@@ -1,7 +1,5 @@
 package es.ugr.redforest.museumsforeveryone;
 
-import android.graphics.drawable.Drawable;
-
 /**
  * Created by UserMan on 22/10/2016.
  */
@@ -9,30 +7,34 @@ import android.graphics.drawable.Drawable;
 public class Language {
 
 	private String lang;
-	private Drawable image;
+	private int image;
 
 	public Language() {
 
 	}
 
-	public Language(String lang, Drawable image) {
+	public Language(String lang, int image) {
 		this.lang = lang;
 		this.image = image;
 	}
 
 	public String getLang() {
+
 		return lang;
 	}
 
 	public void setLang(String lang) {
+
 		this.lang = lang;
 	}
 
-	public Drawable getImage() {
+	public int getImage() {
+
 		return image;
 	}
 
-	public void setImage(Drawable image) {
+	public void setImage(int image) {
+
 		this.image = image;
 	}
 }
