@@ -1,0 +1,26 @@
+<header>
+	<ul id="slide-out" class="side-nav fixed">
+		<li><div class="userView">
+			<img class="background" src="/static/img/material.png">
+			<img id="user_photo" class="circle" src="<%= user.PHOTO %>" alt="<%= user.NAME + ' ' + user.SURNAME%>" width="100px">
+			<span id="username" class="white-text name"><%= user.NAME %></span>
+			<span id="user_id" class="hide"><%= user.ID %></span>
+			<span id="email" class="white-text email"><%= user.EMAIL %></span>
+		</div></li>
+		
+		<!-- Enlace al frontend -->
+		<!--<li><a class="waves-effect waves-custom" href="/"><i class="fa fa-desktop" aria-hidden="true"></i>Portal</a></li>
+		<li><div class="divider"></div></li>-->
+		<li><a class="waves-effect waves-custom" href="/backend/"><i class="fa fa-home" aria-hidden="true"></i>Inicio</a></li>
+		<li><a class="waves-effect waves-custom" href="#"><i class="fa fa-list-alt" aria-hidden="true"></i>Contenido</a></li>
+		<li><a class="waves-effect waves-custom" href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>Localizaciones</a></li>
+		<li><a class="waves-effect waves-custom" href="#"><i class="fa fa-filter" aria-hidden="true"></i>Tipos</a></li>
+		<li><a class="waves-effect waves-custom" href="#"><i class="fa fa-history" aria-hidden="true"></i>Histórico</a></li>
+		<% if(parseInt(user.SUPER_ADMIN)) { %>
+			<li><a class="waves-effect waves-custom" href="/backend/users/"><i class="fa fa-user" aria-hidden="true"></i>Usuarios</a></li>
+		<% } %>
+		<li><div class="divider"></div></li>
+		<li><a class="waves-effect waves-custom" href="/user/logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a></li>
+	</ul>
+	<a id="toggle-sidemenu" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+</header>

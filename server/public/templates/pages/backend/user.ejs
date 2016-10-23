@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<% include ../../partials/backend/head_backend %>
+		<link rel="stylesheet" href="/static/css/src/users_b.css">
+	</head>
+
+	<body>
+		<% include ../../partials/backend/sidemenu_backend %>
+
+		<main class="grey lighten-3">
+		<!-- Nav -->
+		<% include ../../partials/backend/header_backend %>
+
+		<div class="row content_start">
+			<div class="col s12" style="padding-top: 10px">
+			<!-- Button add user -->
+			<a class="waves-effect waves-light btn modal-trigger" href="#add_user">Añadir Usuario</a>
+			</div>
+		</div>
+
+		<!-- Table all users -->
+		<div id="users-table" class="row">
+			<table id="tabla_usuarios" class="striped">
+				<thead>
+					<tr>
+						<th data-field="id">#</th>
+						<th data-field="email">Email</th>
+						<th data-field="nombre_apellidos">Nombre. A</th>
+						<th data-field="bloguero">Admin</th>
+						<th data-field="accion">Accion</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<% var count = 0;
+					for(var i=0; i<users.length; i++) { %>
+						<% if(!users[i].SUPER_ADMIN && users[i].ACTIVE) { 
+							count++; %>
+							<tr>
+							<td><%= users[i].ID %></td>
+							<td><%= users[i].EMAIL %></td>
+							<td><%= users[i].NAME + ' ' + users[i].SURNAME %></td>
+							<td>
+								<% if(parseInt(users[i].ADMIN)) { %>
+									<span>Sí</span>
+								<% } 
+								else { %>
+									<span>No</span>
+								<% } %>
+							</td>
+							<td class="actions">
+								<a class="modal-trigger" href="#edit_user"><i class="material-icons">mode_edit</i></a>
+								<a class="modal-trigger" href="#delete_user"><i class="material-icons">delete</i></a>
+							</td>
+							</tr>
+						<% } %>
+					<% }
+					if(count == 0) { %>
+						<td colspan="5" id="no_users">NO HAY USUARIOS ACTUALMENTE</td>
+					<% } %>
+				</tbody>
+			</table>
+		</div>
+
+		<!-- Modal Add User -->
+		<% include ../../partials/backend/modals/modal_add_user %>
+
+		<!-- Modal Edit User -->
+		<% include ../../partials/backend/modals/modal_edit_user %>
+
+		<!-- Modal Delete User -->
+		<% include ../../partials/backend/modals/modal_delete_user %>
+
+		</main>
+
+		<footer class="page-footer">
+			<% include ../../partials/backend/footer_backend %>
+		</footer>
+
+		<% include ../../partials/backend/script_backend %>
+		<% include ../../partials/backend/server_messages %>
+		<script src="/static/js/src/imagePrevisualization.js"></script>
+		<script src="/static/js/src/user_b.js"></script>
+	</body>
+</html>

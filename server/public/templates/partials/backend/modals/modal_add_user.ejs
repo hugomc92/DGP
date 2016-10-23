@@ -1,0 +1,65 @@
+<div id="add_user" class="modal modal_material modal-fixed-footer">
+	<div class="modal-header z-depth-1">
+		<h4>Añadir Nuevo Usuario</h4>
+		<span><i class="modal_close modal-action modal-close material-icons right">close</i></span>
+	</div>
+	<form class="col s12 row" method="post" action="/backend/users/add/" enctype="multipart/form-data" autocomplete="off">
+		<div class="modal-content">
+			<!-- Email -->
+			<div class="input-field col s12">
+				<input id="add_email_user" name="add_email_user" type="email" class="validate" required>
+				<label for="add_email_user">Email</label>
+			</div>
+
+			<!-- Password -->
+			<div class="input-field col s12">
+				<input id="add_password_user" name="add_password_user" type="password" class="validate" required>
+				<label for="add_password_user">Contraseña</label>
+			</div>
+
+			<!-- Name -->
+			<div class="input-field col s12 m6">
+				<input id="add_name_user" name="add_name_user" type="text" class="validate" required>
+				<label for="add_name_user">Nombre</label>
+			</div>
+
+			<!-- Surname -->
+			<div class="input-field col s12 m6">
+				<input id="add_surname_user" name="add_surname_user" type="text" class="validate" required>
+				<label for="add_surname_user">Apellidos</label>
+			</div>
+
+			<!-- Admin -->
+			<div class="input-field col s12">
+				<p class="red-text text-darken-1">Usuario Admin</p>
+				<!-- Confirmacion -->
+				<p><input name="add_admin_user" type="radio" id="add_admin_yes" value="1" /><label for="add_admin_yes">Sí</label></p>
+				<p><input name="add_admin_user" type="radio" id="add_admin_no" value="0" checked /><label for="add_admin_no">No</label></p>
+			</div>
+
+			<!-- Photo -->
+			<div class="file-field input-field col s12 m6">
+				<div class="btn">
+					<span>Foto</span>
+					<input id="add_photo_user" name="add_photo_user" type="file" required>
+				</div>
+					<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
+				</div>
+			</div>
+
+			<!-- Photo Preview -->
+			<div class="col s12 m6 center-align">
+				<img id="addUserImgViewer" class="imagePreview responsive-img" src="/static/img/img_not_available.png" alt=""/>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<!-- Submit -->
+			<div class="input field col s12 center-align submit_modal">
+				<button class="btn waves-effect waves-light" type="submit" name="add_submit_user">Enviar
+					<i class="material-icons right">send</i>
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

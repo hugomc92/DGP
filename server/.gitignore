@@ -1,0 +1,5 @@
+node_modules/
+logs/
+public/static/css/min/
+public/static/js/min/
+.DS_Store

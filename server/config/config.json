@@ -1,0 +1,17 @@
+{
+	"http":{
+		"host": "localhost",
+		"port": 2424
+	},
+	"db":{
+		"host": "hugomaldonado.ddns.net",
+		"port": 7878,
+		"driver": "mariadb",
+		"username": "dgp",
+		"password": "M/Bc@#W]9@Zj",
+		"database": "m4e"
+	},
+	"logs": {
+		"user_login_logout": false
+	}
+}

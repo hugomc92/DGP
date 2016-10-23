@@ -1,0 +1,119 @@
+@import "./base.less";
+@import "./media.less";
+@import "./color.less";
+
+// Side Menu
+#slide-out {
+	background-color: @principal_color;
+	li a, li i { color: rgba(255, 255, 255, 0.87); }
+	li:first-of-type a:hover {background-color: transparent;}
+	li a:hover {background-color: @sidebar_hover;}
+
+	li.active {
+		background-color: @sidebar_hover;
+	}
+
+	.userView {
+		padding: 32px 20px 0;
+	}
+
+	.divider {
+		margin: 8px 0 8px 0;
+	}
+}
+
+#toggle-sidemenu {
+	display: block;
+	position: absolute;
+	left: 10px;
+	top: 15px;
+	z-index: 99;
+	color: #454545;
+	cursor: pointer;
+
+	i { position: fixed; }
+}
+
+.side-nav {
+	width: 200px;
+
+	@media @mobile { width: 250px; }
+}
+
+.waves-effect.waves-custom .waves-ripple {
+	background-color: rgba(75, 172, 163, 0.65);
+}
+
+// Slide out on drag
+.drag-target {
+	width: 20px !important;
+}
+
+/* Material Design Modal */
+.modal_material {
+	overflow-y: hidden !important;
+
+	.modal_loader {
+		position: absolute;
+		z-index: 100;
+		width: 200px;
+		height: 200px;
+		left: ~"calc(50% - 100px)";
+		top: ~"calc(50% - 100px)";
+
+		.transition(all 0.5s);
+
+		.spinner-green-only {
+			color: @loader_modal_color !important;
+			border-color: @loader_modal_color !important;
+
+			.circle {
+				border-width: 8px !important;
+			}
+		}
+	}
+
+	.modal-header {
+		margin: 0;
+
+		h4 {
+			background: @secondary_color;
+			color: white;
+			padding: 10px;
+			margin: 0;
+			padding-right: 50px;
+		}
+
+		.modal_close {
+			position: absolute;
+			top: 10px;
+			right: 15px;
+			color: white;
+			z-index: 2;
+
+			.transition(all 0.2s);
+
+			&:hover {
+				cursor: pointer;
+				color: #454545;
+
+				.transition(all 0.2s);
+			}
+		}
+	}
+
+	.modal-content {
+		position: fixed !important;
+		padding-bottom: 75px !important;
+	}
+
+	.modal-footer {
+		z-index: 1;
+		margin: 0 !important;
+
+		button {
+			height: 35px;
+			margin: 6px 0;
+		}
+	}
+}

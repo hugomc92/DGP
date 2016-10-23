@@ -1,0 +1,36 @@
+{
+	"name": "musseums_for_everyone_admin",
+	"version": "0.0.1",
+	"description": "Server aplication to manage museum's contents by admins",
+	"main": "main.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Red Forest",
+	"license": "ISC",
+	"dependencies": {
+		"body-parser": "^1.15.2",
+		"cheerio": "^0.20.0",
+		"compression": "^1.6.2",
+		"cors": "^2.8.0",
+		"crypto": "0.0.3",
+		"ejs": "^2.5.1",
+		"express": "^4.14.0",
+		"express-session": "^1.14.1",
+		"grunt": "^1.0.1",
+		"grunt-concurrent": "^2.3.1",
+		"grunt-contrib-cssmin": "^1.0.1",
+		"grunt-contrib-jshint": "^1.0.0",
+		"grunt-contrib-less": "^1.4.0",
+		"grunt-contrib-uglify": "^2.0.0",
+		"grunt-contrib-watch": "^1.0.0",
+		"grunt-crontab": "^0.2.0",
+		"grunt-nodemon": "^0.4.2",
+		"helmet": "^2.1.3",
+		"mariasql": "^0.2.6",
+		"marked": "^0.3.6",
+		"multer": "^1.2.0",
+		"mysql": "^2.11.1",
+		"sequelize": "^3.24.1"
+	}
+}

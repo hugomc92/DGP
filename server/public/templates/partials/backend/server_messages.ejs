@@ -1,0 +1,11 @@
+<% if(typeof msg !== 'undefined' ){%>
+	<script>
+		Materialize.toast("<%= msg %>", 4000)
+	</script>
+<% } %>
+
+<% if(typeof error !== 'undefined' ){%>
+	<script>
+		Materialize.toast("<%= error %>", 4000)
+	</script>
+<% } %>

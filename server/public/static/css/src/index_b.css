@@ -1,0 +1,57 @@
+.half-opacity {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+}
+.move {
+  -ms-transform: translate(-1500px, 0px);
+  -webkit-transform: translate(-1500px, 0px);
+  transform: translate(-1500px, 0px);
+  -ms-transition: transform 500ms;
+  -webkit-transition: -webkit-transform 500ms;
+  transition: transform 500ms;
+}
+.move.to-right {
+  -ms-transform: translate(0px, 0px);
+  -webkit-transform: translate(0px, 0px);
+  transform: translate(0px, 0px);
+}
+#principal_links {
+  margin-top: 30px;
+  text-align: center;
+}
+#principal_links li a {
+  background: #1d8d82;
+  margin: 10px;
+  display: block;
+  padding: 50px 10px;
+  color: white;
+  font-weight: 500;
+  text-transform: uppercase;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+#principal_links li a:hover {
+  background: #4db6ac;
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+#principal_links li a i {
+  font-weight: 500;
+  position: absolute;
+  left: 32px;
+  font-size: 2em;
+  top: 45px;
+}
+@media only screen and (max-width: 300px) {
+  #principal_links li a i {
+    position: initial;
+    margin-right: 15px;
+  }
+}

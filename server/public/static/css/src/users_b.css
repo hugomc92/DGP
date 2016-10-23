@@ -1,0 +1,24 @@
+main {
+  min-height: calc(100vh - 50px);
+}
+#users-table {
+  padding: 0 50px;
+}
+@media only screen and (max-width: 600px) {
+  #users-table {
+    padding: 0 20px;
+  }
+}
+#add_user  div.file-field {
+  margin-top: 50px;
+}
+#delete_user {
+  top: 25% !important;
+  height: 370px;
+}
+#delete_user .modal-content {
+  padding-bottom: 0 !important;
+}
+#no_users {
+  text-align: center;
+}

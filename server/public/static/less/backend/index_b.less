@@ -1,0 +1,41 @@
+@import "../media.less";
+@import "../color.less";
+@import "../base.less";
+
+#principal_links {
+	margin-top: 30px;
+	text-align: center;
+
+	li {
+		a {
+			background: @secondary_color_dark;
+			margin: 10px;
+			display: block;
+			padding: 50px 10px;
+			color: white;
+			font-weight: 500;
+			text-transform: uppercase;
+
+			.transition(all 0.3s);
+
+			&:hover {
+				background: @secondary_color;
+				box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+				.transition(all 0.3s);
+			}
+
+			i {
+				font-weight: 500;
+				position: absolute;
+				left: 32px;
+				font-size: 2em;
+				top: 45px;
+
+				@media @mobile-small {
+					position: initial;
+					margin-right: 15px;
+				}
+			}
+		}
+	}
+}

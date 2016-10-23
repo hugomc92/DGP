@@ -1,0 +1,84 @@
+<div id="edit_user" class="modal modal_material modal-fixed-footer">
+	<div id="user_loader" class="modal_loader preloader-wrapper big active">
+		<div class="spinner-layer spinner-green-only">
+			<div class="circle-clipper left">
+				<div class="circle"></div>
+			</div>
+			<div class="gap-patch">
+				<div class="circle"></div>
+			</div>
+			<div class="circle-clipper right">
+				<div class="circle"></div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-header z-depth-1">
+		<h4>Editar Usuario</h4>
+		<span><i class="modal_close modal-action modal-close material-icons right">close</i></span>
+	</div>
+	<form class="col s12" method="post" action="/backend/users/edit/" enctype="multipart/form-data">
+		<div class="modal-content">
+			<div class="row">
+				<input id="edit_id_user" type="hidden" name="edit_id_user" />
+				<!-- Previous Photo -->
+				<input id="edit_previous_photo_user" type="hidden" name="edit_photo_anterior_user" />
+
+				<!-- Email -->
+				<div class="input-field col s12">
+					<input id="edit_email_user" name="edit_email_user" type="email" class="validate" placeholder="">
+					<label for="edit_email_user">Email</label>
+				</div>
+
+				<!-- Password -->
+				<div class="input-field col s12">
+					<input id="edit_password_user" name="edit_password_user" type="password" class="validate" placeholder="">
+					<label for="edit_password_user">Contraseña</label>
+				</div>
+
+				<!-- Name -->
+				<div class="input-field col s12 m6">
+					<input id="edit_name_user" name="edit_name_user" type="text" class="validate" placeholder="">
+					<label for="edit_name_user">Nombre</label>
+				</div>
+
+				<!-- Surname -->
+				<div class="input-field col s12 m6">
+					<input id="edit_surname_user" name="edit_surname_user" type="text" class="validate" placeholder="">
+					<label for="edit_surname_user">Apellidos</label>
+				</div>
+
+				<!-- Admin -->
+				<div class="input-field col s12">
+					<p class="red-text text-darken-1">Usuario Admin</p>
+					
+					<!-- Confirmacion -->
+					<p><input name="edit_admin_user" type="radio" id="edit_admin_yes" value="1" /><label for="edit_admin_yes">Sí</label></p>
+					<p><input name="edit_admin_user" type="radio" id="edit_admin_no" value="0" /><label for="edit_admin_no">No</label></p>
+				</div>
+
+				<!-- Foto Portada -->
+				<div class="file-field input-field col s12 m6">
+					<div class="btn">
+						<span>Foto</span>
+						<input id="edit_photo_user" name="edit_photo_user" type="file">
+					</div>
+						<div class="file-path-wrapper">
+						<input class="file-path validate" type="text">
+					</div>
+				</div>
+
+				<div class="col s12 m6 center-align">
+					<img id="editUserImgViewer" class="imagePreview responsive-img" src="/static/img/img_not_available.png" alt=""/>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<!-- Submit -->
+			<div class="input field col s12 center-align submit_modal">
+				<button class="btn waves-effect waves-light" type="submit" name="edit_submit_user">Enviar
+					<i class="material-icons right">send</i>
+				</button>
+			</div>
+		</div>
+	</form>
+</div>
