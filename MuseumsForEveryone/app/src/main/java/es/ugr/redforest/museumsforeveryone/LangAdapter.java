@@ -13,9 +13,10 @@ import java.util.ArrayList;
  * Created by UserMan on 22/10/2016.
  */
 
-public class LangAdapter  extends RecyclerView.Adapter<LangAdapter.LangViewHolder> {
+public class LangAdapter  extends RecyclerView.Adapter<LangAdapter.LangViewHolder> implements View.OnClickListener{
 
 	private ArrayList<Language> langList;
+	private View.OnClickListener listener;
 
 	public static class LangViewHolder extends RecyclerView.ViewHolder {
 		private ImageView langImg;
@@ -38,6 +39,7 @@ public class LangAdapter  extends RecyclerView.Adapter<LangAdapter.LangViewHolde
 		View itemView = LayoutInflater.from(parent.getContext())
 						.inflate(R.layout.lang_list_row, parent, false);
 
+		itemView.setOnClickListener(this);
 		return new LangViewHolder(itemView);
 	}
 
@@ -52,5 +54,15 @@ public class LangAdapter  extends RecyclerView.Adapter<LangAdapter.LangViewHolde
 	@Override
 	public int getItemCount() {
 		return langList.size();
+	}
+
+	public void setOnClickListener(View.OnClickListener listener) {
+		this.listener = listener;
+	}
+
+	@Override
+	public void onClick(View view) {
+		if(listener != null)
+			listener.onClick(view);
 	}
 }

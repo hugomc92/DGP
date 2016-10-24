@@ -1,11 +1,13 @@
 package es.ugr.redforest.museumsforeveryone;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -23,6 +25,15 @@ public class LangActivity extends AppCompatActivity {
 	    LangAdapter langAdapter = new LangAdapter(langList);
 	    LinearLayoutManager layMan = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,
 															 false);
+
+	    langAdapter.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+				//TODO: Establecer config de idioma
+			    Intent FirstViewIntent = new Intent(LangActivity.this, FirtsViewActivity.class);
+			    startActivity(FirstViewIntent);
+		    }
+	    });
 
 	    recyclerLang.setLayoutManager(layMan);
 	    recyclerLang.setItemAnimator(new DefaultItemAnimator());
