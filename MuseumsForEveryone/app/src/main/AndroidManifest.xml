@@ -15,9 +15,9 @@
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
-		<activity android:name=".AccessibilityActivity">
+		<activity android:name=".screens.ActivityAccessibility">
 		</activity>
-		<activity android:name=".FirtsViewActivity">
+		<activity android:name=".screens.ActivityFirtsView">
 		</activity>
 	</application>
 

@@ -10,7 +10,6 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-import es.ugr.redforest.museumsforeveryone.FirtsViewActivity;
 import es.ugr.redforest.museumsforeveryone.models.Language;
 import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.adapters.AdapterLang;
@@ -51,7 +50,7 @@ public class ActivityLang extends AppCompatActivity {
 		    @Override
 		    public void onClick(View v) {
 				//TODO: Establecer config de idioma
-			    Intent FirstViewIntent = new Intent(ActivityLang.this, FirtsViewActivity.class);
+			    Intent FirstViewIntent = new Intent(ActivityLang.this, ActivityFirtsView.class);
 			    startActivity(FirstViewIntent);
 		    }
 	    });
