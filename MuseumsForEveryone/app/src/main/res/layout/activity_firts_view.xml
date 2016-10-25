@@ -45,7 +45,8 @@
 			android:layout_height="match_parent"
 			android:src="@drawable/ic_subdirectory_arrow_right_black_24dp"
 			android:scaleType="fitCenter"
-			android:paddingBottom="35dp"/>
+			android:paddingBottom="35dp"
+			android:onClick="buttonEnterMuseum"/>
 		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"

@@ -5,4 +5,10 @@
 	<string name="enter_museum">Entrar al Museo</string>
 	<string name="vision_problems">Problemas de Visión</string>
 	<string name="hearing_problems">Problemas Auditivos</string>
+	<string name="instruction_title">Instrucciones</string>
+	<string name="instructions"></string>
+	<string name="continue_button">Continuar</string>
+	<string name="artwork_info">Info Obras</string>
+	<string name="guided_visit">Visita Guiada</string>
+	<string name="list_artworks">Lista de Obras</string>
 </resources>
