@@ -26,7 +26,7 @@
 		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="Accesibilidad"
+			android:text="@string/accessibility"
 			android:layout_gravity="bottom|center"
 			android:textAllCaps="true"
 			android:background="@android:color/holo_blue_dark"
@@ -49,7 +49,7 @@
 		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="Entrar al Museo"
+			android:text="@string/enter_museum"
 			android:layout_gravity="bottom|center"
 			android:textAllCaps="true"
 			android:background="@android:color/holo_blue_dark"
