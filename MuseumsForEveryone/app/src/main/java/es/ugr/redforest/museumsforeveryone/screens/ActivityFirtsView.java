@@ -17,17 +17,32 @@ import es.ugr.redforest.museumsforeveryone.R;
  */
 public class ActivityFirtsView extends AppCompatActivity {
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_firts_view);
 	}
-	//Assign an action to do on element click
+
+	/**
+	 * Assign an action to do on element click
+	 *
+	 * @author Julian Torices Hernandez
+	 * @version 1.0.0
+	 */
 	public void launchAccessibilityActivity(View v){
 		Intent accessibilityIntent = new Intent(ActivityFirtsView.this, ActivityAccessibility.class);
 		startActivity(accessibilityIntent);
 	}
-	//On click set accessibility preference, no accessibility problems
+
+	/**
+	 * On click set accessibility preference, no accessibility problems
+	 *
+	 * @author Julian Torices Hernandez
+	 * @version 1.0.0
+	 */
 	public void buttonEnterMuseum(View v){
 		SharedPreferences prefs = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();

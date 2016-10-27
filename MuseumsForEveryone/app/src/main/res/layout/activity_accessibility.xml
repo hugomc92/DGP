@@ -13,51 +13,24 @@
 	tools:context="es.ugr.redforest.museumsforeveryone.screens.ActivityAccessibility">
 
 	<FrameLayout
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="0.5">
+		style="@style/FrameLayoutTheme">
 		<ImageButton
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
+			style="@style/ImagenButtonTheme"
 			android:src="@drawable/ic_visibility_black_24dp"
-			android:scaleType="fitCenter"
-			android:paddingBottom="35dp"
 			android:onClick="buttonVisionProblems"/>
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
+			style="@style/TextViewTheme"
 			android:text="@string/vision_problems"
-			android:layout_gravity="bottom|center"
-			android:textAllCaps="true"
-			android:background="@android:color/holo_blue_dark"
-			android:textColor="@android:color/white"
-			android:textStyle="normal|bold"
-			android:textSize="24sp"
-			android:fontFamily="sans-serif"
-			android:textAlignment="center"/>
+			/>
 	</FrameLayout>
 	<FrameLayout
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="0.5">
+		style="@style/FrameLayoutTheme">
 		<ImageButton
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
+			style="@style/ImagenButtonTheme"
 			android:src="@drawable/ic_hearing_black_24dp"
-			android:scaleType="fitCenter"
-			android:paddingBottom="35dp"
 			android:onClick="buttonHearingProblems"/>
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/hearing_problems"
-			android:layout_gravity="bottom|center"
-			android:textAllCaps="true"
-			android:background="@android:color/holo_blue_dark"
-			android:textColor="@android:color/white"
-			android:textStyle="normal|bold"
-			android:textSize="24sp"
-			android:fontFamily="sans-serif"
-			android:textAlignment="center"/>
+			style="@style/TextViewTheme"
+			android:text="@string/hearing_problems"/>
 	</FrameLayout>
 </LinearLayout>

@@ -18,13 +18,21 @@ import es.ugr.redforest.museumsforeveryone.R;
 
 public class ActivityAccessibility extends AppCompatActivity {
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_accessibility);
 	}
 
-	//On click set accessibility preference, vision problems
+	/**
+	 * On click set accessibility preference, vision problems
+	 *
+	 * @author Julian Torices Hernandez
+	 * @version 1.0.0
+	 */
 	public void buttonVisionProblems(View v){
 		SharedPreferences prefs = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();
@@ -34,7 +42,12 @@ public class ActivityAccessibility extends AppCompatActivity {
 		startActivity(instructionIntent);
 	}
 
-	//On click set accessibility preference, hearing problems
+	/**
+	 * On click set accessibility preference, hearing problems
+	 *
+	 * @author Julian Torices Hernandez
+	 * @version 1.0.0
+	 */
 	public void buttonHearingProblems(View v){
 		SharedPreferences prefs = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();

@@ -20,6 +20,12 @@ import es.ugr.redforest.museumsforeveryone.R;
 
 public class ActivityInstructions extends AppCompatActivity {
 
+	/**
+	 * Depending on the type of accessibility display instructions
+	 *
+	 * @author Julian Torices Hernandez
+	 * @version 1.0.0
+	 */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +50,13 @@ public class ActivityInstructions extends AppCompatActivity {
 				instructions.append("No se han cargado instrucciones");
 		}
     }
-	//Assign an action to do on element click
+
+	/**
+	 * Assign an action to do on element click
+	 *
+	 * @author Julian Torices Hernandez
+	 * @version 1.0.0
+	 */
 	public void launchMainActivity(View v){
 		Intent mainIntent = new Intent(ActivityInstructions.this, MainActivity.class);
 		startActivity(mainIntent);
