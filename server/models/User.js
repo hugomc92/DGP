@@ -6,7 +6,7 @@ var DBConnector = require("../utils/DBConnector");
 // Exporto una funcion anonima
 var User = DBConnector.connectM4E().define('USER', {
 	ID: { type: Sequelize.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true },
-	EMAIL: { type: Sequelize.STRING(200), unique: true, allowNull: false },
+	EMAIL: { type: Sequelize.STRING(190), unique: true, allowNull: false },
 	PASSWORD: { type: Sequelize.STRING(500), allowNull: false },
 	NAME: { type: Sequelize.STRING(200), allowNull: false },
 	SURNAME: { type: Sequelize.STRING(200), allowNull: false },
