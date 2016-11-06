@@ -50,7 +50,7 @@ public class ActivityLang extends AppCompatActivity {
 		    @Override
 		    public void onClick(View v) {
 				//TODO: Establecer config de idioma
-			    Intent FirstViewIntent = new Intent(ActivityLang.this, ActivityFirtsView.class);
+			    Intent FirstViewIntent = new Intent(ActivityLang.this, ActivityFirstView.class);
 			    startActivity(FirstViewIntent);
 		    }
 	    });

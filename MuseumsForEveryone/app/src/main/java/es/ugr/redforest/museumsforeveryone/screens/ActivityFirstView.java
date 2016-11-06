@@ -15,7 +15,7 @@ import es.ugr.redforest.museumsforeveryone.R;
  * @author Julian Torices Hernandez
  * @version 1.0.0
  */
-public class ActivityFirtsView extends AppCompatActivity {
+public class ActivityFirstView extends AppCompatActivity {
 
 	/**
 	 * {@inheritDoc}
@@ -23,7 +23,7 @@ public class ActivityFirtsView extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_firts_view);
+		setContentView(R.layout.activity_first_view);
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class ActivityFirtsView extends AppCompatActivity {
 	 * @version 1.0.0
 	 */
 	public void launchAccessibilityActivity(View v){
-		Intent accessibilityIntent = new Intent(ActivityFirtsView.this, ActivityAccessibility.class);
+		Intent accessibilityIntent = new Intent(ActivityFirstView.this, ActivityAccessibility.class);
 		startActivity(accessibilityIntent);
 	}
 
@@ -48,7 +48,7 @@ public class ActivityFirtsView extends AppCompatActivity {
 		SharedPreferences.Editor editor = prefs.edit();
 		editor.putInt("accessibility",0);
 		editor.commit();
-		Intent instructionIntent = new Intent(ActivityFirtsView.this, ActivityInstructions.class);
+		Intent instructionIntent = new Intent(ActivityFirstView.this, ActivityInstructions.class);
 		startActivity(instructionIntent);
 	}
 }

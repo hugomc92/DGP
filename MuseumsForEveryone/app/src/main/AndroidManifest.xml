@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".screens.ActivityAccessibility"/>
-        <activity android:name=".screens.ActivityFirtsView"/>
+        <activity android:name=".screens.ActivityFirstView"/>
         <activity android:name=".screens.ActivityInstructions"/>
         <activity android:name=".screens.MainActivity">
         </activity>

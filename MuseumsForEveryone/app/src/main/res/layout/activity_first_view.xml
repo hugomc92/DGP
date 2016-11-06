@@ -10,7 +10,7 @@
 	android:paddingRight="@dimen/activity_horizontal_margin"
 	android:paddingTop="@dimen/activity_vertical_margin"
 	android:orientation="vertical"
-	tools:context="es.ugr.redforest.museumsforeveryone.screens.ActivityFirtsView">
+	tools:context="es.ugr.redforest.museumsforeveryone.screens.ActivityFirstView">
 
 	<FrameLayout
 		style="@style/FrameLayoutTheme">
