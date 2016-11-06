@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="es.ugr.redforest.museumsforeveryone">
+    package="es.ugr.redforest.museumsforeveryone">
 
     <application
         android:allowBackup="true"
@@ -10,16 +10,16 @@
         android:theme="@style/AppTheme">
         <activity android:name=".screens.ActivityLang">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screens.ActivityAccessibility"/>
-        <activity android:name=".screens.ActivityFirstView"/>
-        <activity android:name=".screens.ActivityInstructions"/>
-        <activity android:name=".screens.MainActivity">
-        </activity>
+        <activity android:name=".screens.ActivityAccessibility" />
+        <activity android:name=".screens.ActivityFirstView" />
+        <activity android:name=".screens.ActivityInstructions" />
+        <activity android:name=".screens.MainActivity"></activity>
+        <activity android:name=".screens.ArtworkListActivity"></activity>
     </application>
 
 </manifest>
