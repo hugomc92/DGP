@@ -51,8 +51,6 @@ $(document).ready(function() {
 					$("#edit_admin_yes").removeAttr('checked');
 					$("#edit_admin_no").removeAttr('checked');
 
-					console.log(admin);
-
 					if(admin)
 						$("#edit_admin_yes").prop('checked', true);
 					else
