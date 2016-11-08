@@ -1,7 +1,9 @@
 package es.ugr.redforest.museumsforeveryone.screens;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import es.ugr.redforest.museumsforeveryone.R;
 
@@ -22,5 +24,11 @@ public class MainActivity extends AppCompatActivity {
 	//Disable back button
 	@Override
 	public void onBackPressed() {
+	}
+
+	/** Called when the user clicks the Artwork List button */
+	public void openArtworkList(View view) {
+		Intent intent = new Intent(this, ArtworkListActivity.class);
+		startActivity(intent);
 	}
 }

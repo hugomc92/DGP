@@ -17,9 +17,10 @@
         <ImageButton
             style="@style/ImagenButtonTheme"
             android:src="@drawable/ic_list_black_24dp"/>
+
         <TextView
             style="@style/TextViewTheme"
-            android:text="@string/list_artworks"/>
+            android:text="@string/artwork_list"/>
     </FrameLayout>
     <FrameLayout
         style="@style/FrameLayoutTheme">
