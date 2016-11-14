@@ -1,6 +1,6 @@
 <div id="add_user" class="modal modal_material modal-fixed-footer">
 	<div class="modal-header z-depth-1">
-		<h4>Añadir Nuevo Usuario</h4>
+		<h4>Añadir un nuevo usuario</h4>
 		<span><i class="modal_close modal-action modal-close material-icons right">close</i></span>
 	</div>
 	<form class="col s12 row" method="post" action="/backend/users/add/" enctype="multipart/form-data" autocomplete="off">
@@ -8,7 +8,7 @@
 			<!-- Email -->
 			<div class="input-field col s12">
 				<input id="add_email_user" name="add_email_user" type="email" class="validate" required>
-				<label for="add_email_user">Email</label>
+				<label for="add_email_user">Correo electrónico</label>
 			</div>
 
 			<!-- Password -->
@@ -31,7 +31,7 @@
 
 			<!-- Admin -->
 			<div class="input-field col s12">
-				<p class="red-text text-darken-1">Usuario Admin</p>
+				<p class="red-text text-darken-1">¿Usuario administrador?</p>
 				<!-- Confirmacion -->
 				<p><input name="add_admin_user" type="radio" id="add_admin_yes" value="1" /><label for="add_admin_yes">Sí</label></p>
 				<p><input name="add_admin_user" type="radio" id="add_admin_no" value="0" checked /><label for="add_admin_no">No</label></p>
@@ -40,7 +40,7 @@
 			<!-- Photo -->
 			<div class="file-field input-field col s12 m6">
 				<div class="btn">
-					<span>Foto</span>
+					<span>Foto de perfil</span>
 					<input id="add_photo_user" name="add_photo_user" type="file" required>
 				</div>
 					<div class="file-path-wrapper">

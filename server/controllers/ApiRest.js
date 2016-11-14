@@ -4,6 +4,7 @@ var express = require("express");
 var cors = require("cors");
 
 var UserService = require('../service/UserService');
+var ContentTypeService = require('../service/ContentTypeService');
 
 function ApiRest() {
 	this.publicTokenList = [];
@@ -29,13 +30,14 @@ function ApiRest() {
 // Validate the API Key to increase the security
 ApiRest.prototype.validateApiKey = function() {
 	var self = this;
-	
+
 };
 
 // Define API Services
 ApiRest.prototype.defineApiServices = function() {
 	var self = this;
 
+	this.serviceRouter.use('/content_type', new ContentTypeService().getRouter());
 	this.serviceRouter.use('/user', new UserService().getRouter());
 };
 

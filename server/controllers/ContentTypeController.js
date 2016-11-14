@@ -59,7 +59,7 @@ ContentTypeController.prototype.initBackend = function () {
 			var description_content_type = req.body.add_description_content_type;
 			var icon_content_type = '/static/img/img_not_available.png';
 
-			// Check if there's file to upload
+			// Check if there're files to upload
 			if (req.files.length > 0) {
 				var file = Utils.normalizeStr(req.files[0].originalname);
 				var extension = '.'+file.substr(file.lastIndexOf('.')+1);
@@ -117,12 +117,113 @@ ContentTypeController.prototype.initBackend = function () {
 
 	// Edit an existing Content Type
 	self.routerBackend.route('/edit').post(upload.array('edit_icon_content_type', 1), function(req, res) {
+		self.renderJson.user = req.session.user;
 
+		if (typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
+			var contentType = ContentType.build();
+			var id_content_type = req.body.edit_id_content_type;
+			contentType.name = req.body.edit_name_content_type;
+			contentType.description = req.body.edit_description_content_type;
+			contentType.icon = req.body.edit_previous_icon_content_type;
+
+			// Check if there're files to upload
+			if(req.files.length > 0) {
+				var file = Utils.normalizeStr(req.files[0].originalname);
+				var extension = '.'+file.substr(file.lastIndexOf('.')+1);
+
+				file = file.split('.').splice(0,1).join('.');
+				var dst = self.uploadimgpath + file + extension;
+
+				// Check if the file exist. If there's an error it doesn't exist
+				try {
+					fs.accessSync(dst, fs.F_OK);
+
+					file += Date.now();
+					file += extension;
+				} catch(e) { 			// File not found
+					file += extension;
+				}
+
+				dst = self.uploadimgpath + file;
+
+				var tmp = self.uploadpath+req.files[0].filename;
+
+				fs.createReadStream(tmp).pipe(fs.createWriteStream(dst));
+
+				// Delete created tmp file.
+				fs.unlink(tmp, function(error) {
+					if(error)
+						console.log(error);
+					else
+						console.log('successfully deleted ' + tmp);
+				});
+
+				// Path to the file, to be sabed in DB
+				user.photo = '/static/img/content_type_icons/' + file;
+			}
+
+			contentType.updateById(id_content_type).then(function(result) {
+				self.renderJson.msg = 'Tipo de contenido editado correctamente';
+				res.redirect('/backend/contentTypes');
+			}, function(error) {
+				self.renderJson.error = 'Se ha producido un error interno';
+				res.redirect('/backend/contentTypes');
+			});
+		}
+		else {
+			res.redirect('/');
+		}
 	});
 
 	// Delete an existing Content Type
 	self.routerBackend.route('/delete').post(function(req, res) {
+		self.renderJson.user = req.session.user;
 
+		if (typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
+			var id_content_type = req.body.delete_id_content_type;
+			var delete_content_type = req.body.delete_content_type;
+
+			if (delete_content_type === 'yes') {
+				var user = User.build();
+
+				console.log(id_content_type);
+
+				// Get the content type to get the icon to delete
+				contentType.retrieveById(id_content_type).then(function(result) {
+					// Delete the icon
+					if (result.ICON !== '/static/img/img_not_available.png') {
+						var dst = path.join(__dirname, '..', 'public') + result.ICON;
+
+						fs.unlink(dst, function(error) {
+							if (error)
+								console.log(error);
+							else
+								console.log('successfully deleted' + dst);
+						});
+					}
+
+					var deleted_content_type = contentType.build();
+
+					deleted_content_type.removeById(id_content_type).then(function(result) {
+						self.renderJson.msg = 'Se ha eliminado el tipo de contenido correctamente';
+						res.redirect('/backend/contentTypes');
+					}, function(err) {
+						self.renderJson.error = 'Se ha producido un error interno borrando el tipo de contenido';
+						res.redirect('/backend/contentTypes');
+					});
+				}, function(err) {
+					self.renderJson.error = 'Se ha producido un error interno';
+					res.redirect('/backend/contentTypes');
+				});
+			}
+			else {
+				self.renderJson.msg = 'No se ha efectuado su acción';
+				res.redirect('/backend/contentTypes');
+			}
+		}
+		else {
+			red.redirect('/');
+		}
 	});
 };
 

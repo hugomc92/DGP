@@ -302,7 +302,7 @@ UsuarioController.prototype.initBackend = function() {
 				});
 			}
 			else {
-				self.renderJson.msg = 'No se ha efectuado su accion';
+				self.renderJson.msg = 'No se ha efectuado su acción';
 				res.redirect('/backend/users');
 			}
 		}
