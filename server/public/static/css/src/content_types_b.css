@@ -1,0 +1,24 @@
+main {
+  min-height: calc(100vh - 50px);
+}
+#content-types-table {
+  padding: 0 50px;
+}
+@media only screen and (max-width: 600px) {
+  #users-table {
+    padding: 0 20px;
+  }
+}
+#add_content_type  div.file-field {
+  margin-top: 50px;
+}
+#delete_content_type {
+  top: 25% !important;
+  height: 370px;
+}
+#delete_content_type .modal-content {
+  padding-bottom: 0 !important;
+}
+#no_content_types {
+  text-align: center;
+}

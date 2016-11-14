@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<% include ../../partials/backend/head_backend %>
+		<link rel="stylesheet" href="/static/css/src/content_types_b.css">
+	</head>
+	<body>
+		<% include ../../partials/backend/sidemenu_backend %>
+
+		<main class="grey lighten-3">
+		<!-- Nav -->
+		<% include ../../partials/backend/header_backend %>
+
+		<div class="row content_start">
+			<div class="col s12" style="padding-top: 10px">
+			<!-- Add new content type button -->
+			<a class="waves-effect waves-light btn modal-trigger" href="#add_content_type">Añadir Tipo de Contenido</a>
+			</div>
+		</div>
+
+		<!-- Table all content types -->
+		<div id="content-types-table" class="row">
+			<table id="tabla_tipos_contenido" class="striped">
+				<thead>
+					<tr>
+						<th data-field="id">#</th>
+						<th data-field="nombre">Nombre</th>
+						<th data-field="descripcion">Descripción</th>
+						<th data-field="icono">Icono</th>
+						<th data-field="accion">Accion</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<% var count = 0;
+					for(var i=0; i<contentTypes.length; i++) { %>
+						<% count++; %>
+						<tr>
+						<td><%= contentTypes[i].ID %></td>
+						<td><%= contentTypes[i].NAME %></td>
+						<td><%= contentTypes[i].DESCRIPTION %></td>
+						<td><%= contentTypes[i].ICON %></td>
+						<td class="actions">
+							<a class="modal-trigger" href="#edit_content_type"><i class="material-icons">mode_edit</i></a>
+							<a class="modal-trigger" href="#delete_content_type"><i class="material-icons">delete</i></a>
+						</td>
+						</tr>
+					<% }
+					if(count == 0) { %>
+						<td colspan="5" id="no_content_types">NO HAY TIPOS DE CONTENIDO ACTUALMENTE</td>
+					<% } %>
+				</tbody>
+			</table>
+		</div>
+
+		<!-- Add Content Type Modal -->
+		<% include ../../partials/backend/modals/modal_add_user %>
+
+		<!-- Edit Content Type Modal -->
+		<% include ../../partials/backend/modals/modal_edit_user %>
+
+		<!-- Delete Content Type Modal -->
+		<% include ../../partials/backend/modals/modal_delete_user %>
+
+		</main>
+
+		<footer class="page-footer">
+			<% include ../../partials/backend/footer_backend %>
+		</footer>
+
+		<% include ../../partials/backend/script_backend %>
+		<% include ../../partials/backend/server_messages %>
+		<script src="/static/js/src/imagePrevisualization.js"></script>
+		<script src="/static/js/src/user_b.js"></script>
+	</body>
+</html>

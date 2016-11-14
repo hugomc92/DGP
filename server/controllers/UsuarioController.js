@@ -141,13 +141,13 @@ UsuarioController.prototype.initBackend = function() {
 			var admin_user = req.body.add_admin_user;
 			var photo_user = '/static/img/img_not_available.png';
 
-			// Check if there're files to upload
+			// Check if there's files to upload
 			if(req.files.length > 0) {
 				var file = Utils.normalizeStr(req.files[0].originalname);
 				var extension = '.'+file.substr(file.lastIndexOf('.')+1);
 
 				file = file.split('.').splice(0,1).join('.');
-				
+
 				var dst = self.uploadimgpath + file + extension;
 
 				// Check if the file exist. If there's an error it doesn't exist
@@ -232,7 +232,7 @@ UsuarioController.prototype.initBackend = function() {
 				}
 
 				dst = self.uploadimgpath + file;
-				
+
 				var tmp = self.uploadpath+req.files[0].filename;
 
 				fs.createReadStream(tmp).pipe(fs.createWriteStream(dst));
@@ -280,7 +280,7 @@ UsuarioController.prototype.initBackend = function() {
 						var dst = path.join(__dirname, '..', 'public') + result.PHOTO;
 
 						fs.unlink(dst, function(error) {
-							if(error) 
+							if(error)
 								console.log(error);
 							else
 								console.log('successfully deleted ' + dst);

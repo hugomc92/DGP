@@ -13,6 +13,9 @@ $(document).ready(function() {
 		case "/backend/users/":
 			active_li = setActiveLi("Usuarios");
 			break;
+		case "/backend/contentTypes/":
+			active_li = setActiveLi("Tipos de contenido");
+			break;
 	}
 });
 

@@ -35,7 +35,7 @@
 				<tbody>
 					<% var count = 0;
 					for(var i=0; i<users.length; i++) { %>
-						<% if(!users[i].SUPER_ADMIN && users[i].ACTIVE) { 
+						<% if(!users[i].SUPER_ADMIN && users[i].ACTIVE) {
 							count++; %>
 							<tr>
 							<td><%= users[i].ID %></td>
@@ -44,7 +44,7 @@
 							<td>
 								<% if(parseInt(users[i].ADMIN)) { %>
 									<span>Sí</span>
-								<% } 
+								<% }
 								else { %>
 									<span>No</span>
 								<% } %>
