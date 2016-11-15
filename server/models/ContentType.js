@@ -1,10 +1,9 @@
-var crypto = require("crypto");
 var Sequelize = require("sequelize");
 var DBConnector = require("../utils/DBConnector");
 
 // Export an anonymous function
 var ContentType = DBConnector.connectM4E().define('CONTENT_TYPE', {
-	ID: {type: Sequelize.INTEGER, primaryKey: true, allowNull: false, autoincrement: true},
+	ID: {type: Sequelize.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true},
 	NAME: {type: Sequelize.STRING(200), allowNull: false},
 	DESCRIPTION: {type: Sequelize.STRING(500), allowNull: true},
 	ICON: {type: Sequelize.STRING(500), allowNull: true}

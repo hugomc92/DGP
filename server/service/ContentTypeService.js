@@ -1,6 +1,6 @@
 var express = require("express");
 var crypto = require("crypto");
-var User = require("../models/ContentType");
+var ContentType = require("../models/ContentType");
 
 // Constructor for ContentTypeService
 function ContentTypeService() {
@@ -15,7 +15,7 @@ ContentTypeService.prototype.initializeRouter = function() {
 		var id_content_type = req.params.content_type_id;
 		var contentType = ContentType.build();
 
-		contetnType.retrieveById(id_content_type).then(function(result) {
+		contentType.retrieveById(id_content_type).then(function(result) {
 			if(result)
 				res.json(result);
 			else

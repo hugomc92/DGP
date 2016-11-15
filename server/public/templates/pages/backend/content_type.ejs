@@ -26,7 +26,6 @@
 						<th data-field="id">#</th>
 						<th data-field="nombre">Nombre</th>
 						<th data-field="descripcion">Descripción</th>
-						<th data-field="icono">Icono</th>
 						<th data-field="accion">Accion</th>
 					</tr>
 				</thead>
@@ -39,7 +38,6 @@
 						<td><%= contentTypes[i].ID %></td>
 						<td><%= contentTypes[i].NAME %></td>
 						<td><%= contentTypes[i].DESCRIPTION %></td>
-						<td><%= contentTypes[i].ICON %></td>
 						<td class="actions">
 							<a class="modal-trigger" href="#edit_content_type"><i class="material-icons">mode_edit</i></a>
 							<a class="modal-trigger" href="#delete_content_type"><i class="material-icons">delete</i></a>
@@ -71,6 +69,6 @@
 		<% include ../../partials/backend/script_backend %>
 		<% include ../../partials/backend/server_messages %>
 		<script src="/static/js/src/imagePrevisualization.js"></script>
-		<script src="/static/js/src/user_b.js"></script>
+		<script src="/static/js/src/content_type_b.js"></script>
 	</body>
 </html>

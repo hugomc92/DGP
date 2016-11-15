@@ -1,7 +1,7 @@
 var express = require('express');
 var crypto = require('crypto');
 var multer = require('multer');
-var upload = multer({dest: __dirname + '/../public/static/uplodad'});
+var upload = multer({dest: __dirname + '/../public/static/upload'});
 var fs = require('fs');
 var path = require('path');
 var moment = require('moment');
@@ -13,7 +13,7 @@ var ContentType = require('../models/ContentType');
 function ContentTypeController(json) {
 	this.renderJson = json;
 	this.uploadpath = path.join(__dirname, '..', 'public', 'static', 'upload') + '/';
-	this.uploadimgpath = path.join(__dirname, '..', 'public', 'static', 'img', 'content_types') + '/';
+	this.uploadimgpath = path.join(__dirname, '..', 'public', 'static', 'img', 'content_type_icons') + '/';
 
 	this.routerBackend = express.Router();
 	this.initBackend();
@@ -159,7 +159,7 @@ ContentTypeController.prototype.initBackend = function () {
 				});
 
 				// Path to the file, to be sabed in DB
-				user.photo = '/static/img/content_type_icons/' + file;
+				contentType.icon = '/static/img/content_type_icons/' + file;
 			}
 
 			contentType.updateById(id_content_type).then(function(result) {
@@ -184,7 +184,7 @@ ContentTypeController.prototype.initBackend = function () {
 			var delete_content_type = req.body.delete_content_type;
 
 			if (delete_content_type === 'yes') {
-				var user = User.build();
+				var contentType = ContentType.build();
 
 				console.log(id_content_type);
 
@@ -202,7 +202,7 @@ ContentTypeController.prototype.initBackend = function () {
 						});
 					}
 
-					var deleted_content_type = contentType.build();
+					var deleted_content_type = ContentType.build();
 
 					deleted_content_type.removeById(id_content_type).then(function(result) {
 						self.renderJson.msg = 'Se ha eliminado el tipo de contenido correctamente';
