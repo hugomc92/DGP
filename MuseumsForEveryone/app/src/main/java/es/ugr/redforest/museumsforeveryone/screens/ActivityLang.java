@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import es.ugr.redforest.museumsforeveryone.models.Language;
 import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.adapters.AdapterLang;
+import es.ugr.redforest.museumsforeveryone.threads.HQueryMarkers;
 
 /**
  * Activity which shows a list of available languages to select one of them
@@ -62,7 +63,8 @@ public class ActivityLang extends AppCompatActivity {
 
 	    //DEBUGGING PURPOSES
 	    loadLanguages();
-
+		HQueryMarkers hQueryMarkers = new HQueryMarkers(this);
+		hQueryMarkers.execute();
     }
 
 	/**
