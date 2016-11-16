@@ -1,5 +1,4 @@
-package com.indalocodex.com.alergiastop.basedatos;
-
+package es.ugr.redforest.museumsforeveryone.utils;
 import android.os.Build;
 import android.util.Log;
 
@@ -15,7 +14,7 @@ import java.net.URL;
 /**
  * Created by Emilio Chica Jimenez on 27/10/2015.
  */
-public class ConsultaBBDD {
+public class QueryBBDD {
 
 
     public static String server ="http://alergiaalpolen.com/";
