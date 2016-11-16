@@ -8,18 +8,22 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".screens.ActivityLang">
+        <activity android:name=".screens.ActivityLang" />
+        <activity android:name=".screens.ActivityAccessibility" />
+        <activity android:name=".screens.ActivityFirstView" />
+        <activity android:name=".screens.ActivityInstructions" />
+        <activity android:name=".screens.MainActivity" />
+        <activity android:name=".screens.ArtworkListActivity" android:label="Obras" />
+        <activity
+            android:name=".screens.SplashScreenActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screens.ActivityAccessibility" />
-        <activity android:name=".screens.ActivityFirstView" />
-        <activity android:name=".screens.ActivityInstructions" />
-        <activity android:name=".screens.MainActivity"></activity>
-        <activity android:name=".screens.ArtworkListActivity"></activity>
+        <activity android:name=".screens.GuidedVisitActivity" android:label="Visita Guiada"/>
     </application>
 
 </manifest>

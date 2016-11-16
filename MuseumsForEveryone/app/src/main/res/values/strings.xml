@@ -1,16 +1,16 @@
 <resources>
-	<string name="app_name">Museums For Everyone</string>
-	<string name="accessibility">Accesibilidad</string>
-	<string name="enter_museum">Entrar al Museo</string>
-	<string name="vision_problems">Problemas de Visión</string>
-	<string name="hearing_problems">Problemas Auditivos</string>
-	<string name="instruction_title">Instrucciones</string>
-	<string name="instructions">Instrucciones</string>
-	<string name="continue_button">Continuar</string>
-	<string name="artwork_info">Info Obras</string>
-	<string name="guided_visit">Visita Guiada</string>
-	<string name="artwork_list">Lista de Obras</string>
-	<string name="artwork_pictures">Pinturas</string>
-	<string name="artwork_sculptures">Esculturas</string>
-	<string name="artwork_movies">Vídeos</string>
+    <string name="app_name">Museums For Everyone</string>
+    <string name="accessibility">Accesibilidad</string>
+    <string name="enter_museum">Entrar al Museo</string>
+    <string name="vision_problems">Problemas de Visión</string>
+    <string name="hearing_problems">Problemas Auditivos</string>
+    <string name="instruction_title">Instrucciones</string>
+    <string name="instructions">Instrucciones</string>
+    <string name="continue_button">Continuar</string>
+    <string name="artwork_info">Info Obras</string>
+    <string name="guided_visit">Visita Guiada</string>
+    <string name="artwork_list">Lista de Obras</string>
+    <string name="artwork_pictures">Pinturas</string>
+    <string name="artwork_sculptures">Esculturas</string>
+    <string name="artwork_movies">Vídeos</string>
 </resources>

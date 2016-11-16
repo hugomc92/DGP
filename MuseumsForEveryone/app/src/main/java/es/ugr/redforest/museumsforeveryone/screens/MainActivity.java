@@ -26,9 +26,25 @@ public class MainActivity extends AppCompatActivity {
 	public void onBackPressed() {
 	}
 
-	/** Called when the user clicks the Artwork List button */
-	public void openArtworkList(View view) {
-		Intent intent = new Intent(this, ArtworkListActivity.class);
-		startActivity(intent);
+	/**
+	 * Assign an action to do on element click
+	 *
+	 * @author Miguel Ángel Torres López
+	 * @version 1.0.0
+	 */
+	public void launchArtworkListActivity(View v){
+		Intent artWorkIntent = new Intent(MainActivity.this, ArtworkListActivity.class);
+		startActivity(artWorkIntent);
+	}
+
+	/**
+	 * Assign an action to do on element click
+	 *
+	 * @author Miguel Ángel Torres López
+	 * @version 1.0.0
+	 */
+	public void launchGuidedVisit(View v){
+		Intent guidedVisitIntent = new Intent(MainActivity.this, GuidedVisitActivity.class);
+		startActivity(guidedVisitIntent);
 	}
 }

@@ -16,7 +16,8 @@
         style="@style/FrameLayoutTheme">
         <ImageButton
             style="@style/ImagenButtonTheme"
-            android:src="@drawable/ic_list_black_24dp"/>
+            android:src="@drawable/ic_list_black_24dp"
+            android:onClick="launchArtworkListActivity"/>
 
         <TextView
             style="@style/TextViewTheme"
@@ -26,7 +27,8 @@
         style="@style/FrameLayoutTheme">
         <ImageButton
             style="@style/ImagenButtonTheme"
-            android:src="@drawable/ic_location_on_black_24dp"/>
+            android:src="@drawable/ic_location_on_black_24dp"
+            android:onClick="launchGuidedVisit"/>
         <TextView
             style="@style/TextViewTheme"
             android:text="@string/guided_visit"
