@@ -1,0 +1,59 @@
+<div id="edit_localization" class="modal modal_material modal-fixed-footer">
+	<div id="localization_loader" class="modal_loader preloader-wrapper big active">
+		<div class="spinner-layer spinner-green-only">
+			<div class="circle-clipper left">
+				<div class="circle"></div>
+			</div>
+			<div class="gap-patch">
+				<div class="circle"></div>
+			</div>
+			<div class="circle-clipper right">
+				<div class="circle"></div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-header z-depth-1">
+		<h4>Editar Localización</h4>
+		<span><i class="modal_close modal-action modal-close material-icons right">close</i></span>
+	</div>
+	<form class="col s12" method="post" action="/backend/localizations/edit/">
+		<div class="modal-content">
+			<div class="row">
+				<input id="edit_id_localization" type="hidden" name="edit_id_localization" />
+
+				<!-- Description -->
+				<div class="input-field col s12">
+					<input id="edit_description_localization" name="edit_description_localization" type="text" placeholder="" required>
+					<label for="edit_description_localization">Descripción</label>
+				</div>
+
+				<!-- NFC -->
+				<div class="input-field col s12">
+					<input id="edit_nfc_localization" name="edit_nfc_localization" type="text" placeholder="">
+					<label for="edit_nfc_localization">Etiqueta NFC</label>
+				</div>
+
+				<!-- QR -->
+				<div class="input-field col s12">
+					<input id="edit_qr_localization" name="edit_qr_localization" type="text" placeholder="">
+					<label for="edit_qr_localization">Código QR</label>
+				</div>
+
+				<!-- Coordinates -->
+				<div class="input-field col s12">
+					<input id="edit_coordinates_localization" name="edit_coordinates_localization" type="text" placeholder="">
+					<label for="edit_coordinates_localization">Coordenadas (Formato: "x,y")</label>
+				</div>
+
+			</div>
+		</div>
+		<div class="modal-footer">
+			<!-- Submit -->
+			<div class="input field col s12 center-align submit_modal">
+				<button class="btn waves-effect waves-light" type="submit" name="edit_submit_localization">Enviar
+					<i class="material-icons right">send</i>
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

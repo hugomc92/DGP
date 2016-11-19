@@ -82,10 +82,10 @@ LocalizationController.prototype.initBackend = function () {
 		if (typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
 			var localization = Localization.build();
 			var id_localization = req.body.edit_id_localization;
-			localization.description = req.body._edit_description_localization;
-			localization.nfc = req.body._edit_nfc_localization;
-			localization.qr = req.body._edit_qr_localization;
-			localization.coordinates = req.body._edit_coordinates_localization;
+			localization.description = req.body.edit_description_localization;
+			localization.nfc = req.body.edit_nfc_localization;
+			localization.qr = req.body.edit_qr_localization;
+			localization.coordinates = req.body.edit_coordinates_localization;
 
 			localization.updateById(id_localization).then(function(result) {
 				self.renderJson.msg = 'Localización editada correctamente';

@@ -13,7 +13,7 @@
 
 		<div class="row content_start">
 			<div class="col s12" style="padding-top: 10px">
-			<!-- Add new content type button -->
+			<!-- Add new localization button -->
 			<a class="waves-effect waves-light btn modal-trigger" href="#add_localization">Añadir Localización</a>
 			</div>
 		</div>
@@ -35,9 +35,9 @@
 					for(var i=0; i<localizations.length; i++) { %>
 						<% count++; %>
 						<tr>
-						<td><%= contentTypes[i].ID %></td>
-						<td><%= contentTypes[i].DESCRIPTION %></td>
-						<td><%= contentTypes[i].COORDINATES %></td>
+						<td><%= localizations[i].ID %></td>
+						<td><%= localizations[i].DESCRIPTION %></td>
+						<td><%= localizations[i].COORDINATES %></td>
 						<td class="actions">
 							<a class="modal-trigger" href="#edit_localization"><i class="material-icons">mode_edit</i></a>
 							<a class="modal-trigger" href="#delete_localization"><i class="material-icons">delete</i></a>
@@ -52,13 +52,13 @@
 		</div>
 
 		<!-- Add Localization Modal -->
-		<% include ../../partials/backend/modals/modal_add_content_type %>
+		<% include ../../partials/backend/modals/modal_add_localization %>
 
 		<!-- Edit Localization Modal -->
-		<% include ../../partials/backend/modals/modal_edit_content_type %>
+		<% include ../../partials/backend/modals/modal_edit_localization %>
 
 		<!-- Delete Localization Modal -->
-		<% include ../../partials/backend/modals/modal_delete_content_type %>
+		<% include ../../partials/backend/modals/modal_delete_localization %>
 
 		</main>
 
