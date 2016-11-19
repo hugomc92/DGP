@@ -20,18 +20,31 @@ public class SplashScreenActivity extends AppCompatActivity {
         ControllerPreferences preferences= new ControllerPreferences();
 
         SharedPreferences prefs = getSharedPreferences("ControllerPreferences", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("accessibility",1);
-        editor.commit();
+        int accesibility=prefs.getInt("accesibility", -1);
+        String language=prefs.getString("language","");
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+        if(accesibility==-1 && language=="") {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(SplashScreenActivity.this, ActivityLang.class);
+                    startActivity(intent);
+                }
+            }, 3000);
+        }
+        else
+        {
+            //Here we set the preferences of controller preferences to their value saved in the shared preferences
+            preferences.savePreferencesLanguage(this,prefs.getString("language", ""));
+            preferences.savePreferencesDisability(this,prefs.getInt("accesibility", -1));
 
-                Intent intent = new Intent(SplashScreenActivity.this, ActivityLang.class);
-                startActivity(intent);
-
-            }
-        },3000);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+            }, 3000);
+        }
     }
 }
