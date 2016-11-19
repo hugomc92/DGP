@@ -5,6 +5,7 @@ var cors = require("cors");
 
 var UserService = require('../service/UserService');
 var ContentTypeService = require('../service/ContentTypeService');
+var LocalizationService = require('../service/LocalizationService');
 
 function ApiRest() {
 	this.publicTokenList = [];
@@ -20,10 +21,10 @@ function ApiRest() {
 	this.router = express.Router();
 	this.router.use(cors());
 
-	// Servir los recursos de la api rest
+	// Serve REST API resources
 	this.router.use('/api', this.serviceRouter);
 
-	// Servir los recursos estaticos - static
+	// Serve static resources
 	this.router.use('/static', express.static(__dirname + '/../public/static'));
 }
 
@@ -39,6 +40,7 @@ ApiRest.prototype.defineApiServices = function() {
 
 	this.serviceRouter.use('/content_type', new ContentTypeService().getRouter());
 	this.serviceRouter.use('/user', new UserService().getRouter());
+	this.serviceRouter.use('/localization', new LocalizationService().getRouter());
 };
 
 // Get Router of API Rest

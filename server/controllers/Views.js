@@ -5,6 +5,7 @@ var session = require('express-session');
 var IndexController = require('./IndexController');
 var UsuarioController = require('./UsuarioController');
 var ContentTypeController = require('./ContentTypeController');
+var LocalizationController = require('./LocalizationController');
 
 function Views(app) {
 	this.expressContext = app;
@@ -26,11 +27,13 @@ Views.prototype.initPages = function() {
 	var indexC = new IndexController(self.renderJson);
 	var usuarioC = new UsuarioController(self.renderJson);
 	var contentTypeC = new ContentTypeController(self.renderJson);
+	var localizationC = new LocalizationController(self.renderJson);
 
 	// -- BACKEND VIEWS --
 	self.routerBackend.use(indexC.getRouterBackend());
 	self.routerBackend.use('/users', usuarioC.getRouterBackend());
 	self.routerBackend.use('/contentTypes', contentTypeC.getRouterBackend());
+	self.routerBackend.use('/localizations', localizationC.getRouterBackend());
 
 	// -- FRONTEND VIEWS --
 	self.routerFrontend.use(indexC.getRouterFrontend());

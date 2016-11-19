@@ -1,5 +1,4 @@
 var express = require('express');
-var crypto = require('crypto');
 var multer = require('multer');
 var upload = multer({dest: __dirname + '/../public/static/upload'});
 var fs = require('fs');
