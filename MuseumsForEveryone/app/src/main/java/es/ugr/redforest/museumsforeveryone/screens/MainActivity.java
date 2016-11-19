@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 	 * @version 1.0.0
 	 */
 	public void launchArtworkListActivity(View v){
-		Intent artWorkIntent = new Intent(MainActivity.this, ArtworkListActivity.class);
+		Intent artWorkIntent = new Intent(MainActivity.this, ContentTypeActivity.class);
 		startActivity(artWorkIntent);
 	}
 

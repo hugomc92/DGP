@@ -4,26 +4,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import es.ugr.redforest.museumsforeveryone.models.ArtWork;
+import es.ugr.redforest.museumsforeveryone.models.ContentType;
 import es.ugr.redforest.museumsforeveryone.R;
 
 /**
- * Adapter used in RecyclerView to display a list of Languages
+ * Adapter used in RecyclerView to display a list of Content Types
  *
  * @author Miguel Ángel Torres López
  * @version 1.0.0
- * @see ArtWork
+ * @see ContentType
  * @see RecyclerView
  */
 
-public class AdapterArtWork extends RecyclerView.Adapter<AdapterArtWork.ArtWorkViewHolder>
+public class AdapterContentType extends RecyclerView.Adapter<AdapterContentType.ContentTypeViewHolder>
                             implements View.OnClickListener{
 
-    private ArrayList<ArtWork> artWorkList;   // ArrayList containing the Languages to show
+    private ArrayList<ContentType> contentTypeList;   // ArrayList containing the Content Types to show
     private View.OnClickListener listener;  // Listener needed to handle onClick event
 
     /**
@@ -33,50 +34,53 @@ public class AdapterArtWork extends RecyclerView.Adapter<AdapterArtWork.ArtWorkV
      * @version 1.0.0
      * @see "layout/lang_list_row.xml"
      */
-    public static class ArtWorkViewHolder extends RecyclerView.ViewHolder {
-        private TextView artWorkTxt;
+    public static class ContentTypeViewHolder extends RecyclerView.ViewHolder {
+        private TextView contentTypeTxt;
+        private ImageView contentTypeImg;
 
         /**
          * Constructor method. Gets references to visible elements
          *
          * @param view Needed by the superclass constructor
          */
-        public  ArtWorkViewHolder(View view) {
+        public  ContentTypeViewHolder(View view) {
             super(view);
 
-            artWorkTxt = (TextView) view.findViewById(R.id.lang_txt);
+            contentTypeTxt = (TextView) view.findViewById(R.id.content_type_txt);
+            contentTypeImg = (ImageView) view.findViewById(R.id.content_type_img);
         }
     }
 
     /**
      * Constructor method.
      *
-     * @param artWorkList List of languages to show
+     * @param contentTypeList List of languages to show
      */
-    public AdapterArtWork(ArrayList<ArtWork> artWorkList) {
-        this.artWorkList = artWorkList;
+    public AdapterContentType(ArrayList<ContentType> contentTypeList) {
+        this.contentTypeList = contentTypeList;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public ArtWorkViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ContentTypeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.artwork_list_row, parent, false);
+                .inflate(R.layout.content_type_list_row, parent, false);
 
         itemView.setOnClickListener(this);
-        return new ArtWorkViewHolder(itemView);
+        return new ContentTypeViewHolder(itemView);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void onBindViewHolder(ArtWorkViewHolder holder, int position) {
-        ArtWork artWork = artWorkList.get(position);
+    public void onBindViewHolder(ContentTypeViewHolder holder, int position) {
+        ContentType contentType = contentTypeList.get(position);
 
-        holder.artWorkTxt.setText(artWork.getArtWork());
+        holder.contentTypeTxt.setText(contentType.getContentName());
+        holder.contentTypeImg.setImageResource(contentType.getIcon());
     }
 
     /**
@@ -84,7 +88,7 @@ public class AdapterArtWork extends RecyclerView.Adapter<AdapterArtWork.ArtWorkV
      */
     @Override
     public int getItemCount() {
-        return artWorkList.size();
+        return contentTypeList.size();
     }
 
     public void setOnClickListener(View.OnClickListener listener) {

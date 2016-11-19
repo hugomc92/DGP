@@ -32,7 +32,7 @@ public class ActivityInstructions extends AppCompatActivity {
         setContentView(R.layout.activity_instructions);
 	    //THIS IS THE PROTOTYPE, THIS WILL CHANGE
 	    //If accessibility == 0 then load instructions
-	    SharedPreferences prefs = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+	    SharedPreferences prefs = getSharedPreferences("ControllerPreferences", Context.MODE_PRIVATE);
 		int accessibility = prefs.getInt("accessibility",-1);
 	    TextView instructions = (TextView) findViewById(R.id.instructions);
 

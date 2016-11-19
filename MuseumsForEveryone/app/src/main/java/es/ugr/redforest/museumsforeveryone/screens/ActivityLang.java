@@ -1,19 +1,23 @@
 package es.ugr.redforest.museumsforeveryone.screens;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import es.ugr.redforest.museumsforeveryone.models.Language;
 import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.adapters.AdapterLang;
-import es.ugr.redforest.museumsforeveryone.threads.HQueryMarkers;
+import es.ugr.redforest.museumsforeveryone.threads.HQueryContentType;
+import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
 
 /**
  * Activity which shows a list of available languages to select one of them
@@ -26,6 +30,8 @@ public class ActivityLang extends AppCompatActivity {
 
 	private ArrayList<Language> langList;   //List of languages available
 
+	private Context context;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -33,11 +39,12 @@ public class ActivityLang extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lang);
+		context=this;
 
 	    langList = new ArrayList<>();
 
 	    //Gets reference of the RecyclerView
-	    RecyclerView recyclerLang = (RecyclerView) findViewById(R.id.recycler_lang);
+	    final RecyclerView recyclerLang = (RecyclerView) findViewById(R.id.recycler_lang);
 
 	    //Creates an Adapter with the list of languages
 	    AdapterLang langAdapter = new AdapterLang(langList);
@@ -47,14 +54,40 @@ public class ActivityLang extends AppCompatActivity {
 															 false);
 
 	    //Assign an action to do on element click
-	    langAdapter.setOnClickListener(new View.OnClickListener() {
-		    @Override
-		    public void onClick(View v) {
-				//TODO: Establecer config de idioma
-			    Intent FirstViewIntent = new Intent(ActivityLang.this, ActivityFirstView.class);
-			    startActivity(FirstViewIntent);
-		    }
-	    });
+		/*recyclerLang.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+
+
+			@Override
+			public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+
+				View child = recyclerLang.findChildViewUnder(e.getX(), e.getY());
+				Intent FirstViewIntent = new Intent(ActivityLang.this, ActivityFirstView.class);
+				TextView texta=(TextView)child.findViewById(R.id.lang_txt);
+				ControllerPreferences.savePreferencesLanguage(context,texta.getText().toString());
+				startActivity(FirstViewIntent);
+				return false;
+			}
+
+			@Override
+			public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+			}
+
+			@Override
+			public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+			}
+		});*/
+
+		//Assign an action to do on element click
+		langAdapter.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//TODO: Establecer config de idiomas
+				Intent FirstViewIntent = new Intent(ActivityLang.this, ActivityFirstView.class);
+				startActivity(FirstViewIntent);
+			}
+		});
 
 	    //Set all previous elements to the RecyclerView
 	    recyclerLang.setLayoutManager(layMan);
@@ -63,8 +96,8 @@ public class ActivityLang extends AppCompatActivity {
 
 	    //DEBUGGING PURPOSES
 	    loadLanguages();
-		HQueryMarkers hQueryMarkers = new HQueryMarkers(this);
-		hQueryMarkers.execute();
+		//HQueryContentType hQueryContentType = new HQueryContentType(this);
+		//hQueryContentType.execute();
     }
 
 	/**
