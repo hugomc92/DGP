@@ -17,13 +17,11 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        ControllerPreferences preferences= new ControllerPreferences();
+        ControllerPreferences preferences= ControllerPreferences.getInstance();
 
-        SharedPreferences prefs = getSharedPreferences("ControllerPreferences", Context.MODE_PRIVATE);
-        int accesibility=prefs.getInt("accesibility", -1);
-        String language=prefs.getString("language","");
+        preferences.loadPreferences(this);
 
-        if(accesibility==-1 && language=="") {
+        if(preferences.isFirtsTime()) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -34,10 +32,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         }
         else
         {
-            //Here we set the preferences of controller preferences to their value saved in the shared preferences
-            preferences.savePreferencesLanguage(this,prefs.getString("language", ""));
-            preferences.savePreferencesDisability(this,prefs.getInt("accesibility", -1));
-
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
