@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_splash_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="es.ugr.redforest.museumsforeveryone.screens.ActivitySplashScreen"
-    android:background="@drawable/splashscreen">
+    android:orientation="vertical" >
 
-
-
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_artwork_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 </RelativeLayout>

@@ -13,9 +13,11 @@
         <activity android:name=".screens.ActivityFirstView" />
         <activity android:name=".screens.ActivityInstructions" />
         <activity android:name=".screens.MainActivity" />
-        <activity android:name=".screens.ContentTypeActivity" android:label="Obras" />
         <activity
-            android:name=".screens.SplashScreenActivity"
+            android:name=".screens.ActivityContentType"
+            android:label="Obras" />
+        <activity
+            android:name=".screens.ActivitySplashScreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +25,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screens.GuidedVisitActivity" android:label="Visita Guiada"/>
+        <activity
+            android:name=".screens.ActivityGuidedVisit"
+            android:label="Visita Guiada" />
+        <activity android:name=".screens.ActivityArtworkList"></activity>
     </application>
 
 </manifest>

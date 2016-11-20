@@ -79,8 +79,9 @@ public class AdapterContentType extends RecyclerView.Adapter<AdapterContentType.
     public void onBindViewHolder(ContentTypeViewHolder holder, int position) {
         ContentType contentType = contentTypeList.get(position);
 
-        holder.contentTypeTxt.setText(contentType.getContentName());
-        holder.contentTypeImg.setImageResource(contentType.getIcon());
+        holder.contentTypeTxt.setText(contentType.getName());
+        //Necesito pasarle el identificador de la imagen pero no se como
+        //holder.contentTypeImg.setImageResource(contentType.getIcon()));
     }
 
     /**

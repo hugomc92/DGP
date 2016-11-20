@@ -14,7 +14,6 @@ import es.ugr.redforest.museumsforeveryone.R;
 
 import es.ugr.redforest.museumsforeveryone.adapters.AdapterGuidedVisit;
 import es.ugr.redforest.museumsforeveryone.models.GuidedVisit;
-import es.ugr.redforest.museumsforeveryone.threads.HQueryContentType;
 
 /**
  * Activity which shows a list of available guided visits to select one of them
@@ -24,7 +23,7 @@ import es.ugr.redforest.museumsforeveryone.threads.HQueryContentType;
  * @see GuidedVisit
  */
 
-public class GuidedVisitActivity extends AppCompatActivity {
+public class ActivityGuidedVisit extends AppCompatActivity {
 
     private ArrayList<GuidedVisit> guidedVisitList;   //List of guided visits available
 
@@ -50,7 +49,7 @@ public class GuidedVisitActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO: Establecer config de idioma
-                Intent FirstViewIntent = new Intent(GuidedVisitActivity.this, ActivityFirstView.class);
+                Intent FirstViewIntent = new Intent(ActivityGuidedVisit.this, ActivityFirstView.class);
                 startActivity(FirstViewIntent);
             }
         });

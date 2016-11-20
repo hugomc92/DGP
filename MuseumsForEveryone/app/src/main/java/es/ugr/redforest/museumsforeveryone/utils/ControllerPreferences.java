@@ -11,7 +11,7 @@ public class ControllerPreferences {
     private static ControllerPreferences instance = new ControllerPreferences();
     private static String language="";
     private static int disability=0;
-    private static boolean firtsTime=false;
+    private static boolean firstTime=false;
 
     public static ControllerPreferences getInstance() {
         return instance;
@@ -30,25 +30,31 @@ public class ControllerPreferences {
         SharedPreferences misprefe = t.getSharedPreferences("PrefUser", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = misprefe.edit();
         editor.putString("language",lan);
+        editor.commit();
+        language=lan;
     }
 
     public static void  savePreferencesDisability(Context t, int dis){
         SharedPreferences misprefe = t.getSharedPreferences("PrefUser", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = misprefe.edit();
         editor.putInt("accesibility",dis);
+        editor.commit();
+        disability=dis;
     }
 
     public static void  savePreferencesFirstTime(Context t, boolean first){
         SharedPreferences misprefe = t.getSharedPreferences("PrefUser", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = misprefe.edit();
         editor.putBoolean("first-time",first);
+        editor.commit();
+        firstTime=first;
     }
 
     public static void loadPreferences(Context t){
         SharedPreferences misprefe = t.getSharedPreferences("PrefUser", Context.MODE_PRIVATE);
         language=misprefe.getString("language","");
         disability=misprefe.getInt("accesibility",-1);
-        firtsTime=misprefe.getBoolean("first-time",false);
+        firstTime=misprefe.getBoolean("first-time",false);
     }
 
     public static String getLanguage() {
@@ -60,6 +66,6 @@ public class ControllerPreferences {
     }
 
     public static boolean isFirtsTime() {
-        return firtsTime;
+        return firstTime;
     }
 }

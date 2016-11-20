@@ -8,6 +8,7 @@ import android.view.View;
 import android.content.SharedPreferences;
 
 import es.ugr.redforest.museumsforeveryone.R;
+import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
 
 /**
  * Activity which shows two buttons about two types of accessibility
@@ -31,13 +32,12 @@ public class ActivityAccessibility extends AppCompatActivity {
 	 * On click set accessibility preference, vision problems
 	 *
 	 * @author Julian Torices Hernandez
+	 * @author Miguel Ángel Torres López
 	 * @version 1.0.0
 	 */
 	public void buttonVisionProblems(View v){
-		SharedPreferences prefs = getSharedPreferences("ControllerPreferences", Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = prefs.edit();
-		editor.putInt("accessibility",1);
-		editor.commit();
+		ControllerPreferences preferences= ControllerPreferences.getInstance();
+		preferences.savePreferencesDisability(this,1);
 		Intent instructionIntent = new Intent(ActivityAccessibility.this, ActivityInstructions.class);
 		startActivity(instructionIntent);
 	}
@@ -49,10 +49,8 @@ public class ActivityAccessibility extends AppCompatActivity {
 	 * @version 1.0.0
 	 */
 	public void buttonHearingProblems(View v){
-		SharedPreferences prefs = getSharedPreferences("ControllerPreferences", Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = prefs.edit();
-		editor.putInt("accessibility",2);
-		editor.commit();
+		ControllerPreferences preferences= ControllerPreferences.getInstance();
+		preferences.savePreferencesDisability(this,2);
 		Intent instructionIntent = new Intent(ActivityAccessibility.this, ActivityInstructions.class);
 		startActivity(instructionIntent);
 	}

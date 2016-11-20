@@ -10,22 +10,22 @@ package es.ugr.redforest.museumsforeveryone.models;
 public class ContentType {
 
     private int id;
-    private String contentName;
+    private String name;
     private String description;
-    private int icon;
+    private String icon;
 
-    public ContentType(int id, String contentName, String description, int icon) {
+    public ContentType(int id, String name, String description, String icon) {
         this.id = id;
-        this.contentName = contentName;
+        this.name = name;
         this.description = description;
         this.icon = icon;
     }
 
-    public String getContentName() {
-        return contentName;
+    public String getName() {
+        return name;
     }
 
-    public int getIcon() {
+    public String getIcon() {
         return icon;
     }
 
@@ -37,11 +37,11 @@ public class ContentType {
         return id;
     }
 
-    public void setContentName(String contentName) {
-        this.contentName = contentName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setIcon(int icon) {
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 

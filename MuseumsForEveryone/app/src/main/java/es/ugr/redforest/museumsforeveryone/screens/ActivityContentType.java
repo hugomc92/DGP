@@ -9,8 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -18,7 +16,6 @@ import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.adapters.AdapterContentType;
 import es.ugr.redforest.museumsforeveryone.models.ContentType;
 import es.ugr.redforest.museumsforeveryone.threads.HQueryContentType;
-import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
 
 /**
  * Activity which shows a list of available artwork types to select one of them
@@ -27,7 +24,7 @@ import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
  * @author Miguel Ángel Torres López
  * @version 1.0.0
  */
-public class ContentTypeActivity extends AppCompatActivity {
+public class ActivityContentType extends AppCompatActivity {
 
     private ArrayList<ContentType> contentTypeList;   //List of artworks available
 
@@ -36,7 +33,7 @@ public class ContentTypeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_content_type_list);
+        setContentView(R.layout.activity_content_type);
 
         context=this;
 
@@ -60,7 +57,7 @@ public class ContentTypeActivity extends AppCompatActivity {
 			public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
 
 				View child = recyclerContentType.findChildViewUnder(e.getX(), e.getY());
-				Intent FirstViewIntent = new Intent(ContentTypeActivity.this, ActivityFirstView.class);
+				Intent FirstViewIntent = new Intent(ActivityContentType.this, ActivityFirstView.class);
 				startActivity(FirstViewIntent);
 				return false;
 			}

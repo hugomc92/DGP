@@ -17,12 +17,14 @@ import java.net.URL;
 public class QueryBBDD {
 
 
-    public static String server ="http://localhost:2424/";
+    public static String server ="http://hugomaldonado.ddns.net:2424/";
 
 
     //Ficheros para consultas
 
-    public static final String consultaTipo = "/service/ContentTypeService";
+    public static final String consultaType = "/service/ContentTypeService";
+    //Supongo que se creara el /service/ContentInformation en un futuro(ahora no existe)
+    public static final String consultaContentInformation="/service/ContentInformation";
 
     public static String realizarConsulta(String urlREST,String parametros,String metodo) {
 

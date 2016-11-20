@@ -77,7 +77,7 @@ public class AdapterGuidedVisit extends RecyclerView.Adapter<AdapterGuidedVisit.
     public void onBindViewHolder(AdapterGuidedVisit.GuidedVisitViewHolder holder, int position) {
         GuidedVisit guidedVisit = guidedVisitList.get(position);
 
-        holder.guidedVisitTxt.setText(guidedVisit.getGuidedVisit());
+        holder.guidedVisitTxt.setText(guidedVisit.getName());
     }
 
     /**

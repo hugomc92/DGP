@@ -1,27 +1,25 @@
 package es.ugr.redforest.museumsforeveryone.models;
 
-
-import java.util.Date;
-
 /**
- * Class containing all data from a guided visit
+ * Class containing all data from a Content Information
  *
  * @author Miguel Ángel Torres López
  * @version 1.0.0
  */
 
-public class GuidedVisit {
-
+public class ContentInformation {
     private int id;
     private String name;
     private String description;
-    private Date dateOut;
+    private String blindDescription;
+    private String language;
 
-    public GuidedVisit(int id, String name, String description, Date dateOut) {
+    public ContentInformation(int id, String name, String description, String blindDescription, String language) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.dateOut = dateOut;
+        this.blindDescription = blindDescription;
+        this.language = language;
     }
 
     public int getId() {
@@ -36,8 +34,12 @@ public class GuidedVisit {
         return description;
     }
 
-    public Date getDateOut() {
-        return dateOut;
+    public String getBlindDescription() {
+        return blindDescription;
+    }
+
+    public String getLanguage() {
+        return language;
     }
 
     public void setId(int id) {
@@ -52,7 +54,12 @@ public class GuidedVisit {
         this.description = description;
     }
 
-    public void setDateOut(Date dateOut) {
-        this.dateOut = dateOut;
+    public void setBlindDescription(String blindDescription) {
+        this.blindDescription = blindDescription;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }
+

@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 	 * @version 1.0.0
 	 */
 	public void launchArtworkListActivity(View v){
-		Intent artWorkIntent = new Intent(MainActivity.this, ContentTypeActivity.class);
+		Intent artWorkIntent = new Intent(MainActivity.this, ActivityContentType.class);
 		startActivity(artWorkIntent);
 	}
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 	 * @version 1.0.0
 	 */
 	public void launchGuidedVisit(View v){
-		Intent guidedVisitIntent = new Intent(MainActivity.this, GuidedVisitActivity.class);
+		Intent guidedVisitIntent = new Intent(MainActivity.this, ActivityGuidedVisit.class);
 		startActivity(guidedVisitIntent);
 	}
 }

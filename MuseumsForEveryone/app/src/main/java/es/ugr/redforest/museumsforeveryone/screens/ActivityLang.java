@@ -64,7 +64,8 @@ public class ActivityLang extends AppCompatActivity {
 				View child = recyclerLang.findChildViewUnder(e.getX(), e.getY());
 				Intent FirstViewIntent = new Intent(ActivityLang.this, ActivityFirstView.class);
 				TextView texta=(TextView)child.findViewById(R.id.lang_txt);
-				ControllerPreferences.savePreferencesLanguage(context,texta.getText().toString());
+				ControllerPreferences preferences=ControllerPreferences.getInstance();
+				preferences.savePreferencesLanguage(context,texta.getText().toString());
 				startActivity(FirstViewIntent);
 				return false;
 			}
@@ -85,6 +86,8 @@ public class ActivityLang extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				//TODO: Establecer config de idiomas
+				ControllerPreferences preferences= ControllerPreferences.getInstance();
+				preferences.savePreferencesLanguage(context,"Español");
 				Intent FirstViewIntent = new Intent(ActivityLang.this, ActivityFirstView.class);
 				startActivity(FirstViewIntent);
 			}
