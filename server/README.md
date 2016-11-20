@@ -73,33 +73,33 @@ $ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo
 
 0.Check if a `screen` session is running attaching it
 
-        ```
-        % screen -r
-        ```
+```
+$ screen -r
+```
 
 1.Launch a new session in `screen` command
 
-        ```
-        $ screen -S grunt
-        ```
+```
+$ screen -S grunt
+```
 
 2.Execute command to be executed in background
 
-        ```
-        $ grunt
-        ```
+```
+$ grunt
+```
 
 3.Detach `screen` from terminal (to still run in background)
 
-        Press Ctrl + a + d
+Press `Ctrl` + `a` + `d`
 
 4.Close terminal
 
 5.To reattach the last screen session
 
-        ```
-        $ screen -r
-        ```
+```
+$ screen -r
+```
 
 ## References
 
