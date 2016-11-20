@@ -69,6 +69,38 @@ Fix it introducing this command:
 $ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 ```
 
+## Execute grunt in background
+
+0.Check if a `screen` session is running attaching it
+
+        ```
+        % screen -r
+        ```
+
+1.Launch a new session in `screen` command
+
+        ```
+        $ screen -S grunt
+        ```
+
+2.Execute command to be executed in background
+
+        ```
+        $ grunt
+        ```
+
+3.Detach `screen` from terminal (to still run in background)
+
+        Press Ctrl + a + d
+
+4.Close terminal
+
+5.To reattach the last screen session
+
+        ```
+        $ screen -r
+        ```
+
 ## References
 
 - [DatePicker](http://amsul.ca/pickadate.js/)
