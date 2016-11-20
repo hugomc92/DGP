@@ -44,7 +44,7 @@ public class ActivityFirstView extends AppCompatActivity {
 	 * @version 1.0.0
 	 */
 	public void buttonEnterMuseum(View v){
-		SharedPreferences prefs = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+		SharedPreferences prefs = getSharedPreferences("ControllerPreferences", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();
 		editor.putInt("accessibility",0);
 		editor.commit();

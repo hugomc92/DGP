@@ -13,7 +13,7 @@
         <activity android:name=".screens.ActivityFirstView" />
         <activity android:name=".screens.ActivityInstructions" />
         <activity android:name=".screens.MainActivity" />
-        <activity android:name=".screens.ArtworkListActivity" android:label="Obras" />
+        <activity android:name=".screens.ContentTypeActivity" android:label="Obras" />
         <activity
             android:name=".screens.SplashScreenActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

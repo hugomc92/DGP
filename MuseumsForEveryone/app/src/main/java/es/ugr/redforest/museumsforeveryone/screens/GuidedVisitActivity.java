@@ -13,9 +13,8 @@ import java.util.ArrayList;
 import es.ugr.redforest.museumsforeveryone.R;
 
 import es.ugr.redforest.museumsforeveryone.adapters.AdapterGuidedVisit;
-import es.ugr.redforest.museumsforeveryone.adapters.AdapterLang;
 import es.ugr.redforest.museumsforeveryone.models.GuidedVisit;
-import es.ugr.redforest.museumsforeveryone.threads.HQueryMarkers;
+import es.ugr.redforest.museumsforeveryone.threads.HQueryContentType;
 
 /**
  * Activity which shows a list of available guided visits to select one of them
@@ -62,7 +61,7 @@ public class GuidedVisitActivity extends AppCompatActivity {
         recyclerGuidedVisit.setAdapter(guidedVisitAdapter);
 
         //DEBUGGING PURPOSES
-        HQueryMarkers hQueryMarkers = new HQueryMarkers(this);
-        hQueryMarkers.execute();
+        //HQueryContentType hQueryContentType = new HQueryContentType(this);
+        //hQueryContentType.execute();
     }
 }

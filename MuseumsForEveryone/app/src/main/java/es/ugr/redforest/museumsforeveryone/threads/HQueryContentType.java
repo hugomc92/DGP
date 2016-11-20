@@ -7,55 +7,67 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.util.List;
 
-
-
+import es.ugr.redforest.museumsforeveryone.models.ContentType;
+import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
 
 
 /**
  * Created by Emilio Chica Jimenez on 27/10/2015.
  */
-public class HQueryMarkers extends AsyncTask<Void, Integer, JSONObject> {
+public class HQueryContentType extends AsyncTask<Void, Integer, String> {
 
         Context context;
         String resultado;
         ProgressDialog pDialog;
-      //  List<MarkerAlergia> markersAlergia;
+        List<ContentType> contentTypeList;
 
 
-        public HQueryMarkers(Context c /*, List<MarkerAlergia> markersAlergia*/) {
+        public HQueryContentType(Context c , List<ContentType> contentTypeList) {
             context=c;
-           // this.markersAlergia = markersAlergia;
+            this.contentTypeList = contentTypeList;
         }
 
         @Override
-        protected JSONObject doInBackground(Void... params) {
+        protected String doInBackground(Void... params) {
             ObjectMapper mapper = new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
- //           resultado = ConsultaBBDD.realizarConsulta(ConsultaBBDD.consultaMarkers, "", "POST");
+            resultado = QueryBBDD.realizarConsulta(QueryBBDD.consultaTipo, "", "POST");
             JSONObject res =null;
+            ContentType itemContentType =null;
             try {
                 if(resultado!=null) {
                     res = new JSONObject(resultado);
-                    ///GUARDAR Inventario EN SQLITE
-                    if (!res.isNull("markers")) {
-                        JSONArray markers = res.getJSONArray("markers");
+                    if (!res.isNull("ContentType")) {
+                        JSONArray contentType = res.getJSONArray("ContentType");
 
-                        for (int j = 0; j < markers.length(); ++j) {
-                            JSONObject item = markers.getJSONObject(j);
-
-                            ma
+                        for (int j = 0; j < contentType.length(); ++j) {
+                            JSONObject item = contentType.getJSONObject(j);
+                            itemContentType = mapper.readValue(item.toString(), ContentType.class);
+                            contentTypeList.add(itemContentType);
                         }
                     }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
+            } catch (JsonParseException e) {
+                e.printStackTrace();
+            } catch (JsonMappingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            return res;
+            return resultado;
         }
 
         @Override
@@ -63,9 +75,9 @@ public class HQueryMarkers extends AsyncTask<Void, Integer, JSONObject> {
             // durante la ejecucion -- para la barra
         }
     @Override
-    protected void onPostExecute(JSONObject resultado) {
+    protected void onPostExecute(String resultado) {
 
-        if (resultado==null) {
+        if (resultado==null && resultado.compareTo("")==0) {
             Toast toast = Toast.makeText(context,
                     "Problemas con internet",
                     Toast.LENGTH_SHORT);

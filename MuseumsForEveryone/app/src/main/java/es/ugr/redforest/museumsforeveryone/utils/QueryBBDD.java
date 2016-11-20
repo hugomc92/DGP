@@ -17,19 +17,12 @@ import java.net.URL;
 public class QueryBBDD {
 
 
-    public static String server ="http://alergiaalpolen.com/";
+    public static String server ="http://localhost:2424/";
 
 
     //Ficheros para consultas
 
-    public static final String consultaMarkers = "consultaMarkers.php";
-    public static final String insertaEstadisticaSintomas = "insertaEstadisticaSintomas.php";
-    public static final String insertaEstadisticaCalidad = "insertaEstadisticaCalidad.php";
-    public static final String insertaEstadisticaInstrumentos = "insertaEstadisticaInstrumentos.php";
-    public static final String insertaEstadisticaAtencion = "insertaEstadisticaAtencion.php";
-    public static final String insertaUsuario = "insertaUsuario.php";
-    public static final String insertaEstadisticaMedicamentos = "insertaEstadisticaMedicamentos.php";
-    public static final String insertaEstadisticaEjercicios = "insertaEstadisticaEjercicios.php";
+    public static final String consultaTipo = "/service/ContentTypeService";
 
     public static String realizarConsulta(String urlREST,String parametros,String metodo) {
 
