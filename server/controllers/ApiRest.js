@@ -6,6 +6,7 @@ var cors = require("cors");
 var UserService = require('../service/UserService');
 var ContentTypeService = require('../service/ContentTypeService');
 var LocalizationService = require('../service/LocalizationService');
+var ActivityLogService = require('../service/ActivityLogService');
 
 function ApiRest() {
 	this.publicTokenList = [];
@@ -41,6 +42,7 @@ ApiRest.prototype.defineApiServices = function() {
 	this.serviceRouter.use('/content_type', new ContentTypeService().getRouter());
 	this.serviceRouter.use('/user', new UserService().getRouter());
 	this.serviceRouter.use('/localization', new LocalizationService().getRouter());
+	this.serviceRouter.use('/activity_log', new ActivityLogService().getRouter());
 };
 
 // Get Router of API Rest

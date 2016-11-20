@@ -7,7 +7,7 @@ var path = require('path');
 var moment = require('moment');
 
 var Utils = require('../utils/Util');
-
+var ActivityLogController = require('./ActivityLogController');
 var User = require('../models/User');
 
 function UsuarioController(json) {
@@ -189,6 +189,15 @@ UsuarioController.prototype.initBackend = function() {
 				admin_user
 			).then(function(result) {
 				self.renderJson.msg = 'Usuario añadido correctamente';
+
+				// Add the event to a new Activity Log
+				var activityLogC = new ActivityLogController(self.renderJson);
+				var ct = "Inserción";
+				var desc = "Se ha añadido al usuario " + name_user + " " + surname_user;
+				var date = new Date();
+				var uid = self.renderJson.user.ID;
+				activityLogC.addNewActivityLog(ct, desc, date, uid);
+
 				res.redirect('/backend/users');
 			}, function(error) {
 				self.renderJson.error = 'Se ha producido un error interno';
@@ -251,6 +260,15 @@ UsuarioController.prototype.initBackend = function() {
 
 			user.updateById(id_user).then(function(result) {
 				self.renderJson.msg = 'Se ha editado correctamente';
+
+				// Add the event to a new Activity Log
+				var activityLogC = new ActivityLogController(self.renderJson);
+				var ct = "Edición";
+				var desc = "Se ha editado al usuario " + user.name + " " + user.surname;
+				var date = new Date();
+				var uid = self.renderJson.user.ID;
+				activityLogC.addNewActivityLog(ct, desc, date, uid);
+
 				res.redirect('/backend/users');
 			}, function(error) {
 				self.renderJson.error = 'Se ha producido un error interno';
@@ -291,6 +309,15 @@ UsuarioController.prototype.initBackend = function() {
 
 					deleted_user.removeById(id_user).then(function(result) {
 						self.renderJson.msg = 'Se ha eliminado correctamente';
+
+						// Add the event to a new Activity Log
+						var activityLogC = new ActivityLogController(self.renderJson);
+						var ct = "Borrado";
+						var desc = "Se ha eliminado al usuario con ID " + id_user;
+						var date = new Date();
+						var uid = self.renderJson.user.ID;
+						activityLogC.addNewActivityLog(ct, desc, date, uid);
+
 						res.redirect('/backend/users');
 					}, function(err) {
 						self.renderJson.error = 'Se ha producido un error interno borrando al usuario';

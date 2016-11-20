@@ -6,6 +6,7 @@ var moment = require('moment');
 
 var Utils = require('../utils/Util');
 var Localization = require('../models/Localization');
+var ActivityLogController = require('./ActivityLogController');
 
 // Constructor for LocalizationController
 function LocalizationController(json) {
@@ -64,6 +65,15 @@ LocalizationController.prototype.initBackend = function () {
 				coordinates_localization
 			).then(function(result) {
 				self.renderJson.msg = 'Localización creada correctamente';
+
+				// Add the event to a new Activity Log
+				var activityLogC = new ActivityLogController(self.renderJson);
+				var ct = "Inserción";
+				var desc = "Se ha insertado la localización " + req.body.add_description_localization;
+				var date = new Date();
+				var uid = self.renderJson.user.ID;
+				activityLogC.addNewActivityLog(ct, desc, date, uid);
+
 				res.redirect('/backend/localizations');
 			}, function(error) {
 				self.renderJson.error = 'Se ha producido un error interno';
@@ -89,6 +99,15 @@ LocalizationController.prototype.initBackend = function () {
 
 			localization.updateById(id_localization).then(function(result) {
 				self.renderJson.msg = 'Localización editada correctamente';
+
+				// Add the event to a new Activity Log
+				var activityLogC = new ActivityLogController(self.renderJson);
+				var ct = "Edición";
+				var desc = "Se ha editado la localización " + req.body.edit_description_localization;
+				var date = new Date();
+				var uid = self.renderJson.user.ID;
+				activityLogC.addNewActivityLog(ct, desc, date, uid);
+
 				res.redirect('/backend/localizations');
 			}, function(error) {
 				self.renderJson.error = 'Se ha producido un error interno';
@@ -118,6 +137,15 @@ LocalizationController.prototype.initBackend = function () {
 
 					deleted_localization.removeById(id_localization).then(function(result) {
 						self.renderJson.msg = 'Se ha eliminado la localización correctamente';
+
+						// Add the event to a new Activity Log
+						var activityLogC = new ActivityLogController(self.renderJson);
+						var ct = "Borrado";
+						var desc = "Se ha eliminado la localización con ID " + id_localization;
+						var date = new Date();
+						var uid = self.renderJson.user.ID;
+						activityLogC.addNewActivityLog(ct, desc, date, uid);
+
 						res.redirect('/backend/localizations');
 					}, function(err) {
 						self.renderJson.error = 'Se ha producido un error interno borrando la localización';

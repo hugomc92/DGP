@@ -7,6 +7,7 @@ var moment = require('moment');
 
 var Utils = require('../utils/Util');
 var ContentType = require('../models/ContentType');
+var ActivityLogController = require('./ActivityLogController');
 
 // Constructor for ContentTypeController
 function ContentTypeController(json) {
@@ -103,6 +104,15 @@ ContentTypeController.prototype.initBackend = function () {
 				icon_content_type
 			).then(function(result) {
 				self.renderJson.msg = 'Tipo de contenido creado correctamente';
+
+				// Add the event to a new Activity Log
+				var activityLogC = new ActivityLogController(self.renderJson);
+				var ct = "Inserción";
+				var desc = "Se ha insertado el tipo de contenido " + name_content_type;
+				var date = new Date();
+				var uid = self.renderJson.user.ID;
+				activityLogC.addNewActivityLog(ct, desc, date, uid);
+
 				res.redirect('/backend/contentTypes');
 			}, function(error) {
 				self.renderJson.error = 'Se ha producido un error interno';
@@ -163,6 +173,15 @@ ContentTypeController.prototype.initBackend = function () {
 
 			contentType.updateById(id_content_type).then(function(result) {
 				self.renderJson.msg = 'Tipo de contenido editado correctamente';
+
+				// Add the event to a new Activity Log
+				var activityLogC = new ActivityLogController(self.renderJson);
+				var ct = "Edición";
+				var desc = "Se ha editado el tipo de contenido " + contentType.name;
+				var date = new Date();
+				var uid = self.renderJson.user.ID;
+				activityLogC.addNewActivityLog(ct, desc, date, uid);
+
 				res.redirect('/backend/contentTypes');
 			}, function(error) {
 				self.renderJson.error = 'Se ha producido un error interno';
@@ -205,6 +224,15 @@ ContentTypeController.prototype.initBackend = function () {
 
 					deleted_content_type.removeById(id_content_type).then(function(result) {
 						self.renderJson.msg = 'Se ha eliminado el tipo de contenido correctamente';
+
+						// Add the event to a new Activity Log
+						var activityLogC = new ActivityLogController(self.renderJson);
+						var ct = "Edición";
+						var desc = "Se ha eliminado el tipo de contenido con ID " + id_content_type;
+						var date = new Date();
+						var uid = self.renderJson.user.ID;
+						activityLogC.addNewActivityLog(ct, desc, date, uid);
+
 						res.redirect('/backend/contentTypes');
 					}, function(err) {
 						self.renderJson.error = 'Se ha producido un error interno borrando el tipo de contenido';
