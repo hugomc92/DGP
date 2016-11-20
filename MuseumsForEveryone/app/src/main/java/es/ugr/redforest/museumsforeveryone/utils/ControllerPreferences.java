@@ -10,8 +10,8 @@ import android.content.SharedPreferences;
 public class ControllerPreferences {
     private static ControllerPreferences instance = new ControllerPreferences();
     private static String language="";
-    private static int disability=0;
-    private static boolean firstTime=false;
+    private static int disability=-1;
+    private static boolean firstTime=true;
 
     public static ControllerPreferences getInstance() {
         return instance;
@@ -54,7 +54,7 @@ public class ControllerPreferences {
         SharedPreferences misprefe = t.getSharedPreferences("PrefUser", Context.MODE_PRIVATE);
         language=misprefe.getString("language","");
         disability=misprefe.getInt("accesibility",-1);
-        firstTime=misprefe.getBoolean("first-time",false);
+        firstTime=misprefe.getBoolean("first-time",true);
     }
 
     public static String getLanguage() {
@@ -66,6 +66,11 @@ public class ControllerPreferences {
     }
 
     public static boolean isFirtsTime() {
-        return firstTime;
+        if(!language.equals("") && disability!=-1) {
+            return firstTime=false;
+        }
+        else {
+            return firstTime;
+        }
     }
 }

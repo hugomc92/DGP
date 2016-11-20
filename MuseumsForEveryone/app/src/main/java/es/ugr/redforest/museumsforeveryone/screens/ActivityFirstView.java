@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.view.View;
 
 import es.ugr.redforest.museumsforeveryone.R;
+import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
 
 /**
  * Activity which shows two buttons about accessibility or enter the museum
@@ -44,10 +45,8 @@ public class ActivityFirstView extends AppCompatActivity {
 	 * @version 1.0.0
 	 */
 	public void buttonEnterMuseum(View v){
-		SharedPreferences prefs = getSharedPreferences("ControllerPreferences", Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = prefs.edit();
-		editor.putInt("accessibility",0);
-		editor.commit();
+		ControllerPreferences preferences= ControllerPreferences.getInstance();
+		preferences.savePreferencesDisability(this,0);
 		Intent instructionIntent = new Intent(ActivityFirstView.this, ActivityInstructions.class);
 		startActivity(instructionIntent);
 	}
