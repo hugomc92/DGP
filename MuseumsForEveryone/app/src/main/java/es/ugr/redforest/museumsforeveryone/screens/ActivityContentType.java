@@ -50,7 +50,7 @@ public class ActivityContentType extends AppCompatActivity {
                 false);
 
         //Assign an action to do on element click
-		recyclerContentType.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+		/*recyclerContentType.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
 
 
 			@Override
@@ -71,7 +71,7 @@ public class ActivityContentType extends AppCompatActivity {
 			public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
 			}
-		});
+		});*/
 
         //Set all previous elements to the RecyclerView
         recyclerContentType.setLayoutManager(layMan);

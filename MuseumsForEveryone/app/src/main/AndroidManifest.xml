@@ -28,7 +28,13 @@
         <activity
             android:name=".screens.ActivityGuidedVisit"
             android:label="Visita Guiada" />
-        <activity android:name=".screens.ActivityArtworkList"></activity>
+        <activity android:name=".screens.ActivityArtworkList" />
+        <activity android:name=".screens.ActivityInfoScanner" />
+        <activity android:name=".screens.ActivityQRScanner" />
+        <activity android:name=".screens.ActivityInfoDisplay" />
+        <activity android:name=".screens.ActivityVisitDisplay" />
+        <activity android:name=".screens.ActivityArtworkDisplay" />
+        <activity android:name=".screens.ActivityPreferences"></activity>
     </application>
 
 </manifest>
