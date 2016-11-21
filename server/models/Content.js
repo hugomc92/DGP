@@ -18,6 +18,12 @@ var Content = DBConnector.connectM4E().define('CONTENT', {
 		},
 		retrieveAllByListIds: function(listIds) {
 			return Content.findAll({where: {ID: {in: listIds}}});
+		},
+		retrievePagination: function(inicio, fin){
+			return Content.findAll({{order: 'ID DESC', offset: parseInt(inicio) - 1, limit: parseInt(fin) });
+		},
+		retrievePaginationByType: function(content_type_id, inicio, fin){
+			return Content.findAll({ where: {CONTENT_TYPE_ID: content_type_id}}, {order: 'ID DESC', offset: parseInt(inicio) - 1, limit: parseInt(fin) });
 		}
 	},
 	freezeTableName: true

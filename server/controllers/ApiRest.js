@@ -5,6 +5,7 @@ var cors = require("cors");
 
 var UserService = require('../service/UserService');
 var ContentTypeService = require('../service/ContentTypeService');
+var ContentService = require('../service/ContentService');
 var LocalizationService = require('../service/LocalizationService');
 var ActivityLogService = require('../service/ActivityLogService');
 
@@ -40,6 +41,7 @@ ApiRest.prototype.defineApiServices = function() {
 	var self = this;
 
 	this.serviceRouter.use('/content_type', new ContentTypeService().getRouter());
+	this.serviceRouter.use('/content', new ContentService().getRouter());
 	this.serviceRouter.use('/user', new UserService().getRouter());
 	this.serviceRouter.use('/localization', new LocalizationService().getRouter());
 	this.serviceRouter.use('/activity_log', new ActivityLogService().getRouter());

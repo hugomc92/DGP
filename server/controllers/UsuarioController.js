@@ -7,10 +7,9 @@ var path = require('path');
 var moment = require('moment');
 
 var Utils = require('../utils/Util');
-var ActivityLogController = require('./ActivityLogController');
 var User = require('../models/User');
 
-function UsuarioController(json) {
+function UsuarioController(json, activityLogC) {
 	this.renderJson = json;
 
 	this.uploadpath = path.join(__dirname, '..', 'public', 'static', 'upload') +'/';
@@ -18,6 +17,8 @@ function UsuarioController(json) {
 
 	this.routerBackend = express.Router();
 	this.routerFrontend = express.Router();
+
+	this.activityLogController = activityLogC;
 
 	this.initFrontend();
 	this.initBackend();

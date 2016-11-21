@@ -12,6 +12,10 @@ ContentTypeService.prototype.initializeRouter = function() {
 	var self = this;
 
 	self.router.route('/id/:content_type_id').get(function(req, res) {
+
+	});
+
+	self.router.route('/id/:content_type_id').get(function(req, res) {
 		var id_content_type = req.params.content_type_id;
 		var contentType = ContentType.build();
 

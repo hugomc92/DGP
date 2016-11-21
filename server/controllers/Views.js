@@ -26,10 +26,14 @@ Views.prototype.initPages = function() {
 
 	// Initialize controllers
 	var indexC = new IndexController(self.renderJson);
-	var usuarioC = new UsuarioController(self.renderJson);
+	var activityLogC = new ActivityLogController(self.renderJson);
+	var usuarioC = new UsuarioController(self.renderJson, activityLogC);
+
+	activityLogC.setUserController(usuarioC);
+
 	var contentTypeC = new ContentTypeController(self.renderJson);
 	var localizationC = new LocalizationController(self.renderJson);
-	var activityLogC = new ActivityLogController(self.renderJson);
+
 
 	// -- BACKEND VIEWS --
 	self.routerBackend.use(indexC.getRouterBackend());

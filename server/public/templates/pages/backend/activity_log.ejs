@@ -35,8 +35,8 @@
 						<td><%= activityLogs[i].ID %></td>
 						<td><%= activityLogs[i].ACTION_TYPE %></td>
 						<td><%= activityLogs[i].DESCRIPTION %></td>
-						<td><%= activityLogs[i].DATE %></td>
-						<td><%= activityLogs[i].USER_ID %></td>
+						<td><%= moment(activityLogs[i].DATE).format("HH:mm DD-MM-YYYY") %></td>
+						<td><%= activityLogs[i].USER.NAME + " " + activityLogs[i].USER.SURNAME %></td>
 						</tr>
 					<% }
 					if(count == 0) { %>

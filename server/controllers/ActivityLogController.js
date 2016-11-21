@@ -11,8 +11,14 @@ var ActivityLog = require('../models/ActivityLog');
 function ActivityLogController(json) {
 	this.renderJson = json;
 	this.routerBackend = express.Router();
-	this.initBackend();
 }
+
+ActivityLogController.prototype.setUserController = function(userC) {
+
+	this.userController = userC;
+
+	this.initBackend();
+};
 
 // Method for initFrontend
 ActivityLogController.prototype.initFrontend = function() {
@@ -32,9 +38,27 @@ ActivityLogController.prototype.initBackend = function () {
 			var activityLogs = ActivityLog.build();
 
 			activityLogs.retrievePagination(1,30).then(function(result) {
+				var activities = result;
 				self.renderJson.activityLogs = result;
-				res.render('pages/backend/activity_log', self.renderJson);
-				self.clearMessages();
+				var activity_users = [];
+
+				for(var i=0; i<result.length; i++)
+					activity_users.push(result[i].USER_ID);
+
+				self.userController.getAllUserWidthIds(activity_users).then(function (result) {
+					console.log("result", result);
+
+					for(var i=0; i<activities.length; i++) {
+						for(var j=0; j<result.length; j++)
+							if(result[j].ID === activities[i].USER_ID)
+								self.renderJson.activityLogs[i].USER = result[j];
+					}
+
+					res.render('pages/backend/activity_log', self.renderJson);
+					self.clearMessages();
+				}, function(err) {
+
+				});
 			}, function(error) {
 				console.log(error);
 				self.renderJson.error = 'Se ha producido un error interno recuperando el historial de actividad';
