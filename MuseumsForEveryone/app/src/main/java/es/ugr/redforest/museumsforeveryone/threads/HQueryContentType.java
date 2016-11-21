@@ -77,7 +77,7 @@ public class HQueryContentType extends AsyncTask<Void, Integer, String> {
     @Override
     protected void onPostExecute(String resultado) {
 
-        if (resultado==null && resultado.compareTo("")==0) {
+        if (resultado==null || resultado.compareTo("")==0) {
             Toast toast = Toast.makeText(context,
                     "Problemas con internet",
                     Toast.LENGTH_SHORT);
