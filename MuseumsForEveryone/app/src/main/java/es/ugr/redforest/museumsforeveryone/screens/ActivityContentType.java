@@ -42,8 +42,11 @@ public class ActivityContentType extends AppCompatActivity {
         //Gets reference of the RecyclerView
         final RecyclerView recyclerContentType = (RecyclerView) findViewById(R.id.recycler_content_type);
 
-        //Creates an Adapter with the list of languages
-        AdapterContentType contentTypeAdapter = new AdapterContentType(contentTypeList);
+        HQueryContentType hQueryContentType = new HQueryContentType(this,contentTypeList);
+        hQueryContentType.execute();
+
+        //Creates an Adapter with the list of
+        AdapterContentType contentTypeAdapter = new AdapterContentType(contentTypeList,this);
 
         //Creates an Android default layout to show elements on the RecyclerView
         LinearLayoutManager layMan = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,
@@ -79,8 +82,6 @@ public class ActivityContentType extends AppCompatActivity {
         recyclerContentType.setAdapter(contentTypeAdapter);
 
         //DEBUGGING PURPOSES
-        HQueryContentType hQueryContentType = new HQueryContentType(this,contentTypeList);
-        hQueryContentType.execute();
 
     }
 }

@@ -1,11 +1,14 @@
 package es.ugr.redforest.museumsforeveryone.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -26,6 +29,7 @@ public class AdapterContentType extends RecyclerView.Adapter<AdapterContentType.
 
     private ArrayList<ContentType> contentTypeList;   // ArrayList containing the Content Types to show
     private View.OnClickListener listener;  // Listener needed to handle onClick event
+    private Context context;
 
     /**
      * ViewHolder needed to handle how to show elements
@@ -56,8 +60,9 @@ public class AdapterContentType extends RecyclerView.Adapter<AdapterContentType.
      *
      * @param contentTypeList List of languages to show
      */
-    public AdapterContentType(ArrayList<ContentType> contentTypeList) {
+    public AdapterContentType(ArrayList<ContentType> contentTypeList,Context context) {
         this.contentTypeList = contentTypeList;
+        this.context=context;
     }
 
     /**
@@ -80,8 +85,7 @@ public class AdapterContentType extends RecyclerView.Adapter<AdapterContentType.
         ContentType contentType = contentTypeList.get(position);
 
         holder.contentTypeTxt.setText(contentType.getName());
-        //Necesito pasarle el identificador de la imagen pero no se como
-        //holder.contentTypeImg.setImageResource(contentType.getIcon()));
+        Picasso.with(context).load(contentType.getIcon()).into(holder.contentTypeImg);
     }
 
     /**

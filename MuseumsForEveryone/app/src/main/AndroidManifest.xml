@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="es.ugr.redforest.museumsforeveryone">
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -28,7 +29,13 @@
         <activity
             android:name=".screens.ActivityGuidedVisit"
             android:label="Visita Guiada" />
-        <activity android:name=".screens.ActivityArtworkList"></activity>
+        <activity android:name=".screens.ActivityArtworkList" />
+        <activity android:name=".screens.ActivityInfoScanner" />
+        <activity android:name=".screens.ActivityQRScanner" />
+        <activity android:name=".screens.ActivityInfoDisplay" />
+        <activity android:name=".screens.ActivityVisitDisplay" />
+        <activity android:name=".screens.ActivityArtworkDisplay" />
+        <activity android:name=".screens.ActivityPreferences"></activity>
     </application>
 
 </manifest>
