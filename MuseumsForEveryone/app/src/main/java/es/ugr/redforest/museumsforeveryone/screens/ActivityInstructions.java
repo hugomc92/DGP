@@ -20,6 +20,7 @@ import es.ugr.redforest.museumsforeveryone.R;
 
 public class ActivityInstructions extends AppCompatActivity {
 
+
 	/**
 	 * Depending on the type of accessibility display instructions
 	 *
@@ -58,7 +59,17 @@ public class ActivityInstructions extends AppCompatActivity {
 	 * @version 1.0.0
 	 */
 	public void launchMainActivity(View v){
-		Intent mainIntent = new Intent(ActivityInstructions.this, MainActivity.class);
-		startActivity(mainIntent);
+		Intent myIntent = getIntent(); // gets the previously created intent
+		String firstTime = myIntent.getStringExtra("FirstTime");
+		if(firstTime.equals("True"))
+		{
+			Intent MainIntent = new Intent(ActivityInstructions.this, MainActivity.class);
+			startActivity(MainIntent);
+		}
+		else
+		{
+			Intent PreferencesIntent = new Intent(ActivityInstructions.this, ActivityPreferences.class);
+			startActivity(PreferencesIntent);
+		}
 	}
 }

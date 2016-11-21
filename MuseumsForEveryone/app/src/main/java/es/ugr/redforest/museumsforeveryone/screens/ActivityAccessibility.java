@@ -39,6 +39,7 @@ public class ActivityAccessibility extends AppCompatActivity {
 		ControllerPreferences preferences= ControllerPreferences.getInstance();
 		preferences.savePreferencesDisability(this,1);
 		Intent instructionIntent = new Intent(ActivityAccessibility.this, ActivityInstructions.class);
+		instructionIntent.putExtra("FirstTime","True");
 		startActivity(instructionIntent);
 	}
 
@@ -52,6 +53,7 @@ public class ActivityAccessibility extends AppCompatActivity {
 		ControllerPreferences preferences= ControllerPreferences.getInstance();
 		preferences.savePreferencesDisability(this,2);
 		Intent instructionIntent = new Intent(ActivityAccessibility.this, ActivityInstructions.class);
+		instructionIntent.putExtra("FirstTime","True");
 		startActivity(instructionIntent);
 	}
 }

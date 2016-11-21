@@ -47,4 +47,15 @@ public class MainActivity extends AppCompatActivity {
 		Intent guidedVisitIntent = new Intent(MainActivity.this, ActivityGuidedVisit.class);
 		startActivity(guidedVisitIntent);
 	}
+
+	/**
+	 * Assign an action to do on element click
+	 *
+	 * @author Miguel Ángel Torres López
+	 * @version 1.0.0
+	 */
+	public void launchInfoObras(View v){
+		Intent preferencesIntent = new Intent(MainActivity.this, ActivityPreferences.class);
+		startActivity(preferencesIntent);
+	}
 }

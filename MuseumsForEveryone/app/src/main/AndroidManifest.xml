@@ -35,7 +35,7 @@
         <activity android:name=".screens.ActivityInfoDisplay" />
         <activity android:name=".screens.ActivityVisitDisplay" />
         <activity android:name=".screens.ActivityArtworkDisplay" />
-        <activity android:name=".screens.ActivityPreferences"></activity>
+        <activity android:name=".screens.ActivityPreferences" android:label="Preferencias"></activity>
     </application>
 
 </manifest>

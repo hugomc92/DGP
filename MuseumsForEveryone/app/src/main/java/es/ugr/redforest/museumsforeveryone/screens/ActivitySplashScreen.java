@@ -24,6 +24,7 @@ public class ActivitySplashScreen extends AppCompatActivity {
                 @Override
                 public void run() {
                     Intent intent = new Intent(ActivitySplashScreen.this, ActivityLang.class);
+                    intent.putExtra("FirstTime","True");
                     startActivity(intent);
                 }
             }, 3000);

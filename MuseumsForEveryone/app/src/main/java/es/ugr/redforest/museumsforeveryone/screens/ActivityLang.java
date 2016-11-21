@@ -33,6 +33,7 @@ public class ActivityLang extends AppCompatActivity {
 
 	private Context context;
 
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -86,10 +87,22 @@ public class ActivityLang extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				//TODO: Establecer config de idiomas
-				ControllerPreferences preferences= ControllerPreferences.getInstance();
-				preferences.savePreferencesLanguage(context,"Español");
-				Intent FirstViewIntent = new Intent(ActivityLang.this, ActivityFirstView.class);
-				startActivity(FirstViewIntent);
+				Intent myIntent = getIntent(); // gets the previously created intent
+				String firstTime = myIntent.getStringExtra("FirstTime");
+				if(firstTime.equals("True"))
+				{
+					ControllerPreferences preferences= ControllerPreferences.getInstance();
+					preferences.savePreferencesLanguage(context,"Español");
+					Intent FirstViewIntent = new Intent(ActivityLang.this, ActivityFirstView.class);
+					startActivity(FirstViewIntent);
+				}
+				else
+				{
+					ControllerPreferences preferences= ControllerPreferences.getInstance();
+					preferences.savePreferencesLanguage(context,"Español");
+					Intent PreferencesIntent = new Intent(ActivityLang.this, ActivityPreferences.class);
+					startActivity(PreferencesIntent);
+				}
 			}
 		});
 

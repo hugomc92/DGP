@@ -48,6 +48,7 @@ public class ActivityFirstView extends AppCompatActivity {
 		ControllerPreferences preferences= ControllerPreferences.getInstance();
 		preferences.savePreferencesDisability(this,0);
 		Intent instructionIntent = new Intent(ActivityFirstView.this, ActivityInstructions.class);
+		instructionIntent.putExtra("FirstTime","True");
 		startActivity(instructionIntent);
 	}
 }
