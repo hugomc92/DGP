@@ -38,4 +38,15 @@ public class ActivityPreferences extends AppCompatActivity {
         instructionsIntent.putExtra("FirstTime","False");
         startActivity(instructionsIntent);
     }
+
+    /**
+     * Assign an action to do on element click
+     *
+     * @author Miguel Ángel Torres López
+     * @version 1.0.0
+     */
+    public void launchAccesibility(View v){
+        Intent accessibilityIntent = new Intent(ActivityPreferences.this, ActivityAccessibilityPreferences.class);
+        startActivity(accessibilityIntent);
+    }
 }

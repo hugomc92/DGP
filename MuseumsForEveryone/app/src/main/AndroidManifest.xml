@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="es.ugr.redforest.museumsforeveryone">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -35,7 +36,10 @@
         <activity android:name=".screens.ActivityInfoDisplay" />
         <activity android:name=".screens.ActivityVisitDisplay" />
         <activity android:name=".screens.ActivityArtworkDisplay" />
-        <activity android:name=".screens.ActivityPreferences" android:label="Preferencias"></activity>
+        <activity
+            android:name=".screens.ActivityPreferences"
+            android:label="Preferencias" />
+        <activity android:name=".screens.ActivityAccessibilityPreferences" android:label="Accesibilidad"></activity>
     </application>
 
 </manifest>

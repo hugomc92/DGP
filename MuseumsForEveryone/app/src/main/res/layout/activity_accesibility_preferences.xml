@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_preferences"
+    android:id="@+id/activity_accesibility_preferences"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,18 +9,18 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="es.ugr.redforest.museumsforeveryone.screens.ActivityPreferences">
+    tools:context="es.ugr.redforest.museumsforeveryone.screens.ActivityAccessibilityPreferences">
 
     <FrameLayout
         style="@style/FrameLayoutTheme">
         <ImageButton
             style="@style/ImagenButtonTheme"
-            android:src="@drawable/ic_list_black_24dp"
-            android:onClick="launchLanguageActivity"/>
+            android:src="@drawable/ic_hearing_black_24dp"
+            android:onClick="launchHearing"/>
 
         <TextView
             style="@style/TextViewTheme"
-            android:text="Idioma"/>
+            android:text="Problemas Auditivos"/>
 
     </FrameLayout>
 
@@ -28,12 +28,12 @@
         style="@style/FrameLayoutTheme">
         <ImageButton
             style="@style/ImagenButtonTheme"
-            android:src="@drawable/ic_accessible_black_24dp"
-            android:onClick="launchAccesibility"/>
+            android:src="@drawable/ic_visibility_black_24dp"
+            android:onClick="launchVisibility"/>
 
         <TextView
             style="@style/TextViewTheme"
-            android:text="Accesibilidad"/>
+            android:text="Problemas de Vision"/>
 
     </FrameLayout>
 
@@ -42,11 +42,11 @@
         <ImageButton
             style="@style/ImagenButtonTheme"
             android:src="@drawable/ic_subdirectory_arrow_right_black_24dp"
-            android:onClick="launchInstructionsActivity"/>
+            android:onClick="launchNoAccessibility"/>
 
         <TextView
             style="@style/TextViewTheme"
-            android:text="Ver Instrucciones"/>
+            android:text="sin accesibilidad"/>
 
     </FrameLayout>
 
