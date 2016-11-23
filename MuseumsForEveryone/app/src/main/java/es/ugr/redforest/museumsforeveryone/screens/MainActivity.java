@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 	 * @version 1.0.0
 	 */
 	public void launchInfoObras(View v){
-		Intent preferencesIntent = new Intent(MainActivity.this, ActivityPreferences.class);
+		Intent preferencesIntent = new Intent(MainActivity.this, ActivityInfoDisplay.class);
 		startActivity(preferencesIntent);
 	}
 }

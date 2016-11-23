@@ -33,7 +33,8 @@
         <activity android:name=".screens.ActivityArtworkList" />
         <activity android:name=".screens.ActivityInfoScanner" />
         <activity android:name=".screens.ActivityQRScanner" />
-        <activity android:name=".screens.ActivityInfoDisplay" />
+        <activity android:name=".screens.ActivityInfoDisplay"
+                android:label="Información Obra"/>
         <activity android:name=".screens.ActivityVisitDisplay" />
         <activity android:name=".screens.ActivityArtworkDisplay" />
         <activity

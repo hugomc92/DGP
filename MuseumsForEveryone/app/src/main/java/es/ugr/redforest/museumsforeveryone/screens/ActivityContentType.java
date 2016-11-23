@@ -60,7 +60,7 @@ public class ActivityContentType extends AppCompatActivity {
 			public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
 
 				View child = recyclerContentType.findChildViewUnder(e.getX(), e.getY());
-				Intent FirstViewIntent = new Intent(ActivityContentType.this, ActivityFirstView.class);
+				Intent FirstViewIntent = new Intent(ActivityContentType.this, ActivityArtworkList.class);
 				startActivity(FirstViewIntent);
 				return false;
 			}
