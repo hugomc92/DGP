@@ -22,6 +22,9 @@ $(document).ready(function() {
 		case "/backend/activityLogs/":
 			active_li = setActiveLi("Histórico");
 			break;
+		case "/backend/guided_visit/":
+			active_li = setActiveLi("Visita Guiadas");
+			break;
 		case "/backend/users/":
 			active_li = setActiveLi("Usuarios");
 			break;
