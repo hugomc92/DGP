@@ -21,7 +21,7 @@ ContentTypeService.prototype.initializeRouter = function() {
 				res.status(401).send("Content Types empty");
 		}, function(err) {
 			res.send("No se ha podido completar su solicitud");
-		})
+		});
 	});
 
 	self.router.route('/id/:content_type_id').get(function(req, res) {
