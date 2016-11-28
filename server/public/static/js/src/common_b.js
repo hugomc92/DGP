@@ -10,11 +10,23 @@ $(document).ready(function() {
 		case "/backend/":
 			active_li = setActiveLi("Inicio");
 			break;
+		case "/backend/content/":
+			active_li = setActiveLi("Contenido");
+			break;
+		case "/backend/localizations/":
+			active_li = setActiveLi("Localizaciones");
+			break;
+		case "/backend/contentTypes/":
+			active_li = setActiveLi("Tipos");
+			break;
+		case "/backend/activityLogs/":
+			active_li = setActiveLi("Histórico");
+			break;
 		case "/backend/users/":
 			active_li = setActiveLi("Usuarios");
 			break;
-		case "/backend/contentTypes/":
-			active_li = setActiveLi("Tipos de contenido");
+		case "/backend/langs/":
+			active_li = setActiveLi("Idiomas");
 			break;
 	}
 });
