@@ -10,6 +10,9 @@ var ContentType = DBConnector.connectM4E().define('CONTENT_TYPE', {
 },
 {
 	instanceMethods: {
+		retrieveAll: function() {
+			return ContentType.findAll();
+		},
 		retrieveById: function(id) {
 			return ContentType.findOne({where: {ID: id}});
 		},

@@ -31,15 +31,11 @@ $(document).ready(function() {
 			$("#delete_content_type_no").attr('checked','');
 		}
 		else if(action == '#edit_content_type') {
-			console.log("EDIT", id_content_type);
-			
 			$.ajax({
 				type: "GET",
 				url: "/api/content_type/id/"+id_content_type+"?email="+$("#email").text(),
 				datatype: "json",
 				success: function(jsondata) {
-					console.log(jsondata);
-
 					$("#edit_id_content_type").val(id_content_type);
 					$("#edit_name_content_type").val(jsondata.NAME);
 					$("#edit_description_content_type").val(jsondata.DESCRIPTION);
