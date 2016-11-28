@@ -20,7 +20,7 @@
   text-align: center;
 }
 #principal_links li a {
-  background: #1d8d82;
+  background: #18405d;
   margin: 10px;
   display: block;
   padding: 50px 10px;
@@ -34,7 +34,7 @@
   transition: all 0.3s;
 }
 #principal_links li a:hover {
-  background: #4db6ac;
+  background: #345f7f;
   box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;

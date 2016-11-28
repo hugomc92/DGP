@@ -15,6 +15,12 @@
   -webkit-transform: translate(0px, 0px);
   transform: translate(0px, 0px);
 }
+.btn {
+  background: #18405d;
+}
+.btn:hover {
+  background: #345f7f;
+}
 #slide-out {
   background-color: #2e3e4e;
 }
@@ -58,7 +64,7 @@
   }
 }
 .waves-effect.waves-custom .waves-ripple {
-  background-color: rgba(75, 172, 163, 0.65);
+  background-color: rgba(52, 95, 127, 0.65);
 }
 .drag-target {
   width: 20px !important;
@@ -91,7 +97,7 @@
   margin: 0;
 }
 .modal_material .modal-header h4 {
-  background: #4db6ac;
+  background: #345f7f;
   color: white;
   padding: 10px;
   margin: 0;
