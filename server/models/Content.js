@@ -1,4 +1,3 @@
-var crypto = require("crypto");
 var Sequelize = require("sequelize");
 var DBConnector = require("../utils/DBConnector");
 

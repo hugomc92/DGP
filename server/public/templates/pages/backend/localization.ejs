@@ -8,57 +8,57 @@
 		<% include ../../partials/backend/sidemenu_backend %>
 
 		<main class="grey lighten-3">
-		<!-- Nav -->
-		<% include ../../partials/backend/header_backend %>
+			<!-- Nav -->
+			<% include ../../partials/backend/header_backend %>
 
-		<div class="row content_start">
-			<div class="col s12" style="padding-top: 10px">
-			<!-- Add new localization button -->
-			<a class="waves-effect waves-light btn modal-trigger" href="#add_localization">Añadir Localización</a>
+			<div class="row content_start">
+				<div class="col s12" style="padding-top: 10px">
+				<!-- Add new localization button -->
+				<a class="waves-effect waves-light btn modal-trigger" href="#add_localization">Añadir Localización</a>
+				</div>
 			</div>
-		</div>
 
-		<!-- Table all localizations -->
-		<div id="content-types-table" class="row">
-			<table id="tabla_tipos_contenido" class="striped">
-				<thead>
-					<tr>
-						<th data-field="id">#</th>
-						<th data-field="descripcion">Descripción</th>
-						<th data-field="coordenadas">Coordenadas</th>
-						<th data-field="accion">Acción</th>
-					</tr>
-				</thead>
-
-				<tbody>
-					<% var count = 0;
-					for(var i=0; i<localizations.length; i++) { %>
-						<% count++; %>
+			<!-- Table all localizations -->
+			<div id="content-types-table" class="row">
+				<table id="tabla_tipos_contenido" class="striped">
+					<thead>
 						<tr>
-						<td><%= localizations[i].ID %></td>
-						<td><%= localizations[i].DESCRIPTION %></td>
-						<td><%= localizations[i].COORDINATES %></td>
-						<td class="actions">
-							<a class="modal-trigger" href="#edit_localization"><i class="material-icons">mode_edit</i></a>
-							<a class="modal-trigger" href="#delete_localization"><i class="material-icons">delete</i></a>
-						</td>
+							<th data-field="id">#</th>
+							<th data-field="descripcion">Descripción</th>
+							<th data-field="coordenadas">Coordenadas</th>
+							<th data-field="accion">Acción</th>
 						</tr>
-					<% }
-					if(count == 0) { %>
-						<td colspan="5" id="no_content_types">NO HAY LOCALIZACIONES ACTUALMENTE</td>
-					<% } %>
-				</tbody>
-			</table>
-		</div>
+					</thead>
 
-		<!-- Add Localization Modal -->
-		<% include ../../partials/backend/modals/modal_add_localization %>
+					<tbody>
+						<% var count = 0;
+						for(var i=0; i<localizations.length; i++) { %>
+							<% count++; %>
+							<tr>
+							<td><%= localizations[i].ID %></td>
+							<td><%= localizations[i].DESCRIPTION %></td>
+							<td><%= localizations[i].COORDINATES %></td>
+							<td class="actions">
+								<a class="modal-trigger" href="#edit_localization"><i class="material-icons">mode_edit</i></a>
+								<a class="modal-trigger" href="#delete_localization"><i class="material-icons">delete</i></a>
+							</td>
+							</tr>
+						<% }
+						if(count == 0) { %>
+							<td colspan="5" id="no_content_types">NO HAY LOCALIZACIONES ACTUALMENTE</td>
+						<% } %>
+					</tbody>
+				</table>
+			</div>
 
-		<!-- Edit Localization Modal -->
-		<% include ../../partials/backend/modals/modal_edit_localization %>
+			<!-- Add Localization Modal -->
+			<% include ../../partials/backend/modals/modal_add_localization %>
 
-		<!-- Delete Localization Modal -->
-		<% include ../../partials/backend/modals/modal_delete_localization %>
+			<!-- Edit Localization Modal -->
+			<% include ../../partials/backend/modals/modal_edit_localization %>
+
+			<!-- Delete Localization Modal -->
+			<% include ../../partials/backend/modals/modal_delete_localization %>
 
 		</main>
 

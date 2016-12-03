@@ -1,0 +1,31 @@
+<div id="delete_content" class="modal modal_material modal-fixed-footer">
+	<div class="modal-header z-depth-1">
+		<h4>Eliminar Contenido</h4>
+		<span><i class="modal_close modal-action modal-close material-icons right">close</i></span>
+	</div>
+	<form class="col s12" method="post" action="/backend/contentTypes/delete/">
+		<div class="modal-content">
+			<div class="row">
+				<input id="delete_id_content" name="delete_id_content" type="hidden"/>
+
+				<h4 id="delete_titulo"></h4>
+
+				<!-- Warning -->
+				<p class="red-text text-darken-1">¿Realmente quiere borrar este contenido?</p>
+				<p class="red-text text-darken-1">La acción de borrado es irreversible, debe de estar completamente seguro que quiere eliminarlo.</p>
+
+				<!-- Confirmation -->
+				<p><input name="delete_content" type="radio" id="delete_content_yes" value="yes" /><label for="delete_content_yes">Si</label></p>
+				<p><input name="delete_content" type="radio" id="delete_content_no" value="no" checked /><label for="delete_content_no">No</label></p>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<!-- Submit -->
+			<div class="input field col s12 center-align submit_modal">
+				<button class="btn waves-effect waves-light red" type="submit">Eliminar
+					<i class="material-icons right">send</i>
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

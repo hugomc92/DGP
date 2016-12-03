@@ -46,8 +46,6 @@ ActivityLogController.prototype.initBackend = function () {
 					activity_users.push(result[i].USER_ID);
 
 				self.userController.getAllUserWidthIds(activity_users).then(function (result) {
-					console.log("result", result);
-
 					for(var i=0; i<activities.length; i++) {
 						for(var j=0; j<result.length; j++)
 							if(result[j].ID === activities[i].USER_ID)

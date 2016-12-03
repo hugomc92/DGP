@@ -3,10 +3,12 @@ var express = require('express');
 var session = require('express-session');
 
 var IndexController = require('./IndexController');
-var UsuarioController = require('./UsuarioController');
+var UserController = require('./UserController');
+var ContentController = require('./ContentController');
 var ContentTypeController = require('./ContentTypeController');
 var LocalizationController = require('./LocalizationController');
 var ActivityLogController = require('./ActivityLogController');
+var LangController = require('./LangController');
 
 function Views(app) {
 	this.expressContext = app;
@@ -27,24 +29,28 @@ Views.prototype.initPages = function() {
 	// Initialize controllers
 	var indexC = new IndexController(self.renderJson);
 	var activityLogC = new ActivityLogController(self.renderJson);
-	var usuarioC = new UsuarioController(self.renderJson, activityLogC);
+	var userC = new UserController(self.renderJson, activityLogC);
 
-	activityLogC.setUserController(usuarioC);
+	activityLogC.setUserController(userC);
 
 	var contentTypeC = new ContentTypeController(self.renderJson);
 	var localizationC = new LocalizationController(self.renderJson);
+	var contentC = new ContentController(self.renderJson, activityLogC);
+	var langC = new LangController(self.renderJson, activityLogC);
 
 
 	// -- BACKEND VIEWS --
 	self.routerBackend.use(indexC.getRouterBackend());
-	self.routerBackend.use('/users', usuarioC.getRouterBackend());
+	self.routerBackend.use('/users', userC.getRouterBackend());
 	self.routerBackend.use('/contentTypes', contentTypeC.getRouterBackend());
 	self.routerBackend.use('/localizations', localizationC.getRouterBackend());
 	self.routerBackend.use('/activityLogs', activityLogC.getRouterBackend());
+	self.routerBackend.use('/contents', contentC.getRouterBackend());
+	self.routerBackend.use('/langs', langC.getRouterBackend());
 
 	// -- FRONTEND VIEWS --
 	self.routerFrontend.use(indexC.getRouterFrontend());
-	self.routerFrontend.use('/user', usuarioC.getRouterFrontend());
+	self.routerFrontend.use('/user', userC.getRouterFrontend());
 
 	// Attach both Views to Express Context.
 	self.expressContext.use('/backend', self.routerBackend);

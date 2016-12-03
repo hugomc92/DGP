@@ -201,10 +201,8 @@ ContentTypeController.prototype.initBackend = function () {
 			var id_content_type = req.body.delete_id_content_type;
 			var delete_content_type = req.body.delete_content_type;
 
-			if (delete_content_type === 'yes') {
+			if(delete_content_type === 'yes') {
 				var contentType = ContentType.build();
-
-				console.log(id_content_type);
 
 				// Get the content type to get the icon to delete
 				contentType.retrieveById(id_content_type).then(function(result) {

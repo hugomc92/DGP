@@ -8,43 +8,43 @@
 		<% include ../../partials/backend/sidemenu_backend %>
 
 		<main class="grey lighten-3">
-		<!-- Nav -->
-		<% include ../../partials/backend/header_backend %>
+			<!-- Nav -->
+			<% include ../../partials/backend/header_backend %>
 
-		<div class="row content_start">
-		</div>
+			<div class="row content_start">
+			</div>
 
-		<!-- Table all localizations -->
-		<div id="content-types-table" class="row">
-			<table id="tabla_tipos_contenido" class="striped">
-				<thead>
-					<tr>
-						<th data-field="id">#</th>
-						<th data-field="tipo_accion">Tipo de acción</th>
-						<th data-field="descripcion">Descripción</th>
-						<th data-field="fecha">Fecha</th>
-						<th data-field="autor">Autor</th>
-					</tr>
-				</thead>
-
-				<tbody>
-					<% var count = 0;
-					for(var i=0; i<activityLogs.length; i++) { %>
-						<% count++; %>
+			<!-- Table all localizations -->
+			<div id="content-types-table" class="row">
+				<table id="tabla_tipos_contenido" class="striped">
+					<thead>
 						<tr>
-						<td><%= activityLogs[i].ID %></td>
-						<td><%= activityLogs[i].ACTION_TYPE %></td>
-						<td><%= activityLogs[i].DESCRIPTION %></td>
-						<td><%= moment(activityLogs[i].DATE).format("HH:mm DD-MM-YYYY") %></td>
-						<td><%= activityLogs[i].USER.NAME + " " + activityLogs[i].USER.SURNAME %></td>
+							<th data-field="id">#</th>
+							<th data-field="tipo_accion">Tipo de acción</th>
+							<th data-field="descripcion">Descripción</th>
+							<th data-field="fecha">Fecha</th>
+							<th data-field="autor">Autor</th>
 						</tr>
-					<% }
-					if(count == 0) { %>
-						<td colspan="5" id="no_content_types">NO HAY REGISTROS EN EL HISTORIAL ACTUALMENTE</td>
-					<% } %>
-				</tbody>
-			</table>
-		</div>
+					</thead>
+
+					<tbody>
+						<% var count = 0;
+						for(var i=0; i<activityLogs.length; i++) { %>
+							<% count++; %>
+							<tr>
+							<td><%= activityLogs[i].ID %></td>
+							<td><%= activityLogs[i].ACTION_TYPE %></td>
+							<td><%= activityLogs[i].DESCRIPTION %></td>
+							<td><%= moment(activityLogs[i].DATE).format("HH:mm DD-MM-YYYY") %></td>
+							<td><%= activityLogs[i].USER.NAME + " " + activityLogs[i].USER.SURNAME %></td>
+							</tr>
+						<% }
+						if(count == 0) { %>
+							<td colspan="5" id="no_content_types">NO HAY REGISTROS EN EL HISTORIAL ACTUALMENTE</td>
+						<% } %>
+					</tbody>
+				</table>
+			</div>
 		</main>
 
 		<footer class="page-footer">

@@ -1,0 +1,14 @@
+main {
+  min-height: calc(100vh - 50px);
+}
+#langs-table {
+  padding: 0 50px;
+}
+@media only screen and (max-width: 600px) {
+  #langs-table {
+    padding: 0 20px;
+  }
+}
+#no_langs {
+  text-align: center;
+}

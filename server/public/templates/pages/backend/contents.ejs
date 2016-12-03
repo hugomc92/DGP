@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<% include ../../partials/backend/head_backend %>
+		<link rel="stylesheet" href="/static/css/src/content_b.css">
+	</head>
+	<body>
+		<% include ../../partials/backend/sidemenu_backend %>
+
+		<main class="grey lighten-3">
+			<!-- Nav -->
+			<% include ../../partials/backend/header_backend %>
+
+			<div class="row content_start">
+				<div class="col s12" style="padding-top: 10px">
+				<!-- Add new content type button -->
+				<a class="waves-effect waves-light btn modal-trigger" href="#/backend/contents/add">Añadir Contenido</a>
+				</div>
+			</div>
+
+			<!-- Table all content types -->
+			<div id="content-table" class="row">
+				<table class="striped">
+					<thead>
+						<tr>
+							<th data-field="id">#</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<% var count = 0;
+						for(var i=0; i<contents.length; i++) {
+							count++; %>
+							<tr>
+								<td><%= contents[i].ID %></td>
+								<td class="actions">
+									<a href="#edit_content_type"><i class="material-icons">mode_edit</i></a>
+									<a class="modal-trigger" href="#delete_content"><i class="material-icons">delete</i></a>
+								</td>
+							</tr>
+						<% }
+						if(count == 0) { %>
+							<td colspan="5" id="no_content">NO HAY CONTENIDOS ACTUALMENTE</td>
+						<% } %>
+					</tbody>
+				</table>
+			</div>
+
+			<!-- Delete Content Modal -->
+			<% include ../../partials/backend/modals/modal_delete_content %>
+
+		</main>
+
+		<footer class="page-footer">
+			<% include ../../partials/backend/footer_backend %>
+		</footer>
+
+		<% include ../../partials/backend/script_backend %>
+		<% include ../../partials/backend/server_messages %>
+		<script src="/static/js/src/content_b.js"></script>
+	</body>
+</html>

@@ -1,0 +1,45 @@
+<div id="add_lang" class="modal modal_material modal-fixed-footer">
+	<div class="modal-header z-depth-1">
+		<h4>Añadir un nuevo idioma</h4>
+		<span><i class="modal_close modal-action modal-close material-icons right">close</i></span>
+	</div>
+	<form class="col s12 row" method="post" action="/backend/langs/add/" enctype="multipart/form-data" autocomplete="off">
+		<div class="modal-content">
+			<!-- Name -->
+			<div class="input-field col s12 m6">
+				<input id="add_name_lang" name="add_name_lang" type="text" class="validate" required>
+				<label for="add_name_lang">Nombre</label>
+			</div>
+
+			<!-- Code -->
+			<div class="input-field col s12 m6">
+				<input id="add_code_lang" name="add_code_lang" type="text" class="validate" required>
+				<label for="add_code_lang">Código de idioma</label>
+			</div>
+
+			<!-- Photo -->
+			<div class="file-field input-field col s12 m6">
+				<div class="btn">
+					<span>Bandera</span>
+					<input id="add_flag_lang" name="add_flag_lang" type="file" required>
+				</div>
+					<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
+				</div>
+			</div>
+
+			<!-- Photo Preview -->
+			<div class="col s12 m6 center-align">
+				<img id="addFlagImgViewer" class="imagePreview responsive-img" src="/static/img/img_not_available.png" alt=""/>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<!-- Submit -->
+			<div class="input field col s12 center-align submit_modal">
+				<button class="btn waves-effect waves-light" type="submit" name="add_submit_user">Enviar
+					<i class="material-icons right">send</i>
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

@@ -9,7 +9,7 @@ var moment = require('moment');
 var Utils = require('../utils/Util');
 var User = require('../models/User');
 
-function UsuarioController(json, activityLogC) {
+function UserController(json, activityLogC) {
 	this.renderJson = json;
 
 	this.uploadpath = path.join(__dirname, '..', 'public', 'static', 'upload') +'/';
@@ -24,7 +24,7 @@ function UsuarioController(json, activityLogC) {
 	this.initBackend();
 }
 
-UsuarioController.prototype.initFrontend = function() {
+UserController.prototype.initFrontend = function() {
 	var self = this;
 
 	self.routerFrontend.route('/login').get(function(req, res) {
@@ -108,7 +108,7 @@ UsuarioController.prototype.initFrontend = function() {
 	});
 };
 
-UsuarioController.prototype.initBackend = function() {
+UserController.prototype.initBackend = function() {
 	var self = this;
 
 	self.routerBackend.route('/').get(function(req, res) {
@@ -192,12 +192,11 @@ UsuarioController.prototype.initBackend = function() {
 				self.renderJson.msg = 'Usuario añadido correctamente';
 
 				// Add the event to a new Activity Log
-				var activityLogC = new ActivityLogController(self.renderJson);
 				var ct = "Inserción";
 				var desc = "Se ha añadido al usuario " + name_user + " " + surname_user;
 				var date = new Date();
 				var uid = self.renderJson.user.ID;
-				activityLogC.addNewActivityLog(ct, desc, date, uid);
+				self.activityLogController.addNewActivityLog(ct, desc, date, uid);
 
 				res.redirect('/backend/users');
 			}, function(error) {
@@ -263,12 +262,11 @@ UsuarioController.prototype.initBackend = function() {
 				self.renderJson.msg = 'Se ha editado correctamente';
 
 				// Add the event to a new Activity Log
-				var activityLogC = new ActivityLogController(self.renderJson);
 				var ct = "Edición";
 				var desc = "Se ha editado al usuario " + user.name + " " + user.surname;
 				var date = new Date();
 				var uid = self.renderJson.user.ID;
-				activityLogC.addNewActivityLog(ct, desc, date, uid);
+				self.activityLogController.addNewActivityLog(ct, desc, date, uid);
 
 				res.redirect('/backend/users');
 			}, function(error) {
@@ -290,8 +288,6 @@ UsuarioController.prototype.initBackend = function() {
 			if(delete_user === 'yes') {
 				var user = User.build();
 
-				console.log(id_user);
-
 				// Get the user to get the photo to delete
 				user.retrieveById(id_user).then(function(result) {
 					// delete the photo
@@ -312,12 +308,11 @@ UsuarioController.prototype.initBackend = function() {
 						self.renderJson.msg = 'Se ha eliminado correctamente';
 
 						// Add the event to a new Activity Log
-						var activityLogC = new ActivityLogController(self.renderJson);
 						var ct = "Borrado";
 						var desc = "Se ha eliminado al usuario con ID " + id_user;
 						var date = new Date();
 						var uid = self.renderJson.user.ID;
-						activityLogC.addNewActivityLog(ct, desc, date, uid);
+						self.activityLogController.addNewActivityLog(ct, desc, date, uid);
 
 						res.redirect('/backend/users');
 					}, function(err) {
@@ -339,33 +334,33 @@ UsuarioController.prototype.initBackend = function() {
 	});
 };
 
-UsuarioController.prototype.getRouterBackend = function() {
+UserController.prototype.getRouterBackend = function() {
 	return this.routerBackend;
 };
 
-UsuarioController.prototype.getRouterFrontend = function() {
+UserController.prototype.getRouterFrontend = function() {
 	return this.routerFrontend;
 };
 
-UsuarioController.prototype.getUserById = function(id) {
+UserController.prototype.getUserById = function(id) {
 	var user = User.build();
 
 	return user.retrieveById(id);
 };
 
-UsuarioController.prototype.getUserByEmail = function(email) {
+UserController.prototype.getUserByEmail = function(email) {
 	var user = User.build();
 
 	return user.retrieveByEmail(email);
 };
 
-UsuarioController.prototype.getAllUserWidthIds = function(listIds) {
+UserController.prototype.getAllUserWidthIds = function(listIds) {
 	var user = User.build();
 
 	return user.retrieveAllByListIds(listIds);
 };
 
-UsuarioController.prototype.updateNameSurname = function(id, name, surname) {
+UserController.prototype.updateNameSurname = function(id, name, surname) {
 	var user = User.build();
 
 	user.retrieveById(id).then(function(success) {
@@ -380,9 +375,9 @@ UsuarioController.prototype.updateNameSurname = function(id, name, surname) {
 	});
 };
 
-UsuarioController.prototype.clearMessages = function() {
+UserController.prototype.clearMessages = function() {
 	delete this.renderJson.msg;
 	delete this.renderJson.error;
 };
 
-module.exports = UsuarioController;
+module.exports = UserController;

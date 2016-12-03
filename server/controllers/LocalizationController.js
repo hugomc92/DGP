@@ -127,10 +127,8 @@ LocalizationController.prototype.initBackend = function () {
 			var id_localization = req.body.delete_id_localization;
 			var delete_localization = req.body.delete_localization;
 
-			if (delete_localization === 'yes') {
+			if(delete_localization === 'yes') {
 				var localization = Localization.build();
-
-				console.log(id_localization);
 
 				localization.retrieveById(id_localization).then(function(result) {
 					var deleted_localization = Localization.build();

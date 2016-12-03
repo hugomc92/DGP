@@ -26,8 +26,6 @@ IndexController.prototype.initBackend = function() {
 		self.renderJson.breadcrumb = { 'LINK': '/backend/', 'SECTION': 'Inicio' };
 		self.renderJson.user = req.session.user;
 
-		console.log(self.renderJson.user);
-
 		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
 			res.render('pages/backend/index', self.renderJson);
 			self.clearMessages();
