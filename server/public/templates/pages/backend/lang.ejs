@@ -27,7 +27,7 @@
 							<th data-field="id">#</th>
 							<th data-field="name">Nombre</th>
 							<th data-field="flag">Bandera</th>
-							<th data-field="code">Código</th>
+							<th data-field="code">Código Idioma</th>
 							<th data-field="actions">Acciones</th>
 						</tr>
 					</thead>
@@ -39,7 +39,7 @@
 							<tr>
 								<td><%= langs[i].ID %></td>
 								<td><%= langs[i].NAME %></td>
-								<td><img src="<%= langs[i].FLAG %>" width="50px" </td>
+								<td><img src="<%= langs[i].FLAG %>" alt="Bandera <%= langs[i].NAME %>" width="50px" </td>
 								<td><%= langs[i].CODE %></td>
 								<td class="actions">
 									<a class="modal-trigger" href="#edit_lang"><i class="material-icons">mode_edit</i></a>

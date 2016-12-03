@@ -7,7 +7,7 @@ var path = require('path');
 var moment = require('moment');
 
 var Utils = require('../utils/Util');
-var Lang = require('../models/Language');
+var Language = require('../models/Language');
 
 function LangController(json, activityLogC) {
 	this.renderJson = json;
@@ -35,14 +35,14 @@ LangController.prototype.initBackend = function() {
 		self.renderJson.user = req.session.user;
 
 		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
-			var langs = Lang.build();
+			var langs = Language.build();
 
-			langs.retrieveAll().then(function(result) {
-				self.renderJson.langs = result;
+			langs.retrieveAll().then(function(success) {
+				self.renderJson.langs = success;
 
 				res.render('pages/backend/lang', self.renderJson);
 				self.clearMessages();
-			}, function(error) {
+			}, function(err) {
 				self.renderJson.error = 'Se ha producido un error interno recuperando los idiomas';
 				res.redirect('/backend');
 			});
@@ -51,16 +51,13 @@ LangController.prototype.initBackend = function() {
 			res.redirect('/');
 	});
 
-	self.routerBackend.route('/add').post(upload.array('add_photo_user', 1), function(req, res) {
+	self.routerBackend.route('/add').post(upload.array('add_flag_lang', 1), function(req, res) {
 		self.renderJson.user = req.session.user;
 
 		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
-			var email_user = req.body.add_email_user;
-			var password_user = req.body.add_password_user;
-			var name_user = req.body.add_name_user;
-			var surname_user = req.body.add_surname_user;
-			var admin_user = req.body.add_admin_user;
-			var photo_user = '/static/img/img_not_available.png';
+			var name = req.body.add_name_lang;
+			var code = req.body.add_code_lang;
+			var flag = '/static/img/img_not_available.png';
 
 			// Check if there's files to upload
 			if(req.files.length > 0) {
@@ -96,30 +93,27 @@ LangController.prototype.initBackend = function() {
 				});
 
 				// Path to the file, to be sabed in DB
-				photo_user = '/static/img/langs/' + file;
+				flag = '/static/img/langs/' + file;
 			}
 
-			var user = Lang.build();
+			var lang = Language.build();
 
-			user.add(
-				email_user,
-				password_user,
-				name_user,
-				surname_user,
-				photo_user,
-				admin_user
-			).then(function(result) {
-				self.renderJson.msg = 'Usuario añadido correctamente';
+			console.log("name", name);
+			console.log("flag", flag);
+			console.log("code", code);
+
+			lang.add(name, flag, code).then(function(success) {
+				self.renderJson.msg = 'Idioma añadido correctamente';
 
 				// Add the event to a new Activity Log
 				var ct = "Inserción";
-				var desc = "Se ha añadido al usuario " + name_user + " " + surname_user;
+				var desc = "Se ha añadido el idioma " + name + " con código " + code;
 				var date = new Date();
 				var uid = self.renderJson.user.ID;
 				self.activityLogController.addNewActivityLog(ct, desc, date, uid);
 
 				res.redirect('/backend/langs');
-			}, function(error) {
+			}, function(err) {
 				self.renderJson.error = 'Se ha producido un error interno';
 				res.redirect('/backend/langs');
 			});

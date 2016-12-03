@@ -7,7 +7,7 @@ var ActivityLog = DBConnector.connectM4E().define('ACTIVITY_LOG', {
 	ACTION_TYPE: {type: Sequelize.STRING(50), allowNull: false},
 	DESCRIPTION: {type: Sequelize.STRING(300), allowNull: false},
 	DATE: {type: Sequelize.DATE, allowNull: false},
-	USER_ID: {type: Sequelize.INTEGER}
+	USER_ID: {type: Sequelize.INTEGER, allowNull: false}
 },
 {
 	instanceMethods: {

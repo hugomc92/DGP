@@ -71,6 +71,8 @@ ActivityLogController.prototype.initBackend = function () {
 
 // Add a new Activity Log
 ActivityLogController.prototype.addNewActivityLog = function(action_type, description, date, user_id) {
+	console.log("params:", action_type, description, date, user_id);
+	
 	var activityLog = ActivityLog.build();
 
 	activityLog.add(action_type, description, date, user_id);
