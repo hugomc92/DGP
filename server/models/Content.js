@@ -8,7 +8,7 @@ var Content = DBConnector.connectM4E().define('CONTENT', {
 	DATE_IN: {type: Sequelize.DATE, allowNull: false},
 	DATE_OUT: {type: Sequelize.DATE, allowNull: false},
 	LOCALIZATION_ID: {type: Sequelize.INTEGER, allowNull: true},
-	CONTENT_TYPE_ID: {type: Sequelize.INTEGER, allowNull: true}
+	CONTENT_TYPE_ID: {type: Sequelize.INTEGER, allowNull: false}
 },
 {
 	instanceMethods: {

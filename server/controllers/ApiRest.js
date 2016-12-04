@@ -8,6 +8,7 @@ var ContentTypeService = require('../service/ContentTypeService');
 var ContentService = require('../service/ContentService');
 var LocalizationService = require('../service/LocalizationService');
 var ActivityLogService = require('../service/ActivityLogService');
+var LangService = require('../service/LangService');
 
 function ApiRest() {
 	this.publicTokenList = [];
@@ -45,6 +46,7 @@ ApiRest.prototype.defineApiServices = function() {
 	this.serviceRouter.use('/user', new UserService().getRouter());
 	this.serviceRouter.use('/localization', new LocalizationService().getRouter());
 	this.serviceRouter.use('/activity_log', new ActivityLogService().getRouter());
+	this.serviceRouter.use('/lang', new LangService().getRouter());
 };
 
 // Get Router of API Rest

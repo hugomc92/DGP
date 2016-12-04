@@ -86,11 +86,11 @@
   -o-transition: all 0.5s;
   transition: all 0.5s;
 }
-.modal_material .modal_loader .spinner-green-only {
+.modal_material .modal_loader .spinner-custom {
   color: #ffab91 !important;
   border-color: #ffab91 !important;
 }
-.modal_material .modal_loader .spinner-green-only .circle {
+.modal_material .modal_loader .spinner-custom .circle {
   border-width: 8px !important;
 }
 .modal_material .modal-header {

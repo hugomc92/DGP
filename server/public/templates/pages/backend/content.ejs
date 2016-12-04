@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<% include ../../partials/backend/head_backend %>
+		<link rel="stylesheet" href="/static/css/src/content_b.css">
+	</head>
+	<body>
+		<% include ../../partials/backend/sidemenu_backend %>
+
+		<main class="grey lighten-3">
+			<!-- Nav -->
+			<% include ../../partials/backend/header_backend %>
+
+			<div class="row content_start">
+				<div id="tabs_container" class="col s11">
+					<ul class="tabs">
+						<li class="tab col"><a class="active" href="#spanish_content" content-lang="1">Español</a></li>
+					</ul>
+				</div>
+				<div id="more_langs" class="col s1"><a class="modal-trigger waves-effect waves-light"><i class="material-icons">add</i></a></div>
+				
+				<!-- All tabs content -->
+				<div id="spanish_content" class="col s12">Test 1</div>
+			</div>
+
+			<!-- Selector new Lang modal-->
+			<% include ../../partials/backend/modals/modal_add_lang_content %>
+		</main>
+
+		<footer class="page-footer">
+			<% include ../../partials/backend/footer_backend %>
+		</footer>
+
+		<% include ../../partials/backend/script_backend %>
+		<% include ../../partials/backend/server_messages %>
+		<script src="/static/js/src/content_b.js"></script>
+	</body>
+</html>

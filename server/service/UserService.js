@@ -22,14 +22,14 @@ UserService.prototype.initializeRouter = function() {
 			else
 				res.status(401).send("User not found");
 		}, function(error) {
-			res.send("No se ha podido completar su solicitud");
+			res.status(404).send("User not found");
 		});
 	});
 };
 
 UserService.prototype.getRouter = function() {
-var self = this;
-return self.router;
+	var self = this;
+	return self.router;
 };
 
 module.exports = UserService;

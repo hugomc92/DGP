@@ -2,7 +2,7 @@
 <html lang="es">
 	<head>
 		<% include ../../partials/backend/head_backend %>
-		<link rel="stylesheet" href="/static/css/src/content_b.css">
+		<link rel="stylesheet" href="/static/css/src/contents_b.css">
 	</head>
 	<body>
 		<% include ../../partials/backend/sidemenu_backend %>
@@ -14,16 +14,23 @@
 			<div class="row content_start">
 				<div id="btn_add_container" class="col s12">
 				<!-- Add new content type button -->
-				<a class="waves-effect waves-light btn modal-trigger" href="#/backend/contents/add">Añadir Contenido</a>
+				<a class="waves-effect waves-light btn modal-trigger" href="/backend/contents/add">Añadir Contenido</a>
 				</div>
 			</div>
 
 			<!-- Table all content types -->
 			<div id="content-table" class="row">
-				<table class="striped">
+				<table class="striped responsive-table">
 					<thead>
 						<tr>
 							<th data-field="id">#</th>
+							<th data-field="name">Nombre</th>
+							<th data-field="content_type">Tipo</th>
+							<th data-field="location">Localización</th>
+							<th data-field="languages">Idiomas</th>
+							<th data-field="date_in">Fecha Entrada</th>
+							<th data-field="date_out">Fecha Salida</th>
+							<th data-field="actions">Acción</th>
 						</tr>
 					</thead>
 
@@ -40,7 +47,7 @@
 							</tr>
 						<% }
 						if(count == 0) { %>
-							<td colspan="5" id="no_content">NO HAY CONTENIDOS ACTUALMENTE</td>
+							<td colspan="8" id="no_content">NO HAY CONTENIDOS ACTUALMENTE</td>
 						<% } %>
 					</tbody>
 				</table>
@@ -57,6 +64,6 @@
 
 		<% include ../../partials/backend/script_backend %>
 		<% include ../../partials/backend/server_messages %>
-		<script src="/static/js/src/content_b.js"></script>
+		<script src="/static/js/src/contents_b.js"></script>
 	</body>
 </html>

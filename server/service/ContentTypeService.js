@@ -1,5 +1,4 @@
 var express = require("express");
-var crypto = require("crypto");
 var ContentType = require("../models/ContentType");
 
 // Constructor for ContentTypeService

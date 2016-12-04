@@ -51,6 +51,22 @@ ContentController.prototype.initBackend = function () {
 			res.redirect('/');
 		}
 	});
+
+	self.routerBackend.route('/add').get(function(req, res) {
+		self.renderJson.breadcrumb = {'LINK': '/backend/contents/', 'SECTION': 'Contenido'};
+
+		self.renderJson.moreContent = {'LINK': '/backend/contents/add', 'SECTION': 'Añadir Contenido'};
+		self.renderJson.user = req.session.user;
+
+		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
+
+			res.render('pages/backend/content', self.renderJson);
+			self.clearMessages();
+		}
+		else {
+			res.redirect('/');
+		}
+	});
 };
 
 // Get the Backend router
@@ -81,6 +97,7 @@ ContentController.prototype.getAllContentWidthIds = function(listIds) {
 ContentController.prototype.clearMessages = function() {
 	delete this.renderJson.msg;
 	delete this.renderJson.error;
+	delete this.renderJson.moreContent;
 };
 
 module.exports = ContentController;

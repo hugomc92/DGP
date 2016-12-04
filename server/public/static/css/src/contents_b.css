@@ -1,0 +1,14 @@
+main {
+  min-height: calc(100vh - 50px);
+}
+#content-table {
+  padding: 0 50px;
+}
+@media only screen and (max-width: 600px) {
+  #content-table {
+    padding: 0 20px;
+  }
+}
+#no_content {
+  text-align: center;
+}
