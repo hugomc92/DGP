@@ -65,12 +65,12 @@ $(document).ready(function() {
 
 		if($('#lang_select').val() !== null) {
 			var langId = parseInt($('#lang_select').val());
-			
-			console.log("langID: ", langId);
 
 			currentLangs.push(langId);
 
-			for(var i=0; i<langs.length; i++) {
+			var found = false;
+
+			for(var i=0; i<langs.length && !found; i++) {
 				if(langs[i].ID === langId) {
 					// Add new Tab
 					$('.tabs').append('<li class="tab col"><a href="#' + langs[i].NAME.toLowerCase() + '_content" content-lang="' + langs[i].ID + '">' + langs[i].NAME + '</a></li>');
@@ -80,10 +80,10 @@ $(document).ready(function() {
 
 					// Add new content tab
 					$('#contents').append('<div id="' + langs[i].NAME.toLowerCase() + '_content" class="col s12" style="display:none">Test 1</div>');
+
+					found = true;
 				}
 			}
-			
-			console.log("currentLangs", currentLangs);
 		}
 
 		cleanAddLangModal();
