@@ -10,7 +10,7 @@ $(document).ready(function() {
 		case "/backend/":
 			active_li = setActiveLi("Inicio");
 			break;
-		case "/backend/contents/":
+		case "/backend/contents/": case "/backend/contents/add":
 			active_li = setActiveLi("Contenido");
 			break;
 		case "/backend/localizations/":
