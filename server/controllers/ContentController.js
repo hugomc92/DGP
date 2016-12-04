@@ -26,7 +26,7 @@ ContentController.prototype.initFrontend = function() {
 };
 
 // Method for initBackend
-ContentController.prototype.initBackend = function () {
+ContentController.prototype.initBackend = function() {
 	var self = this;
 
 	// Launch Content section
