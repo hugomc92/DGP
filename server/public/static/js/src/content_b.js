@@ -1,12 +1,41 @@
 var currentLangs = [];
 var choosenAddLang;
 var langs;
-
+var contentId;
+var dateInPicker;
+var dateOutPicker;
 
 $(document).ready(function() {
 	currentLangs.push(1);
 
 	$('ul.tabs').tabs();
+
+	$('input, textarea').characterCounter();
+
+	dateInPicker = initializeDatePicker($('#content_date_in'));
+	dateOutPicker = initializeDatePicker($('#content_date_out'));
+
+	var dateIn = $('#content_date_in');
+	var dateOut = $('#content_date_out');
+
+	dateIn.on('change', function() {
+		var dateInUpdate = new Date(dateIn.val()).toLocaleDateString('es-ES');
+		console.log(new Date(dateIn.val()), dateInUpdate);
+		var infoUpdate = dateInUpdate.split('/');
+		var day = infoUpdate[0];
+		var month = infoUpdate[1];
+		var year = infoUpdate[2];
+
+		var minDate = [parseInt(year), parseInt(month)-1, day];
+
+		console.log("mindate", minDate);
+
+		dateOutPicker.set('min', minDate);
+
+		var options = { year: 'numeric', month: 'short', day: 'numeric' };
+
+		//dateOut.val(new Date(dateIn.val()).toLocaleDateString('es-ES', options));
+	});
 
 	$('#more_langs').click(function() {
 		$('#add_lang_content').openModal( {
@@ -73,7 +102,7 @@ $(document).ready(function() {
 			for(var i=0; i<langs.length && !found; i++) {
 				if(langs[i].ID === langId) {
 					// Add new Tab
-					$('.tabs').append('<li class="tab col"><a href="#' + langs[i].NAME.toLowerCase() + '_content" content-lang="' + langs[i].ID + '">' + langs[i].NAME + '</a></li>');
+					$('.tabs').append('<li class="tab col"><a href="#' + langs[i].NAME.toLowerCase() + '_content" content-lang="' + langs[i].ID + '"><img src="' + langs[i].FLAG + '" alt="Bandera ' + langs[i].NAME + '" width="25px"/><span class="hide-on-small-only">' + langs[i].NAME + '</span></a></li>');
 
 					// Update all tabs
 					$('ul.tabs').tabs();
@@ -96,4 +125,52 @@ function cleanAddLangModal() {
 
 	$('#add_lang_loader').css('opacity', '1');
 	$('#add_lang_loader').css('display', 'initial');
+}
+
+function initializeDatePicker(datePicker) {
+    
+    var $input = datePicker.pickadate( {
+        selectMonths: true,
+        selectYears: 2,
+
+        firstDay: 1,
+
+        min: new Date(),
+
+        monthsFull : [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+        monthsShort : [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+        weekdaysFull : [ 'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo' ],
+        weekdaysShort : [ 'Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom' ],
+
+        today: '',
+        clear: '',
+        close: 'Cerrar',
+
+        labelMonthNext: 'Mes siguiente',
+        labelMonthPrev: 'Mes anterior',
+        labelMonthSelect: 'Seleccionar un mes',
+        labelYearSelect: 'Seleccionar un año',
+
+        closeOnSelect: true,
+        closeOnClear: true,
+
+        container: 'main',
+
+        onClose: function() {
+            $('.datepicker').blur();
+
+            $(document.activeElement).blur();
+        },
+
+        onSet: function(context) {
+            if('select' in context) {
+				var self = this;
+				setTimeout(function() { self.close(); }, 200);
+            }
+        }
+    });
+
+    var picker = $input.pickadate('picker');
+
+    return picker;
 }

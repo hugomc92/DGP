@@ -37,10 +37,6 @@ main {
   -o-transition: all 0.3s;
   transition: all 0.3s;
 }
-#tabs_container .tabs li a i {
-  font-size: 3em;
-  margin-top: 3px;
-}
 #tabs_container .tabs li a.active:hover {
   cursor: default !important;
 }
@@ -51,6 +47,20 @@ main {
   -ms-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
+}
+#tabs_container .tabs li a img {
+  margin-right: 10px;
+  position: relative;
+  top: 2px;
+}
+@media only screen and (max-width: 600px) {
+  #tabs_container .tabs li a img {
+    margin: 0;
+  }
+}
+#tabs_container .tabs li a i {
+  font-size: 3em;
+  margin-top: 3px;
 }
 #tabs_container .indicator {
   background-color: white;
@@ -104,4 +114,29 @@ main {
 #lang_selection h4 {
   text-align: center;
   margin-top: 80px;
+}
+#contents .info_form {
+  background: white;
+  margin-top: 10px;
+  padding-bottom: 25px;
+}
+#contents .multimedia_content {
+  background: white;
+}
+.picker__date-display {
+  background: #345f7f;
+}
+.picker__weekday-display {
+  background: #18405d;
+}
+.picker__day.picker__day--today {
+  color: #345f7f;
+}
+.picker__day--selected,
+.picker__day--selected:hover,
+.picker--focused .picker__day--selected {
+  background-color: #345f7f;
+}
+.picker__footer button {
+  color: #345f7f;
 }

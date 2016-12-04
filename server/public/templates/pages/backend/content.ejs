@@ -14,14 +14,53 @@
 			<div class="row content_start">
 				<div id="tabs_container" class="col s11">
 					<ul class="tabs">
-						<li class="tab col"><a class="active" href="#spanish_content" content-lang="1">Español</a></li>
+						<li class="tab col">
+							<a class="active" href="#spanish_content" content-lang="1">
+								<img src="/static/img/langs/flag_of_spain_(civil).png" alt="Bandera Español" width="25px"/>
+								<span class="hide-on-small-only">Español</span>
+							</a>
+						</li>
 					</ul>
 				</div>
 				<div id="more_langs" class="col s1"><a class="modal-trigger waves-effect waves-light"><i class="material-icons">add</i></a></div>
 				
 				<!-- All tabs content -->
 				<div id="contents">
-					<div id="spanish_content" class="col s12">FORMULARIO DE CONTENIDO ESPAÑOL</div>
+					<div id="spanish_content" class="col s12">
+						<div class="row">
+							<form method="post" action="/backend/content/add" class="info_form col s12 z-depth-1">
+								<h5>INFORMACIÓN</h5>
+								<!-- Content name -->
+								<div class="input-field col s12">
+									<input id="content_name" name="content_name" type="text" class="validate" length="100" required>
+									<label for="content_name">Nombre</label>
+								</div>
+								<!-- Content description -->
+								<div class="input-field col s12">
+									<textarea id="content_description" name="content_description" class="materialize-textarea" length="500"></textarea>
+									<label for="content_description">Descripción</label>
+								</div>
+								<!-- Content blind description -->
+								<div class="input-field col s12">
+									<textarea id="content_blind_description" name="content_blind_description" class="materialize-textarea" length="500"></textarea>
+									<label for="content_blind_description">Descripción ciegos (en idioma seleccionado)</label>
+								</div>
+								<!-- Content date in  -->
+								<div class="input-field col s12 m6">
+									<input type="date" id="content_date_in" name="content_date_in" class="datepicker">
+									<label for="content_date_in">Fecha Entrada</label>
+								</div>
+								<!-- Content date out  -->
+								<div class="input-field col s12 m6">
+									<input type="date" id="content_date_out" name="content_date_out" class="datepicker">
+									<label for="content_date_out">Fecha Salida (opcional)</label>
+								</div>
+							</form>
+						</div>
+						<div class="multimedia_content row z-depth-1">
+							<h5 class="col s12">MULTIMEDIA</h5>
+						</div>
+					</div>
 				</div>
 			</div>
 

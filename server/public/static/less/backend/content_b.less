@@ -23,11 +23,6 @@ main {
 
 			.transition(all 0.3s);
 
-			i {
-				font-size: 3em;
-				margin-top: 3px;
-			}
-
 			&.active:hover {
 				cursor: default !important;
 			}
@@ -36,6 +31,21 @@ main {
 				background: @secondary_color_dark;
 
 				.transition(all 0.3s);
+			}
+
+			img {
+				margin-right: 10px;
+				position: relative;
+				top: 2px;
+
+				@media @mobile {
+					margin: 0;
+				}
+			}
+
+			i {
+				font-size: 3em;
+				margin-top: 3px;
 			}
 		}
 	}
@@ -91,4 +101,36 @@ main {
 		text-align: center;
 		margin-top: 80px;
 	}
+}
+
+#contents {
+	.info_form  {
+		background: white;
+		margin-top: 10px;
+		padding-bottom: 25px;
+	}
+
+	.multimedia_content {
+		background: white;
+	}
+}
+
+.picker__date-display {
+	background: @secondary_color;
+}
+
+.picker__weekday-display {
+	background: @secondary_color_dark;
+}
+
+.picker__day.picker__day--today {
+	color: @secondary_color;
+}
+
+.picker__day--selected, .picker__day--selected:hover, .picker--focused .picker__day--selected {
+	background-color: @secondary_color;
+}
+
+.picker__footer button {
+	color: @secondary_color;
 }
