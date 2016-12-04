@@ -101,3 +101,7 @@ main {
     margin-top: 12px;
   }
 }
+#lang_selection h4 {
+  text-align: center;
+  margin-top: 80px;
+}
