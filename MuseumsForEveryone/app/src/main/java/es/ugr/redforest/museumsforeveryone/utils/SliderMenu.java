@@ -24,7 +24,7 @@ import es.ugr.redforest.museumsforeveryone.R;
  */
 
 public class SliderMenu {
-    /*public Toolbar toolbar;
+    public Toolbar toolbar;
     String TITLES[]={"Museums For Everyone", "Lista Obras","Visita Guiada","Info Obra","Preferencias","Contacto"};
     int ICONS[]={android.R.drawable.ic_dialog_map,android.R.drawable.ic_input_get,android.R.drawable.arrow_down_float,android.R.drawable.ic_dialog_email, android.R.drawable.ic_btn_speak_now, android.R.drawable.ic_delete};
     RecyclerView mRecyclerView;							  // Declaring RecyclerView
@@ -52,24 +52,6 @@ public class SliderMenu {
         toolbar.inflateMenu(xml);
         toolbar.setLogo(R.mipmap.ic_launcher);
         toolbar.setTitle(nombre);
-
-        toolbar.setOnMenuItemClickListener(
-                new Toolbar.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_search:
-                                Intent searchActivity = new Intent(context, Busqueda.class);
-                                context.startActivity(searchActivity);
-                                break;
-                            case R.id.action_carrito:
-                                Intent intent = new Intent(context, CargaCesta.class);
-                                context.startActivity(intent);
-                                break;
-                        }
-                        return true;
-                    }
-                });
         //////////////////////////////////CODIGASOOO///////////////////////////
 
         mRecyclerView.setHasFixedSize(true);                            // Letting the system know that the list objects are of fixed size
@@ -93,66 +75,19 @@ public class SliderMenu {
             public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
                 View child = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
 
-
                 if (child != null && mGestureDetector.onTouchEvent(motionEvent)) {
                     if(recyclerView.getChildPosition(child)==1) {
-                        Drawer.closeDrawers();
-                        Intent mainIntent = new Intent(recyclerView.getContext(), MainActivity.class);
-                        GeoLocalizacion geo;
-                        Location localizacion;
-                        geo = new GeoLocalizacion(context); ////////////////////LOCALIZACION
-                        localizacion = geo.updatePosicion();
-                        if(localizacion!=null) {
-                            lat = localizacion.getLatitude();
-                            longi = localizacion.getLongitude();
-                        }
-                        mainIntent.putExtra("lat", lat);
-                        mainIntent.putExtra("long", longi);
-                        context.startActivity(mainIntent);
-                        actualActivity.finish();
+
                     }else if(recyclerView.getChildPosition(child)==2){
                         Drawer.closeDrawers();
                         Intent mainIntent = new Intent(recyclerView.getContext(), CargaDepartamentos.class);
                         context.startActivity(mainIntent);
                         actualActivity.finish();
                     }else if(recyclerView.getChildPosition(child)==3){
-                        Drawer.closeDrawers();
-                        Intent mainIntent = new Intent(recyclerView.getContext(), CargaReservas.class);
-                        context.startActivity(mainIntent);
-                        actualActivity.finish();
-                    }else if(recyclerView.getChildPosition(child)==4){
-                        Drawer.closeDrawers();
-                        Intent mainIntent = new Intent(recyclerView.getContext(), CargaContacto.class);
-                        context.startActivity(mainIntent);
-                        actualActivity.finish();
-                    }
-                    /*}else if(recyclerView.getChildPosition(child)==3){
-                        Drawer.closeDrawers();
-                        Intent mainIntent = new Intent(recyclerView.getContext(), CargaFAQ.class);
-                        context.startActivity(mainIntent);
-                        actualActivity.finish();
-                    }else if(recyclerView.getChildPosition(child)==4){
-                        Drawer.closeDrawers();
-                        Intent mainIntent = new Intent(recyclerView.getContext(), CargaPedidos.class);
-                        context.startActivity(mainIntent);
-                        actualActivity.finish();
-                    }
-                    else if(recyclerView.getChildPosition(child)==5){
-                        Drawer.closeDrawers();
-                        Intent mainIntent = new Intent(recyclerView.getContext(), CargaReservas.class);
-                        context.startActivity(mainIntent);
-                        actualActivity.finish();
-                    }
-                    else if(recyclerView.getChildPosition(child)==6){
-                        Drawer.closeDrawers();
-                        Intent mainIntent = new Intent(recyclerView.getContext(), CargaContacto.class);
-                        context.startActivity(mainIntent);
-                        actualActivity.finish();
-                    }*//*
 
+                    }else if(recyclerView.getChildPosition(child)==4){
 
-                    // Close the activity so the user won't able to go back this
-                    // activity pressing Back button
+                    }
 
                     return true;
                 }
@@ -180,14 +115,11 @@ public class SliderMenu {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                // code here will execute once the drawer is opened( As I dont want anything happened whe drawer is
-                // open I am not going to put anything here)
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                // Code here will execute once drawer is closed
             }
 
             @Override
@@ -212,5 +144,5 @@ public class SliderMenu {
 
     public void inicializarToolbar(int xml){
         //inicializarToolbar(xml,"FarmaSearch");
-    }*/
+    }
 }
