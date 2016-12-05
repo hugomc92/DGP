@@ -20,7 +20,7 @@
 
         <TextView
             style="@style/TextViewTheme"
-            android:text="Problemas Auditivos"/>
+            android:text="@string/hearing_problems"/>
 
     </FrameLayout>
 
@@ -33,7 +33,7 @@
 
         <TextView
             style="@style/TextViewTheme"
-            android:text="Problemas de Vision"/>
+            android:text="@string/vision_problems"/>
 
     </FrameLayout>
 
@@ -46,7 +46,7 @@
 
         <TextView
             style="@style/TextViewTheme"
-            android:text="sin accesibilidad"/>
+            android:text="@string/without_accesibility_problems"/>
 
     </FrameLayout>
 

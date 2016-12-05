@@ -20,7 +20,7 @@
 
         <TextView
             style="@style/TextViewTheme"
-            android:text="Idioma"/>
+            android:text="@string/language"/>
 
     </FrameLayout>
 
@@ -33,7 +33,7 @@
 
         <TextView
             style="@style/TextViewTheme"
-            android:text="Accesibilidad"/>
+            android:text="@string/accessibility"/>
 
     </FrameLayout>
 
@@ -46,7 +46,7 @@
 
         <TextView
             style="@style/TextViewTheme"
-            android:text="Ver Instrucciones"/>
+            android:text="@string/instruction_title"/>
 
     </FrameLayout>
 

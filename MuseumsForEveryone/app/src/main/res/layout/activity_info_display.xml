@@ -19,7 +19,7 @@
 
         <TextView
             style="@style/TextViewTheme"
-            android:text="Escanear QR"
+            android:text="@string/nfc_scann"
             android:onClick="launchActivityQRScanner"/>
     </FrameLayout>
 

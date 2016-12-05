@@ -4,6 +4,7 @@
     <string name="enter_museum">Entrar al Museo</string>
     <string name="vision_problems">Problemas de Visión</string>
     <string name="hearing_problems">Problemas Auditivos</string>
+    <string name="without_accesibility_problems">Sin problemas de accesibilidad</string>
     <string name="instruction_title">Instrucciones</string>
     <string name="instructions">Instrucciones</string>
     <string name="continue_button">Continuar</string>
@@ -13,6 +14,12 @@
     <string name="artwork_pictures">Pinturas</string>
     <string name="artwork_sculptures">Esculturas</string>
     <string name="artwork_movies">Vídeos</string>
+<<<<<<< Updated upstream
     <string name="openDrawer">Open Drawer </string>
     <string name="closeDrawer">Close Drawer </string>
+=======
+    <string name="nfc_scann">Escanear NFC</string>
+    <string name="qr_scann">Escanear QR</string>
+    <string name="language">Idioma</string>
+>>>>>>> Stashed changes
 </resources>
