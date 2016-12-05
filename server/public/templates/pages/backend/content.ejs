@@ -36,7 +36,7 @@
 									<label for="content_name">Nombre</label>
 								</div>
 								<!-- Content type -->
-								<div class="input-field col s12 m6">
+								<div id="content_type_select" class="input-field col s12 m6">
 									<select>
 										<option value="" disabled selected>Tipo de contenido</option>
 										<% for(var i=0; i<contentTypes.length; i++) { %>
@@ -44,8 +44,8 @@
 										<% } %>
 									</select>
 								</div>
-								<!-- Content type -->
-								<div class="input-field col s12 m6">
+								<!-- Content location -->
+								<div  id="location_select" class="input-field col s12 m6">
 									<select>
 										<option value="" disabled selected>Localización  (opcional)</option>
 										<% for(var i=0; i<localizations.length; i++) { %>

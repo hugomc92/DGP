@@ -5,6 +5,8 @@ var contentId;
 var dateInPicker;
 var dateOutPicker;
 var dateInUpdate;
+var contentTypeSelect;
+var locationSelect;
 
 $(document).ready(function() {
 
@@ -13,6 +15,9 @@ $(document).ready(function() {
 	$('ul.tabs').tabs();
 
 	$('input, textarea').characterCounter();
+
+	contentTypeSelect = $('#content_type_select').html();
+	locationSelect = $('#location_select').html();
 
 	$('select').material_select();
 
@@ -110,6 +115,16 @@ $(document).ready(function() {
 					// Add new content tab
 					var cont = $('#spanish_content').html();
 					$('#contents').append('<div id="' + langs[i].NAME.toLowerCase() + '_content" class="col s12" style="display:none">' + cont + '</div>');
+
+					var elem = $('#contents #' + langs[i].NAME.toLowerCase() + '_content');
+
+					elem.find('#content_type_select').text('');
+					elem.find('#content_type_select').html(contentTypeSelect);
+
+					elem.find('#location_select').text('');
+					elem.find('#location_select').html(locationSelect);
+
+					$('select').material_select();
 
 					found = true;
 				}
