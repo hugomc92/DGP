@@ -26,9 +26,9 @@
 				
 				<!-- All tabs content -->
 				<div id="contents">
-					<div id="spanish_content" class="col s12">
+					<div id="spanish_content" class="col s12" form-lang="1">
 						<div class="row">
-							<form method="post" action="/backend/content/add" class="info_form col s12 z-depth-1">
+							<form method="post" action="#" class="info_form col s12 z-depth-1">
 								<h5>INFORMACIÓN</h5>
 								<!-- Content name -->
 								<div class="input-field col s12">
@@ -37,7 +37,7 @@
 								</div>
 								<!-- Content type -->
 								<div id="content_type_select" class="input-field col s12 m6">
-									<select>
+									<select required>
 										<option value="" disabled selected>Tipo de contenido</option>
 										<% for(var i=0; i<contentTypes.length; i++) { %>
 											<option value="<%= contentTypes[i].ID %>" data-icon="<%= contentTypes[i].ICON %>" class="left circle"><%= contentTypes[i].NAME %></option>
@@ -60,18 +60,25 @@
 								</div>
 								<!-- Content blind description -->
 								<div class="input-field col s12">
-									<textarea id="content_blind_description" name="content_blind_description" class="materialize-textarea" length="500"></textarea>
+									<textarea id="content_blind_description" name="content_blind_description" class="materialize-textarea" length="500" required></textarea>
 									<label for="content_blind_description">Descripción ciegos (en idioma seleccionado)</label>
 								</div>
 								<!-- Content date in  -->
 								<div class="input-field col s12 m6">
-									<input type="date" id="content_date_in" name="content_date_in" class="datepicker">
+									<input type="date" id="content_date_in" name="content_date_in" class="datepicker" required>
 									<label for="content_date_in">Fecha Entrada</label>
 								</div>
 								<!-- Content date out  -->
 								<div class="input-field col s12 m6">
 									<input type="date" id="content_date_out" name="content_date_out" class="datepicker">
 									<label for="content_date_out">Fecha Salida (opcional)</label>
+								</div>
+								<!-- Submit form -->
+								<div class="input-field col s12">
+									<button id="submit_content_form" class="btn waves-effect waves-light right" type="submit" name="submit_content_form">
+										<span>Guardar</span>
+										<i class="material-icons right">save</i>
+									</button>
 								</div>
 							</form>
 						</div>

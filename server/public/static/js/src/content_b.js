@@ -10,6 +10,8 @@ var locationSelect;
 
 $(document).ready(function() {
 
+	Materialize.updateTextFields();
+
 	currentLangs.push(1);
 
 	$('ul.tabs').tabs();
@@ -40,6 +42,12 @@ $(document).ready(function() {
 
 			dateOutPicker.set('min', minDate);
 		}, 1000);		
+	});
+
+	$('.info_form').on('submit', function(event) {
+		event.preventDefault();
+
+		send_data($(this));
 	});
 
 	$('#more_langs').click(function() {
@@ -181,9 +189,9 @@ function initializeDatePicker(datePicker) {
         onSet: function(context) {
             if('select' in context) {
 				var self = this;
-				console.log("ASDF");
+
 				dateInUpdate = moment(context.select).format("DD/MM/YYYY");
-				console.log("dateInUpdate: ", dateInUpdate);
+
 				setTimeout(function() { self.close(); }, 200);
             }
         }
@@ -192,4 +200,17 @@ function initializeDatePicker(datePicker) {
     var picker = $input.pickadate('picker');
 
     return picker;
+}
+
+function send_data(form) {
+	console.log(form.parent().parent());
+
+	// Get language id from current form
+	var langId = form.parent().parent().attr('form-lang');
+	console.log('langId', langId);
+
+	// Get all data from current form
+
+	// Avoid to send form on action
+	return false;
 }
