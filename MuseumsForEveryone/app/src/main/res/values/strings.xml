@@ -13,4 +13,6 @@
     <string name="artwork_pictures">Pinturas</string>
     <string name="artwork_sculptures">Esculturas</string>
     <string name="artwork_movies">Vídeos</string>
+    <string name="openDrawer">Open Drawer </string>
+    <string name="closeDrawer">Close Drawer </string>
 </resources>

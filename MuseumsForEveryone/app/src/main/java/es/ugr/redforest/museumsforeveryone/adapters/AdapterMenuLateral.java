@@ -1,7 +1,6 @@
-package adapter;
-
+package es.ugr.redforest.museumsforeveryone.adapters;
 /**
- * Created by Tri_2 on 07/09/2015.
+ * Created by Emilio Chica Jiménez on 07/09/2015.
  */
 
         import android.support.v7.widget.RecyclerView;
@@ -11,7 +10,7 @@ package adapter;
         import android.widget.ImageView;
         import android.widget.TextView;
 
-        import com.desarrollo.guia_pueblo.R;
+        import es.ugr.redforest.museumsforeveryone.R;
 
 /**
  * Created by hp1 on 28-12-2014.

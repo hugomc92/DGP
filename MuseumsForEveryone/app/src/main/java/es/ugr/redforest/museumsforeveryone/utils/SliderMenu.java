@@ -18,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import es.ugr.redforest.museumsforeveryone.R;
+import es.ugr.redforest.museumsforeveryone.adapters.AdapterMenuLateral;
 
 /**
  * Created by matl1995 on 23/11/16.
@@ -34,8 +35,6 @@ public class SliderMenu {
     public ActionBarDrawerToggle mDrawerToggle;
     Context context;
     Activity actualActivity;
-    double lat = Double.MAX_VALUE;
-    double longi=Double.MAX_VALUE;
 
     public SliderMenu(Context context,Activity v){
         this.context = context;

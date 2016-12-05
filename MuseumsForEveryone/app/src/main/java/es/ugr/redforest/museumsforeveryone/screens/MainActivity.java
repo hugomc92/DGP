@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import es.ugr.redforest.museumsforeveryone.R;
+import es.ugr.redforest.museumsforeveryone.utils.SliderMenu;
 
 /**
  * Activity which shows two buttons about two types of accessibility
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		SliderMenu mySlide = new SliderMenu(this,this);
+		mySlide.inicializarToolbar(R.menu.menu_main,"");
 	}
 	//Disable back button
 	@Override
