@@ -9,12 +9,14 @@ var Utils = require('../utils/Util');
 var Content = require('../models/Content');
 
 // Constructor for ContentController
-function ContentController(json, activityLogC) {
+function ContentController(json, activityLogC, contentTypeC, localizationC) {
 	this.renderJson = json;
 	this.uploadpath = path.join(__dirname, '..', 'public', 'static', 'upload') + '/';
 	this.uploadimgpath = path.join(__dirname, '..', 'public', 'static', 'img', 'contents') + '/';
 
 	this.activityLogController = activityLogC;
+	this.contentTypeController = contentTypeC;
+	this.localizationController = localizationC;
 
 	this.routerBackend = express.Router();
 	this.initBackend();
@@ -44,7 +46,7 @@ ContentController.prototype.initBackend = function() {
 				self.clearMessages();
 			}, function(err) {
 				self.renderJson.error = 'Se ha producido un error interno recuperando los contenidos';
-				res.redirect('/backend');
+				res.redirect('/backend/');
 			});
 		}
 		else {
@@ -59,9 +61,22 @@ ContentController.prototype.initBackend = function() {
 		self.renderJson.user = req.session.user;
 
 		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
+			self.contentTypeController.getAllContentTypes().then(function(success) {
+				self.renderJson.contentTypes = success;
 
-			res.render('pages/backend/content', self.renderJson);
-			self.clearMessages();
+				self.localizationController.getAllLocalizations().then(function(success) {
+					self.renderJson.localizations = success;
+
+					res.render('pages/backend/content', self.renderJson);
+					self.clearMessages();
+				}, function(err) {
+					self.renderJson.error = 'Se ha producido un error interno recuperando información';
+				res.redirect('/backend/contents/');
+				});
+			}, function(err) {
+				self.renderJson.error = 'Se ha producido un error recuperando información';
+				res.redirect('/backend/contents/');
+			});
 		}
 		else {
 			res.redirect('/');

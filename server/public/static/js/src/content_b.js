@@ -4,13 +4,17 @@ var langs;
 var contentId;
 var dateInPicker;
 var dateOutPicker;
+var dateInUpdate;
 
 $(document).ready(function() {
+
 	currentLangs.push(1);
 
 	$('ul.tabs').tabs();
 
 	$('input, textarea').characterCounter();
+
+	$('select').material_select();
 
 	dateInPicker = initializeDatePicker($('#content_date_in'));
 	dateOutPicker = initializeDatePicker($('#content_date_out'));
@@ -19,22 +23,18 @@ $(document).ready(function() {
 	var dateOut = $('#content_date_out');
 
 	dateIn.on('change', function() {
-		var dateInUpdate = new Date(dateIn.val()).toLocaleDateString('es-ES');
-		console.log(new Date(dateIn.val()), dateInUpdate);
-		var infoUpdate = dateInUpdate.split('/');
-		var day = infoUpdate[0];
-		var month = infoUpdate[1];
-		var year = infoUpdate[2];
+		dateOut.val('');
 
-		var minDate = [parseInt(year), parseInt(month)-1, day];
+		setTimeout(function() {
+			var infoUpdate = dateInUpdate.split('/');
+			var day = infoUpdate[0];
+			var month = infoUpdate[1];
+			var year = infoUpdate[2];
 
-		console.log("mindate", minDate);
+			var minDate = [parseInt(year), parseInt(month)-1, day];
 
-		dateOutPicker.set('min', minDate);
-
-		var options = { year: 'numeric', month: 'short', day: 'numeric' };
-
-		//dateOut.val(new Date(dateIn.val()).toLocaleDateString('es-ES', options));
+			dateOutPicker.set('min', minDate);
+		}, 1000);		
 	});
 
 	$('#more_langs').click(function() {
@@ -108,7 +108,8 @@ $(document).ready(function() {
 					$('ul.tabs').tabs();
 
 					// Add new content tab
-					$('#contents').append('<div id="' + langs[i].NAME.toLowerCase() + '_content" class="col s12" style="display:none">Test 1</div>');
+					var cont = $('#spanish_content').html();
+					$('#contents').append('<div id="' + langs[i].NAME.toLowerCase() + '_content" class="col s12" style="display:none">' + cont + '</div>');
 
 					found = true;
 				}
@@ -165,6 +166,9 @@ function initializeDatePicker(datePicker) {
         onSet: function(context) {
             if('select' in context) {
 				var self = this;
+				console.log("ASDF");
+				dateInUpdate = moment(context.select).format("DD/MM/YYYY");
+				console.log("dateInUpdate: ", dateInUpdate);
 				setTimeout(function() { self.close(); }, 200);
             }
         }

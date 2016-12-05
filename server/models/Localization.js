@@ -11,6 +11,9 @@ var Localization = DBConnector.connectM4E().define('LOCALIZATION', {
 },
 {
 	instanceMethods: {
+		retrieveAll: function() {
+			return Localization.findAll();
+		},
 		retrieveById: function(id) {
 			return Localization.findOne({where: {ID: id}});
 		},

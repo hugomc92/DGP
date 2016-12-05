@@ -35,7 +35,7 @@ Views.prototype.initPages = function() {
 
 	var contentTypeC = new ContentTypeController(self.renderJson);
 	var localizationC = new LocalizationController(self.renderJson);
-	var contentC = new ContentController(self.renderJson, activityLogC);
+	var contentC = new ContentController(self.renderJson, activityLogC, contentTypeC, localizationC);
 	var langC = new LangController(self.renderJson, activityLogC);
 
 

@@ -189,6 +189,13 @@ LocalizationController.prototype.getAllLocalizationWidthIds = function(listIds) 
 	return localization.retrieveAllByListIds(listIds);
 };
 
+// Get all the Localizations
+LocalizationController.prototype.getAllLocalizations = function() {
+	var localization = Localization.build();
+
+	return localization.retrieveAll();
+};
+
 // Clear all the messages
 LocalizationController.prototype.clearMessages = function() {
 	delete this.renderJson.msg;

@@ -23,8 +23,12 @@ main {
 
 			.transition(all 0.3s);
 
-			&.active:hover {
-				cursor: default !important;
+			&.active {
+				background: @secondary_color_light;
+
+				&:hover {
+					cursor: default !important;
+				}
 			}
 
 			&:not(.active):hover {

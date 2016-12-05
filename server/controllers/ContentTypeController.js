@@ -276,6 +276,13 @@ ContentTypeController.prototype.getAllContentTypeWidthIds = function(listIds) {
 	return contentType.retrieveAllByListIds(listIds);
 };
 
+// Get all the Content Types
+ContentTypeController.prototype.getAllContentTypes = function() {
+	var contentType = ContentType.build();
+
+	return contentType.retrieveAll();
+};
+
 // Clear all the messages
 ContentTypeController.prototype.clearMessages = function() {
 	delete this.renderJson.msg;

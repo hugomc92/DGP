@@ -35,6 +35,24 @@
 									<input id="content_name" name="content_name" type="text" class="validate" length="100" required>
 									<label for="content_name">Nombre</label>
 								</div>
+								<!-- Content type -->
+								<div class="input-field col s12 m6">
+									<select>
+										<option value="" disabled selected>Tipo de contenido</option>
+										<% for(var i=0; i<contentTypes.length; i++) { %>
+											<option value="<%= contentTypes[i].ID %>" data-icon="<%= contentTypes[i].ICON %>" class="left circle"><%= contentTypes[i].NAME %></option>
+										<% } %>
+									</select>
+								</div>
+								<!-- Content type -->
+								<div class="input-field col s12 m6">
+									<select>
+										<option value="" disabled selected>Localización  (opcional)</option>
+										<% for(var i=0; i<localizations.length; i++) { %>
+											<option value="<%= localizations[i].ID %>"><%= localizations[i].DESCRIPTION %></option>
+										<% } %>
+									</select>
+								</div>
 								<!-- Content description -->
 								<div class="input-field col s12">
 									<textarea id="content_description" name="content_description" class="materialize-textarea" length="500"></textarea>
@@ -74,6 +92,7 @@
 
 		<% include ../../partials/backend/script_backend %>
 		<% include ../../partials/backend/server_messages %>
+		<script src="http://momentjs.com/downloads/moment.min.js"></script>
 		<script src="/static/js/src/content_b.js"></script>
 	</body>
 </html>
