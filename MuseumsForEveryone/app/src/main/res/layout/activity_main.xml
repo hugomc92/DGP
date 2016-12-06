@@ -16,15 +16,8 @@
             android:orientation="vertical">
 
             <include layout="@layout/toolbar" />
-<<<<<<< HEAD
-=======
             <include layout="@layout/shadow_toolbar" />
-<<<<<<< HEAD
 
-=======
-            
->>>>>>> master
->>>>>>> master
         </LinearLayout>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"

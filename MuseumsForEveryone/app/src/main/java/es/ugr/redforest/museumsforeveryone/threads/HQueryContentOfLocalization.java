@@ -1,33 +1,33 @@
 package es.ugr.redforest.museumsforeveryone.threads;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.view.Gravity;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
+import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.models.Content;
 import es.ugr.redforest.museumsforeveryone.models.ContentInformation;
 import es.ugr.redforest.museumsforeveryone.models.ContentType;
 import es.ugr.redforest.museumsforeveryone.models.Localization;
 import es.ugr.redforest.museumsforeveryone.models.Multimedia;
-import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
 import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
 
 /**
@@ -42,14 +42,17 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
     private Localization localization;
     private String language="";
     private String id="";
+    private int index=0;
+    private String artworkName="";
 
 
-    public HQueryContentOfLocalization(Context c , Localization localization, String language, String id) {
+    public HQueryContentOfLocalization(Context c , Localization localization, String language, String id,int index,String artworkName) {
         this.context=c;
         this.localization = localization;
         this.language = language;
         this.id = id;
-
+        this.index = index;
+        this.artworkName = artworkName;
     }
 
     @Override
@@ -131,6 +134,23 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
             toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
             toast.show();
             pDialog.dismiss();
+        }else
+        {
+            ImageView imageView = (ImageView) ((Activity)context).findViewById(R.id.imgArtwork);
+            TextView typeArtWork = (TextView)  ((Activity)context).findViewById(R.id.typeArtWork);
+            TextView titleArtwork = (TextView)  ((Activity)context).findViewById(R.id.titleArtwork);
+            TextView descriptionArtwork = (TextView)  ((Activity)context).findViewById(R.id.descriptionArtwork);
+
+            Content content = localization.getContents().get(index);
+            ArrayList<Multimedia> multimedias = content.getMultimediaByType("image");
+
+            Picasso.with(context).load(multimedias.get(0).getUrl()).into(imageView);
+
+            imageView.setContentDescription(content.getContentInformation().getBlindDescription());
+            typeArtWork.setText(content.getContentType().getName());
+            titleArtwork.setText(content.getContentInformation().getName());
+            descriptionArtwork.setText(content.getContentInformation().getDescription());
+            artworkName = content.getContentType().getName();
         }
         pDialog.dismiss();
     }
