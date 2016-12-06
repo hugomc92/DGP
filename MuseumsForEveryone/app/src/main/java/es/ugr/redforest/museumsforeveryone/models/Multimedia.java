@@ -11,13 +11,22 @@ public class Multimedia {
     private int id;
     private String url;
     private String type;
+    private String alternativeText;
 
-    public Multimedia(int id, String url, String type) {
+    public Multimedia(int id, String url, String type,String alternativeText) {
         this.id = id;
         this.url = url;
         this.type = type;
+        this.alternativeText = alternativeText;
     }
 
+    public String getAlternativeText() {
+        return alternativeText;
+    }
+
+    public void setAlternativeText(String alternativeText) {
+        this.alternativeText = alternativeText;
+    }
     public int getId() {
         return id;
     }
