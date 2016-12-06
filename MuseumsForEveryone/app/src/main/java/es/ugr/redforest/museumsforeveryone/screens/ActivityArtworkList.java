@@ -33,10 +33,10 @@ public class ActivityArtworkList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artwork_list);
-
+/*
         context=this;
 
-        contentsInformationList =new ArrayList<>();
+        contentsInformationList = new ArrayList<>();
 
         //Query to bring all artworks
         HQueryContentsInformation hQueryContentsInformation = new HQueryContentsInformation(this, contentsInformationList);
@@ -80,6 +80,6 @@ public class ActivityArtworkList extends AppCompatActivity {
         recyclerContentInformation.setLayoutManager(layMan);
         recyclerContentInformation.setItemAnimator(new DefaultItemAnimator());
         recyclerContentInformation.setAdapter(contentInformationAdapter);
-
+*/
     }
 }

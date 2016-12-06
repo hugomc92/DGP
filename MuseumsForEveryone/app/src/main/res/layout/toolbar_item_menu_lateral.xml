@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
     android:layout_height="wrap_content"
     android:background="#ffffff"
-    android:orientation="horizontal">
+    >
 
 
     <ImageView
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/rowIcon"
         android:paddingLeft="16dp"
-        android:src="@drawable/inicio"/>
+        android:src="@drawable/ic_home_black_48dp"/>
 
     <TextView
         android:layout_width="fill_parent"
@@ -22,6 +22,10 @@
         android:paddingTop="4dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
-        android:id="@+id/rowText" />
+        android:id="@+id/rowText"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:layout_toRightOf="@+id/rowIcon"
+        android:layout_toEndOf="@+id/rowIcon" />
 
-</LinearLayout>
+</RelativeLayout>
