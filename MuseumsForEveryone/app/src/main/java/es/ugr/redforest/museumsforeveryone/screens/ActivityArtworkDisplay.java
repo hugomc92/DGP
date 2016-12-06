@@ -20,9 +20,10 @@ public class ActivityArtworkDisplay extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artwork_display);
         SliderMenu mySlide = new SliderMenu(this,this);
+
         HQueryContentOfLocalization queryContent = new HQueryContentOfLocalization(this,localization,languageCode,id);
         queryContent.execute();
-
+        
         mySlide.inicializarToolbar(R.menu.menu_main,artworkName);
     }
 }
