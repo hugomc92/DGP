@@ -19,36 +19,38 @@ import java.io.IOException;
 import java.util.List;
 
 import es.ugr.redforest.museumsforeveryone.models.ContentInformation;
-import es.ugr.redforest.museumsforeveryone.models.ContentType;
 import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
 
 /**
- * Thread to connect to the server and get the content information
+ * Thread to connect to the server and get the localization information
  * @author Miguel Ángel Torres López
  * @version 1.0.0
  */
 
-public class HQueryContentInformation extends AsyncTask<Void, Integer, String> {
+public class HQueryContentsInformation extends AsyncTask<Void, Integer, String> {
     Context context;
-    String resultado;
+    String result;
     ProgressDialog pDialog;
     List<ContentInformation> contentInformationList;
+    String typeContent="";
 
 
-    public HQueryContentInformation(Context c , List<ContentInformation> contentInformationList) {
-        context=c;
+    public HQueryContentsInformation(Context c , List<ContentInformation> contentInformationList,String typeContent) {
+        this.context=c;
         this.contentInformationList = contentInformationList;
+        this.typeContent = typeContent;
+
     }
 
     @Override
     protected String doInBackground(Void... params) {
         ObjectMapper mapper = new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        resultado = QueryBBDD.realizarConsulta(QueryBBDD.consultaContentInformation, "", "POST");
+        result = QueryBBDD.doQuery(QueryBBDD.queryContentInformation, typeContent, "POST");
         JSONObject res =null;
         ContentInformation itemContentInformation =null;
         try {
-            if(resultado!=null) {
-                res = new JSONObject(resultado);
+            if(result !=null) {
+                res = new JSONObject(result);
                 if (!res.isNull("ContentInformation")) {
                     JSONArray contentType = res.getJSONArray("ContentInformation");
 
@@ -68,7 +70,7 @@ public class HQueryContentInformation extends AsyncTask<Void, Integer, String> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return resultado;
+        return result;
     }
 
     @Override
@@ -94,7 +96,7 @@ public class HQueryContentInformation extends AsyncTask<Void, Integer, String> {
     protected void onPreExecute() {
         super.onPreExecute();
         pDialog = new ProgressDialog(context);
-        pDialog.setMessage("Cargando Datos");
+        pDialog.setMessage("Loading Data");
         pDialog.setCancelable(false);
         pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         pDialog.show();

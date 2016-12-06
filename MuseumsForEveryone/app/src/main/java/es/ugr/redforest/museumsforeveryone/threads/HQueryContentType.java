@@ -42,7 +42,7 @@ public class HQueryContentType extends AsyncTask<Void, Integer, String> {
         @Override
         protected String doInBackground(Void... params) {
             ObjectMapper mapper = new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-            resultado = QueryBBDD.realizarConsulta(QueryBBDD.consultaType, "", "POST");
+            resultado = QueryBBDD.doQuery(QueryBBDD.queryType, "", "POST");
             JSONObject res =null;
             ContentType itemContentType =null;
             try {

@@ -12,9 +12,9 @@ public class ContentInformation {
     private String name;
     private String description;
     private String blindDescription;
-    private String language;
+    private Language language;
 
-    public ContentInformation(int id, String name, String description, String blindDescription, String language) {
+    public ContentInformation(int id, String name, String description, String blindDescription, Language language) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -38,7 +38,7 @@ public class ContentInformation {
         return blindDescription;
     }
 
-    public String getLanguage() {
+    public Language getLanguage() {
         return language;
     }
 
@@ -58,7 +58,7 @@ public class ContentInformation {
         this.blindDescription = blindDescription;
     }
 
-    public void setLanguage(String language) {
+    public void setLanguage(Language language) {
         this.language = language;
     }
 }

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.adapters.AdapterContentInformation;
 import es.ugr.redforest.museumsforeveryone.models.ContentInformation;
-import es.ugr.redforest.museumsforeveryone.threads.HQueryContentInformation;
+import es.ugr.redforest.museumsforeveryone.threads.HQueryContentsInformation;
 
 /**
  * Activity which shows a list of available artworks to select one of them
@@ -25,7 +25,7 @@ import es.ugr.redforest.museumsforeveryone.threads.HQueryContentInformation;
  */
 public class ActivityArtworkList extends AppCompatActivity {
 
-    private ArrayList<ContentInformation> contentInformationList;   //List of artworks available
+    private ArrayList<ContentInformation> contentsInformationList;   //List of artworks available
 
     private Context context;
 
@@ -36,13 +36,17 @@ public class ActivityArtworkList extends AppCompatActivity {
 
         context=this;
 
-        contentInformationList =new ArrayList<>();
+        contentsInformationList =new ArrayList<>();
+
+        //Query to bring all artworks
+        HQueryContentsInformation hQueryContentsInformation = new HQueryContentsInformation(this, contentsInformationList);
+        hQueryContentsInformation.execute();
 
         //Gets reference of the RecyclerView
         final RecyclerView recyclerContentInformation = (RecyclerView) findViewById(R.id.recycler_artwork_list);
 
         //Creates an Adapter with the list of languages
-        AdapterContentInformation contentInformationAdapter = new AdapterContentInformation(contentInformationList);
+        AdapterContentInformation contentInformationAdapter = new AdapterContentInformation(contentsInformationList);
 
         //Creates an Android default layout to show elements on the RecyclerView
         LinearLayoutManager layMan = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,
@@ -76,10 +80,6 @@ public class ActivityArtworkList extends AppCompatActivity {
         recyclerContentInformation.setLayoutManager(layMan);
         recyclerContentInformation.setItemAnimator(new DefaultItemAnimator());
         recyclerContentInformation.setAdapter(contentInformationAdapter);
-
-        //DEBUGGING PURPOSES
-        HQueryContentInformation hQueryContentInformation = new HQueryContentInformation(this,contentInformationList);
-        hQueryContentInformation.execute();
 
     }
 }

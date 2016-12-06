@@ -22,13 +22,14 @@ public class QueryBBDD {
 
     //Ficheros para consultas
 
-    public static final String consultaType = "/service/ContentTypeService";
+    public static final String queryType = "/service/ContentTypeService";
     //Supongo que se creara el /service/ContentInformation en un futuro(ahora no existe)
-    public static final String consultaContentInformation="/service/ContentInformation";
+    public static final String queryContentInformation ="/service/ContentInformation";
+    public static final String queryContentOfLocalization ="/api/content/localization";
 
-    public static String realizarConsulta(String urlREST,String parametros,String metodo) {
+    public static String doQuery(String urlREST, String parameters, String metodo) {
 
-            HttpURLConnection conexion = null;
+            HttpURLConnection connection= null;
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO) {
 
@@ -39,19 +40,19 @@ public class QueryBBDD {
 
                 URL url = new URL(server + urlREST );
 
-                conexion = (HttpURLConnection) url.openConnection();
-                conexion.setConnectTimeout(5000);
-                conexion.setReadTimeout(10000);
-                conexion.setRequestMethod(metodo);
-                conexion.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-                conexion.setDoInput(true);
-                conexion.setDoOutput(true);
-                OutputStream os = conexion.getOutputStream();
-                os.write(parametros.getBytes());
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setConnectTimeout(5000);
+                connection.setReadTimeout(10000);
+                connection.setRequestMethod(metodo);
+                connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                OutputStream os = connection.getOutputStream();
+                os.write(parameters.getBytes());
                 os.flush();
-                conexion.connect();
+                connection.connect();
 
-                int responseCode = conexion.getResponseCode();
+                int responseCode = connection.getResponseCode();
 
                 Log.d(" reponseCode", String.valueOf(responseCode));
 
@@ -60,7 +61,7 @@ public class QueryBBDD {
                     StringBuilder sb = new StringBuilder();
                     try{
 
-                        BufferedReader br = new BufferedReader(new InputStreamReader(conexion.getInputStream()));
+                        BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                         String linea;
 
                         while ((linea = br.readLine())!= null){
@@ -77,7 +78,7 @@ public class QueryBBDD {
                 }else{
 
                     if(responseCode == HttpURLConnection.HTTP_CLIENT_TIMEOUT){
-                        Log.d(" reponseCode",  conexion.getErrorStream().toString());
+                        Log.d(" reponseCode",  connection.getErrorStream().toString());
                     }
                 }
 
@@ -88,8 +89,8 @@ public class QueryBBDD {
                 e.printStackTrace();
             }
             finally {
-                    if(conexion!=null)
-                        conexion.disconnect();
+                    if(connection!=null)
+                        connection.disconnect();
             }
 
             return null;

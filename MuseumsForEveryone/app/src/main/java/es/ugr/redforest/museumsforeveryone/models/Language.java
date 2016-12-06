@@ -4,6 +4,7 @@ package es.ugr.redforest.museumsforeveryone.models;
  * Class containing all data from a language
  *
  * @author Gregorio Carvajal Exposito
+ * @author Emilio Chica Jiménez
  * @version 1.0.0
  */
 
@@ -11,6 +12,8 @@ public class Language {
 
 	private String lang;    //String which will be shown in the UI
 	private int image;      //Reference to the resource of the flag image for the language
+	private String code;	//String with language's code
+
 
 	/**
 	 * Empty constructor
@@ -20,14 +23,16 @@ public class Language {
 	}
 
 	/**
-	 * initializer contrsuctor
+	 * initializer constructor
 	 *
 	 * @param lang String which will be shown in th UI
 	 * @param image Reference to the resource of the flag image for the language
+	 * @param code String with language's code
 	 */
-	public Language(String lang, int image) {
+	public Language(String lang, int image,String code) {
 		this.lang = lang;
 		this.image = image;
+		this.code = code;
 	}
 
 	/**
@@ -68,5 +73,21 @@ public class Language {
 	public void setImage(int image) {
 
 		this.image = image;
+	}
+	/**
+	 * Gets language's code
+	 *
+	 * @return String with language's code
+	 */
+	public String getCode() {
+		return code;
+	}
+	/**
+	 * Gets language's code
+	 *
+	 *  @param code String with with language's code
+	 */
+	public void setCode(String code) {
+		this.code = code;
 	}
 }
