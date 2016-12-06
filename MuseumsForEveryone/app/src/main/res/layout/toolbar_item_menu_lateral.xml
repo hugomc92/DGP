@@ -18,8 +18,6 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="12dp"
-        android:paddingTop="4dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/rowText"

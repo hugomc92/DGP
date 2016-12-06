@@ -23,5 +23,6 @@
     <string name="home">Inicio</string>
     <string name="preferences">Preferencias</string>
     <string name="contact_info">Información y contacto</string>
+    <string name="scannQR">Escanear código QR</string>
 
 </resources>

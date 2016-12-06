@@ -3,6 +3,10 @@
     package="es.ugr.redforest.museumsforeveryone">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CAPTURE_VIDEO_OUTPUT" />
+    <uses-permission android:name="android.permission.CAPTURE_SECURE_VIDEO_OUTPUT" />
+    <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
 
     <application
         android:allowBackup="true"
@@ -32,7 +36,8 @@
             android:label="Visita Guiada" />
         <activity android:name=".screens.ActivityArtworkList" />
         <activity android:name=".screens.ActivityInfoScanner" />
-        <activity android:name=".screens.ActivityQRScanner" />
+        <activity android:name=".screens.ActivityQRScanner"
+            android:label="QRScanner"/>
         <activity android:name=".screens.ActivityInfoDisplay"
                 android:label="Información Obra"/>
         <activity android:name=".screens.ActivityVisitDisplay" />
