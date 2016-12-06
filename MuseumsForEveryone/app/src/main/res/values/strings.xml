@@ -11,15 +11,17 @@
     <string name="artwork_info">Info Obras</string>
     <string name="guided_visit">Visita Guiada</string>
     <string name="artwork_list">Lista de Obras</string>
+    <string name="artwork_scann">Escanear obra</string>
     <string name="artwork_pictures">Pinturas</string>
     <string name="artwork_sculptures">Esculturas</string>
     <string name="artwork_movies">Vídeos</string>
-<<<<<<< Updated upstream
     <string name="openDrawer">Open Drawer </string>
     <string name="closeDrawer">Close Drawer </string>
-=======
     <string name="nfc_scann">Escanear NFC</string>
     <string name="qr_scann">Escanear QR</string>
     <string name="language">Idioma</string>
->>>>>>> Stashed changes
+    <string name="home">Inicio</string>
+    <string name="preferences">Preferencias</string>
+    <string name="contact_info">Información y contacto</string>
+
 </resources>

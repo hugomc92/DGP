@@ -19,15 +19,21 @@ import android.view.View;
 
 import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.adapters.AdapterMenuLateral;
+import es.ugr.redforest.museumsforeveryone.screens.ActivityArtworkList;
+import es.ugr.redforest.museumsforeveryone.screens.ActivityContactInform;
+import es.ugr.redforest.museumsforeveryone.screens.ActivityGuidedVisit;
+import es.ugr.redforest.museumsforeveryone.screens.ActivityPreferences;
+import es.ugr.redforest.museumsforeveryone.screens.ActivityQRScanner;
+import es.ugr.redforest.museumsforeveryone.screens.MainActivity;
 
 /**
- * Created by matl1995 on 23/11/16.
+ * Created by sasu on 06/12/16.
  */
 
 public class SliderMenu {
     public Toolbar toolbar;
-    String TITLES[]={"Museums For Everyone", "Lista Obras","Visita Guiada","Info Obra","Preferencias","Contacto"};
-    int ICONS[]={android.R.drawable.ic_dialog_map,android.R.drawable.ic_input_get,android.R.drawable.arrow_down_float,android.R.drawable.ic_dialog_email, android.R.drawable.ic_btn_speak_now, android.R.drawable.ic_delete};
+    String TITLES[];
+    int ICONS[]={R.drawable.ic_home_black_48dp,R.drawable.qr_code_variant,R.drawable.ic_list_black_24dp,R.drawable.ic_assistant_photo_black_24dp, R.drawable.ic_settings_black_24dp, R.drawable.ic_help_black_24dp};
     RecyclerView mRecyclerView;							  // Declaring RecyclerView
     RecyclerView.Adapter mAdapter;                        // Declaring Adapter For Recycler View
     RecyclerView.LayoutManager mLayoutManager;            // Declaring Layout Manager as a linear layout manager
@@ -38,6 +44,7 @@ public class SliderMenu {
 
     public SliderMenu(Context context,Activity v){
         this.context = context;
+        this.TITLES = new String[]{context.getString(R.string.home),context.getString(R.string.artwork_scann),context.getString(R.string.artwork_list),context.getString(R.string.guided_visit),context.getString(R.string.preferences),context.getString(R.string.contact_info)};
         actualActivity =v;
         toolbar = (Toolbar) v.findViewById(R.id.tool_bar);
         mRecyclerView = (RecyclerView)  v.findViewById(R.id.RecyclerView); // Assigning the RecyclerView Object to the xml View
@@ -49,7 +56,6 @@ public class SliderMenu {
 
         //////////////////////////////////CODIGASOOO///////////////////////////
         toolbar.inflateMenu(xml);
-        toolbar.setLogo(R.mipmap.ic_launcher);
         toolbar.setTitle(nombre);
         //////////////////////////////////CODIGASOOO///////////////////////////
 
@@ -75,17 +81,36 @@ public class SliderMenu {
                 View child = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
 
                 if (child != null && mGestureDetector.onTouchEvent(motionEvent)) {
-                    if(recyclerView.getChildPosition(child)==1) {
-
-                    }else if(recyclerView.getChildPosition(child)==2){
+                    if(recyclerView.getChildAdapterPosition(child)==1) {
                         Drawer.closeDrawers();
-                        Intent mainIntent = new Intent(recyclerView.getContext(), CargaDepartamentos.class);
+                        Intent mainIntent = new Intent(recyclerView.getContext(),MainActivity.class);
                         context.startActivity(mainIntent);
                         actualActivity.finish();
-                    }else if(recyclerView.getChildPosition(child)==3){
-
-                    }else if(recyclerView.getChildPosition(child)==4){
-
+                    }else if(recyclerView.getChildAdapterPosition(child)==2){
+                        Drawer.closeDrawers();
+                        Intent mainIntent = new Intent(recyclerView.getContext(), ActivityQRScanner.class);
+                        context.startActivity(mainIntent);
+                        actualActivity.finish();
+                    }else if(recyclerView.getChildAdapterPosition(child)==3){
+                        Drawer.closeDrawers();
+                        Intent mainIntent = new Intent(recyclerView.getContext(), ActivityArtworkList.class);
+                        context.startActivity(mainIntent);
+                        actualActivity.finish();
+                    }else if(recyclerView.getChildAdapterPosition(child)==4){
+                        Drawer.closeDrawers();
+                        Intent mainIntent = new Intent(recyclerView.getContext(), ActivityGuidedVisit.class);
+                        context.startActivity(mainIntent);
+                        actualActivity.finish();
+                    }else if(recyclerView.getChildAdapterPosition(child)==5){
+                        Drawer.closeDrawers();
+                        Intent mainIntent = new Intent(recyclerView.getContext(), ActivityPreferences.class);
+                        context.startActivity(mainIntent);
+                        actualActivity.finish();
+                    }else if(recyclerView.getChildAdapterPosition(child)==6){
+                        Drawer.closeDrawers();
+                        Intent mainIntent = new Intent(recyclerView.getContext(), ActivityContactInform.class);
+                        context.startActivity(mainIntent);
+                        actualActivity.finish();
                     }
 
                     return true;

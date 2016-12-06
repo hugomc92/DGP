@@ -122,16 +122,16 @@ public class ActivityLang extends AppCompatActivity {
 	 * Only for debugging purposes
 	 */
 	private void loadLanguages() {
-		Language es = new Language("Español", R.drawable.spain);
+		Language es = new Language("Español", R.drawable.spain,"es");
 		langList.add(es);
 
-		Language en = new Language("English", R.drawable.english);
+		Language en = new Language("English", R.drawable.english,"en");
 		langList.add(en);
 
-		Language fr = new Language("Français", R.drawable.french);
+		Language fr = new Language("Français", R.drawable.french,"fr");
 		langList.add(fr);
 
-		Language de = new Language("Deutsch", R.drawable.german);
+		Language de = new Language("Deutsch", R.drawable.german,"de");
 		langList.add(de);
 	}
 
