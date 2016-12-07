@@ -42,6 +42,8 @@ ContentController.prototype.initBackend = function() {
 			content.retrievePagination(1,30).then(function(success) {
 				self.renderJson.contents = success;
 
+				self.renderJson.action = 'add';
+
 				res.render('pages/backend/contents', self.renderJson);
 				self.clearMessages();
 			}, function(err) {

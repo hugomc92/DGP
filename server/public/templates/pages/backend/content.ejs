@@ -36,8 +36,8 @@
 									<label for="content_name">Nombre</label>
 								</div>
 								<!-- Content type -->
-								<div id="content_type_select" class="input-field col s12 m6">
-									<select required>
+								<div class="input-field col s12 m6">
+									<select required id="content_type" name="content_type">
 										<option value="" disabled selected>Tipo de contenido</option>
 										<% for(var i=0; i<contentTypes.length; i++) { %>
 											<option value="<%= contentTypes[i].ID %>" data-icon="<%= contentTypes[i].ICON %>" class="left circle"><%= contentTypes[i].NAME %></option>
@@ -45,8 +45,8 @@
 									</select>
 								</div>
 								<!-- Content location -->
-								<div  id="location_select" class="input-field col s12 m6">
-									<select>
+								<div class="input-field col s12 m6">
+									<select id="content_location" name="content_location">
 										<option value="" disabled selected>Localización  (opcional)</option>
 										<% for(var i=0; i<localizations.length; i++) { %>
 											<option value="<%= localizations[i].ID %>"><%= localizations[i].DESCRIPTION %></option>

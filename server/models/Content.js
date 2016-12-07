@@ -23,7 +23,8 @@ var Content = DBConnector.connectM4E().define('CONTENT', {
 		},
 		retrievePaginationByType: function(content_type_id, inicio, fin){
 			return Content.findAll({ where: {CONTENT_TYPE_ID: content_type_id}}, {order: 'ID DESC', offset: parseInt(inicio) - 1, limit: parseInt(fin) });
-		}
+		},
+		add: function(creationDate, )
 	},
 	freezeTableName: true
 });

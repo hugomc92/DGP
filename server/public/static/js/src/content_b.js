@@ -6,8 +6,14 @@ var contentId;
 var dateInUpdate;
 var contentTypeSelect;
 var locationSelect;
+var action;
 
 $(document).ready(function() {
+
+	if($('#content_action').text().indexOf('Añadir') >= -1)
+		action = 'add';
+	else 
+		action = 'edit';
 
 	form = $('#spanish_content').find('.info_form').parent().html();
 
@@ -205,9 +211,52 @@ function send_data(form) {
 	var langId = form.parent().parent().attr('content-lang');
 	console.log('langId', langId);
 
-	// Get all data from current form
+	// Get all data from current form and add it to a json object
+	var jsonObj = {};
+	var content = {};
+	var contentInfo = {};
+
+	content.DATE_IN = form.find('#content_date_in').val();
+	content.DATE_OUT = form.find('#content_date_out').val();
+	content.LOCATION = form.find('#content_location').val();
+	content.TYPE = form.find('#content_type').val();
+
+	contentInfo.NAME = form.find('#content_name').val();
+	contentInfo.DESCRIPTION = form.find('#content_description').val();
+	contentInfo.BLIND_DESCRIPTION = form.find('#content_blind_description').val();
+	contentInfo.LANG = langId;
+	
+	jsonObj.CONTENT = content;
+	jsonObj.CONTENT_INFO = contentInfo;
+
 
 	// AJAX Call to post all data
+	$.ajax({
+		type: "POST",
+		url: '/api/content/' + action + '?email=' + $("#email").text(),
+		data: JSON.stringify(jsonObj),
+		contentType: 'application/json',
+		datatype: 'json',
+		success: function(jsondata){
+			if(jsondata.indexOf('ok') > -1) {
+				// Notify user of success
+				Materialize.toast('Se ha guardado el contenido con éxito', 4000);
+
+				// Modify all forms to get it
+				if(action === 'add')
+					action = 'edit';
+			}
+			else if(json.indexOf('not_allowed') >-1) {
+				Materialize.toast('No tiene los permisos suficientes para añadir contenido', 4000);
+			}
+			else {
+				Materialize.toast('Se ha producido un fallo interno', 4000);
+			}
+		},
+		error: function(xhr, status){
+			Materialize.toast("Se ha producido un fallo añadiendo el contenido", 4000);
+		}
+	});
 
 	// Avoid to send form on action
 	return false;

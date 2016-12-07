@@ -1,5 +1,8 @@
 var express = require("express");
+
 var Content = require("../models/Content");
+var ContentInformation = require("../models/ContentInformation");
+var User = require("../models/User");
 
 // Constructor for ActivityLogService
 function ContentService() {
@@ -43,6 +46,60 @@ ContentService.prototype.initializeRouter = function() {
 		}, function(err) {
 			res.status(404).send("Content not found");
 		});
+	});
+
+	self.router.route('/add').post(function(req, res) {
+		console.log('CONTENT ADD');
+
+		email = req.query.email;
+		user = User.build();
+
+		if(typeof email !== 'undefined') {
+			user.retrieveByEmail(email).then(function(result) {
+				if(result.ADMIN) {
+					var jsonObj = req.body;
+
+					console.log(jsonObj);
+					res.json('ok');
+				}
+				else {
+					res.json('not_allowed');
+				}
+			}, function(err) {
+				res.json('failed');
+			});
+		}
+		else {
+			res.json('not_allowed');
+		}
+		
+	});
+
+	self.router.route('/edit').post(function(req, res) {
+		console.log('CONTENT EDIT');
+
+		email = req.query.email;
+		user = User.build();
+
+		if(typeof email !== 'undefined') {
+			user.retrieveByEmail(email).then(function(result) {
+				if(result.ADMIN) {
+					var jsonObj = req.body;
+
+					console.log(jsonObj);
+					res.json('ok');
+				}
+				else {
+					res.json('not_allowed');
+				}
+			}, function(err) {
+				res.json('failed');
+			});
+		}
+		else {
+			res.json('not_allowed');
+		}
+		
 	});
 };
 
