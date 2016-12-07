@@ -1,54 +1,17 @@
 var currentLangs = [];
 var choosenAddLang;
+var form;
 var langs;
 var contentId;
-var dateInPicker;
-var dateOutPicker;
 var dateInUpdate;
 var contentTypeSelect;
 var locationSelect;
 
 $(document).ready(function() {
 
-	Materialize.updateTextFields();
+	form = $('#spanish_content').find('.info_form').parent().html();
 
-	currentLangs.push(1);
-
-	$('ul.tabs').tabs();
-
-	$('input, textarea').characterCounter();
-
-	contentTypeSelect = $('#content_type_select').html();
-	locationSelect = $('#location_select').html();
-
-	$('select').material_select();
-
-	dateInPicker = initializeDatePicker($('#content_date_in'));
-	dateOutPicker = initializeDatePicker($('#content_date_out'));
-
-	var dateIn = $('#content_date_in');
-	var dateOut = $('#content_date_out');
-
-	dateIn.on('change', function() {
-		dateOut.val('');
-
-		setTimeout(function() {
-			var infoUpdate = dateInUpdate.split('/');
-			var day = infoUpdate[0];
-			var month = infoUpdate[1];
-			var year = infoUpdate[2];
-
-			var minDate = [parseInt(year), parseInt(month)-1, day];
-
-			dateOutPicker.set('min', minDate);
-		}, 1000);		
-	});
-
-	$('.info_form').on('submit', function(event) {
-		event.preventDefault();
-
-		send_data($(this));
-	});
+	initilizeForm($('#spanish_content'), 1);
 
 	$('#more_langs').click(function() {
 		$('#add_lang_content').openModal( {
@@ -121,18 +84,9 @@ $(document).ready(function() {
 					$('ul.tabs').tabs();
 
 					// Add new content tab
-					var cont = $('#spanish_content').html();
-					$('#contents').append('<div id="' + langs[i].NAME.toLowerCase() + '_content" class="col s12" style="display:none">' + cont + '</div>');
+					$('#contents').append('<div id="' + langs[i].NAME.toLowerCase() + '_content" class="col s12" style="display:none">' + form + '</div>');
 
-					var elem = $('#contents #' + langs[i].NAME.toLowerCase() + '_content');
-
-					elem.find('#content_type_select').text('');
-					elem.find('#content_type_select').html(contentTypeSelect);
-
-					elem.find('#location_select').text('');
-					elem.find('#location_select').html(locationSelect);
-
-					$('select').material_select();
+					initilizeForm($('#' + langs[i].NAME.toLowerCase() + '_content'), langId);
 
 					found = true;
 				}
@@ -142,6 +96,48 @@ $(document).ready(function() {
 		cleanAddLangModal();
 	});
 });
+
+function initilizeForm(elem, langId) {
+
+	var form = elem.find('.info_form');
+
+	Materialize.updateTextFields();
+
+	currentLangs.push(1);
+
+	form.find('ul.tabs').tabs();
+
+	form.find('input, textarea').characterCounter();
+
+	$('select').material_select();
+
+	var dateInPicker = initializeDatePicker(form.find('#content_date_in'));
+	var dateOutPicker = initializeDatePicker(form.find('#content_date_out'));
+
+	var dateIn = form.find('#content_date_in');
+	var dateOut = form.find('#content_date_out');
+
+	dateIn.on('change', function() {
+		dateOut.val('');
+
+		setTimeout(function() {
+			var infoUpdate = dateInUpdate.split('/');
+			var day = infoUpdate[0];
+			var month = infoUpdate[1];
+			var year = infoUpdate[2];
+
+			var minDate = [parseInt(year), parseInt(month)-1, day];
+
+			dateOutPicker.set('min', minDate);
+		}, 1000);		
+	});
+
+	form.on('submit', function(event) {
+		event.preventDefault();
+
+		send_data($(this));
+	});
+}
 
 function cleanAddLangModal() {
 
@@ -206,10 +202,12 @@ function send_data(form) {
 	console.log(form.parent().parent());
 
 	// Get language id from current form
-	var langId = form.parent().parent().attr('form-lang');
+	var langId = form.parent().parent().attr('content-lang');
 	console.log('langId', langId);
 
 	// Get all data from current form
+
+	// AJAX Call to post all data
 
 	// Avoid to send form on action
 	return false;
