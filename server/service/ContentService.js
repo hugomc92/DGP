@@ -42,8 +42,6 @@ ContentService.prototype.initializeRouter = function() {
 		content.retrieveAllByType(type).then(function (result) {
 			var contents = result;
 
-			//console.log('contents', contents);
-
 			if(result) {
 				jsonResObj = {
 					contents: []
@@ -67,34 +65,36 @@ ContentService.prototype.initializeRouter = function() {
 					contentInformation.retrieveAllByContentIdsByLang(contentIds, langId).then(function(success) {
 						var contentInfos = success;
 
-						//console.log('contentInfos', contentInfos);
-
 						var contentType = ContentType.build();
 
 						contentType.retrieveAllByListIds(contentTypesIds).then(function(success) {
 							var contentTypes = success;
 
-							//console.log('contentTypes', contentTypes);
-
 							for(var i=0; i<contents.length; i++) {
 								var contentInfo;
+								var contentInfofound = false;
+								var contentTypefound = false;
 
-								for(var j=0; j<contentInfos.length; j++) {
+								for(var j=0; j<contentInfos.length && !contentInfofound; j++) {
 									if(contentInfos[j].CONTENT_ID === contents[i].ID) {
 										contentInfo = contentInfos[j];
+										contentInfofound = true;
 									}
 								}
 
-								for(var k=0; k<contentTypes.length; k++) {
+								for(var k=0; k<contentTypes.length && !contentTypefound; k++) {
 									if(contentTypes[k].ID === contents[i].CONTENT_TYPE_ID) {
 										jsonResObj.contents.push( {
 											content: contents[i],
 											content_information: contentInfo,
 											content_type: contentTypes[k]
 										});
+										
+										contentTypefound = true;
 									}
 								}
 							}
+
 							res.json(jsonResObj);
 						}, function(err) {
 							res.status(404).send("Content Types not found");
