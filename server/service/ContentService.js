@@ -6,8 +6,8 @@ var ContentInformation = require('../models/ContentInformation');
 var ContentType = require('../models/ContentType');
 var Language = require('../models/Language');
 
-// Constructor for ActivityLogService
-function ContentService() { 
+// Constructor for ContentService
+function ContentService() {
 	this.router = express.Router();
 	this.initializeRouter();
 }
@@ -58,7 +58,6 @@ ContentService.prototype.initializeRouter = function() {
 				var lang = Language.build();
 
 				lang.retrieveByCode(code).then(function(success) {
-
 					if(success !== null) {
 						var langId = success.ID;
 						
@@ -163,8 +162,6 @@ ContentService.prototype.initializeRouter = function() {
 					content.add(dateIn, dateOut, jsonObj.CONTENT.LOCATION, jsonObj.CONTENT.TYPE).then(function(success) {
 						content.retrieveLast().then(function(success) {
 							var lastContent = success;
-
-							console.log("Last", lastContent);
 
 							var contentInformation = ContentInformation.build();
 
@@ -292,8 +289,7 @@ ContentService.prototype.initializeRouter = function() {
 };
 
 ContentService.prototype.getRouter = function() {
-	var self = this;
-	return self.router;
+	return this.router;
 };
 
 module.exports = ContentService;
