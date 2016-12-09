@@ -39,10 +39,8 @@ ContentController.prototype.initBackend = function() {
 		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
 			var content = Content.build();
 
-			content.retrievePagination(1,30).then(function(success) {
+			content.retrievePagination(1,50).then(function(success) {
 				self.renderJson.contents = success;
-
-				self.renderJson.action = 'add';
 
 				res.render('pages/backend/contents', self.renderJson);
 				self.clearMessages();
@@ -58,6 +56,8 @@ ContentController.prototype.initBackend = function() {
 
 	self.routerBackend.route('/add').get(function(req, res) {
 		self.renderJson.breadcrumb = {'LINK': '/backend/contents/', 'SECTION': 'Contenido'};
+
+		self.renderJson.action = 'add';
 
 		self.renderJson.moreContent = {'LINK': '/backend/contents/add', 'SECTION': 'Añadir Contenido'};
 		self.renderJson.user = req.session.user;
@@ -115,6 +115,7 @@ ContentController.prototype.clearMessages = function() {
 	delete this.renderJson.msg;
 	delete this.renderJson.error;
 	delete this.renderJson.moreContent;
+	delete this.renderJson.action;
 };
 
 module.exports = ContentController;

@@ -7,6 +7,7 @@ var dateInUpdate;
 var contentTypeSelect;
 var locationSelect;
 var action;
+var contentId;
 
 $(document).ready(function() {
 
@@ -14,6 +15,11 @@ $(document).ready(function() {
 		action = 'add';
 	else 
 		action = 'edit';
+
+	if($('#contents').attr('content-id') !== '')
+		contentId = $('#contents').attr('content-id');
+
+	console.log("contentId", contentId);
 
 	form = $('#spanish_content').find('.info_form').parent().html();
 
@@ -123,6 +129,9 @@ function initilizeForm(elem, langId) {
 	var dateIn = form.find('#content_date_in');
 	var dateOut = form.find('#content_date_out');
 
+	var dateInHidden = form.find('#content_date_in_hidden');
+	var dateOutHidden = form.find('#content_date_out_hidden');
+
 	dateIn.on('change', function() {
 		dateOut.val('');
 
@@ -135,7 +144,20 @@ function initilizeForm(elem, langId) {
 			var minDate = [parseInt(year), parseInt(month)-1, day];
 
 			dateOutPicker.set('min', minDate);
-		}, 1000);		
+
+			dateInHidden.val(day + '/' + month + '/' + year);
+		}, 500);		
+	});
+
+	dateOut.on('change', function() {
+		setTimeout(function() {
+			var infoUpdate = dateInUpdate.split('/');
+			var day = infoUpdate[0];
+			var month = infoUpdate[1];
+			var year = infoUpdate[2];
+
+			dateOutHidden.val(day + '/' + month + '/' + year);
+		}, 500);		
 	});
 
 	form.on('submit', function(event) {
@@ -216,8 +238,8 @@ function send_data(form) {
 	var content = {};
 	var contentInfo = {};
 
-	content.DATE_IN = form.find('#content_date_in').val();
-	content.DATE_OUT = form.find('#content_date_out').val();
+	content.DATE_IN = form.find('#content_date_in_hidden').val();
+	content.DATE_OUT = form.find('#content_date_out_hidden').val();
 	content.LOCATION = form.find('#content_location').val();
 	content.TYPE = form.find('#content_type').val();
 
@@ -238,19 +260,19 @@ function send_data(form) {
 		contentType: 'application/json',
 		datatype: 'json',
 		success: function(jsondata){
-			if(jsondata.indexOf('ok') > -1) {
+			if(jsondata.ok === 'failed') {
+				Materialize.toast('Se ha producido un fallo interno', 4000);
+			}
+			else if(jsondata.ok === 'not_allowed') {
+				Materialize.toast('No tiene los permisos suficientes para añadir contenido', 4000);
+			}
+			else {
 				// Notify user of success
 				Materialize.toast('Se ha guardado el contenido con éxito', 4000);
 
 				// Modify all forms to get it
 				if(action === 'add')
 					action = 'edit';
-			}
-			else if(json.indexOf('not_allowed') >-1) {
-				Materialize.toast('No tiene los permisos suficientes para añadir contenido', 4000);
-			}
-			else {
-				Materialize.toast('Se ha producido un fallo interno', 4000);
 			}
 		},
 		error: function(xhr, status){

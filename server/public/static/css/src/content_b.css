@@ -123,6 +123,12 @@ main {
   margin-top: 10px;
   padding-bottom: 25px;
 }
+#contents .info_form .content_required {
+  color: red !important;
+}
+#contents .info_form .content_required::after {
+  content: '*';
+}
 #contents .info_form #submit_content_form {
   margin-top: 25px;
 }

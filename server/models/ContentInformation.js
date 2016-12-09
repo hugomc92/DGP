@@ -5,8 +5,8 @@ var DBConnector = require("../utils/DBConnector");
 var ContentInformation = DBConnector.connectM4E().define('CONTENT_INFORMATION', {
 	ID: {type: Sequelize.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true},
 	NAME: {type: Sequelize.STRING(100), allowNull: false},
-	DESCRIPTION: {type: Sequelize.STRING(500), allowNull: true},
-	BLIND_DESCRIPTION: {type: Sequelize.STRING(500), allowNull: false},
+	DESCRIPTION: {type: Sequelize.STRING, allowNull: true},
+	BLIND_DESCRIPTION: {type: Sequelize.STRING, allowNull: false},
 	CONTENT_ID: {type: Sequelize.INTEGER, allowNull: false},
 	LANG_ID: {type: Sequelize.INTEGER, allowNull: false}
 },

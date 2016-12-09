@@ -1,8 +1,9 @@
-var express = require("express");
+var express = require('express');
+var moment = require('moment');
 
-var Content = require("../models/Content");
-var ContentInformation = require("../models/ContentInformation");
-var User = require("../models/User");
+var Content = require('../models/Content');
+var ContentInformation = require('../models/ContentInformation');
+var User = require('../models/User');
 
 // Constructor for ActivityLogService
 function ContentService() {
@@ -54,25 +55,81 @@ ContentService.prototype.initializeRouter = function() {
 		email = req.query.email;
 		user = User.build();
 
+		var jsonResObj = {};
+
 		if(typeof email !== 'undefined') {
 			user.retrieveByEmail(email).then(function(result) {
 				if(result.ADMIN) {
 					var jsonObj = req.body;
 
 					console.log(jsonObj);
-					res.json('ok');
+
+					var dateIn;
+					var dateOut;
+
+					var resIn = jsonObj.CONTENT.DATE_IN.split('/');
+					var dayIn = resIn[0];
+					var monthIn = resIn[1];
+					var yearIn = resIn[2];
+
+					var resOut = jsonObj.CONTENT.DATE_OUT.split('/');
+					var dayOut = resOut[0];
+					var monthOut = resOut[1];
+					var yearOut = resOut[2];
+
+					if(jsonObj.CONTENT.DATE_IN !== '')
+						dateIn = new Date(yearIn, monthIn-1, dayIn);
+					
+					if(jsonObj.CONTENT.DATE_OUT !== '')
+						dateOut = new Date(yearOut, monthOut-1, dayOut);
+
+					var content = Content.build();
+
+					content.add(dateIn, dateOut, jsonObj.CONTENT.LOCATION, jsonObj.CONTENT.TYPE).then(function(success) {
+						content.retrieveLast().then(function(success) {
+							var lastContent = success;
+
+							console.log("Last", lastContent);
+
+							var contentInformation = ContentInformation.build();
+
+							contentInformation.add(jsonObj.CONTENT_INFO.NAME, jsonObj.CONTENT_INFO.DESCRIPTION, jsonObj.CONTENT_INFO.BLIND_DESCRIPTION, lastContent.ID, jsonObj.CONTENT_INFO.LANG).then(function(success) {
+								
+								jsonResObj.ok = lastContent.ID;
+
+								res.json(jsonResObj);
+							}, function(err) {
+								jsonResObj.ok = 'failed';
+
+								res.json(jsonResObj);
+							});
+						}, function(err) {
+							jsonResObj.ok = 'failed';
+
+							res.json(jsonResObj);
+						});
+					}, function(err) {
+						jsonResObj.ok = 'failed';
+
+						res.json(jsonResObj);
+					});
 				}
 				else {
-					res.json('not_allowed');
+					jsonResObj.ok = 'not_allowed';
+
+					res.json(jsonResObj);
 				}
 			}, function(err) {
-				res.json('failed');
+				jsonResObj.ok = 'failed';
+
+				res.json(jsonResObj);
 			});
 		}
 		else {
-			res.json('not_allowed');
+			jsonResObj.ok = 'not_allowed';
+
+			res.json(jsonResObj);
 		}
-		
 	});
 
 	self.router.route('/edit').post(function(req, res) {
@@ -81,25 +138,81 @@ ContentService.prototype.initializeRouter = function() {
 		email = req.query.email;
 		user = User.build();
 
+		var jsonResObj = {};
+
 		if(typeof email !== 'undefined') {
 			user.retrieveByEmail(email).then(function(result) {
 				if(result.ADMIN) {
 					var jsonObj = req.body;
 
 					console.log(jsonObj);
-					res.json('ok');
+
+					var dateIn;
+					var dateOut;
+
+					var resIn = jsonObj.CONTENT.DATE_IN.split('/');
+					var dayIn = resIn[0];
+					var monthIn = resIn[1];
+					var yearIn = resIn[2];
+
+					var resOut = jsonObj.CONTENT.DATE_OUT.split('/');
+					var dayOut = resOut[0];
+					var monthOut = resOut[1];
+					var yearOut = resOut[2];
+
+					if(jsonObj.CONTENT.DATE_IN !== '')
+						dateIn = new Date(yearIn, monthIn-1, dayIn);
+					
+					if(jsonObj.CONTENT.DATE_OUT !== '')
+						dateOut = new Date(yearOut, monthOut-1, dayOut);
+
+					var content = Content.build();
+
+					content.updateById(dateIn, dateOut, jsonObj.CONTENT.LOCATION, jsonObj.CONTENT.TYPE).then(function(success) {
+						content.retrieveLast().then(function(success) {
+							var lastContent = success;
+
+							console.log("Last", lastContent);
+
+							var contentInformation = ContentInformation.build();
+
+							contentInformation.updateById(jsonObj.CONTENT_INFO.NAME, jsonObj.CONTENT_INFO.DESCRIPTION, jsonObj.CONTENT_INFO.BLIND_DESCRIPTION, lastContent.ID, jsonObj.CONTENT_INFO.LANG).then(function(success) {
+								
+								jsonResObj.ok = lastContent.ID;
+
+								res.json(jsonResObj);
+							}, function(err) {
+								jsonResObj.ok = 'failed';
+
+								res.json(jsonResObj);
+							});
+						}, function(err) {
+							jsonResObj.ok = 'failed';
+
+							res.json(jsonResObj);
+						});
+					}, function(err) {
+						jsonResObj.ok = 'failed';
+
+						res.json(jsonResObj);
+					});
 				}
 				else {
-					res.json('not_allowed');
+					jsonResObj.ok = 'not_allowed';
+
+					res.json(jsonResObj);
 				}
 			}, function(err) {
-				res.json('failed');
+				jsonResObj.ok = 'failed';
+
+				res.json(jsonResObj);
 			});
 		}
 		else {
-			res.json('not_allowed');
+			jsonResObj.ok = 'not_allowed';
+
+			res.json(jsonResObj);
 		}
-		
 	});
 };
 
