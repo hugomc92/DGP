@@ -18,6 +18,15 @@ var ContentInformation = DBConnector.connectM4E().define('CONTENT_INFORMATION', 
 		retrieveByContentId: function(contentId) {
 			return ContentInformation.findAll({where: {CONTENT_ID: contentId}});
 		},
+		retrieveByContentIdByLangId: function(contentId, langId) {
+			return ContentInformation.findOne({ where: {CONTENT_ID: contentId, LANG_ID: langId}});
+		},
+		retrieveAllByContentIds: function(contentIds) {
+			return ContentInformation.findAll({where: {CONTENT_ID: {in: contentIds}}});
+		},
+		retrieveAllByContentIdsByLang: function(contentIds, langId) {
+			return ContentInformation.findAll({where: {LANG_ID: langId, CONTENT_ID: {in: contentIds}}});
+		},
 		add: function(name, description, blindDescription, contentId, langId) {
 			return ContentInformation.create( {
 				NAME: name,

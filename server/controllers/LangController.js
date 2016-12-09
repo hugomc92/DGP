@@ -257,15 +257,15 @@ LangController.prototype.getRouterFrontend = function() {
 };
 
 LangController.prototype.getLangById = function(id) {
-	var user = Lang.build();
+	var lang = Language.build();
 
-	return user.retrieveById(id);
+	return lang.retrieveById(id);
 };
 
 LangController.prototype.getAllLangWidthIds = function(listIds) {
-	var user = Lang.build();
+	var lang = Language.build();
 
-	return user.retrieveAllByListIds(listIds);
+	return lang.retrieveAllByListIds(listIds);
 };
 
 LangController.prototype.clearMessages = function() {

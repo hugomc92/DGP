@@ -40,6 +40,39 @@
 							count++; %>
 							<tr>
 								<td><%= contents[i].ID %></td>
+								<% for(var j=0; j<contentInformations.length; j++) {
+									if(contentInformations[j].CONTENT_ID === contents[i].ID) { %>
+										<td><%= contentInformations[j].NAME %></td>
+									<% }
+								} %>
+								<% for(var j=0; j<contentTypes.length; j++) {
+									if(contentTypes[j].ID === contents[i].CONTENT_TYPE_ID) { %>
+										<td><%= contentTypes[j].NAME %></td>
+									<% }
+								} %>
+								<% var found = false;
+								for(var j=0; j<locations.length; j++) {
+									if(locations[j].ID === contents[i].LOCALIZATION_ID) { %>
+										<td><%= locations[j].DESCRIPTION %></td>
+										<% found = true;
+									}
+								}
+								if(found === false) { %>
+									<td>Ninguna</td>
+								<% } %>
+								<% for(var j=0; j<contentInformations.length; j++) {
+									if(contentInformations[j].CONTENT_ID === contents[i].ID) { %>
+										<td><ul>
+										<% for(var k=0; k<langs.length; k++) {
+											if(langs[k].ID === contentInformations[j].LANG_ID) { %>
+												<li><img src="<%= langs[k].FLAG %>" width="30px" /></li>
+											<% }
+										} %>
+										</ul></td>
+									<% }
+								} %>
+								<td><%= moment(contents[i].DATE_IN).format('DD/MM/YYYY') %></td>
+								<td><%= moment(contents[i].DATE_OUT).format('DD/MM/YYYY') %></td>
 								<td class="actions">
 									<a href="#edit_content_type"><i class="material-icons">mode_edit</i></a>
 									<a class="modal-trigger" href="#delete_content"><i class="material-icons">delete</i></a>

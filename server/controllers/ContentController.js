@@ -7,9 +7,10 @@ var moment = require('moment');
 
 var Utils = require('../utils/Util');
 var Content = require('../models/Content');
+var ContentInformation = require('../models/ContentInformation');
 
 // Constructor for ContentController
-function ContentController(json, activityLogC, contentTypeC, localizationC) {
+function ContentController(json, activityLogC, contentTypeC, localizationC, langC) {
 	this.renderJson = json;
 	this.uploadpath = path.join(__dirname, '..', 'public', 'static', 'upload') + '/';
 	this.uploadimgpath = path.join(__dirname, '..', 'public', 'static', 'img', 'contents') + '/';
@@ -17,6 +18,7 @@ function ContentController(json, activityLogC, contentTypeC, localizationC) {
 	this.activityLogController = activityLogC;
 	this.contentTypeController = contentTypeC;
 	this.localizationController = localizationC;
+	this.langController = langC;
 
 	this.routerBackend = express.Router();
 	this.initBackend();
@@ -42,8 +44,54 @@ ContentController.prototype.initBackend = function() {
 			content.retrievePagination(1,50).then(function(success) {
 				self.renderJson.contents = success;
 
-				res.render('pages/backend/contents', self.renderJson);
-				self.clearMessages();
+				console.log('contents', success);
+
+				var contentIds = [];
+				var contentTypeIds = [];
+				var locationIds = [];
+				for(var i=0; i<success.length; i++) {
+					contentIds.push(success[i].ID);
+					contentTypeIds.push(success[i].CONTENT_TYPE_ID);
+					locationIds.push(success[i].LOCALIZATION_ID);
+				}
+
+				self.contentTypeController.getAllContentTypeWidthIds(contentTypeIds).then(function(success) {
+					self.renderJson.contentTypes = success;
+
+					self.localizationController.getAllLocalizationWidthIds(locationIds).then(function(success) {
+						self.renderJson.locations = success;
+
+						var contentInformation = ContentInformation.build();
+
+						contentInformation.retrieveAllByContentIds(contentIds).then(function(success) {
+							self.renderJson.contentInformations = success;
+
+							var langsIds = [];
+
+							for(var i=0; i<success.length; i++)
+								langsIds.push(success[i].LANG_ID);
+
+							self.langController.getAllLangWidthIds(langsIds).then(function(success) {
+								self.renderJson.langs = success;
+
+								res.render('pages/backend/contents', self.renderJson);
+								self.clearMessages();
+							}, function(err) {
+								self.renderJson.error = 'Se ha producido un error interno recuperando los idiomas2   de los contenidos';
+								res.redirect('/backend/');
+							});
+						}, function(err) {
+							self.renderJson.error = 'Se ha producido un error interno recuperando la información de los contenidos';
+							res.redirect('/backend/');
+						});
+					}, function(err) {
+						self.renderJson.error = 'Se ha producido un error interno recuperando las localizaciones de los contenidos';
+						res.redirect('/backend/');
+					});
+				}, function(err){
+					self.renderJson.error = 'Se ha producido un error interno recuperando los tipos de los contenidos';
+					res.redirect('/backend/');
+				});
 			}, function(err) {
 				self.renderJson.error = 'Se ha producido un error interno recuperando los contenidos';
 				res.redirect('/backend/');
