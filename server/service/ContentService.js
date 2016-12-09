@@ -42,7 +42,7 @@ ContentService.prototype.initializeRouter = function() {
 		content.retrieveAllByType(type).then(function (result) {
 			var contents = result;
 
-			if(result) {
+			if(contents.length > 0) {
 				jsonResObj = {
 					contents: []
 				};
@@ -58,50 +58,53 @@ ContentService.prototype.initializeRouter = function() {
 				var lang = Language.build();
 
 				lang.retrieveByCode(code).then(function(success) {
-					var langId = success.ID;
-					
-					var contentInformation = ContentInformation.build();
 
-					contentInformation.retrieveAllByContentIdsByLang(contentIds, langId).then(function(success) {
-						var contentInfos = success;
+					if(success !== null) {
+						var langId = success.ID;
+						
+						var contentInformation = ContentInformation.build();
 
-						var contentType = ContentType.build();
+						contentInformation.retrieveAllByContentIdsByLang(contentIds, langId).then(function(success) {
+							var contentInfos = success;
 
-						contentType.retrieveAllByListIds(contentTypesIds).then(function(success) {
-							var contentTypes = success;
+							var contentType = ContentType.build();
 
-							for(var i=0; i<contents.length; i++) {
-								var contentInfo;
-								var contentInfofound = false;
-								var contentTypefound = false;
+							contentType.retrieveAllByListIds(contentTypesIds).then(function(success) {
+								var contentTypes = success;
 
-								for(var j=0; j<contentInfos.length && !contentInfofound; j++) {
-									if(contentInfos[j].CONTENT_ID === contents[i].ID) {
-										contentInfo = contentInfos[j];
-										contentInfofound = true;
+								for(var i=0; i<contents.length; i++) {
+									var contentInfo;
+									var contentInfofound = false;
+									var contentTypefound = false;
+
+									for(var j=0; j<contentInfos.length && !contentInfofound; j++) {
+										if(contentInfos[j].CONTENT_ID === contents[i].ID) {
+											contentInfo = contentInfos[j];
+											contentInfofound = true;
+										}
+									}
+
+									for(var k=0; k<contentTypes.length && !contentTypefound; k++) {
+										if(contentTypes[k].ID === contents[i].CONTENT_TYPE_ID) {
+											jsonResObj.contents.push( {
+												content: contents[i],
+												content_information: contentInfo,
+												content_type: contentTypes[k]
+											});
+											contentTypefound = true;
+										}
 									}
 								}
-
-								for(var k=0; k<contentTypes.length && !contentTypefound; k++) {
-									if(contentTypes[k].ID === contents[i].CONTENT_TYPE_ID) {
-										jsonResObj.contents.push( {
-											content: contents[i],
-											content_information: contentInfo,
-											content_type: contentTypes[k]
-										});
-										
-										contentTypefound = true;
-									}
-								}
-							}
-
-							res.json(jsonResObj);
+								res.json(jsonResObj);
+							}, function(err) {
+								res.status(404).send("Content Types not found");
+							});
 						}, function(err) {
-							res.status(404).send("Content Types not found");
+							res.status(404).send("Content Informations not found");
 						});
-					}, function(err) {
-						res.status(404).send("Content Informations not found");
-					});
+					}
+					else
+						res.status(401).send("Lang not found");
 				}, function(err) {
 					res.status(404).send("Language not found");
 				});
