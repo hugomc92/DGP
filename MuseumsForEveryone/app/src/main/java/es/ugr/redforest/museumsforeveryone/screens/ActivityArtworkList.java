@@ -66,9 +66,11 @@ public class ActivityArtworkList extends AppCompatActivity {
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
 
                 View child = recyclerContentInformation.findChildViewUnder(e.getX(), e.getY());
-                Intent ActivityArtworkDisplayIntent = new Intent(ActivityArtworkList.this, ActivityArtworkDisplay.class);
-                ActivityArtworkDisplayIntent.putExtra("id",recyclerContentInformation.getChildAdapterPosition(child));
-                startActivity(ActivityArtworkDisplayIntent);
+                if(child!=null) {
+                    Intent ActivityArtworkDisplayIntent = new Intent(ActivityArtworkList.this, ActivityArtworkDisplay.class);
+                    ActivityArtworkDisplayIntent.putExtra("id", recyclerContentInformation.getChildAdapterPosition(child));
+                    startActivity(ActivityArtworkDisplayIntent);
+                }
                 return false;
             }
 
