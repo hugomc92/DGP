@@ -44,7 +44,6 @@ public class ActivityArtworkList extends AppCompatActivity {
         if(bundle.containsKey("id_type"))
             id = bundle.getString("id_type");
 
-        String languageCode = ControllerPreferences.getLanguage();
         //Query to bring all artworks
         HQueryArtworkList hQueryContentsInformation = new HQueryArtworkList(this,contents,id);
         hQueryContentsInformation.execute();
@@ -67,8 +66,9 @@ public class ActivityArtworkList extends AppCompatActivity {
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
 
                 View child = recyclerContentInformation.findChildViewUnder(e.getX(), e.getY());
-                Intent FirstViewIntent = new Intent(ActivityArtworkList.this, ActivityFirstView.class);
-                startActivity(FirstViewIntent);
+                Intent ActivityArtworkDisplayIntent = new Intent(ActivityArtworkList.this, ActivityArtworkDisplay.class);
+                ActivityArtworkDisplayIntent.putExtra("id",recyclerContentInformation.getChildAdapterPosition(child));
+                startActivity(ActivityArtworkDisplayIntent);
                 return false;
             }
 

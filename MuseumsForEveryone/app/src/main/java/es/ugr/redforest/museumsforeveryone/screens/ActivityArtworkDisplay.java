@@ -19,7 +19,6 @@ public class ActivityArtworkDisplay extends AppCompatActivity {
 
     String artworkName="";
     Localization localization= null;
-    String languageCode="";
     String id="";
     Context context;
 
@@ -35,14 +34,18 @@ public class ActivityArtworkDisplay extends AppCompatActivity {
         if(bundle.containsKey("index")){
             index = bundle.getInt("index");
         }
-        if(bundle.containsKey("id")) {
+        if(bundle.containsKey("qrornfc")) {
+            id = bundle.getString("qrornfc");
+            HQueryContentOfLocalization queryContent = new HQueryContentOfLocalization(this, localization, id,index,artworkName,true);
+            queryContent.execute();
+        }else if(bundle.containsKey("id"))
+        {
             id = bundle.getString("id");
-
-            languageCode = ControllerPreferences.getLanguage();
-
-            HQueryContentOfLocalization queryContent = new HQueryContentOfLocalization(this, localization, id,index,artworkName);
+            HQueryContentOfLocalization queryContent = new HQueryContentOfLocalization(this, localization, id,index,artworkName,false);
             queryContent.execute();
         }
+
+
 
         mySlide.inicializarToolbar(R.menu.menu_main, artworkName);
     }
