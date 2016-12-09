@@ -24,6 +24,9 @@ var Content = DBConnector.connectM4E().define('CONTENT', {
 		retrievePagination: function(inicio, fin){
 			return Content.findAll({order: 'ID DESC', offset: parseInt(inicio) - 1, limit: parseInt(fin) });
 		},
+		retrieveAllByType: function(content_type_id){
+			return Content.findAll({ where: {CONTENT_TYPE_ID: content_type_id}});
+		},
 		retrievePaginationByType: function(content_type_id, inicio, fin){
 			return Content.findAll({ where: {CONTENT_TYPE_ID: content_type_id}}, {order: 'ID DESC', offset: parseInt(inicio) - 1, limit: parseInt(fin) });
 		},

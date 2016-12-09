@@ -19,8 +19,8 @@ var Language = DBConnector.connectM4E().define('LANGUAGE', {
 		retrieveAllByListIds : function(listIds) {
 			return Language.findAll({ where: { ID: { in: listIds } } });
 		},
-		retrievePagination: function(inicio, fin) {
-			return Language.findAll({order: 'ID DESC', offset: parseInt(inicio) - 1, limit: parseInt(fin) });
+		retrieveByCode: function(code) {
+			return Language.findOne({where: {CODE: code}});
 		},
 		add: function(name, flag, code) {
 			return Language.create( {
