@@ -1,11 +1,16 @@
 package es.ugr.redforest.museumsforeveryone.utils;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -16,6 +21,7 @@ import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.adapters.AdapterMenuLateral;
@@ -30,7 +36,7 @@ import es.ugr.redforest.museumsforeveryone.screens.MainActivity;
  * Created by sasu on 06/12/16.
  */
 
-public class SliderMenu {
+public class SliderMenu extends ActivityCompat{
     public Toolbar toolbar;
     String TITLES[];
     int ICONS[]={R.drawable.ic_home_black_48dp,R.drawable.qr_code_variant,R.drawable.ic_list_black_24dp,R.drawable.ic_assistant_photo_black_24dp, R.drawable.ic_settings_black_24dp, R.drawable.ic_help_black_24dp};
@@ -41,6 +47,7 @@ public class SliderMenu {
     public ActionBarDrawerToggle mDrawerToggle;
     Context context;
     Activity actualActivity;
+    private static final int CAMERA_REQUEST = 1;
 
     public SliderMenu(Context context,Activity v){
         this.context = context;
@@ -87,6 +94,17 @@ public class SliderMenu {
                         context.startActivity(mainIntent);
                         actualActivity.finish();
                     }else if(recyclerView.getChildAdapterPosition(child)==2){
+                        if(ActivityCompat.checkSelfPermission(recyclerView.getContext(),Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED){
+                            Drawer.closeDrawers();
+                            Intent mainIntent = new Intent(recyclerView.getContext(), ActivityQRScanner.class);
+                            context.startActivity(mainIntent);
+                            actualActivity.finish();
+
+                            Toast.makeText(recyclerView.getContext(),recyclerView.getContext().getString(R.string.Permit_Granted),Toast.LENGTH_SHORT).show();
+                        }else{
+                            explainPermisUse(actualActivity,recyclerView.getContext());
+                            requestCameraPermit(actualActivity,recyclerView.getContext());
+                        }
                         Drawer.closeDrawers();
                         Intent mainIntent = new Intent(recyclerView.getContext(), ActivityQRScanner.class);
                         context.startActivity(mainIntent);
@@ -164,6 +182,61 @@ public class SliderMenu {
 
         Drawer.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
         mDrawerToggle.syncState();
+    }
+
+    private void explainPermisUse(Activity activity,Context context) {
+        if(ActivityCompat.shouldShowRequestPermissionRationale(activity,Manifest.permission.CAMERA)){
+            Toast.makeText(context,context.getString(R.string.Permit_Reason),Toast.LENGTH_SHORT).show();
+            alertBasicDialog(context);
+        }
+    }
+
+    private void requestCameraPermit(Activity activity,Context context){
+        ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.CAMERA},CAMERA_REQUEST);
+        Toast.makeText(context,context.getString(R.string.Permits),Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case CAMERA_REQUEST: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Drawer.closeDrawers();
+                    Intent mainIntent = new Intent(this.context, ActivityQRScanner.class);
+                    context.startActivity(mainIntent);
+                    actualActivity.finish();
+                    Toast.makeText(this.context,this.context.getString(R.string.Permit_Granted),Toast.LENGTH_SHORT).show();
+
+
+                } else {
+
+                    Toast.makeText(this.context,this.context.getString(R.string.Permit_Denied),Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
+    private void alertBasicDialog(Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(context.getString(R.string.Permit_Reason));
+
+        builder.setPositiveButton(context.getString(R.string.continue_button), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.show();
     }
 
     public void inicializarToolbar(int xml){

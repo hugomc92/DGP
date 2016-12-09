@@ -113,6 +113,14 @@ main {
 		margin-top: 10px;
 		padding-bottom: 25px;
 
+		.content_required {
+			color: red !important;
+			
+			&::after {
+				content: '*';
+			}
+		}
+
 		#submit_content_form {
 			margin-top: 25px;
 		}

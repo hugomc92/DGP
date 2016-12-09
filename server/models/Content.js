@@ -12,6 +12,9 @@ var Content = DBConnector.connectM4E().define('CONTENT', {
 },
 {
 	instanceMethods: {
+		retrieveLast: function() {
+			return Content.findOne({order: 'ID DESC'});
+		},
 		retrieveById: function(id) {
 			return Content.findOne({where: {ID: id}});
 		},
@@ -21,8 +24,28 @@ var Content = DBConnector.connectM4E().define('CONTENT', {
 		retrievePagination: function(inicio, fin){
 			return Content.findAll({order: 'ID DESC', offset: parseInt(inicio) - 1, limit: parseInt(fin) });
 		},
+		retrieveAllByType: function(content_type_id){
+			return Content.findAll({ where: {CONTENT_TYPE_ID: content_type_id}});
+		},
 		retrievePaginationByType: function(content_type_id, inicio, fin){
 			return Content.findAll({ where: {CONTENT_TYPE_ID: content_type_id}}, {order: 'ID DESC', offset: parseInt(inicio) - 1, limit: parseInt(fin) });
+		},
+		add: function(dateIn, dateOut, locationId, contentTypeID) {
+			return Content.create( {
+				CREATION_DATE: new Date(),
+				DATE_IN: dateIn,
+				DATE_OUT: dateOut,
+				LOCALIZATION_ID: locationId,
+				CONTENT_TYPE_ID: contentTypeID
+			});
+		},
+		updateById: function(id) {
+			return Content.update( {
+				DATE_IN: this.dateIn,
+				DATE_OUT: this.dateOut,
+				LOCALIZATION_ID: this.locationId,
+				CONTENT_TYPE_ID: this.contentTypeID
+			}, {where: {ID: id}});
 		}
 	},
 	freezeTableName: true

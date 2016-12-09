@@ -23,5 +23,10 @@
     <string name="home">Inicio</string>
     <string name="preferences">Preferencias</string>
     <string name="contact_info">Información y contacto</string>
+    <string name="scannQR">Escanear código QR</string>
+    <string name="Permit_Granted">Permisos concedidos</string>
+    <string name="Permit_Denied">Permisos denegados</string>
+    <string name="Permits">Solicitud de permisos</string>
+    <string name="Permit_Reason">Sin los permisos de la cámara no podrá escanear los códigos QR de la obra deseada.</string>
 
 </resources>
