@@ -40,7 +40,7 @@ public class ActivityArtworkDisplay extends AppCompatActivity {
 
             languageCode = ControllerPreferences.getLanguage();
 
-            HQueryContentOfLocalization queryContent = new HQueryContentOfLocalization(this, localization, languageCode, id,index,artworkName);
+            HQueryContentOfLocalization queryContent = new HQueryContentOfLocalization(this, localization, id,index,artworkName);
             queryContent.execute();
         }
 

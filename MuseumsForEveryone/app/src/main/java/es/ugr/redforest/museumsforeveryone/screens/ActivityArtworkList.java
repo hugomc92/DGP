@@ -14,18 +14,22 @@ import java.util.ArrayList;
 
 import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.adapters.AdapterContentInformation;
+import es.ugr.redforest.museumsforeveryone.models.Content;
 import es.ugr.redforest.museumsforeveryone.models.ContentInformation;
-import es.ugr.redforest.museumsforeveryone.threads.HQueryContentsInformation;
+import es.ugr.redforest.museumsforeveryone.threads.HQueryArtworkList;
+import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
+
 
 /**
  * Activity which shows a list of available artworks to select one of them
  *
  * @author Miguel Ángel Torres López
+ * @author Emilio Chica Jiménez
  * @version 1.0.0
  */
 public class ActivityArtworkList extends AppCompatActivity {
 
-    private ArrayList<ContentInformation> contentsInformationList;   //List of artworks available
+    private ArrayList<ContentInformation> contents;   //List of artworks available
 
     private Context context;
 
@@ -33,20 +37,23 @@ public class ActivityArtworkList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artwork_list);
-/*
+        String id="";
         context=this;
+        contents = new ArrayList<>();
+        Bundle bundle = getIntent().getExtras();
+        if(bundle.containsKey("id_type"))
+            id = bundle.getString("id_type");
 
-        contentsInformationList = new ArrayList<>();
-
+        String languageCode = ControllerPreferences.getLanguage();
         //Query to bring all artworks
-        HQueryContentsInformation hQueryContentsInformation = new HQueryContentsInformation(this, contentsInformationList);
+        HQueryArtworkList hQueryContentsInformation = new HQueryArtworkList(this,contents,id);
         hQueryContentsInformation.execute();
 
         //Gets reference of the RecyclerView
         final RecyclerView recyclerContentInformation = (RecyclerView) findViewById(R.id.recycler_artwork_list);
 
         //Creates an Adapter with the list of languages
-        AdapterContentInformation contentInformationAdapter = new AdapterContentInformation(contentsInformationList);
+        AdapterContentInformation contentInformationAdapter = new AdapterContentInformation(contents);
 
         //Creates an Android default layout to show elements on the RecyclerView
         LinearLayoutManager layMan = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,
@@ -80,6 +87,6 @@ public class ActivityArtworkList extends AppCompatActivity {
         recyclerContentInformation.setLayoutManager(layMan);
         recyclerContentInformation.setItemAnimator(new DefaultItemAnimator());
         recyclerContentInformation.setAdapter(contentInformationAdapter);
-*/
+
     }
 }

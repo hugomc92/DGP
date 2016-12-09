@@ -16,9 +16,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import es.ugr.redforest.museumsforeveryone.models.ContentInformation;
+import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
 import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
 
 /**
@@ -27,15 +29,15 @@ import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
  * @version 1.0.0
  */
 
-public class HQueryContentsInformation extends AsyncTask<Void, Integer, String> {
+public class HQueryArtworkList extends AsyncTask<Void, Integer, String> {
     Context context;
     String result;
     ProgressDialog pDialog;
-    List<ContentInformation> contentInformationList;
+    ArrayList<ContentInformation> contentInformationList;
     String typeContent="";
 
 
-    public HQueryContentsInformation(Context c , List<ContentInformation> contentInformationList,String typeContent) {
+    public HQueryArtworkList(Context c , ArrayList<ContentInformation> contentInformationList, String typeContent) {
         this.context=c;
         this.contentInformationList = contentInformationList;
         this.typeContent = typeContent;
@@ -45,19 +47,20 @@ public class HQueryContentsInformation extends AsyncTask<Void, Integer, String> 
     @Override
     protected String doInBackground(Void... params) {
         ObjectMapper mapper = new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        result = QueryBBDD.doQuery(QueryBBDD.queryContentInformation, typeContent, "POST");
+        result = QueryBBDD.doQuery(QueryBBDD.queryContentInformationOfType+"/"+typeContent+"/lang/"+ ControllerPreferences.getLanguage(), "", "POST");
         JSONObject res =null;
-        ContentInformation itemContentInformation =null;
+        ContentInformation contentInformation =null;
         try {
             if(result !=null) {
                 res = new JSONObject(result);
-                if (!res.isNull("ContentInformation")) {
-                    JSONArray contentType = res.getJSONArray("ContentInformation");
+                if (!res.isNull("contents")) {
+                    JSONArray contentType = res.getJSONArray("contents");
 
                     for (int j = 0; j < contentType.length(); ++j) {
                         JSONObject item = contentType.getJSONObject(j);
-                        itemContentInformation = mapper.readValue(item.toString(), ContentInformation.class);
-                        contentInformationList.add(itemContentInformation);
+                        JSONObject itemContentInformation = item.getJSONObject("content_information");
+                        contentInformation = mapper.readValue(itemContentInformation.toString(), ContentInformation.class);
+                        contentInformationList.add(contentInformation);
                     }
                 }
             }

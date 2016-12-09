@@ -22,9 +22,9 @@ public class QueryBBDD {
 
     //Ficheros para consultas
 
-    public static final String queryType = "/service/ContentTypeService";
+    public static final String queryType = "/api/content_type";
     //Supongo que se creara el /service/ContentInformation en un futuro(ahora no existe)
-    public static final String queryContentInformation ="/service/ContentInformation";
+    public static final String queryContentInformationOfType ="/api/content/type";
     public static final String queryContentOfLocalization ="/api/content/localization";
 
     public static String doQuery(String urlREST, String parameters, String metodo) {

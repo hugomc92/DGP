@@ -28,6 +28,7 @@ import es.ugr.redforest.museumsforeveryone.models.ContentInformation;
 import es.ugr.redforest.museumsforeveryone.models.ContentType;
 import es.ugr.redforest.museumsforeveryone.models.Localization;
 import es.ugr.redforest.museumsforeveryone.models.Multimedia;
+import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
 import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
 
 /**
@@ -40,16 +41,14 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
     private Context context;
     private ProgressDialog pDialog;
     private Localization localization;
-    private String language="";
     private String id="";
     private int index=0;
     private String artworkName="";
 
 
-    public HQueryContentOfLocalization(Context c , Localization localization, String language, String id,int index,String artworkName) {
+    public HQueryContentOfLocalization(Context c , Localization localization, String id,int index,String artworkName) {
         this.context=c;
         this.localization = localization;
-        this.language = language;
         this.id = id;
         this.index = index;
         this.artworkName = artworkName;
@@ -59,7 +58,7 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
     protected String doInBackground(Void... params) {
         String result;
         ObjectMapper mapper = new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        result = QueryBBDD.doQuery(QueryBBDD.queryContentOfLocalization +"/"+id+"/lang/"+language, "", "POST");
+        result = QueryBBDD.doQuery(QueryBBDD.queryContentOfLocalization +"/"+id+"/lang/"+ ControllerPreferences.getLanguage(), "", "POST");
         JSONObject res =null;
         try {
             if(result !=null) {
