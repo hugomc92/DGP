@@ -5,6 +5,7 @@ var Content = require('../models/Content');
 var ContentInformation = require('../models/ContentInformation');
 var ContentType = require('../models/ContentType');
 var Language = require('../models/Language');
+var Localization = require('../models/Localization');
 
 // Constructor for ContentService
 function ContentService() {
@@ -116,7 +117,75 @@ ContentService.prototype.initializeRouter = function() {
 	});
 
 	self.router.route('/id/:id/:langCode').get(function(req, res) {
+		
+		var contentId = req.params.id;
+		var langCode = req.params.langCode;
 
+		var lang = Language.build();
+
+		lang.retrieveByCode(langCode).then(function(success) {
+			if(success !== null) {
+				var langId = success.ID;
+
+				var content = Content.build();
+
+				content.retrieveById(contentId).then(function(success) {
+					if(success !== null) {
+						var cont = success;
+						
+						var location = Localization.build();
+
+						location.retrieveById(cont.LOCALIZATION_ID).then(function(success) {
+							var contLocation = success;
+							
+							var contentInformation = ContentInformation.build();
+
+							contentInformation.retrieveByContentIdByLangId(contentId, langId).then(function(success) {
+								if(success !== null) {
+
+									var contInformation = success;
+
+									var contentType = ContentType.build();
+
+									contentType.retrieveById(cont.CONTENT_TYPE_ID).then(function(success) {
+										if(success !== null) {
+											var contType = success;
+
+											var jsonResObj= {};
+
+											jsonResObj.localization = contLocation;
+											jsonResObj.content = cont;
+											jsonResObj.content_information = contInformation;
+											jsonResObj.content_type = contType;
+
+											res.json(jsonResObj);
+										}
+										else
+											res.status(401).send("Content Type not found");
+									}, function(err) {
+										res.status(404).send("Content Type not found");
+									});
+								}
+								else
+									res.status(401).send("Content Information not found");
+							}, function(err) {
+								res.status(404).send("Content Information not found");
+							});
+						}, function(err) {
+							res.status(401).send("Location not found");
+						});
+					}
+					else
+						res.status(401).send("Content not found");
+				}, function(err) {
+					res.status(401).send("Content not found");
+				});
+			}
+			else
+				res.status(401).send("Lang not found");
+		}, function(err) {
+			res.status(404).send("Language not found");
+		});
 	});
 
 	self.router.route('/location/:code/:langCode').get(function(req, res) {
