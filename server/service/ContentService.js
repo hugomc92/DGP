@@ -187,9 +187,109 @@ ContentService.prototype.initializeRouter = function() {
 			res.status(404).send("Language not found");
 		});
 	});
-
+	
 	self.router.route('/location/:code/:langCode').get(function(req, res) {
+		
+		var code = req.params.code;
+		var langCode = req.params.langCode;
 
+		var lang = Language.build();
+
+		lang.retrieveByCode(langCode).then(function(success) {
+			if(success !== null) {
+				var langId = success.ID;
+
+				var location = Localization.build();
+
+				location.retrieveByCode(code).then(function(success) {
+					if(success !== null) {
+						var locat= success;
+
+						var content = Content.build();
+
+						content.retrieveAllByLocationId(locat.ID).then(function(success) {
+							if(success !== null && success.length > 0) {
+								var contents = success;
+
+								var contentIds = [];
+								var contentTypeIds = [];
+
+								for(var i=0; i<contents.length; i++) {
+									contentIds.push(contents[i].ID);
+									contentTypeIds.push(contents[i].CONTENT_TYPE_ID);
+								}
+
+								var contentInfo = ContentInformation.build();
+
+								contentInfo.retrieveAllByContentIdsByLang(contentIds, langId).then(function(success) {
+									if(success !== null && success.length > 0) {
+										var contentInfos = success;
+
+										var contentType = ContentType.build();
+
+										contentType.retrieveAllByListIds(contentTypeIds).then(function(success) {
+											if(success !== null && success.length > 0) {
+												var contentTypes = success;
+
+												var jsonResObj = {
+													location: locat,
+													contents: []
+												};
+
+												for(var i=0; i<contents.length; i++) {
+													var contentInfo;
+													var contentInfofound = false;
+													var contentTypefound = false;
+
+													for(var j=0; j<contentInfos.length && !contentInfofound; j++) {
+														if(contentInfos[j].CONTENT_ID === contents[i].ID) {
+															contentInfo = contentInfos[j];
+															contentInfofound = true;
+														}
+													}
+
+													for(var k=0; k<contentTypes.length && !contentTypefound; k++) {
+														if(contentTypes[k].ID === contents[i].CONTENT_TYPE_ID) {
+															jsonResObj.contents.push( {
+																content: contents[i],
+																content_information: contentInfo,
+																content_type: contentTypes[k]
+															});
+															contentTypefound = true;
+														}
+													}
+												}
+												res.json(jsonResObj);
+											}
+											else
+												res.status(401).send("Content Types not found");
+										}, function(err) {
+											res.status(404).send("Content Types not found");
+										});
+									}
+									else
+										res.status(401).send("Content Information not found");
+								}, function(err) {
+									res.status(404).send("Content Information not found");
+								});
+							}
+							else
+								res.status(401).send("Content not found");
+						}, function(err) {
+							res.status(404).send("Content not found");
+						});
+					}
+					else
+						res.status(401).send("Location not found");
+				}, function(err) {
+					res.status(404).send("Location not found");
+				});
+			}
+			else
+				res.status(401).send("Lang not found");
+		}, function(err) {
+			res.status(404).send("Language not found");
+		});
 	});
 
 	self.router.route('/add').post(function(req, res) {

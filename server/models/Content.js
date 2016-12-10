@@ -30,6 +30,9 @@ var Content = DBConnector.connectM4E().define('CONTENT', {
 		retrievePaginationByType: function(content_type_id, inicio, fin){
 			return Content.findAll({ where: {CONTENT_TYPE_ID: content_type_id}}, {order: 'ID DESC', offset: parseInt(inicio) - 1, limit: parseInt(fin) });
 		},
+		retrieveAllByLocationId: function(locationId) {
+			return Content.findAll({where: {LOCALIZATION_ID: locationId}});
+		},
 		add: function(dateIn, dateOut, locationId, contentTypeID) {
 			return Content.create( {
 				CREATION_DATE: new Date(),
