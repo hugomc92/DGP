@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.List;
 
 import es.ugr.redforest.museumsforeveryone.models.ContentType;
+import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
 import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
 
 
@@ -42,14 +43,14 @@ public class HQueryContentType extends AsyncTask<Void, Integer, String> {
         @Override
         protected String doInBackground(Void... params) {
             ObjectMapper mapper = new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-            resultado = QueryBBDD.doQuery(QueryBBDD.queryType, "", "POST");
+            resultado = QueryBBDD.doQuery(QueryBBDD.queryType+"/lang/"+ ControllerPreferences.getLanguage(), "", "POST");
             JSONObject res =null;
             ContentType itemContentType =null;
             try {
                 if(resultado!=null) {
                     res = new JSONObject(resultado);
-                    if (!res.isNull("ContentType")) {
-                        JSONArray contentType = res.getJSONArray("ContentType");
+                    if (!res.isNull("content_type")) {
+                        JSONArray contentType = res.getJSONArray("content_type");
 
                         for (int j = 0; j < contentType.length(); ++j) {
                             JSONObject item = contentType.getJSONObject(j);

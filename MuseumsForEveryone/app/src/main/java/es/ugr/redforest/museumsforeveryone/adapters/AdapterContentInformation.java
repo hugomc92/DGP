@@ -16,15 +16,14 @@ import es.ugr.redforest.museumsforeveryone.models.ContentInformation;
  * Adapter used in RecyclerView to display a list of Content information
  *
  * @author Miguel Ángel Torres López
+ * @author Emilio Chica Jiménez
  * @version 1.0.0
  * @see ContentInformation
  * @see RecyclerView
  */
 
-public class AdapterContentInformation extends RecyclerView.Adapter<AdapterContentInformation.ContentInformationViewHolder>
-        implements View.OnClickListener{
+public class AdapterContentInformation extends RecyclerView.Adapter<AdapterContentInformation.ContentInformationViewHolder> {
     private ArrayList<ContentInformation> contentInformationList;   // ArrayList containing the Content Types to show
-    private View.OnClickListener listener;  // Listener needed to handle onClick event
 
     /**
      * ViewHolder needed to handle how to show elements
@@ -64,8 +63,6 @@ public class AdapterContentInformation extends RecyclerView.Adapter<AdapterConte
     public ContentInformationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.content_information_list_row, parent, false);
-
-        itemView.setOnClickListener(this);
         return new ContentInformationViewHolder(itemView);
     }
 
@@ -87,16 +84,5 @@ public class AdapterContentInformation extends RecyclerView.Adapter<AdapterConte
         return contentInformationList.size();
     }
 
-    public void setOnClickListener(View.OnClickListener listener) {
-        this.listener = listener;
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onClick(View view) {
-        if(listener != null)
-            listener.onClick(view);
-    }
 }

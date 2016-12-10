@@ -28,5 +28,13 @@
     <string name="Permit_Denied">Permisos denegados</string>
     <string name="Permits">Solicitud de permisos</string>
     <string name="Permit_Reason">Sin los permisos de la cámara no podrá escanear los códigos QR de la obra deseada.</string>
+    <string name="show_previous_image">mostrar la foto anterior</string>
+    <string name="show_next_image">mostrar la foto siguiente</string>
+    <string name="images_of_content">Images of content</string>
+    <string name="title_artwork">title_artwork</string>
+    <string name="type_artwork">type_artwork</string>
+    <string name="description_artwork">Description artwork</string>
+    <string name="video_description">video description</string>
+    <string name="image_description">Image description</string>
 
 </resources>

@@ -12,12 +12,21 @@ public class Multimedia {
     private String url;
     private String type;
     private String alternativeText;
+    private String subtitle;
 
     public Multimedia(int id, String url, String type,String alternativeText) {
         this.id = id;
         this.url = url;
         this.type = type;
         this.alternativeText = alternativeText;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
     }
 
     public String getAlternativeText() {

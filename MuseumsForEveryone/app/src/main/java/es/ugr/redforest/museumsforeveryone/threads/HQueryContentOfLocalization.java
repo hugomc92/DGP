@@ -3,11 +3,18 @@ package es.ugr.redforest.museumsforeveryone.threads;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.media.MediaFormat;
+import android.widget.MediaController;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -19,7 +26,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import es.ugr.redforest.museumsforeveryone.R;
@@ -28,6 +40,7 @@ import es.ugr.redforest.museumsforeveryone.models.ContentInformation;
 import es.ugr.redforest.museumsforeveryone.models.ContentType;
 import es.ugr.redforest.museumsforeveryone.models.Localization;
 import es.ugr.redforest.museumsforeveryone.models.Multimedia;
+import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
 import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
 
 /**
@@ -40,26 +53,32 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
     private Context context;
     private ProgressDialog pDialog;
     private Localization localization;
-    private String language="";
     private String id="";
     private int index=0;
     private String artworkName="";
+    private static int indexImage=0;
+    private boolean qrornfc=true;
 
-
-    public HQueryContentOfLocalization(Context c , Localization localization, String language, String id,int index,String artworkName) {
+    public HQueryContentOfLocalization(Context c , Localization localization, String id, int index, String artworkName,boolean qrornfc) {
         this.context=c;
         this.localization = localization;
-        this.language = language;
         this.id = id;
         this.index = index;
         this.artworkName = artworkName;
+        this.qrornfc = qrornfc;
     }
 
     @Override
     protected String doInBackground(Void... params) {
         String result;
         ObjectMapper mapper = new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        result = QueryBBDD.doQuery(QueryBBDD.queryContentOfLocalization +"/"+id+"/lang/"+language, "", "POST");
+        String query = "";
+        if(qrornfc)
+            query = QueryBBDD.queryContentOfLocalization;
+        else
+            query = QueryBBDD.queryContent;
+
+        result = QueryBBDD.doQuery(query +"/"+id+"/lang/"+ ControllerPreferences.getLanguage(), "", "POST");
         JSONObject res =null;
         try {
             if(result !=null) {
@@ -136,21 +155,78 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
             pDialog.dismiss();
         }else
         {
-            ImageView imageView = (ImageView) ((Activity)context).findViewById(R.id.imgArtwork);
+            //Initialize all view in display
+            final ImageView imageView = (ImageView) ((Activity)context).findViewById(R.id.imgArtwork);
             TextView typeArtWork = (TextView)  ((Activity)context).findViewById(R.id.typeArtWork);
             TextView titleArtwork = (TextView)  ((Activity)context).findViewById(R.id.titleArtwork);
             TextView descriptionArtwork = (TextView)  ((Activity)context).findViewById(R.id.descriptionArtwork);
+            TextView titleImage = (TextView)  ((Activity)context).findViewById(R.id.titleImage);
+            VideoView videoView = (VideoView)((Activity) context).findViewById(R.id.videoArtwork);
 
+            //Obtains contents from this location
             Content content = localization.getContents().get(index);
-            ArrayList<Multimedia> multimedias = content.getMultimediaByType("image");
+            final ArrayList<Multimedia> imageMultimedia = content.getMultimediaByType("image");
+            //Set image in imageview and description
+            Picasso.with(context).load(imageMultimedia.get(0).getUrl()).into(imageView);
+            imageView.setContentDescription(imageMultimedia.get(0).getAlternativeText());
+            //If arrays only contains one image hide carrousel control else add listener to carrousel
+            if(imageMultimedia.size()==1) {
+                RelativeLayout relativeLayout =(RelativeLayout) ((Activity) context).findViewById(R.id.carrousel_images);
+                relativeLayout.setVisibility(View.GONE);
+            }else{
+                Button previosImage = (Button)  ((Activity) context).findViewById(R.id.btPreviousImage);
+                Button nextImage = (Button)  ((Activity) context).findViewById(R.id.btNextImage);
+                previosImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        indexImage--;
+                        if(indexImage<0){
+                            indexImage = imageMultimedia.size();
+                        }
+                        Picasso.with(context).load(imageMultimedia.get(indexImage).getUrl()).into(imageView);
+                        imageView.setContentDescription(imageMultimedia.get(indexImage).getAlternativeText());
+                    }
+                });
+                nextImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        indexImage++;
+                        if(indexImage>imageMultimedia.size()){
+                            indexImage = 0;
+                        }
+                        Picasso.with(context).load(imageMultimedia.get(indexImage).getUrl()).into(imageView);
+                        imageView.setContentDescription(imageMultimedia.get(indexImage).getAlternativeText());
+                    }
+                });
+            }
 
-            Picasso.with(context).load(multimedias.get(0).getUrl()).into(imageView);
-
-            imageView.setContentDescription(content.getContentInformation().getBlindDescription());
+            ArrayList<Multimedia> videoMultimedia = content.getMultimediaByType("video");
+            //If array contains video put video and subtitles in videoview else hide videoview
+            if(videoMultimedia.size()>0){
+                Uri uri = Uri.parse(videoMultimedia.get(0).getUrl());
+                videoView.setVideoURI(uri);
+                MediaController mediaController = new MediaController(context);
+                mediaController.setAnchorView(videoView);
+                videoView.setMediaController(mediaController);
+                try {
+                    URL url = new URL(videoMultimedia.get(0).getSubtitle());
+                    InputStream stream = url.openStream();
+                    videoView.addSubtitleSource(stream, MediaFormat.createSubtitleFormat("text/vtt",ControllerPreferences.getLanguage()));
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else
+            {
+                videoView.setVisibility(View.GONE);
+            }
+            //set values at textview
             typeArtWork.setText(content.getContentType().getName());
             titleArtwork.setText(content.getContentInformation().getName());
             descriptionArtwork.setText(content.getContentInformation().getDescription());
             artworkName = content.getContentType().getName();
+            titleImage.setText(artworkName);
         }
         pDialog.dismiss();
     }
