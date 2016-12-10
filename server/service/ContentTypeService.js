@@ -14,8 +14,8 @@ ContentTypeService.prototype.initializeRouter = function() {
 		var contentType = ContentType.build();
 
 		contentType.retrieveAll().then(function(success) {
-			if(result)
-				res.json(result);
+			if(success)
+				res.json(success);
 			else
 				res.status(401).send("Content Types empty");
 		}, function(err) {
