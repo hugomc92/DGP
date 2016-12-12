@@ -27,7 +27,7 @@
     <string name="Permit_Granted">Permisos concedidos</string>
     <string name="Permit_Denied">Permisos denegados</string>
     <string name="Permits">Solicitud de permisos</string>
-    <string name="QR_Scann_Instrucctions">Para analizar un código QR apunte con el teléfono hacia el código QR hasta que aparezca centrado en la pantalla</string>
+    <string name="QR_Scan_Instrucctions">Para analizar un código QR apunte con el teléfono hacia el código QR hasta que aparezca centrado en la pantalla</string>
     <string name="show_next_image">mostrar la foto siguiente</string>
     <string name="show_previous_image">mostrar la foto anterior</string>
     <string name="Permit_Reason">Sin los permisos de la cámara no podrá escanear los códigos QR de la obra deseada.</string>
@@ -40,5 +40,6 @@
     <string name="image_description">Image description</string>
     <string name="NFC_Error_Disabled">El sensor NFC está desactivado. Por favor actívelo en su dispositivo y vuelva a intentarlo.</string>
     <string name="Scan_with_QR">Escanear con QR</string>
+    <string name="NFCScan_instructions">Para analizar la pegatina NFC active el sensor NFC de su dispositivo y acerquelo a la etiqueta NFC por la parte trasera del dispositivo.</string>
 
 </resources>

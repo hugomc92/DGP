@@ -18,7 +18,7 @@
         />
 
     <TextView
-        android:text="@string/QR_Scann_Instrucctions"
+        android:text="@string/QR_Scan_Instrucctions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
