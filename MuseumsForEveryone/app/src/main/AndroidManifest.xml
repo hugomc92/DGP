@@ -16,40 +16,59 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
-        <activity android:name=".screens.ActivityLang" />
-        <activity android:name=".screens.ActivityAccessibility" />
-        <activity android:name=".screens.ActivityFirstView" />
-        <activity android:name=".screens.ActivityInstructions" />
-        <activity android:name=".screens.MainActivity" />
+        <activity android:name=".screens.ActivityLang"
+            android:screenOrientation="portrait"
+        />
+        <activity android:name=".screens.ActivityAccessibility"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".screens.ActivityFirstView"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".screens.ActivityInstructions"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".screens.MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".screens.ActivityContentType"
+            android:screenOrientation="portrait"
             android:label="Obras" />
         <activity
             android:name=".screens.ActivitySplashScreen"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".screens.ActivityGuidedVisit"
+            android:screenOrientation="portrait"
             android:label="Visita Guiada" />
-        <activity android:name=".screens.ActivityArtworkList" />
-        <activity android:name=".screens.ActivityInfoScanner" />
+        <activity android:name=".screens.ActivityArtworkList"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".screens.ActivityInfoScanner"
+            android:screenOrientation="portrait"/>
         <activity android:name=".screens.ActivityQRScanner"
+            android:screenOrientation="portrait"
             android:label="QRScanner"/>
         <activity android:name=".screens.ActivityInfoDisplay"
+            android:screenOrientation="portrait"
                 android:label="Información Obra"/>
-        <activity android:name=".screens.ActivityVisitDisplay" />
-        <activity android:name=".screens.ActivityArtworkDisplay" />
+        <activity android:name=".screens.ActivityVisitDisplay"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".screens.ActivityArtworkDisplay"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".screens.ActivityPreferences"
+            android:screenOrientation="portrait"
             android:label="Preferencias" />
-        <activity android:name=".screens.ActivityAccessibilityPreferences" android:label="Accesibilidad"></activity>
-        <activity android:name=".screens.ActivityRequestCameraPermission" />
-        <activity android:name=".screens.ActivityNFCScanner" />
+        <activity android:name=".screens.ActivityAccessibilityPreferences"
+            android:label="Accesibilidad"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".screens.ActivityRequestCameraPermission"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".screens.ActivityNFCScanner"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
