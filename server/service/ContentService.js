@@ -201,7 +201,7 @@ ContentService.prototype.initializeRouter = function() {
 
 				var location = Localization.build();
 
-				location.retrieveByCode(code).then(function(success) {
+				location.retrieve(code).then(function(success) {
 					if(success !== null) {
 						var locat= success;
 
@@ -304,8 +304,6 @@ ContentService.prototype.initializeRouter = function() {
 			user.retrieveByEmail(email).then(function(result) {
 				if(result.ADMIN) {
 					var jsonObj = req.body;
-
-					console.log(jsonObj);
 
 					var dateIn;
 					var dateOut;

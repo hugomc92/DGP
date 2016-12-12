@@ -18,6 +18,9 @@
 main {
   min-height: calc(100vh - 50px);
 }
+.content_start {
+  margin-bottom: -15px;
+}
 @media only screen and (max-width: 600px) {
   .content_start {
     padding-top: 56px !important;
@@ -123,17 +126,15 @@ main {
   margin-top: 10px;
   padding-bottom: 25px;
 }
-#contents .info_form .content_required {
-  color: red !important;
-}
-#contents .info_form .content_required::after {
-  content: '*';
+#contents .info_form input.select-dropdown {
+  color: #9e9e9e;
 }
 #contents .info_form #submit_content_form {
   margin-top: 25px;
 }
-#contents .multimedia_content {
+#contents .multimedia {
   background: white;
+  display: none;
 }
 .picker__date-display {
   background: #345f7f;

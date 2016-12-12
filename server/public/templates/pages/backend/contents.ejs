@@ -14,7 +14,7 @@
 			<div class="row content_start">
 				<div id="btn_add_container" class="col s12">
 				<!-- Add new content type button -->
-				<a class="waves-effect waves-light btn modal-trigger" href="/backend/contents/add">Añadir Contenido</a>
+				<a class="waves-effect waves-light btn modal-trigger" href="/backend/contents/add/">Añadir Contenido</a>
 				</div>
 			</div>
 
@@ -40,10 +40,12 @@
 							count++; %>
 							<tr>
 								<td><%= contents[i].ID %></td>
-								<% for(var j=0; j<contentInformations.length; j++) {
+								<% var found = false;
+								for(var j=0; j<contentInformations.length && !found; j++) {
 									if(contentInformations[j].CONTENT_ID === contents[i].ID) { %>
 										<td><%= contentInformations[j].NAME %></td>
-									<% }
+										<% found = true;
+									}
 								} %>
 								<% for(var j=0; j<contentTypes.length; j++) {
 									if(contentTypes[j].ID === contents[i].CONTENT_TYPE_ID) { %>
@@ -60,21 +62,23 @@
 								if(found === false) { %>
 									<td>Ninguna</td>
 								<% } %>
+								<td><ul>
 								<% for(var j=0; j<contentInformations.length; j++) {
 									if(contentInformations[j].CONTENT_ID === contents[i].ID) { %>
-										<td><ul>
+										
 										<% for(var k=0; k<langs.length; k++) {
 											if(langs[k].ID === contentInformations[j].LANG_ID) { %>
 												<li><img src="<%= langs[k].FLAG %>" width="30px" /></li>
 											<% }
 										} %>
-										</ul></td>
+										
 									<% }
 								} %>
+								</ul></td>
 								<td><%= moment(contents[i].DATE_IN).format('DD/MM/YYYY') %></td>
 								<td><%= moment(contents[i].DATE_OUT).format('DD/MM/YYYY') %></td>
 								<td class="actions">
-									<a href="/backend/contents/edit/<%= contents[i].ID %>"><i class="material-icons">mode_edit</i></a>
+									<a href="/backend/contents/edit/<%= contents[i].ID %>/"><i class="material-icons">mode_edit</i></a>
 									<a class="modal-trigger" href="#delete_content"><i class="material-icons">delete</i></a>
 								</td>
 							</tr>

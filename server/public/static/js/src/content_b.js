@@ -11,7 +11,7 @@ var contentId;
 
 $(document).ready(function() {
 
-	if($('#content_action').text().indexOf('Añadir') >= -1)
+	if($('#content_action').text().indexOf('Añadir') > -1)
 		action = 'add';
 	else 
 		action = 'edit';
@@ -21,9 +21,24 @@ $(document).ready(function() {
 
 	console.log("contentId", contentId);
 
-	form = $('#spanish_content').find('.info_form').parent().html();
+	if(action === 'add') {
+		form = $('#español_content').find('.info_form').parent().html();
 
-	initilizeForm($('#spanish_content'), 1);
+		initilizeForm($('#español_content'), 1);
+	}
+	else {
+		var elems = $('.info_form').parent().parent();
+
+		form = $(elems[0]).find('.info_form').parent().html();
+
+		for(var i=0; i<elems.length; i++) {
+			var elem = $(elems[i]);
+
+			initilizeForm(elem, elem.attr('content-lang'));
+		}
+
+		$('.multimedia').css('display', 'block');
+	}
 
 	$('#more_langs').click(function() {
 		$('#add_lang_content').openModal( {
@@ -86,23 +101,34 @@ $(document).ready(function() {
 			currentLangs.push(langId);
 
 			var found = false;
+			var lang;
 
 			for(var i=0; i<langs.length && !found; i++) {
 				if(langs[i].ID === langId) {
-					// Add new Tab
-					$('.tabs').append('<li class="tab col"><a href="#' + langs[i].NAME.toLowerCase() + '_content" content-lang="' + langs[i].ID + '"><img src="' + langs[i].FLAG + '" alt="Bandera ' + langs[i].NAME + '" width="25px"/><span class="hide-on-small-only">' + langs[i].NAME + '</span></a></li>');
-
-					// Update all tabs
-					$('ul.tabs').tabs();
-
-					// Add new content tab
-					$('#contents').append('<div id="' + langs[i].NAME.toLowerCase() + '_content" class="col s12" style="display:none">' + form + '</div>');
-
-					initilizeForm($('#' + langs[i].NAME.toLowerCase() + '_content'), langId);
-
+					lang = langs[i];
+					
 					found = true;
 				}
 			}
+
+			// Add new Tab
+			$('.tabs').append('<li class="tab col"><a href="#' + lang.NAME.toLowerCase() + '_content" content-lang="' + lang.ID + '"><img src="' + lang.FLAG + '" alt="Bandera ' + lang.NAME + '" width="25px"/><span class="hide-on-small-only">' + lang.NAME + '</span></a></li>');
+
+			// Update all tabs
+			$('ul.tabs').tabs();
+
+			// Add new content tab
+			$('#contents').append('<div id="' + lang.NAME.toLowerCase() + '_content" class="col s12" style="display:none">' + form + '</div>');
+
+			// Clean all values
+			$('#' + lang.NAME.toLowerCase() + '_content').find('.info_form').find('input:not([type=hidden]):not([type=date])').each(function() {
+				$(this).val('');
+			});
+			$('#' + lang.NAME.toLowerCase() + '_content').find('.info_form').find('textarea').each(function() {
+				$(this).text('');
+			});
+
+			initilizeForm($('#' + lang.NAME.toLowerCase() + '_content'), langId);
 		}
 
 		cleanAddLangModal();
@@ -113,9 +139,7 @@ function initilizeForm(elem, langId) {
 
 	var form = elem.find('.info_form');
 
-	Materialize.updateTextFields();
-
-	currentLangs.push(1);
+	currentLangs.push(parseInt(langId));
 
 	form.find('ul.tabs').tabs();
 
@@ -125,6 +149,8 @@ function initilizeForm(elem, langId) {
 
 	var dateInPicker = initializeDatePicker(form.find('#content_date_in'));
 	var dateOutPicker = initializeDatePicker(form.find('#content_date_out'));
+
+	Materialize.updateTextFields();
 
 	var dateIn = form.find('#content_date_in');
 	var dateOut = form.find('#content_date_out');
@@ -270,9 +296,12 @@ function send_data(form) {
 				// Notify user of success
 				Materialize.toast('Se ha guardado el contenido con éxito', 4000);
 
-				// Modify all forms to get it
-				if(action === 'add')
+				// Modify all forms
+				if(action === 'add') {
 					action = 'edit';
+
+					$('.multimedia').css('display', 'block');
+				}
 			}
 		},
 		error: function(xhr, status){
