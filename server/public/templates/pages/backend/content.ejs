@@ -14,19 +14,120 @@
 			<div class="row content_start">
 				<div id="tabs_container" class="col s11">
 					<ul class="tabs">
+						<% if(typeof(langs) !== 'undefined') {
+							for(var i=0; i<langs.length; i++) { %>
+								<li class="tab col">
+									<% if(i === 0) { %>
+									<a class="active" href="#<%= langs[i].NAME.toLowerCase() %>_content" content-lang="<%= langs[i].ID %>">
+									<% } 
+									else { %>
+									<a href="#<%= langs[i].NAME.toLowerCase() %>_content" content-lang="langs[i].ID">
+									<% } %>
+										<img src="<%= langs[i].FLAG %>" alt="Bandera <%= langs[i].NAME %>" width="25px"/>
+										<span class="hide-on-small-only"><%= langs[i].NAME %></span>
+									</a>
+								</li>
+							<% }
+						}
+						else { %>
 						<li class="tab col">
-							<a class="active" href="#spanish_content" content-lang="1">
+							<a class="active" href="#español_content" content-lang="1">
 								<img src="/static/img/langs/flag_of_spain_(civil).png" alt="Bandera Español" width="25px"/>
 								<span class="hide-on-small-only">Español</span>
 							</a>
 						</li>
+						<% } %>
 					</ul>
 				</div>
 				<div id="more_langs" class="col s1"><a class="modal-trigger waves-effect waves-light"><i class="material-icons">add</i></a></div>
 				
 				<!-- All tabs content -->
-				<div id="contents" content-id="">
-					<div id="spanish_content" class="col s12" content-lang="1">
+				<div id="contents" content-id="<% if(typeof(contentId) !== 'undefined') { %> <%= contentId %> <% } %>">
+					<% if(typeof(langs) !== 'undefined') {
+						for(var j=0; j<langs.length; j++) { %>
+							<div id="<%= langs[j].NAME.toLowerCase() %>_content" class="col s12" content-lang="<%= langs[j].ID %>">
+								<div class="row">
+									<form method="post" action="#" class="info_form col s12 z-depth-1">
+										<h5>INFORMACIÓN</h5>
+										<!-- Content name -->
+										<div class="input-field col s12">
+											<input id="content_name" name="content_name" type="text" class="validate" length="100" required value="<%= contentInformations[j].NAME %>">
+											<label for="content_name">Nombre</label>
+										</div>
+										<!-- Content type -->
+										<div class="input-field col s12 m6">
+											<select required id="content_type" name="content_type">
+												<option value="" disabled>Tipo de contenido</option>
+												<% for(var i=0; i<contentTypes.length; i++) {
+													if(contentTypes[i] === cont.CONTENT_TYPE_ID) { %>
+														<option value="<%= contentTypes[i].ID %>" selected data-icon="<%= contentTypes[i].ICON %>" class="left circle"><%= contentTypes[i].NAME %></option>
+													<% }
+													else { %>
+														<option value="<%= contentTypes[i].ID %>" data-icon="<%= contentTypes[i].ICON %>" class="left circle"><%= contentTypes[i].NAME %></option>
+													<% } %>
+												<% } %>
+											</select>
+										</div>
+										<!-- Content location -->
+										<div class="input-field col s12 m6">
+											<select id="content_location" name="content_location">
+												<option value="" disabled>Localización  (opcional)</option>
+												<% for(var i=0; i<localizations.length; i++) { 
+													if(localizations[i].ID === cont.LOCALIZATION_ID) {%>
+														<option value="<%= localizations[i].ID %>" selected><%= localizations[i].DESCRIPTION %></option>
+													<% }
+													else { %>
+														<option value="<%= localizations[i].ID %>"><%= localizations[i].DESCRIPTION %></option>
+													<% } %>
+												<% } %>
+											</select>
+										</div>
+										<!-- Content description -->
+										<div class="input-field col s12">
+											<textarea id="content_description" name="content_description" class="materialize-textarea"><%= contentInformations[j].DESCRIPTION %></textarea>
+											<label for="content_description">Descripción</label>
+										</div>
+										<!-- Content blind description -->
+										<div class="input-field col s12">
+											<textarea id="content_blind_description" name="content_blind_description" class="materialize-textarea" required><%= contentInformations[j].BLIND_DESCRIPTION %></textarea>
+											<label for="content_blind_description">Descripción ciegos (en idioma seleccionado)</label>
+										</div>
+										<% moment.locale('es', {
+											months: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ]
+										}); %>
+										<!-- Content date in  -->
+										<div class="input-field col s12 m6">
+											<input type="hidden" id="content_date_in_hidden" name="content_date_in_hidden" value="<%= moment(cont.DATE_IN).format('DD/MM/YYYY') %>">
+											<input type="date" id="content_date_in" name="content_date_in" class="datepicker" required value="<%= moment(cont.DATE_IN).format('DD MMMM, YYYY') %>">
+											<label for="content_date_in">Fecha Entrada</label>
+										</div>
+										<!-- Content date out  -->
+										<div class="input-field col s12 m6">
+											<input type="hidden" id="content_date_out_hidden" name="content_date_out_hidden" value="<%= moment(cont.DATE_OUT).format('DD/MM/YYYY') %>">
+											<input type="date" id="content_date_out" name="content_date_out" class="datepicker" value="<%= moment(cont.DATE_OUT).format('DD MMMM, YYYY') %>">
+											<label for="content_date_out">Fecha Salida (opcional)</label>
+										</div>
+										<!-- Submit form -->
+										<div class="input-field col s12">
+											<button id="submit_content_form" class="btn waves-effect waves-light right" type="submit" name="submit_content_form">
+												<span>Guardar</span>
+												<i class="material-icons right">save</i>
+											</button>
+										</div>
+									</form>
+								</div>
+								<div class="multimedia img_content row z-depth-1">
+									<h5 class="col s12">IMÁGENES</h5>
+								</div>
+								<div class="multimedia video_content row z-depth-1">
+									<h5 class="col s12">VIDEOS</h5>
+								</div>
+							</div>
+						<% }
+					}
+					else { %>
+					
+					<div id="español_content" class="col s12" content-lang="1">
 						<div class="row">
 							<form method="post" action="#" class="info_form col s12 z-depth-1">
 								<h5>INFORMACIÓN</h5>
@@ -84,10 +185,15 @@
 								</div>
 							</form>
 						</div>
-						<div class="multimedia_content row z-depth-1">
-							<h5 class="col s12">MULTIMEDIA</h5>
+						<div class="multimedia img_content row z-depth-1">
+							<h5 class="col s12">IMÁGENES</h5>
+						</div>
+						<div class="multimedia video_content row z-depth-1">
+							<h5 class="col s12">VIDEOS</h5>
 						</div>
 					</div>
+
+					<% } %>
 				</div>
 			</div>
 

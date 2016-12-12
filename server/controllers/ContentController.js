@@ -44,8 +44,6 @@ ContentController.prototype.initBackend = function() {
 			content.retrievePagination(1,50).then(function(success) {
 				self.renderJson.contents = success;
 
-				console.log('contents', success);
-
 				var contentIds = [];
 				var contentTypeIds = [];
 				var locationIds = [];
@@ -132,6 +130,70 @@ ContentController.prototype.initBackend = function() {
 			res.redirect('/');
 		}
 	});
+
+	self.routerBackend.route('/edit/:contentId').get(function(req, res) {
+		
+		var contentId = req.params.contentId;
+
+		console.log('contentId', contentId);
+
+		self.renderJson.breadcrumb = {'LINK': '/backend/contents/', 'SECTION': 'Contenido'};
+
+		self.renderJson.action = 'add';
+
+		self.renderJson.moreContent = {'LINK': '/backend/contents/edit/' + contentId, 'SECTION': 'Editar Contenido'};
+		self.renderJson.user = req.session.user;
+
+		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
+			self.contentTypeController.getAllContentTypes().then(function(success) {
+				self.renderJson.contentTypes = success;
+
+				self.localizationController.getAllLocalizations().then(function(success) {
+					self.renderJson.localizations = success;
+
+					var contentInformation = ContentInformation.build();
+
+					contentInformation.retrieveByContentId(contentId).then(function(success) {
+						self.renderJson.contentInformations = success;
+
+						var langIds = [];
+						for(var i=0; i<success.length; i++)
+							langIds.push(success[i].LANG_ID);
+
+						self.langController.getAllLangWidthIds(langIds).then(function(success) {
+							self.renderJson.langs = success;
+
+							var content = Content.build();
+
+							content.retrieveById(contentId).then(function(success) {
+								self.renderJson.cont = success;
+
+								res.render('pages/backend/content', self.renderJson);
+								self.clearMessages();
+							}, function(err) {
+
+							});
+						}, function(err) {
+							self.renderJson.error = 'Se ha producido un error interno recuperando los idiomas';
+							res.redirect('/backend/contents/');
+						});
+					}, function(err) {
+						self.renderJson.error = 'Se ha producido un error interno recuperando la información';
+						res.redirect('/backend/contents/');
+					});
+				}, function(err) {
+					self.renderJson.error = 'Se ha producido un error interno recuperando información';
+					res.redirect('/backend/contents/');
+				});
+			}, function(err) {
+				self.renderJson.error = 'Se ha producido un error recuperando información';
+				res.redirect('/backend/contents/');
+			});
+		}
+		else {
+			res.redirect('/');
+		}
+	});
 };
 
 // Get the Backend router
@@ -163,7 +225,15 @@ ContentController.prototype.clearMessages = function() {
 	delete this.renderJson.msg;
 	delete this.renderJson.error;
 	delete this.renderJson.moreContent;
-	delete this.renderJson.action;
+	
+	delete this.renderJson.contents;
+	delete this.renderJson.contentTypes;
+
+	delete this.renderJson.locations;
+	delete this.renderJson.contentInformations;
+	delete this.renderJson.langs;
+
+	delete this.renderJson.cont;
 };
 
 module.exports = ContentController;

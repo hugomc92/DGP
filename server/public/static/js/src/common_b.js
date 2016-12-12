@@ -6,32 +6,24 @@ $(document).ready(function() {
 
 	var active_li;
 
-	switch(pathname) {
-		case "/backend/":
-			active_li = setActiveLi("Inicio");
-			break;
-		case "/backend/contents/": case "/backend/contents/add":
-			active_li = setActiveLi("Contenido");
-			break;
-		case "/backend/localizations/":
-			active_li = setActiveLi("Localizaciones");
-			break;
-		case "/backend/contentTypes/":
-			active_li = setActiveLi("Tipos");
-			break;
-		case "/backend/activityLogs/":
-			active_li = setActiveLi("Histórico");
-			break;
-		case "/backend/guided_visit/":
-			active_li = setActiveLi("Visita Guiadas");
-			break;
-		case "/backend/users/":
-			active_li = setActiveLi("Usuarios");
-			break;
-		case "/backend/langs/":
-			active_li = setActiveLi("Idiomas");
-			break;
-	}
+	if(pathname.indexOf('contents') > 0)
+		active_li = setActiveLi("Contenido");
+	else if (pathname.indexOf('contents') > 0)
+		active_li = setActiveLi("Contenido");
+	else if (pathname.indexOf('localizations') > 0)
+		active_li = setActiveLi("Localizaciones");
+	else if (pathname.indexOf('contentTypes') > 0)
+		active_li = setActiveLi("Tipos");
+	else if (pathname.indexOf('activityLogs') > 0)
+		active_li = setActiveLi("Histórico");
+	else if (pathname.indexOf('guided_visit') > 0)
+		active_li = setActiveLi("Visita Guiadas");
+	else if (pathname.indexOf('users') > 0)
+		active_li = setActiveLi("Usuarios");
+	else if (pathname.indexOf('langs') > 0)
+		active_li = setActiveLi("Idiomas");
+	else
+		active_li = setActiveLi("Inicio");
 });
 
 function setActiveLi(section) {

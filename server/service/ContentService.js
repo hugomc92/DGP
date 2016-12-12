@@ -195,7 +195,7 @@ ContentService.prototype.initializeRouter = function() {
 
 		var lang = Language.build();
 
-		lang.retrieveByCode(langCode).then(function(success) {
+		lang.retrieve(langCode).then(function(success) {
 			if(success !== null) {
 				var langId = success.ID;
 
@@ -304,8 +304,6 @@ ContentService.prototype.initializeRouter = function() {
 			user.retrieveByEmail(email).then(function(result) {
 				if(result.ADMIN) {
 					var jsonObj = req.body;
-
-					console.log(jsonObj);
 
 					var dateIn;
 					var dateOut;
