@@ -49,6 +49,7 @@
             android:label="Preferencias" />
         <activity android:name=".screens.ActivityAccessibilityPreferences" android:label="Accesibilidad"></activity>
         <activity android:name=".screens.ActivityRequestCameraPermission" />
+        <activity android:name=".screens.ActivityNFCScanner" />
     </application>
 
 </manifest>

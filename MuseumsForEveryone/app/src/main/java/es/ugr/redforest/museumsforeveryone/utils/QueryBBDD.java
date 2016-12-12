@@ -21,10 +21,10 @@ public class QueryBBDD {
 
 
 
-    public static final String queryType = "/api/content_type";
-    public static final String queryContentInformationOfType ="/api/content/type";
-    public static final String queryContent ="/api/content/";
-    public static final String queryContentOfLocalization ="/api/content/localization";
+    public static final String queryType = "api/content_type";
+    public static final String queryContentInformationOfType ="api/content/type";
+    public static final String queryContent ="api/content/";
+    public static final String queryContentOfLocalization ="api/content/location";
 
     public static String doQuery(String urlREST, String parameters, String metodo) {
 

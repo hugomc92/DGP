@@ -1,57 +1,44 @@
 package es.ugr.redforest.museumsforeveryone.screens;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.PointF;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Vibrator;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Vibrator;
+import android.nfc.NfcAdapter;
 
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 
-
-
 import es.ugr.redforest.museumsforeveryone.R;
 
-public class ActivityQRScanner extends AppCompatActivity implements QRCodeReaderView.OnQRCodeReadListener{
+public class ActivityNFCScanner extends AppCompatActivity{
 
-    private static final int CAMERA_REQUEST = 1;
-    private QRCodeReaderView qrCodeReaderView;
+    private static final int NFC_REQUEST = 2;
     private TextView resultTextView;
+    private NfcAdapter mNfcAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qrscanner);
+        setContentView(R.layout.activity_nfc_scanner);
 
-        resultTextView = (TextView) findViewById(R.id.textView_Prueba);
+        resultTextView = (TextView) findViewById(R.id.textView_Prueba2);
 
-        qrCodeReaderView = (QRCodeReaderView) findViewById(R.id.qrdecoderview);
-        qrCodeReaderView.setOnQRCodeReadListener(this);
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        qrCodeReaderView.setQRDecodingEnabled(true);
+        if (!mNfcAdapter.isEnabled()) {
+            Toast.makeText(this,getString(R.string.NFC_Error_Disabled),Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this,"Tiene NFC",Toast.LENGTH_LONG).show();
+        }
 
-        qrCodeReaderView.setAutofocusInterval(2000L);
+        handleIntent(getIntent());
 
-        qrCodeReaderView.setBackCamera();
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        qrCodeReaderView.startCamera();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        qrCodeReaderView.stopCamera();
-    }
-
     @Override
     public void onBackPressed() {
         Intent mainIntent = new Intent(this, MainActivity.class);
@@ -59,6 +46,18 @@ public class ActivityQRScanner extends AppCompatActivity implements QRCodeReader
 
     }
 
+    private void handleIntent(Intent intent) {
+        // TODO: handle Intent
+    }
+
+    public void onCliclActiveQR(View v){
+        Intent activeQRIntent = new Intent(ActivityNFCScanner.this, ActivityRequestCameraPermission.class);
+        activeQRIntent.putExtra("QR","active");
+        startActivity(activeQRIntent);
+    }
+
+
+/*
     @Override
     public void onQRCodeRead(String text, PointF[] points) {
 
@@ -78,5 +77,7 @@ public class ActivityQRScanner extends AppCompatActivity implements QRCodeReader
         }
 
 
-    }
+    }*/
+
+
 }

@@ -92,14 +92,14 @@ public class ActivityLang extends AppCompatActivity {
 				if(firstTime.equals("True"))
 				{
 					ControllerPreferences preferences= ControllerPreferences.getInstance();
-					preferences.savePreferencesLanguage(context,"Español");
+					preferences.savePreferencesLanguage(context,"es-es");
 					Intent FirstViewIntent = new Intent(ActivityLang.this, ActivityFirstView.class);
 					startActivity(FirstViewIntent);
 				}
 				else
 				{
 					ControllerPreferences preferences= ControllerPreferences.getInstance();
-					preferences.savePreferencesLanguage(context,"Español");
+					preferences.savePreferencesLanguage(context,"es-es");
 					Intent PreferencesIntent = new Intent(ActivityLang.this, ActivityPreferences.class);
 					startActivity(PreferencesIntent);
 				}
