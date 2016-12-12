@@ -1,9 +1,14 @@
 package es.ugr.redforest.museumsforeveryone.screens;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.PointF;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.os.Vibrator;
 
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 
@@ -13,6 +18,7 @@ import es.ugr.redforest.museumsforeveryone.R;
 
 public class ActivityQRScanner extends AppCompatActivity implements QRCodeReaderView.OnQRCodeReadListener{
 
+    private static final int CAMERA_REQUEST = 1;
     private QRCodeReaderView qrCodeReaderView;
     private TextView resultTextView;
 
@@ -48,6 +54,22 @@ public class ActivityQRScanner extends AppCompatActivity implements QRCodeReader
 
     @Override
     public void onQRCodeRead(String text, PointF[] points) {
-        resultTextView.setText(text);
+
+        try {
+            int id_result = Integer.parseInt(text);
+            Intent mainIntent = new Intent(this, ActivityArtworkDisplay.class);
+            mainIntent.putExtra("id",id_result);
+            startActivity(mainIntent);
+
+        }catch (Exception e){
+
+            Vibrator v = (Vibrator) this.getSystemService(this.VIBRATOR_SERVICE);
+
+            v.vibrate(50);
+            Toast.makeText(this,getString(R.string.QR_Error),Toast.LENGTH_LONG).show();
+
+        }
+
+
     }
 }
