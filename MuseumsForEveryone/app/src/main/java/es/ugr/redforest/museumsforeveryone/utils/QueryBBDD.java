@@ -21,7 +21,7 @@ public class QueryBBDD {
 
 
 
-    public static final String queryType = "api/content_type";
+    public static final String queryType = "api/content_type/";
     public static final String queryContentInformationOfType ="api/content/type";
     public static final String queryContent ="api/content/";
     public static final String queryContentOfLocalization ="api/content/location";
@@ -43,12 +43,15 @@ public class QueryBBDD {
                 connection.setConnectTimeout(5000);
                 connection.setReadTimeout(10000);
                 connection.setRequestMethod(metodo);
+                connection.getRequestMethod();
                 connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
                 connection.setDoInput(true);
-                connection.setDoOutput(true);
-                OutputStream os = connection.getOutputStream();
-                os.write(parameters.getBytes());
-                os.flush();
+                if(metodo.compareTo("POST")==0) {
+                    connection.setDoOutput(true);
+                    OutputStream os = connection.getOutputStream();
+                    os.write(parameters.getBytes());
+                    os.flush();
+                }
                 connection.connect();
 
                 int responseCode = connection.getResponseCode();

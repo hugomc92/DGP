@@ -4,9 +4,8 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import es.ugr.redforest.museumsforeveryone.R;
-import es.ugr.redforest.museumsforeveryone.models.Localization;
+import es.ugr.redforest.museumsforeveryone.models.Location;
 import es.ugr.redforest.museumsforeveryone.threads.HQueryContentOfLocalization;
-import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
 import es.ugr.redforest.museumsforeveryone.utils.SliderMenu;
 
 /**
@@ -18,7 +17,7 @@ import es.ugr.redforest.museumsforeveryone.utils.SliderMenu;
 public class ActivityArtworkDisplay extends AppCompatActivity {
 
     String artworkName="";
-    Localization localization= null;
+    Location location = null;
     String id="";
     Context context;
 
@@ -30,18 +29,19 @@ public class ActivityArtworkDisplay extends AppCompatActivity {
         SliderMenu mySlide = new SliderMenu(this,this);
 
         Bundle bundle = getIntent().getExtras();
+        //Content's index in a content's array
         int index =0;
         if(bundle.containsKey("index")){
             index = bundle.getInt("index");
         }
         if(bundle.containsKey("qrornfc")) {
             id = bundle.getString("qrornfc");
-            HQueryContentOfLocalization queryContent = new HQueryContentOfLocalization(this, localization, id,index,artworkName,true);
+            HQueryContentOfLocalization queryContent = new HQueryContentOfLocalization(this, location, id,index,artworkName,true);
             queryContent.execute();
         }else if(bundle.containsKey("id"))
         {
             id = bundle.getString("id");
-            HQueryContentOfLocalization queryContent = new HQueryContentOfLocalization(this, localization, id,index,artworkName,false);
+            HQueryContentOfLocalization queryContent = new HQueryContentOfLocalization(this, location, id,index,artworkName,false);
             queryContent.execute();
         }
 

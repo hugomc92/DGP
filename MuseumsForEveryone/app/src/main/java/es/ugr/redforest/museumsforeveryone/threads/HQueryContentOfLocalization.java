@@ -26,25 +26,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.models.Content;
 import es.ugr.redforest.museumsforeveryone.models.ContentInformation;
 import es.ugr.redforest.museumsforeveryone.models.ContentType;
-import es.ugr.redforest.museumsforeveryone.models.Localization;
+import es.ugr.redforest.museumsforeveryone.models.Location;
 import es.ugr.redforest.museumsforeveryone.models.Multimedia;
 import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
 import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
 
 /**
- * Thread to connect to the server and get the localization
+ * Thread to connect to the server and get the location and contents in this location
  * @author Emilio Chica Jiménez
  * @version 1.0.0
  */
@@ -52,16 +50,16 @@ import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
 public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String> {
     private Context context;
     private ProgressDialog pDialog;
-    private Localization localization;
+    private Location location;
     private String id="";
     private int index=0;
     private String artworkName="";
     private static int indexImage=0;
     private boolean qrornfc=true;
 
-    public HQueryContentOfLocalization(Context c , Localization localization, String id, int index, String artworkName,boolean qrornfc) {
+    public HQueryContentOfLocalization(Context c , Location location, String id, int index, String artworkName, boolean qrornfc) {
         this.context=c;
-        this.localization = localization;
+        this.location = location;
         this.id = id;
         this.index = index;
         this.artworkName = artworkName;
@@ -71,22 +69,22 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
     @Override
     protected String doInBackground(Void... params) {
         String result;
-        ObjectMapper mapper = new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        ObjectMapper mapper = new ObjectMapper().disable(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES).disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         String query = "";
         if(qrornfc)
             query = QueryBBDD.queryContentOfLocalization;
         else
             query = QueryBBDD.queryContent;
 
-        result = QueryBBDD.doQuery(query +"/"+id+"/"+ ControllerPreferences.getLanguage(), "", "POST");
+        result = QueryBBDD.doQuery(query +"/"+id+"/"+ ControllerPreferences.getLanguage(), "", "GET");
         JSONObject res =null;
         try {
             if(result !=null) {
                 res = new JSONObject(result);
-                if (!res.isNull("localization")) {
-                    //Transform JSON localization to model localization
-                    JSONObject loc = res.getJSONObject("localization");
-                    localization =  mapper.readValue(loc.toString(), Localization.class);
+                if (!res.isNull("location")) {
+                    //Transform JSON location to model location
+                    JSONObject loc = res.getJSONObject("location");
+                    location =  mapper.readValue(loc.toString(), Location.class);
 
                     ContentInformation itemContentInformation =null;
                     ContentType itemContentType =null;
@@ -105,24 +103,30 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
                         JSONObject content_type = item.getJSONObject("content_type");
                         itemContentType = mapper.readValue(content_type.toString(), ContentType.class);
                         //Add videos to content
-                        JSONArray videosJson = item.getJSONArray("video");
-                        for(int i=0;i<videosJson.length();++i) {
-                            JSONObject videoJson = videosJson.getJSONObject(i);
-                            Multimedia video = new Multimedia(videoJson.getInt("id"), videoJson.getString("url"), "video", videoJson.getString("subtitles"));
-                            content.addMultimedia(video);
+                        if(item.has("video")) {
+                            JSONArray videosJson = item.getJSONArray("video");
+                            for (int i = 0; i < videosJson.length(); ++i) {
+                                JSONObject videoJson = videosJson.getJSONObject(i);
+                                Multimedia video = mapper.readValue(videoJson.toString(), Multimedia.class);
+                                video.setType("video");
+                                content.addMultimedia(video);
+                            }
                         }
                         //Add images to content
-                        JSONArray imagesJson = item.getJSONArray("images");
-                        for(int i=0;i<imagesJson.length();++i) {
-                            JSONObject imageJson = imagesJson.getJSONObject(i);
-                            Multimedia image = new Multimedia(imageJson.getInt("id"), imageJson.getString("url"), "image", imageJson.getString("alt_image"));
-                            content.addMultimedia(image);
+                        if(item.has("images")) {
+                            JSONArray imagesJson = item.getJSONArray("images");
+                            for (int i = 0; i < imagesJson.length(); ++i) {
+                                JSONObject imageJson = imagesJson.getJSONObject(i);
+                                Multimedia image = mapper.readValue(imageJson.toString(), Multimedia.class);
+                                image.setType("image");
+                                content.addMultimedia(image);
+                            }
                         }
                         //add content information and content type to content
                         content.setContentInformation(itemContentInformation);
                         content.setContentType(itemContentType);
-                        //add content to localization
-                        localization.addContent(content);
+                        //add content to location
+                        location.addContent(content);
                     }
 
                 }
@@ -152,7 +156,6 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
                     Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
             toast.show();
-            pDialog.dismiss();
         }else
         {
             //Initialize all view in display
@@ -164,44 +167,51 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
             VideoView videoView = (VideoView)((Activity) context).findViewById(R.id.videoArtwork);
 
             //Obtains contents from this location
-            Content content = localization.getContents().get(index);
+            Content content = location.getContents().get(index);
             final ArrayList<Multimedia> imageMultimedia = content.getMultimediaByType("image");
             //Set image in imageview and description
-            Picasso.with(context).load(imageMultimedia.get(0).getUrl()).into(imageView);
-            imageView.setContentDescription(imageMultimedia.get(0).getAlternativeText());
-            //If arrays only contains one image hide carrousel control else add listener to carrousel
-            if(imageMultimedia.size()==1) {
-                RelativeLayout relativeLayout =(RelativeLayout) ((Activity) context).findViewById(R.id.carrousel_images);
-                relativeLayout.setVisibility(View.GONE);
-            }else{
-                Button previosImage = (Button)  ((Activity) context).findViewById(R.id.btPreviousImage);
-                Button nextImage = (Button)  ((Activity) context).findViewById(R.id.btNextImage);
-                previosImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        indexImage--;
-                        if(indexImage<0){
-                            indexImage = imageMultimedia.size();
+            if(imageMultimedia!=null)
+            if(imageMultimedia.size()>0) {
+                Picasso.with(context).load(QueryBBDD.server + imageMultimedia.get(0).getUrl()).into(imageView);
+                imageView.setContentDescription(imageMultimedia.get(0).getAlternativeText());
+                //If arrays only contains one image hide carrousel control else add listener to carrousel
+                if (imageMultimedia.size() == 1) {
+                    RelativeLayout relativeLayout = (RelativeLayout) ((Activity) context).findViewById(R.id.carrousel_images);
+                    relativeLayout.setVisibility(View.GONE);
+                } else {
+                    Button previosImage = (Button) ((Activity) context).findViewById(R.id.btPreviousImage);
+                    Button nextImage = (Button) ((Activity) context).findViewById(R.id.btNextImage);
+                    previosImage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            indexImage--;
+                            if (indexImage < 0) {
+                                indexImage = imageMultimedia.size();
+                            }
+                            Picasso.with(context).load(imageMultimedia.get(indexImage).getUrl()).into(imageView);
+                            imageView.setContentDescription(imageMultimedia.get(indexImage).getAlternativeText());
                         }
-                        Picasso.with(context).load(imageMultimedia.get(indexImage).getUrl()).into(imageView);
-                        imageView.setContentDescription(imageMultimedia.get(indexImage).getAlternativeText());
-                    }
-                });
-                nextImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        indexImage++;
-                        if(indexImage>imageMultimedia.size()){
-                            indexImage = 0;
+                    });
+                    nextImage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            indexImage++;
+                            if (indexImage > imageMultimedia.size()) {
+                                indexImage = 0;
+                            }
+                            Picasso.with(context).load(imageMultimedia.get(indexImage).getUrl()).into(imageView);
+                            imageView.setContentDescription(imageMultimedia.get(indexImage).getAlternativeText());
                         }
-                        Picasso.with(context).load(imageMultimedia.get(indexImage).getUrl()).into(imageView);
-                        imageView.setContentDescription(imageMultimedia.get(indexImage).getAlternativeText());
-                    }
-                });
+                    });
+                }
+            }else {
+                imageView.setVisibility(View.GONE);
+                ((Activity)context).findViewById(R.id.carrousel_images).setVisibility(View.GONE);
             }
 
             ArrayList<Multimedia> videoMultimedia = content.getMultimediaByType("video");
             //If array contains video put video and subtitles in videoview else hide videoview
+            if(videoMultimedia!=null)
             if(videoMultimedia.size()>0){
                 Uri uri = Uri.parse(videoMultimedia.get(0).getUrl());
                 videoView.setVideoURI(uri);

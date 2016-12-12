@@ -1,5 +1,7 @@
 package es.ugr.redforest.museumsforeveryone.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Class containing all data from a language
  *
@@ -40,6 +42,7 @@ public class Language {
 	 *
 	 * @return Returns a String
 	 */
+	@JsonProperty("LANGUAGE")
 	public String getLang() {
 
 		return lang;
@@ -50,6 +53,7 @@ public class Language {
 	 *
 	 * @param lang String to show
 	 */
+	@JsonProperty("LANGUAGE")
 	public void setLang(String lang) {
 
 		this.lang = lang;
@@ -60,6 +64,7 @@ public class Language {
 	 *
 	 * @return Integer ID of the image resource
 	 */
+	@JsonProperty("ICON")
 	public int getImage() {
 
 		return image;
@@ -70,6 +75,7 @@ public class Language {
 	 *
 	 * @param image Integer ID of the image resource
 	 */
+	@JsonProperty("ICON")
 	public void setImage(int image) {
 
 		this.image = image;
@@ -79,6 +85,7 @@ public class Language {
 	 *
 	 * @return String with language's code
 	 */
+	@JsonProperty("CODE")
 	public String getCode() {
 		return code;
 	}
@@ -87,6 +94,7 @@ public class Language {
 	 *
 	 *  @param code String with with language's code
 	 */
+	@JsonProperty("CODE")
 	public void setCode(String code) {
 		this.code = code;
 	}
