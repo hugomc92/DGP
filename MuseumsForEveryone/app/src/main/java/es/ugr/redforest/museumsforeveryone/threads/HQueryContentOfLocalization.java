@@ -56,6 +56,7 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
     private String artworkName="";
     private static int indexImage=0;
     private boolean qrornfc=true;
+    private Content content=null;
 
     public HQueryContentOfLocalization(Context c , Location location, String id, int index, String artworkName, boolean qrornfc) {
         this.context=c;
@@ -64,6 +65,9 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
         this.index = index;
         this.artworkName = artworkName;
         this.qrornfc = qrornfc;
+    }
+    private void fillContent(JSONObject item ){
+
     }
 
     @Override
@@ -88,23 +92,61 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
 
                     ContentInformation itemContentInformation =null;
                     ContentType itemContentType =null;
-                    Content content=null;
+
                     //Fetch array of contents
-                    JSONArray contentsJSON = res.getJSONArray("contents");
-                    for (int j = 0; j < contentsJSON.length(); ++j) {
-                        JSONObject item = contentsJSON.getJSONObject(j);
-                        //Transform JSON content to model content
-                        JSONObject contentJson = item.getJSONObject("content");
-                        content =  mapper.readValue(contentJson.toString(), Content.class);
+                    //If content is scan by nfc or qr gets all contents in this location
+                    if(qrornfc) {
+                        JSONArray contentsJSON = res.getJSONArray("contents");
+                        for (int j = 0; j < contentsJSON.length(); ++j) {
+                            JSONObject item = contentsJSON.getJSONObject(j);
+                            //Transform JSON content to model content
+                            JSONObject contentJson = item.getJSONObject("content");
+                            content = mapper.readValue(contentJson.toString(), Content.class);
+                            //Transform JSON content infomration to model content infomration
+                            JSONObject content_information = item.getJSONObject("content_information");
+                            itemContentInformation = mapper.readValue(content_information.toString(), ContentInformation.class);
+                            //Transform JSON content type to model content type
+                            JSONObject content_type = item.getJSONObject("content_type");
+                            itemContentType = mapper.readValue(content_type.toString(), ContentType.class);
+                            //Add videos to content
+                            if (item.has("video")) {
+                                JSONArray videosJson = item.getJSONArray("video");
+                                for (int i = 0; i < videosJson.length(); ++i) {
+                                    JSONObject videoJson = videosJson.getJSONObject(i);
+                                    Multimedia video = mapper.readValue(videoJson.toString(), Multimedia.class);
+                                    video.setType("video");
+                                    content.addMultimedia(video);
+                                }
+                            }
+                            //Add images to content
+                            if (item.has("images")) {
+                                JSONArray imagesJson = item.getJSONArray("images");
+                                for (int i = 0; i < imagesJson.length(); ++i) {
+                                    JSONObject imageJson = imagesJson.getJSONObject(i);
+                                    Multimedia image = mapper.readValue(imageJson.toString(), Multimedia.class);
+                                    image.setType("image");
+                                    content.addMultimedia(image);
+                                }
+                            }
+                            //add content information and content type to content
+                            content.setContentInformation(itemContentInformation);
+                            content.setContentType(itemContentType);
+                            //add content to location
+                            location.addContent(content);
+                        }
+                    }else { //Show one content
+
+                        JSONObject contentJson = res.getJSONObject("content");
+                        content = mapper.readValue(contentJson.toString(), Content.class);
                         //Transform JSON content infomration to model content infomration
-                        JSONObject content_information = item.getJSONObject("content_information");
+                        JSONObject content_information = res.getJSONObject("content_information");
                         itemContentInformation = mapper.readValue(content_information.toString(), ContentInformation.class);
                         //Transform JSON content type to model content type
-                        JSONObject content_type = item.getJSONObject("content_type");
+                        JSONObject content_type = res.getJSONObject("content_type");
                         itemContentType = mapper.readValue(content_type.toString(), ContentType.class);
                         //Add videos to content
-                        if(item.has("video")) {
-                            JSONArray videosJson = item.getJSONArray("video");
+                        if (res.has("video")) {
+                            JSONArray videosJson = res.getJSONArray("video");
                             for (int i = 0; i < videosJson.length(); ++i) {
                                 JSONObject videoJson = videosJson.getJSONObject(i);
                                 Multimedia video = mapper.readValue(videoJson.toString(), Multimedia.class);
@@ -113,8 +155,8 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
                             }
                         }
                         //Add images to content
-                        if(item.has("images")) {
-                            JSONArray imagesJson = item.getJSONArray("images");
+                        if (res.has("images")) {
+                            JSONArray imagesJson = res.getJSONArray("images");
                             for (int i = 0; i < imagesJson.length(); ++i) {
                                 JSONObject imageJson = imagesJson.getJSONObject(i);
                                 Multimedia image = mapper.readValue(imageJson.toString(), Multimedia.class);
@@ -125,8 +167,6 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
                         //add content information and content type to content
                         content.setContentInformation(itemContentInformation);
                         content.setContentType(itemContentType);
-                        //add content to location
-                        location.addContent(content);
                     }
 
                 }
@@ -166,8 +206,10 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
             TextView titleImage = (TextView)  ((Activity)context).findViewById(R.id.titleImage);
             VideoView videoView = (VideoView)((Activity) context).findViewById(R.id.videoArtwork);
 
-            //Obtains contents from this location
-            Content content = location.getContents().get(index);
+            //If content is scan by nfc or qr gets all contents in this location
+            if(qrornfc)
+                content = location.getContents().get(index);
+
             final ArrayList<Multimedia> imageMultimedia = content.getMultimediaByType("image");
             //Set image in imageview and description
             if(imageMultimedia!=null)

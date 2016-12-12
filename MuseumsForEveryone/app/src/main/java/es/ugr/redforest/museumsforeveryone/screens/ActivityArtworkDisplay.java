@@ -40,7 +40,7 @@ public class ActivityArtworkDisplay extends AppCompatActivity {
             queryContent.execute();
         }else if(bundle.containsKey("id"))
         {
-            id = bundle.getString("id");
+            id = String.valueOf(bundle.getInt("id"));
             HQueryContentOfLocalization queryContent = new HQueryContentOfLocalization(this, location, id,index,artworkName,false);
             queryContent.execute();
         }

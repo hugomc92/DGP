@@ -38,8 +38,7 @@ public class ActivityArtworkList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artwork_list);
-        SliderMenu mySlide = new SliderMenu(this,this);
-        mySlide.inicializarToolbar(R.menu.menu_main,getString(R.string.app_name));
+
         String id="";
         context=this;
         contents = new ArrayList<>();
