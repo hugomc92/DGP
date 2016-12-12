@@ -78,7 +78,7 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
         else
             query = QueryBBDD.queryContent;
 
-        result = QueryBBDD.doQuery(query +"/"+id+"/lang/"+ ControllerPreferences.getLanguage(), "", "POST");
+        result = QueryBBDD.doQuery(query +"/"+id+"/"+ ControllerPreferences.getLanguage(), "", "POST");
         JSONObject res =null;
         try {
             if(result !=null) {
@@ -146,7 +146,7 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
     @Override
     protected void onPostExecute(String resultado) {
 
-        if (resultado==null && resultado.compareTo("")==0) {
+        if (resultado==null || resultado.compareTo("")==0) {
             Toast toast = Toast.makeText(context,
                     "Conection problems, try again",
                     Toast.LENGTH_SHORT);

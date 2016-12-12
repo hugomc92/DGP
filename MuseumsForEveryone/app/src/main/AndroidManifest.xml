@@ -4,9 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.CAPTURE_VIDEO_OUTPUT" />
     <uses-permission android:name="android.permission.CAPTURE_SECURE_VIDEO_OUTPUT" />
     <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -46,6 +48,8 @@
             android:name=".screens.ActivityPreferences"
             android:label="Preferencias" />
         <activity android:name=".screens.ActivityAccessibilityPreferences" android:label="Accesibilidad"></activity>
+        <activity android:name=".screens.ActivityRequestCameraPermission" />
+        <activity android:name=".screens.ActivityNFCScanner" />
     </application>
 
 </manifest>
