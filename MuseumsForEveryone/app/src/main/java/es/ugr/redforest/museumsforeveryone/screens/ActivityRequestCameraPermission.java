@@ -39,6 +39,7 @@ public class ActivityRequestCameraPermission extends Activity {
 
         //The extra stuff is just because of the onclick method in the nfc scanner xml
         if(extra == null){
+            // check if the device has NFC sensor
             if (mNfcAdapter == null) {
                 // If the device hasn't got NFC we'll use QR and will request for camera permission
                 if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED){
@@ -65,6 +66,7 @@ public class ActivityRequestCameraPermission extends Activity {
 
             }
         }else{
+            //This code exectutes only when the QR read button is pressed in ActivityNFCScanner layout
             if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED){
                 Intent mainIntent = new Intent(this, ActivityQRScanner.class);
                 startActivity(mainIntent);
@@ -82,12 +84,14 @@ public class ActivityRequestCameraPermission extends Activity {
 
     }
 
+    //Method that explain the reason for accepting the camera permission
     private void explainPermisUse() {
         if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.CAMERA)){
             //Toast.makeText(this, this.getString(R.string.Camera_Permit),Toast.LENGTH_SHORT).show();
             alertBasicDialog();
         }
     }
+    //Method that explain the reason for accepting the NFC permission
     private void explainNFCPermisUse() {
         if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.NFC)){
             //Toast.makeText(this, this.getString(R.string.Camera_Permit),Toast.LENGTH_SHORT).show();
@@ -95,6 +99,7 @@ public class ActivityRequestCameraPermission extends Activity {
         }
     }
 
+    //Method that create the message dialog for showing the permission reason.
     private void alertBasicDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -110,6 +115,7 @@ public class ActivityRequestCameraPermission extends Activity {
 
         builder.show();
     }
+    //Method that create the message dialog for showing the permission reason.
     private void alertBasicDialogNFC() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -126,6 +132,8 @@ public class ActivityRequestCameraPermission extends Activity {
         builder.show();
     }
 
+    //Method that create a dialog that is showed only when the user denied the requestPermission and it is used for confirm the user action.
+    //If the user press no the dialog shows if he really want to denied it and why he need it, and then close the dialog. If the user press yes the requestPermission is called again.
     private void alertBasicDialogDeniedPermission() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -154,6 +162,9 @@ public class ActivityRequestCameraPermission extends Activity {
         builder.show();
     }
 
+
+    //Method that create a dialog that is showed only when the user denied the requestPermission and it is used for confirm the user action.
+    //If the user press no the dialog shows if he really want to denied it and why he need it, and then close the dialog. If the user press yes the requestPermission is called again.
     private void alertBasicDialogDeniedNFCPermission() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -183,17 +194,21 @@ public class ActivityRequestCameraPermission extends Activity {
     }
 
 
+    //Method used just for calling the RequestPermissions specifically.
     private void requestCameraPermit(){
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},CAMERA_REQUEST);
         // Toast.makeText(context,context.getString(R.string.Permits),Toast.LENGTH_SHORT).show();
 
     }
+    //Method used just for calling the RequestPermissions specifically.
     private void requestNFCPermit(){
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.NFC},NFC_REQUEST);
         // Toast.makeText(context,context.getString(R.string.Permits),Toast.LENGTH_SHORT).show();
 
     }
 
+    //This is the request handler, called always when requestPermissions is invoked.
+    //If the requestPermissions is called because of the camera or NFC sensor the Android handler will answer with this response.
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
