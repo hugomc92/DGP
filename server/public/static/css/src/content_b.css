@@ -125,6 +125,9 @@ main {
   background: white;
   margin-top: 10px;
   padding-bottom: 25px;
+  /*input.select-dropdown {
+			color: #9e9e9e;
+		}*/
 }
 #contents .info_form input.select-dropdown {
   color: #9e9e9e;

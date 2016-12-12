@@ -150,7 +150,7 @@ ContentController.prototype.initBackend = function() {
 				self.renderJson.contentTypes = success;
 
 				self.localizationController.getAllLocalizations().then(function(success) {
-					self.renderJson.localizations = success;
+					self.renderJson.locations = success;
 
 					var contentInformation = ContentInformation.build();
 

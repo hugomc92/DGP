@@ -18,10 +18,10 @@
 							for(var i=0; i<langs.length; i++) { %>
 								<li class="tab col">
 									<% if(i === 0) { %>
-									<a class="active" href="#<%= langs[i].NAME.toLowerCase() %>_content" content-lang="<%= langs[i].ID %>">
+									<a class="active" href="#<%= langs[i].NAME.toLowerCase() %>_content">
 									<% } 
 									else { %>
-									<a href="#<%= langs[i].NAME.toLowerCase() %>_content" content-lang="langs[i].ID">
+									<a href="#<%= langs[i].NAME.toLowerCase() %>_content">
 									<% } %>
 										<img src="<%= langs[i].FLAG %>" alt="Bandera <%= langs[i].NAME %>" width="25px"/>
 										<span class="hide-on-small-only"><%= langs[i].NAME %></span>
@@ -31,7 +31,7 @@
 						}
 						else { %>
 						<li class="tab col">
-							<a class="active" href="#español_content" content-lang="1">
+							<a class="active" href="#español_content">
 								<img src="/static/img/langs/flag_of_spain_(civil).png" alt="Bandera Español" width="25px"/>
 								<span class="hide-on-small-only">Español</span>
 							</a>
@@ -42,10 +42,10 @@
 				<div id="more_langs" class="col s1"><a class="modal-trigger waves-effect waves-light"><i class="material-icons">add</i></a></div>
 				
 				<!-- All tabs content -->
-				<div id="contents" content-id="<% if(typeof(contentId) !== 'undefined') { %> <%= contentId %> <% } %>">
+				<div id="contents" content-id="<% if(typeof(cont) !== 'undefined') { %> <%= cont.ID %> <% } %>">
 					<% if(typeof(langs) !== 'undefined') {
 						for(var j=0; j<langs.length; j++) { %>
-							<div id="<%= langs[j].NAME.toLowerCase() %>_content" class="col s12" content-lang="<%= langs[j].ID %>">
+							<div id="<%= langs[j].NAME.toLowerCase() %>_content" class="col s12" content-lang="<%= langs[j].ID %>" info-id="<%= contentInformations[j].ID %>">
 								<div class="row">
 									<form method="post" action="#" class="info_form col s12 z-depth-1">
 										<h5>INFORMACIÓN</h5>
@@ -71,13 +71,13 @@
 										<!-- Content location -->
 										<div class="input-field col s12 m6">
 											<select id="content_location" name="content_location">
-												<option value="" disabled>Localización  (opcional)</option>
-												<% for(var i=0; i<localizations.length; i++) { 
-													if(localizations[i].ID === cont.LOCALIZATION_ID) {%>
-														<option value="<%= localizations[i].ID %>" selected><%= localizations[i].DESCRIPTION %></option>
+												<option value="" selected disabled>Localización  (opcional)</option>
+												<% for(var i=0; i<locations.length; i++) { 
+													if(locations[i].ID === cont.LOCALIZATION_ID) {%>
+														<option value="<%= locations[i].ID %>" selected><%= locations[i].DESCRIPTION %></option>
 													<% }
 													else { %>
-														<option value="<%= localizations[i].ID %>"><%= localizations[i].DESCRIPTION %></option>
+														<option value="<%= locations[i].ID %>"><%= locations[i].DESCRIPTION %></option>
 													<% } %>
 												<% } %>
 											</select>
@@ -159,7 +159,7 @@
 					}
 					else { %>
 					
-					<div id="español_content" class="col s12" content-lang="1">
+					<div id="español_content" class="col s12" content-lang="1" info-id="">
 						<div class="row">
 							<form method="post" action="#" class="info_form col s12 z-depth-1">
 								<h5>INFORMACIÓN</h5>

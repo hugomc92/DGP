@@ -15,6 +15,9 @@ var ContentInformation = DBConnector.connectM4E().define('CONTENT_INFORMATION', 
 		retrieveById: function(id) {
 			return ContentInformation.findOne({where: {ID: id}});
 		},
+		retrieveLast: function() {
+			return ContentInformation.findOne({order: 'ID DESC'});
+		},
 		retrieveByContentId: function(contentId) {
 			return ContentInformation.findAll({where: {CONTENT_ID: contentId}});
 		},
@@ -41,8 +44,6 @@ var ContentInformation = DBConnector.connectM4E().define('CONTENT_INFORMATION', 
 				NAME: this.name,
 				DESCRIPTION: this.description,
 				BLIND_DESCRIPTION: this.blindDescription,
-				CONTENT_ID: this.contentId,
-				LANG_ID: this.langId
 			}, {where: {ID: id}});
 		}
 	},
