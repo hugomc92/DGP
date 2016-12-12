@@ -19,10 +19,12 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginLeft="20dp"
+        android:paddingRight="20dp"
         android:text="Medium Text"
         android:id="@+id/rowText"
         android:layout_centerVertical="true"
-        android:gravity="center"
+        android:gravity="left"
         android:layout_toRightOf="@+id/rowIcon"
         android:layout_toEndOf="@+id/rowIcon" />
 
