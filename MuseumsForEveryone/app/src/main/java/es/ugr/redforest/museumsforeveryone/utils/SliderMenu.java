@@ -177,12 +177,7 @@ public class SliderMenu extends AppCompatActivity{
         mDrawerToggle.syncState();
     }
 
-    private void explainPermisUse(Activity activity,Context context) {
-        if(ActivityCompat.shouldShowRequestPermissionRationale(activity,Manifest.permission.CAMERA)){
-            Toast.makeText(context,context.getString(R.string.Permit_Reason),Toast.LENGTH_SHORT).show();
-            alertBasicDialog(context);
-        }
-    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
