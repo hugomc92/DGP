@@ -16,6 +16,7 @@ import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.adapters.AdapterContentType;
 import es.ugr.redforest.museumsforeveryone.models.ContentType;
 import es.ugr.redforest.museumsforeveryone.threads.HQueryContentType;
+import es.ugr.redforest.museumsforeveryone.utils.SliderMenu;
 
 /**
  * Activity which shows a list of available artwork types to select one of them
@@ -38,53 +39,12 @@ public class ActivityContentType extends AppCompatActivity {
         context=this;
 
         contentTypeList =new ArrayList<>();
-
-        //Gets reference of the RecyclerView
-        final RecyclerView recyclerContentType = (RecyclerView) findViewById(R.id.recycler_content_type);
+        SliderMenu mySlide = new SliderMenu(this,this);
+        mySlide.inicializarToolbar(R.menu.menu_main,getString(R.string.app_name));
 
         HQueryContentType hQueryContentType = new HQueryContentType(this,contentTypeList);
         hQueryContentType.execute();
 
-        //Creates an Adapter with the list of
-        AdapterContentType contentTypeAdapter = new AdapterContentType(contentTypeList,this);
-
-        //Creates an Android default layout to show elements on the RecyclerView
-        LinearLayoutManager layMan = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,
-                false);
-
-        //Assign an action to do on element click
-		recyclerContentType.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-
-
-			@Override
-			public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-
-                View child = recyclerContentType.findChildViewUnder(e.getX(), e.getY());
-                if(child!=null) {
-                    Intent ActivityArtworkListIntent = new Intent(ActivityContentType.this, ActivityArtworkList.class);
-                    ActivityArtworkListIntent.putExtra("id_type", recyclerContentType.getChildAdapterPosition(child));
-                    startActivity(ActivityArtworkListIntent);
-                }
-				return false;
-			}
-
-			@Override
-			public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-			}
-
-			@Override
-			public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-			}
-		});
-
-        //Set all previous elements to the RecyclerView
-        recyclerContentType.setLayoutManager(layMan);
-        recyclerContentType.setItemAnimator(new DefaultItemAnimator());
-        recyclerContentType.setAdapter(contentTypeAdapter);
-
-        //DEBUGGING PURPOSES
 
     }
 }

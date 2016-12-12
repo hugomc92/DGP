@@ -40,7 +40,8 @@
             android:contentDescription="@string/artwork_list"
             style="@style/ImagenButtonTheme"
             android:src="@drawable/ic_list_black_24dp"
-            android:onClick="launchArtworkListActivity"/>
+            android:onClick="launchArtworkListActivity"
+            android:background="@android:color/transparent" />
 
         <TextView
             style="@style/TextViewTheme"
@@ -55,7 +56,8 @@
             style="@style/ImagenButtonTheme"
             android:contentDescription="@string/guided_visit"
             android:src="@drawable/ic_location_on_black_24dp"
-            android:onClick="launchGuidedVisit"/>
+            android:onClick="launchGuidedVisit"
+            android:background="@android:color/transparent" />
 
         <TextView
             style="@style/TextViewTheme"
@@ -70,7 +72,8 @@
             android:contentDescription="@string/artwork_info"
             style="@style/ImagenButtonTheme"
             android:src="@drawable/ic_center_focus_weak_black_24dp"
-            android:onClick="launchInfoObras"/>
+            android:onClick="launchInfoObras"
+            android:background="@android:color/transparent" />
 
         <TextView
             style="@style/TextViewTheme"

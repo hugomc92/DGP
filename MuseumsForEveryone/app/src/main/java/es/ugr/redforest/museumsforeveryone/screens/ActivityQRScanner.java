@@ -66,7 +66,7 @@ public class ActivityQRScanner extends AppCompatActivity implements QRCodeReader
         try {
             int id_result = Integer.parseInt(text);
             Intent mainIntent = new Intent(this, ActivityArtworkDisplay.class);
-            mainIntent.putExtra("id",text);
+            mainIntent.putExtra("qrornfc",text);
             startActivity(mainIntent);
 
         }catch (Exception e){

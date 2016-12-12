@@ -1,5 +1,7 @@
 package es.ugr.redforest.museumsforeveryone.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -29,7 +31,8 @@ public class Content {
         this.dateOut = dateOut;
         this.multimedia = new ArrayList<>();
     }
-
+    public Content()
+    {this.multimedia = new ArrayList<>();}
     public void addMultimedia(Multimedia m){
         multimedia.add(m);
     }
@@ -58,35 +61,35 @@ public class Content {
     public void setContentType(ContentType contentType) {
         this.contentType = contentType;
     }
-
+    @JsonProperty("ID")
     public int getId() {
         return id;
     }
-
+    @JsonProperty("CREATION_DATE")
     public Date getCreation_date() {
         return creation_date;
     }
-
+    @JsonProperty("DATE_IN")
     public Date getDateIn() {
         return dateIn;
     }
-
+    @JsonProperty("DATE_OUT")
     public Date getDateOut() {
         return dateOut;
     }
-
+    @JsonProperty("ID")
     public void setId(int id) {
         this.id = id;
     }
-
+    @JsonProperty("CREATION_DATE")
     public void setCreation_date(Date creation_date) {
         this.creation_date = creation_date;
     }
-
+    @JsonProperty("DATE_IN")
     public void setDateIn(Date dateIn) {
         this.dateIn = dateIn;
     }
-
+    @JsonProperty("DATE_OUT")
     public void setDateOut(Date dateOut) {
         this.dateOut = dateOut;
     }
