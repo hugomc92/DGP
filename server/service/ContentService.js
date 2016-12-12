@@ -195,13 +195,13 @@ ContentService.prototype.initializeRouter = function() {
 
 		var lang = Language.build();
 
-		lang.retrieve(langCode).then(function(success) {
+		lang.retrieveByCode(langCode).then(function(success) {
 			if(success !== null) {
 				var langId = success.ID;
 
 				var location = Localization.build();
 
-				location.retrieveByCode(code).then(function(success) {
+				location.retrieve(code).then(function(success) {
 					if(success !== null) {
 						var locat= success;
 
