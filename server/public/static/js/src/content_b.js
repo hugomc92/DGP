@@ -296,9 +296,12 @@ function send_data(form) {
 				// Notify user of success
 				Materialize.toast('Se ha guardado el contenido con éxito', 4000);
 
-				// Modify all forms to get it
-				if(action === 'add')
+				// Modify all forms
+				if(action === 'add') {
 					action = 'edit';
+
+					$('.multimedia').css('display', 'block');
+				}
 			}
 		},
 		error: function(xhr, status){
