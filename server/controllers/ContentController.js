@@ -8,6 +8,7 @@ var moment = require('moment');
 var Utils = require('../utils/Util');
 var Content = require('../models/Content');
 var ContentInformation = require('../models/ContentInformation');
+var Image = require('../models/Image');
 
 // Constructor for ContentController
 function ContentController(json, activityLogC, contentTypeC, localizationC, langC) {
@@ -168,10 +169,19 @@ ContentController.prototype.initBackend = function() {
 							content.retrieveById(contentId).then(function(success) {
 								self.renderJson.cont = success;
 
-								res.render('pages/backend/content', self.renderJson);
-								self.clearMessages();
-							}, function(err) {
+								var image = Image.build();
 
+								image.retrieveAllByContentId(contentId).then(function(success) {
+									self.renderJson.images = success;
+
+									res.render('pages/backend/content', self.renderJson);
+									self.clearMessages();
+								}, function(err) {
+
+								});
+							}, function(err) {
+								self.renderJson.error = 'Se ha producido un error interno recuperando las imágenes';
+								res.redirect('/backend/contents/');
 							});
 						}, function(err) {
 							self.renderJson.error = 'Se ha producido un error interno recuperando los idiomas';
@@ -234,6 +244,7 @@ ContentController.prototype.clearMessages = function() {
 	delete this.renderJson.langs;
 
 	delete this.renderJson.cont;
+	delete this.renderJson.images;
 };
 
 module.exports = ContentController;

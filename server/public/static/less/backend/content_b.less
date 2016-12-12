@@ -127,6 +127,71 @@ main {
 	.multimedia {
 		background: white;
 		display: none;
+
+		.content_multimedia {
+			li {
+				text-align: center;
+				margin: 10px auto;
+
+				&:hover {
+					.multimedia_actions .btn-floating {
+						max-height: 50px;
+					}
+				}
+
+				img {
+					display: block;
+					margin: 0 auto;
+				}
+
+				.multimedia_actions {
+					.btn-floating {
+						background: @secondary_color_dark;
+						margin: 5px 0;
+						display: inline-block;
+						max-height: 0;
+
+						@media @tablet {
+							max-height: 50px;
+						}
+
+						@media @mobile {
+							max-height: 50px;
+						}
+
+						&:hover {
+							background: @secondary_color;
+						}
+
+						&.edit_multimedia {
+							margin-right: 5px;
+						}
+
+						&.remove_multimedia {
+							margin-left: 5px;
+						}
+					}
+				}
+
+				.add_multimedia {
+					height: 100px;
+					display: block;
+					color: white;
+					text-align: center;
+
+					i {
+						display: block;
+						font-size: 3.5em;
+						margin-top: 10px;
+					}
+					
+					span {
+						display: block;
+						margin-top: 10px;
+					}
+				}
+			}
+		}
 	}
 }
 
