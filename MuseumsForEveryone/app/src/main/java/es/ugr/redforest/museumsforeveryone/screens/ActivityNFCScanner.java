@@ -13,6 +13,7 @@ import android.nfc.NfcAdapter;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 
 import es.ugr.redforest.museumsforeveryone.R;
+import es.ugr.redforest.museumsforeveryone.utils.SliderMenu;
 
 public class ActivityNFCScanner extends AppCompatActivity{
 
@@ -25,6 +26,8 @@ public class ActivityNFCScanner extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc_scanner);
+        SliderMenu mySlide = new SliderMenu(this,this);
+        mySlide.inicializarToolbar(R.menu.menu_main,getString(R.string.app_name));
 
         resultTextView = (TextView) findViewById(R.id.textView_Prueba2);
 
@@ -42,6 +45,7 @@ public class ActivityNFCScanner extends AppCompatActivity{
     @Override
     public void onBackPressed() {
         Intent mainIntent = new Intent(this, MainActivity.class);
+        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainIntent);
 
     }

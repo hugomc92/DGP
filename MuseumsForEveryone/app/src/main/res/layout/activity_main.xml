@@ -31,39 +31,56 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="es.ugr.redforest.museumsforeveryone.screens.MainActivity">
 
-    <FrameLayout
-        style="@style/FrameLayoutTheme">
+    <RelativeLayout
+        style="@style/FrameLayoutTheme"
+        android:contentDescription="@string/artwork_list"
+        >
+
         <ImageButton
+            android:contentDescription="@string/artwork_list"
             style="@style/ImagenButtonTheme"
             android:src="@drawable/ic_list_black_24dp"
-            android:onClick="launchArtworkListActivity"/>
+            android:onClick="launchArtworkListActivity"
+            android:background="@android:color/transparent" />
 
         <TextView
             style="@style/TextViewTheme"
-            android:text="@string/artwork_list"/>
-    </FrameLayout>
-    <FrameLayout
+            android:text="@string/artwork_list"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:contentDescription="@string/guided_visit"
         style="@style/FrameLayoutTheme">
         <ImageButton
             style="@style/ImagenButtonTheme"
+            android:contentDescription="@string/guided_visit"
             android:src="@drawable/ic_location_on_black_24dp"
-            android:onClick="launchGuidedVisit"/>
+            android:onClick="launchGuidedVisit"
+            android:background="@android:color/transparent" />
+
         <TextView
             style="@style/TextViewTheme"
             android:text="@string/guided_visit"
-            />
-    </FrameLayout>
-    <FrameLayout
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:contentDescription="@string/artwork_info"
         style="@style/FrameLayoutTheme">
         <ImageButton
+            android:contentDescription="@string/artwork_info"
             style="@style/ImagenButtonTheme"
             android:src="@drawable/ic_center_focus_weak_black_24dp"
-            android:onClick="launchInfoObras"/>
+            android:onClick="launchInfoObras"
+            android:background="@android:color/transparent" />
+
         <TextView
             style="@style/TextViewTheme"
             android:text="@string/artwork_info"
-            />
-    </FrameLayout>
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
 </LinearLayout>
 
     </LinearLayout>

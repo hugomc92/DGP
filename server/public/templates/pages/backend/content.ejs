@@ -92,7 +92,7 @@
 											<textarea id="content_blind_description" name="content_blind_description" class="materialize-textarea" required><%= contentInformations[j].BLIND_DESCRIPTION %></textarea>
 											<label for="content_blind_description">Descripción ciegos (en idioma seleccionado)</label>
 										</div>
-										<% moment.locale('es', {
+										<% moment.updateLocale('es', {
 											months: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ]
 										}); %>
 										<!-- Content date in  -->
@@ -118,9 +118,41 @@
 								</div>
 								<div class="multimedia img_content row z-depth-1">
 									<h5 class="col s12">IMÁGENES</h5>
+									<ul class="content_multimedia row">
+										<% if(typeof(images) !== 'undefined') { 
+											for(var i=0; i<images.length; i++) {%>
+												<li class="col s12 m6 l4">
+													<img pic="<%= images[i].ID %>" class="responsive-img"src="<%= images[i].URL %>">
+													<div class="multimedia_actions">
+														<a class="edit_multimedia btn-floating waves-effect waves-light"><i class="material-icons">edit</i></a>
+														<a class="remove_multimedia btn-floating waves-effect waves-light red"><i class="material-icons">delete</i></a>
+													</div>
+												</li>
+											<% } 
+										} %>
+										<li class="col s12 m6 l4">
+											<a class="add_multimedia waves-effect waves-light btn">
+												<i class="material-icons">add</i>
+												<span>Añadir imagen</span>
+											</a>
+										</li>
+									</ul>
 								</div>
 								<div class="multimedia video_content row z-depth-1">
 									<h5 class="col s12">VIDEOS</h5>
+									<ul class="content_multimedia row">
+										<% if(typeof(videos) !== 'undefined') { 
+											for(var i=0; i<videos.length; i++) {%>
+												<li class="col s12 m6 l4"> <video class="responsive-video" controls><source src="<%= videos[i].URL %>"></video></li>
+											<% } 
+										} %>
+										<li class="col s12 m6 l4">
+											<a class="add_multimedia waves-effect waves-light btn">
+												<i class="material-icons">add</i>
+												<span>Añadir Video</span>
+											</a>
+										</li>
+									</ul>
 								</div>
 							</div>
 						<% }
@@ -187,9 +219,25 @@
 						</div>
 						<div class="multimedia img_content row z-depth-1">
 							<h5 class="col s12">IMÁGENES</h5>
+							<ul class="content_multimedia row">
+								<li class="col s12 m6 l4">
+									<a class="add_multimedia waves-effect waves-light btn">
+										<i class="material-icons">add</i>
+										<span>Añadir imagen</span>
+									</a>
+								</li>
+							</ul>
 						</div>
 						<div class="multimedia video_content row z-depth-1">
 							<h5 class="col s12">VIDEOS</h5>
+							<ul class="content_multimedia row">
+								<li class="col s12 m6 l4">
+									<a class="add_multimedia waves-effect waves-light btn">
+										<i class="material-icons">add</i>
+										<span>Añadir Video</span>
+									</a>
+								</li>
+							</ul>
 						</div>
 					</div>
 

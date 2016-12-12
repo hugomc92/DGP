@@ -1,6 +1,8 @@
 package es.ugr.redforest.museumsforeveryone.screens;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,9 +26,20 @@ public class MainActivity extends AppCompatActivity {
 		SliderMenu mySlide = new SliderMenu(this,this);
 		mySlide.inicializarToolbar(R.menu.menu_main,getString(R.string.app_name));
 	}
-	//Disable back button
+
 	@Override
 	public void onBackPressed() {
+		new AlertDialog.Builder(this).setMessage(R.string.exit_Message)
+				.setCancelable(false)
+				.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+                        System.exit(0);
+                        finish();
+
+					}
+				})
+				.setNegativeButton(R.string.No, null)
+				.show();
 	}
 
 	/**
@@ -58,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 	 * @version 1.0.0
 	 */
 	public void launchInfoObras(View v){
-		Intent preferencesIntent = new Intent(MainActivity.this, ActivityInfoDisplay.class);
+		Intent preferencesIntent = new Intent(MainActivity.this, ActivityRequestCameraPermission.class);
 		startActivity(preferencesIntent);
 	}
 }

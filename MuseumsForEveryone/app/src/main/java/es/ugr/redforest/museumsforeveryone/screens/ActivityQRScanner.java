@@ -55,6 +55,7 @@ public class ActivityQRScanner extends AppCompatActivity implements QRCodeReader
     @Override
     public void onBackPressed() {
         Intent mainIntent = new Intent(this, MainActivity.class);
+        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainIntent);
 
     }

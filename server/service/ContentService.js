@@ -6,6 +6,7 @@ var ContentInformation = require('../models/ContentInformation');
 var ContentType = require('../models/ContentType');
 var Language = require('../models/Language');
 var Localization = require('../models/Localization');
+var Image = require('../models/Image');
 
 // Constructor for ContentService
 function ContentService() {
@@ -72,30 +73,49 @@ ContentService.prototype.initializeRouter = function() {
 							contentType.retrieveAllByListIds(contentTypesIds).then(function(success) {
 								var contentTypes = success;
 
-								for(var i=0; i<contents.length; i++) {
-									var contentInfo;
-									var contentInfofound = false;
-									var contentTypefound = false;
+								var image = Image.build();
 
-									for(var j=0; j<contentInfos.length && !contentInfofound; j++) {
-										if(contentInfos[j].CONTENT_ID === contents[i].ID) {
-											contentInfo = contentInfos[j];
-											contentInfofound = true;
-										}
-									}
+								image.retrieveAllByContentIds(contentIds).then(function(success) {
+									var images = success;
 
-									for(var k=0; k<contentTypes.length && !contentTypefound; k++) {
-										if(contentTypes[k].ID === contents[i].CONTENT_TYPE_ID) {
-											jsonResObj.contents.push( {
-												content: contents[i],
-												content_information: contentInfo,
-												content_type: contentTypes[k]
-											});
-											contentTypefound = true;
+									for(var i=0; i<contents.length; i++) {
+										var contentInfo;
+										var contenType;
+										var contentImages = [];
+										var contentInfofound = false;
+										var contentTypefound = false;
+
+										for(var j=0; j<contentInfos.length && !contentInfofound; j++) {
+											if(contentInfos[j].CONTENT_ID === contents[i].ID) {
+												contentInfo = contentInfos[j];
+												contentInfofound = true;
+											}
 										}
+
+										for(var k=0; k<contentTypes.length && !contentTypefound; k++) {
+											if(contentTypes[k].ID === contents[i].CONTENT_TYPE_ID) {
+												contentType = contentTypes[k];
+												contentTypefound = true;
+											}
+										}
+
+										for(var l=0; l<images.length; l++) {
+											if(images[l].CONTENT_ID === contents[i].ID) {
+												contentImages.push(images[l]);
+											}
+										}
+
+										jsonResObj.contents.push( {
+											content: contents[i],
+											content_information: contentInfo,
+											content_type: contentType,
+											images: contentImages
+										});
 									}
-								}
-								res.json(jsonResObj);
+									res.json(jsonResObj);
+								}, function(err) {
+									res.status(404).send("Images not found");
+								});
 							}, function(err) {
 								res.status(404).send("Content Types not found");
 							});
