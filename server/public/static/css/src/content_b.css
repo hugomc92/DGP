@@ -136,6 +136,57 @@ main {
   background: white;
   display: none;
 }
+#contents .multimedia .content_multimedia li {
+  text-align: center;
+  margin: 10px auto;
+}
+#contents .multimedia .content_multimedia li:hover .multimedia_actions .btn-floating {
+  max-height: 50px;
+}
+#contents .multimedia .content_multimedia li img {
+  display: block;
+  margin: 0 auto;
+}
+#contents .multimedia .content_multimedia li .multimedia_actions .btn-floating {
+  background: #18405d;
+  margin: 5px 0;
+  display: inline-block;
+  max-height: 0;
+}
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  #contents .multimedia .content_multimedia li .multimedia_actions .btn-floating {
+    max-height: 50px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  #contents .multimedia .content_multimedia li .multimedia_actions .btn-floating {
+    max-height: 50px;
+  }
+}
+#contents .multimedia .content_multimedia li .multimedia_actions .btn-floating:hover {
+  background: #345f7f;
+}
+#contents .multimedia .content_multimedia li .multimedia_actions .btn-floating.edit_multimedia {
+  margin-right: 5px;
+}
+#contents .multimedia .content_multimedia li .multimedia_actions .btn-floating.remove_multimedia {
+  margin-left: 5px;
+}
+#contents .multimedia .content_multimedia li .add_multimedia {
+  height: 100px;
+  display: block;
+  color: white;
+  text-align: center;
+}
+#contents .multimedia .content_multimedia li .add_multimedia i {
+  display: block;
+  font-size: 3.5em;
+  margin-top: 10px;
+}
+#contents .multimedia .content_multimedia li .add_multimedia span {
+  display: block;
+  margin-top: 10px;
+}
 .picker__date-display {
   background: #345f7f;
 }
