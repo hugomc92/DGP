@@ -4,6 +4,7 @@
 	"description": "Server aplication to manage museum's contents by admins",
 	"main": "main.js",
 	"scripts": {
+		"run": "grunt",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "Red Forest",

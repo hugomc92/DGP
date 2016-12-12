@@ -13,7 +13,7 @@ android {
     buildToolsVersion "24.0.3"
     defaultConfig {
         applicationId "es.ugr.redforest.museumsforeveryone"
-        minSdkVersion 14
+        minSdkVersion 19
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"

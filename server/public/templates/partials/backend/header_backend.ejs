@@ -5,7 +5,7 @@
 			
 			<% if(typeof(moreContent) !== 'undefined') { %>
 				<a href="<%= breadcrumb.LINK %>" class="breadcrumb hide-on-small-only"><%= breadcrumb.SECTION %></a>
-				<a href="<%= moreContent.LINK %>" class="breadcrumb"><%= moreContent.SECTION %></a>
+				<a id="content_action" href="<%= moreContent.LINK %>" class="breadcrumb"><%= moreContent.SECTION %></a>
 			<% }
 			else { %>
 				<a href="<%= breadcrumb.LINK %>" class="breadcrumb"><%= breadcrumb.SECTION %></a>

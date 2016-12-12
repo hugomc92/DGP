@@ -1,54 +1,29 @@
 var currentLangs = [];
 var choosenAddLang;
+var form;
 var langs;
 var contentId;
-var dateInPicker;
-var dateOutPicker;
 var dateInUpdate;
 var contentTypeSelect;
 var locationSelect;
+var action;
+var contentId;
 
 $(document).ready(function() {
 
-	Materialize.updateTextFields();
+	if($('#content_action').text().indexOf('Añadir') >= -1)
+		action = 'add';
+	else 
+		action = 'edit';
 
-	currentLangs.push(1);
+	if($('#contents').attr('content-id') !== '')
+		contentId = $('#contents').attr('content-id');
 
-	$('ul.tabs').tabs();
+	console.log("contentId", contentId);
 
-	$('input, textarea').characterCounter();
+	form = $('#spanish_content').find('.info_form').parent().html();
 
-	contentTypeSelect = $('#content_type_select').html();
-	locationSelect = $('#location_select').html();
-
-	$('select').material_select();
-
-	dateInPicker = initializeDatePicker($('#content_date_in'));
-	dateOutPicker = initializeDatePicker($('#content_date_out'));
-
-	var dateIn = $('#content_date_in');
-	var dateOut = $('#content_date_out');
-
-	dateIn.on('change', function() {
-		dateOut.val('');
-
-		setTimeout(function() {
-			var infoUpdate = dateInUpdate.split('/');
-			var day = infoUpdate[0];
-			var month = infoUpdate[1];
-			var year = infoUpdate[2];
-
-			var minDate = [parseInt(year), parseInt(month)-1, day];
-
-			dateOutPicker.set('min', minDate);
-		}, 1000);		
-	});
-
-	$('.info_form').on('submit', function(event) {
-		event.preventDefault();
-
-		send_data($(this));
-	});
+	initilizeForm($('#spanish_content'), 1);
 
 	$('#more_langs').click(function() {
 		$('#add_lang_content').openModal( {
@@ -121,18 +96,9 @@ $(document).ready(function() {
 					$('ul.tabs').tabs();
 
 					// Add new content tab
-					var cont = $('#spanish_content').html();
-					$('#contents').append('<div id="' + langs[i].NAME.toLowerCase() + '_content" class="col s12" style="display:none">' + cont + '</div>');
+					$('#contents').append('<div id="' + langs[i].NAME.toLowerCase() + '_content" class="col s12" style="display:none">' + form + '</div>');
 
-					var elem = $('#contents #' + langs[i].NAME.toLowerCase() + '_content');
-
-					elem.find('#content_type_select').text('');
-					elem.find('#content_type_select').html(contentTypeSelect);
-
-					elem.find('#location_select').text('');
-					elem.find('#location_select').html(locationSelect);
-
-					$('select').material_select();
+					initilizeForm($('#' + langs[i].NAME.toLowerCase() + '_content'), langId);
 
 					found = true;
 				}
@@ -142,6 +108,64 @@ $(document).ready(function() {
 		cleanAddLangModal();
 	});
 });
+
+function initilizeForm(elem, langId) {
+
+	var form = elem.find('.info_form');
+
+	Materialize.updateTextFields();
+
+	currentLangs.push(1);
+
+	form.find('ul.tabs').tabs();
+
+	form.find('input, textarea').characterCounter();
+
+	$('select').material_select();
+
+	var dateInPicker = initializeDatePicker(form.find('#content_date_in'));
+	var dateOutPicker = initializeDatePicker(form.find('#content_date_out'));
+
+	var dateIn = form.find('#content_date_in');
+	var dateOut = form.find('#content_date_out');
+
+	var dateInHidden = form.find('#content_date_in_hidden');
+	var dateOutHidden = form.find('#content_date_out_hidden');
+
+	dateIn.on('change', function() {
+		dateOut.val('');
+
+		setTimeout(function() {
+			var infoUpdate = dateInUpdate.split('/');
+			var day = infoUpdate[0];
+			var month = infoUpdate[1];
+			var year = infoUpdate[2];
+
+			var minDate = [parseInt(year), parseInt(month)-1, day];
+
+			dateOutPicker.set('min', minDate);
+
+			dateInHidden.val(day + '/' + month + '/' + year);
+		}, 500);		
+	});
+
+	dateOut.on('change', function() {
+		setTimeout(function() {
+			var infoUpdate = dateInUpdate.split('/');
+			var day = infoUpdate[0];
+			var month = infoUpdate[1];
+			var year = infoUpdate[2];
+
+			dateOutHidden.val(day + '/' + month + '/' + year);
+		}, 500);		
+	});
+
+	form.on('submit', function(event) {
+		event.preventDefault();
+
+		send_data($(this));
+	});
+}
 
 function cleanAddLangModal() {
 
@@ -206,10 +230,55 @@ function send_data(form) {
 	console.log(form.parent().parent());
 
 	// Get language id from current form
-	var langId = form.parent().parent().attr('form-lang');
+	var langId = form.parent().parent().attr('content-lang');
 	console.log('langId', langId);
 
-	// Get all data from current form
+	// Get all data from current form and add it to a json object
+	var jsonObj = {};
+	var content = {};
+	var contentInfo = {};
+
+	content.DATE_IN = form.find('#content_date_in_hidden').val();
+	content.DATE_OUT = form.find('#content_date_out_hidden').val();
+	content.LOCATION = form.find('#content_location').val();
+	content.TYPE = form.find('#content_type').val();
+
+	contentInfo.NAME = form.find('#content_name').val();
+	contentInfo.DESCRIPTION = form.find('#content_description').val();
+	contentInfo.BLIND_DESCRIPTION = form.find('#content_blind_description').val();
+	contentInfo.LANG = langId;
+	
+	jsonObj.CONTENT = content;
+	jsonObj.CONTENT_INFO = contentInfo;
+
+
+	// AJAX Call to post all data
+	$.ajax({
+		type: "POST",
+		url: '/api/content/' + action + '?email=' + $("#email").text(),
+		data: JSON.stringify(jsonObj),
+		contentType: 'application/json',
+		datatype: 'json',
+		success: function(jsondata){
+			if(jsondata.ok === 'failed') {
+				Materialize.toast('Se ha producido un fallo interno', 4000);
+			}
+			else if(jsondata.ok === 'not_allowed') {
+				Materialize.toast('No tiene los permisos suficientes para añadir contenido', 4000);
+			}
+			else {
+				// Notify user of success
+				Materialize.toast('Se ha guardado el contenido con éxito', 4000);
+
+				// Modify all forms to get it
+				if(action === 'add')
+					action = 'edit';
+			}
+		},
+		error: function(xhr, status){
+			Materialize.toast("Se ha producido un fallo añadiendo el contenido", 4000);
+		}
+	});
 
 	// Avoid to send form on action
 	return false;

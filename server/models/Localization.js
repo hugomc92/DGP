@@ -17,6 +17,9 @@ var Localization = DBConnector.connectM4E().define('LOCALIZATION', {
 		retrieveById: function(id) {
 			return Localization.findOne({where: {ID: id}});
 		},
+		retrieveByCode: function(code) {
+			return Localization.findOne({where: {$or: [{NFC: code}, {QR: code}]}});
+		},
 		retrieveAllByListIds: function(listIds) {
 			return Localization.findAll({where: {ID: {in: listIds}}});
 		},

@@ -25,8 +25,8 @@
 				<div id="more_langs" class="col s1"><a class="modal-trigger waves-effect waves-light"><i class="material-icons">add</i></a></div>
 				
 				<!-- All tabs content -->
-				<div id="contents">
-					<div id="spanish_content" class="col s12" form-lang="1">
+				<div id="contents" content-id="">
+					<div id="spanish_content" class="col s12" content-lang="1">
 						<div class="row">
 							<form method="post" action="#" class="info_form col s12 z-depth-1">
 								<h5>INFORMACIÓN</h5>
@@ -36,8 +36,8 @@
 									<label for="content_name">Nombre</label>
 								</div>
 								<!-- Content type -->
-								<div id="content_type_select" class="input-field col s12 m6">
-									<select required>
+								<div class="input-field col s12 m6">
+									<select required id="content_type" name="content_type">
 										<option value="" disabled selected>Tipo de contenido</option>
 										<% for(var i=0; i<contentTypes.length; i++) { %>
 											<option value="<%= contentTypes[i].ID %>" data-icon="<%= contentTypes[i].ICON %>" class="left circle"><%= contentTypes[i].NAME %></option>
@@ -45,8 +45,8 @@
 									</select>
 								</div>
 								<!-- Content location -->
-								<div  id="location_select" class="input-field col s12 m6">
-									<select>
+								<div class="input-field col s12 m6">
+									<select id="content_location" name="content_location">
 										<option value="" disabled selected>Localización  (opcional)</option>
 										<% for(var i=0; i<localizations.length; i++) { %>
 											<option value="<%= localizations[i].ID %>"><%= localizations[i].DESCRIPTION %></option>
@@ -55,21 +55,23 @@
 								</div>
 								<!-- Content description -->
 								<div class="input-field col s12">
-									<textarea id="content_description" name="content_description" class="materialize-textarea" length="500"></textarea>
+									<textarea id="content_description" name="content_description" class="materialize-textarea"></textarea>
 									<label for="content_description">Descripción</label>
 								</div>
 								<!-- Content blind description -->
 								<div class="input-field col s12">
-									<textarea id="content_blind_description" name="content_blind_description" class="materialize-textarea" length="500" required></textarea>
+									<textarea id="content_blind_description" name="content_blind_description" class="materialize-textarea" required></textarea>
 									<label for="content_blind_description">Descripción ciegos (en idioma seleccionado)</label>
 								</div>
 								<!-- Content date in  -->
 								<div class="input-field col s12 m6">
+									<input type="hidden" id="content_date_in_hidden" name="content_date_in_hidden">
 									<input type="date" id="content_date_in" name="content_date_in" class="datepicker" required>
 									<label for="content_date_in">Fecha Entrada</label>
 								</div>
 								<!-- Content date out  -->
 								<div class="input-field col s12 m6">
+									<input type="hidden" id="content_date_out_hidden" name="content_date_out_hidden">
 									<input type="date" id="content_date_out" name="content_date_out" class="datepicker">
 									<label for="content_date_out">Fecha Salida (opcional)</label>
 								</div>
