@@ -192,14 +192,53 @@ ContentService.prototype.initializeRouter = function() {
 										if(success !== null) {
 											var contType = success;
 
-											var jsonResObj= {};
+											var image = Image.build();
 
-											jsonResObj.location = contLocation;
-											jsonResObj.content = cont;
-											jsonResObj.content_information = contInformation;
-											jsonResObj.content_type = contType;
+											image.retrieveAllByContentId(cont.ID).then(function(success) {
+												var images = success;
 
-											res.json(jsonResObj);
+												var imageIds = [];
+
+												for(var i=0; i<images.length; i++)
+													imageIds.push(images[i].ID);
+
+												var altImage = AltImage.build();
+
+												altImage.retrieveAllByImageIdsByLangId(imageIds, langId).then(function(success) {
+													var altImages = success;
+
+													console.log('altImages', altImages);
+
+													var jsonResObj= {};
+
+													jsonResObj.location = contLocation;
+													jsonResObj.content = cont;
+													jsonResObj.content_information = contInformation;
+													jsonResObj.content_type = contType;
+													jsonResObj.images = [];
+
+													for(var i=0; i<images.length; i++) {
+														var altImageFound = false;
+
+														for(var j=0; j<altImages.length && !altImageFound; j++) {
+															if(altImages[j].IMAGE_ID === images[i].ID) {
+																jsonResObj.images.push( {
+																	image: images[i],
+																	alt_text: altImages[i].ALT_TEXT
+																});
+
+																altImageFound = true;
+															}
+														}
+													}
+
+													res.json(jsonResObj);
+												}, function(err) {
+													res.status(404).send("Images Alt Texts not found");
+												});
+											}, function(err){
+												res.status(404).send("Images not found");
+											});
 										}
 										else
 											res.status(401).send("Content Type not found");
