@@ -184,6 +184,12 @@ $(document).ready(function() {
 				$(this).trigger('autoresize');
 			});
 
+			$('#' + lang.NAME.toLowerCase() + '_content').find('.image_alt_text').text('NO TIENE TEXTO ALTERNATIVO EN ESTE IDIOMA');
+
+			$('#' + lang.NAME.toLowerCase() + '_content').find('.materialboxed').removeClass('initialized');
+			
+			$('#' + lang.NAME.toLowerCase() + '_content').find('.materialboxed').materialbox();
+
 			initilizeForm($('#' + lang.NAME.toLowerCase() + '_content'), langId);
 			initilizeMultimediaImage($('#' + lang.NAME.toLowerCase() + '_content'));
 		}
