@@ -8,6 +8,7 @@ var Language = require('../models/Language');
 var Localization = require('../models/Localization');
 var User = require('../models/User');
 var Image = require('../models/Image');
+var AltImage = require('../models/AltImage');
 
 // Constructor for ContentService
 function ContentService() {
@@ -51,12 +52,9 @@ ContentService.prototype.initializeRouter = function() {
 				};
 
 				var contentIds = [];
-				var contentTypesIds = [];
 
-				for(var i=0; i<contents.length; i++) {
+				for(var i=0; i<contents.length; i++)
 					contentIds.push(contents[i].ID);
-					contentTypesIds.push(contents[i].CONTENT_TYPE_ID);
-				}
 
 				var lang = Language.build();
 
@@ -71,49 +69,71 @@ ContentService.prototype.initializeRouter = function() {
 
 							var contentType = ContentType.build();
 
-							contentType.retrieveAllByListIds(contentTypesIds).then(function(success) {
-								var contentTypes = success;
+							contentType.retrieveById(type).then(function(success) {
+								var contentType = success;
 
 								var image = Image.build();
+
+								console.log(contentIds);
 
 								image.retrieveAllByContentIds(contentIds).then(function(success) {
 									var images = success;
 
-									for(var i=0; i<contents.length; i++) {
-										var contentInfo;
-										var contenType;
-										var contentImages = [];
-										var contentInfofound = false;
-										var contentTypefound = false;
+									console.log('images', images);
+									
+									var imageIds = [];
 
-										for(var j=0; j<contentInfos.length && !contentInfofound; j++) {
-											if(contentInfos[j].CONTENT_ID === contents[i].ID) {
-												contentInfo = contentInfos[j];
-												contentInfofound = true;
+									for(var i=0; i<images.length; i++)
+										imageIds.push(images[i].ID);
+
+									var altImage = AltImage.build();
+
+									altImage.retrieveAllByImageIdsByLangId(imageIds, langId).then(function(success) {
+										var imagesAltText = success;
+
+										console.log('altTexts', imagesAltText);
+										
+										for(var i=0; i<contents.length; i++) {
+											var contentInfo;
+											var contentImages = [];
+											var contentInfofound = false;
+
+											for(var j=0; j<contentInfos.length && !contentInfofound; j++) {
+												if(contentInfos[j].CONTENT_ID === contents[i].ID) {
+													contentInfo = contentInfos[j];
+													contentInfofound = true;
+												}
 											}
-										}
 
-										for(var k=0; k<contentTypes.length && !contentTypefound; k++) {
-											if(contentTypes[k].ID === contents[i].CONTENT_TYPE_ID) {
-												contentType = contentTypes[k];
-												contentTypefound = true;
+											for(var k=0; k<images.length; k++) {
+												if(images[k].CONTENT_ID === contents[i].ID) {
+													var altTextFound = false;
+
+													for(var l=0; l<imagesAltText.length && !altTextFound; l++) {
+														if(imagesAltText[l].IMAGE_ID === images[k].ID && imagesAltText[l].LANG_ID === langId) {
+															contentImages.push({
+																image: images[k],
+																alt_text: imagesAltText[l].ALT_TEXT
+															});
+
+															altTextFound = true;
+														}
+													}
+												}
 											}
-										}
+											
 
-										for(var l=0; l<images.length; l++) {
-											if(images[l].CONTENT_ID === contents[i].ID) {
-												contentImages.push(images[l]);
-											}
+											jsonResObj.contents.push( {
+												content: contents[i],
+												content_information: contentInfo,
+												content_type: contentType,
+												images: contentImages
+											});
 										}
-
-										jsonResObj.contents.push( {
-											content: contents[i],
-											content_information: contentInfo,
-											content_type: contentType,
-											images: contentImages
-										});
-									}
-									res.json(jsonResObj);
+										res.json(jsonResObj);
+									}, function(err) {
+										res.status(404).send("Images Alt Texts not found");
+									});
 								}, function(err) {
 									res.status(404).send("Images not found");
 								});

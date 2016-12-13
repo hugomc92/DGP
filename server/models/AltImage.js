@@ -29,7 +29,7 @@ var AltImage = DBConnector.connectM4E().define('ALT_IMAGE', {
 			return AltImage.findAll({ where: {IMAGE_ID: {in: imageId}}});
 		},
 		retrieveAllByImageIdsByLangId: function(imageIds, langId) {
-			return AltImage.findAll({ where: {IMAGE_ID: {in: imageId}, LANG_ID: langId}});
+			return AltImage.findAll({ where: {IMAGE_ID: {in: imageIds}, LANG_ID: langId}});
 		},
 		retrieveById: function(id) {
 			return AltImage.findOne({where: {ID: id}});
@@ -58,8 +58,6 @@ var AltImage = DBConnector.connectM4E().define('ALT_IMAGE', {
 					ALT_TEXT: altTexts[i].alt
 				});
 			}
-
-			console.log('jsonBulk', jsonBulk);
 
 			return AltImage.bulkCreate(jsonBulk);
 
