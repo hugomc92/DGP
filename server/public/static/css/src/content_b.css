@@ -150,6 +150,14 @@ main {
   display: block;
   margin: 0 auto;
 }
+#contents .multimedia .content_multimedia li .image_alt_text {
+  margin-top: -21px;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 100;
+  position: relative;
+  /* margin: 0; */
+  color: white;
+}
 #contents .multimedia .content_multimedia li .multimedia_actions .btn-floating {
   background: #18405d;
   margin: 5px 0;

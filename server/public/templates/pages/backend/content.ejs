@@ -122,7 +122,22 @@
 										<% if(typeof(images) !== 'undefined') {
 											for(var i=0; i<images.length; i++) {%>
 												<li class="col s12 m6 l4">
-													<img pic="<%= images[i].ID %>" class="responsive-img materialboxed"src="<%= images[i].URL %>">
+													<% var altTextFound = false;
+													var altText = '';
+													for(var k=0; k<altTexts.length && !altTextFound; k++) {
+														if(altTexts[k].IMAGE_ID === images[i].ID && altTexts[k].LANG_ID === langs[j].ID) {
+															altText = altTexts[k].ALT_TEXT;
+															altTextFound = true;
+														}
+													}
+													if(altTextFound) { %>
+														<img pic="<%= images[i].ID %>" class="responsive-img materialboxed" data-caption="<%= altText %>" alt="<%= altText %>" src="<%= images[i].URL %>">
+														<p class="image_alt_text truncate"><%= altText %></p>
+													<% }
+													else { %>
+														<img pic="<%= images[i].ID %>" class="responsive-img materialboxed" data-caption="NO TIENE TEXTO ALTERNATIVO EN ESTE IDIOMA" alt="Imagen del contenido" src="<%= images[i].URL %>">
+														<p class="image_alt_text  truncate">NO TIENE TEXTO ALTERNATIVO EN ESTE IDIOMA</p>
+													<% } %>
 													<div class="multimedia_actions">
 														<a class="edit_multimedia btn-floating btn-large waves-effect waves-light"><i class="material-icons">edit</i></a>
 														<a class="remove_multimedia btn-floating btn-large waves-effect waves-light red"><i class="material-icons">delete</i></a>

@@ -176,13 +176,28 @@ ContentController.prototype.initBackend = function() {
 								image.retrieveAllByContentId(contentId).then(function(success) {
 									self.renderJson.images = success;
 
-									res.render('pages/backend/content', self.renderJson);
-									self.clearMessages();
-								}, function(err) {
+									var imageIds = [];
 
+									for(var i=0; i<success.length; i++)
+										imageIds.push(success[i].ID);
+
+									var altImage = AltImage.build();
+
+									altImage.retrieveAllByImageIds(imageIds).then(function(success) {
+										self.renderJson.altTexts = success;
+
+										res.render('pages/backend/content', self.renderJson);
+										self.clearMessages();
+									}, function(err) {
+										self.renderJson.error = 'Se ha producido un error interno recuperando la información de las imágenes';
+										res.redirect('/backend/contents/');
+									});									
+								}, function(err) {
+									self.renderJson.error = 'Se ha producido un error interno recuperando las imágenes';
+									res.redirect('/backend/contents/');
 								});
 							}, function(err) {
-								self.renderJson.error = 'Se ha producido un error interno recuperando las imágenes';
+								self.renderJson.error = 'Se ha producido un error interno recuperando el contenido';
 								res.redirect('/backend/contents/');
 							});
 						}, function(err) {

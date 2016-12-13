@@ -26,7 +26,7 @@ var AltImage = DBConnector.connectM4E().define('ALT_IMAGE', {
 			return AltImage.findAll({ where: {IMAGE_ID: imageId, LANG_ID: langId}});
 		},
 		retrieveAllByImageIds: function(imageIds) {
-			return AltImage.findAll({ where: {IMAGE_ID: {in: imageId}}});
+			return AltImage.findAll({ where: {IMAGE_ID: {in: imageIds}}});
 		},
 		retrieveAllByImageIdsByLangId: function(imageIds, langId) {
 			return AltImage.findAll({ where: {IMAGE_ID: {in: imageIds}, LANG_ID: langId}});
