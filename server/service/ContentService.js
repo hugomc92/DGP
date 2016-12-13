@@ -6,6 +6,7 @@ var ContentInformation = require('../models/ContentInformation');
 var ContentType = require('../models/ContentType');
 var Language = require('../models/Language');
 var Localization = require('../models/Localization');
+var User = require('../models/User');
 var Image = require('../models/Image');
 
 // Constructor for ContentService
@@ -173,7 +174,7 @@ ContentService.prototype.initializeRouter = function() {
 
 											var jsonResObj= {};
 
-											jsonResObj.localization = contLocation;
+											jsonResObj.location = contLocation;
 											jsonResObj.content = cont;
 											jsonResObj.content_information = contInformation;
 											jsonResObj.content_type = contType;
@@ -325,6 +326,8 @@ ContentService.prototype.initializeRouter = function() {
 				if(result.ADMIN) {
 					var jsonObj = req.body;
 
+					console.log(jsonObj);
+
 					var dateIn;
 					var dateOut;
 
@@ -354,9 +357,18 @@ ContentService.prototype.initializeRouter = function() {
 
 							contentInformation.add(jsonObj.CONTENT_INFO.NAME, jsonObj.CONTENT_INFO.DESCRIPTION, jsonObj.CONTENT_INFO.BLIND_DESCRIPTION, lastContent.ID, jsonObj.CONTENT_INFO.LANG).then(function(success) {
 								
-								jsonResObj.ok = lastContent.ID;
+								contentInformation.retrieveLast().then(function(success) {
 
-								res.json(jsonResObj);
+									jsonResObj.ok = 'ok';
+									jsonResObj.contentId = lastContent.ID;
+									jsonResObj.contentInfoId = success.ID;
+
+									res.json(jsonResObj);
+								}, function(err) {
+									jsonResObj.ok = 'failed';
+
+									res.json(jsonResObj);
+								});
 							}, function(err) {
 								jsonResObj.ok = 'failed';
 
@@ -427,17 +439,25 @@ ContentService.prototype.initializeRouter = function() {
 
 					var content = Content.build();
 
-					content.updateById(dateIn, dateOut, jsonObj.CONTENT.LOCATION, jsonObj.CONTENT.TYPE).then(function(success) {
-						content.retrieveLast().then(function(success) {
-							var lastContent = success;
+					content.dateIn = dateIn;
+					content.dateOut = dateOut;
+					content.locationId = jsonObj.CONTENT.LOCATION;
+					content.contentTypeID = jsonObj.CONTENT.TYPE;
 
-							console.log("Last", lastContent);
+					var contentId = jsonObj.CONTENT_ID;
 
-							var contentInformation = ContentInformation.build();
+					content.updateById(contentId).then(function(success) {
+						var contentInformation = ContentInformation.build();
 
-							contentInformation.updateById(jsonObj.CONTENT_INFO.NAME, jsonObj.CONTENT_INFO.DESCRIPTION, jsonObj.CONTENT_INFO.BLIND_DESCRIPTION, lastContent.ID, jsonObj.CONTENT_INFO.LANG).then(function(success) {
+						if(jsonObj.CONTENT_INFO_ID !== '') {
+
+							contentInformation.name = jsonObj.CONTENT_INFO.NAME;
+							contentInformation.description = jsonObj.CONTENT_INFO.DESCRIPTION;
+							contentInformation.blindDescription = jsonObj.CONTENT_INFO.BLIND_DESCRIPTION;
+
+							contentInformation.updateById(jsonObj.CONTENT_INFO_ID).then(function(success) {
 								
-								jsonResObj.ok = lastContent.ID;
+								jsonResObj.ok = contentId;
 
 								res.json(jsonResObj);
 							}, function(err) {
@@ -445,16 +465,69 @@ ContentService.prototype.initializeRouter = function() {
 
 								res.json(jsonResObj);
 							});
-						}, function(err) {
-							jsonResObj.ok = 'failed';
+						}
+						else {
+							contentInformation.add(jsonObj.CONTENT_INFO.NAME, jsonObj.CONTENT_INFO.DESCRIPTION, jsonObj.CONTENT_INFO.BLIND_DESCRIPTION, contentId, jsonObj.CONTENT_INFO.LANG).then(function(success) {
+								
+								contentInformation.retrieveLast().then(function(success) {
+									
+									console.log('last content info', success);
 
-							res.json(jsonResObj);
-						});
+									jsonResObj.ok = 'ok';
+									jsonResObj.contentId = contentId;
+									jsonResObj.contentInfoId = success.ID;
+
+									res.json(jsonResObj);
+								}, function(err) {
+									jsonResObj.ok = 'failed';
+
+									res.json(jsonResObj);
+								});
+							}, function(err) {
+								jsonResObj.ok = 'failed';
+
+								res.json(jsonResObj);
+							});
+						}
 					}, function(err) {
 						jsonResObj.ok = 'failed';
 
 						res.json(jsonResObj);
 					});
+				}
+				else {
+					jsonResObj.ok = 'not_allowed';
+
+					res.json(jsonResObj);
+				}
+			}, function(err) {
+				jsonResObj.ok = 'failed';
+
+				res.json(jsonResObj);
+			});
+		}
+		else {
+			jsonResObj.ok = 'not_allowed';
+
+			res.json(jsonResObj);
+		}
+	});
+
+	self.router.route('/image/add').post(function(req, res) {
+		console.log('IMAGE ADD');
+
+		email = req.query.email;
+		user = User.build();
+
+		var jsonResObj = {};
+
+		if(typeof email !== 'undefined') {
+			user.retrieveByEmail(email).then(function(result) {
+				if(result.ADMIN) {
+					var jsonObj = req.body;
+
+					console.log(jsonObj);
+					console.log(req.files);
 				}
 				else {
 					jsonResObj.ok = 'not_allowed';
