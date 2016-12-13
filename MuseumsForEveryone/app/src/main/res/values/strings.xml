@@ -48,5 +48,9 @@
     <string name="Permit_Reason_Ask_Again">Sin los permisos de la cámara no podrá escanear los códigos QR de la obra deseada.\n¿Intentar de nuevo?</string>
     <string name="NFC_Permit">Para poder escanear un código NFC necesita darle a la aplicación los permisos de uso del sensor NFC.</string>
     <string name="NFC_Reason_Ask_again">Para poder escanear un código NFC necesita darle a la aplicación los permisos de uso del sensor NFC.\n¿Intentar de nuevo?</string>
+    <string name="instructions_without_discapacity">Instrucciones sin discapacidad</string>
+    <string name="instructions_with_sight_discapacity">Instrucciones problemas de visión</string>
+    <string name="instructions_with_sound_problems">Instrucciones problemas auditivos</string>
+    <string name="instructions_Error">No se han cargado instrucciones</string>
 
 </resources>
