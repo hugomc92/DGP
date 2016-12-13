@@ -27,8 +27,6 @@ $(document).ready(function() {
 		datatype: "json",
 		success: function(jsondata) {
 			langs = jsondata;
-
-			console.log('langs', langs);
 		},
 		error : function(xhr, status) {
 			console.log(xhr);
@@ -298,7 +296,7 @@ function initilizeMultimediaImage(elem) {
 					$(this).trigger('autoresize');
 				});
 
-				$('#modal_content_image').find('#alt_texts').text('');
+				$('#modal_content_image').find('#alt_texts_container').text('');
 
 				Materialize.updateTextFields();
 
@@ -435,8 +433,10 @@ function send_data(form) {
 				if(action === 'add') {
 
 					var modalForm = $('#modal_content_image').find('form');
-					
-					modalForm.attr('action', modalForm.attr() + '/' + modalForm);
+
+					var newAction = modalForm.attr('action') + contentId;
+
+					modalForm.attr('action', newAction);
 
 					action = 'edit';
 
