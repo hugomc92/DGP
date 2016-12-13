@@ -231,8 +231,9 @@ function initilizeMultimediaImage(elem) {
 			complete: function() {
 				$('#modal_content_image').find('modal-header h4').text('');
 
-				$('#modal_content_image').find('input').each(function() {
+				$('#modal_content_image').find('input, textarea').each(function() {
 					$(this).val('');
+					$(this).trigger('autoresize');
 				});
 
 				Materialize.updateTextFields();
