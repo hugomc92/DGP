@@ -322,8 +322,6 @@ ContentService.prototype.initializeRouter = function() {
 
 													altImage.retrieveAllByImageIdsByLangId(imageIds, langId).then(function(success) {
 														var imagesAltText = success;
-
-														console.log('altTexts', imagesAltText);
 														
 														for(var i=0; i<contents.length; i++) {
 															var contentInfo;
@@ -401,7 +399,6 @@ ContentService.prototype.initializeRouter = function() {
 	});
 
 	self.router.route('/add').post(function(req, res) {
-		console.log('CONTENT ADD');
 
 		email = req.query.email;
 		user = User.build();
@@ -412,8 +409,6 @@ ContentService.prototype.initializeRouter = function() {
 			user.retrieveByEmail(email).then(function(result) {
 				if(result.ADMIN) {
 					var jsonObj = req.body;
-
-					console.log(jsonObj);
 
 					var dateIn;
 					var dateOut;
@@ -491,7 +486,6 @@ ContentService.prototype.initializeRouter = function() {
 	});
 
 	self.router.route('/edit').post(function(req, res) {
-		console.log('CONTENT EDIT');
 
 		email = req.query.email;
 		user = User.build();
@@ -502,8 +496,6 @@ ContentService.prototype.initializeRouter = function() {
 			user.retrieveByEmail(email).then(function(result) {
 				if(result.ADMIN) {
 					var jsonObj = req.body;
-
-					console.log(jsonObj);
 
 					var dateIn;
 					var dateOut;
@@ -557,8 +549,6 @@ ContentService.prototype.initializeRouter = function() {
 							contentInformation.add(jsonObj.CONTENT_INFO.NAME, jsonObj.CONTENT_INFO.DESCRIPTION, jsonObj.CONTENT_INFO.BLIND_DESCRIPTION, contentId, jsonObj.CONTENT_INFO.LANG).then(function(success) {
 								
 								contentInformation.retrieveLast().then(function(success) {
-									
-									console.log('last content info', success);
 
 									jsonResObj.ok = 'ok';
 									jsonResObj.contentId = contentId;
@@ -581,40 +571,6 @@ ContentService.prototype.initializeRouter = function() {
 
 						res.json(jsonResObj);
 					});
-				}
-				else {
-					jsonResObj.ok = 'not_allowed';
-
-					res.json(jsonResObj);
-				}
-			}, function(err) {
-				jsonResObj.ok = 'failed';
-
-				res.json(jsonResObj);
-			});
-		}
-		else {
-			jsonResObj.ok = 'not_allowed';
-
-			res.json(jsonResObj);
-		}
-	});
-
-	self.router.route('/image/add').post(function(req, res) {
-		console.log('IMAGE ADD');
-
-		email = req.query.email;
-		user = User.build();
-
-		var jsonResObj = {};
-
-		if(typeof email !== 'undefined') {
-			user.retrieveByEmail(email).then(function(result) {
-				if(result.ADMIN) {
-					var jsonObj = req.body;
-
-					console.log(jsonObj);
-					console.log(req.files);
 				}
 				else {
 					jsonResObj.ok = 'not_allowed';

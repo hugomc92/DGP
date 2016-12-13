@@ -304,12 +304,6 @@ function initilizeMultimediaImage(elem) {
 			}
 		});
 	});
-
-	/*$('#modal_content_image').find('form').on('submit', function(event) {
-		event.preventDefault();
-
-		send_image($(this));
-	});*/
 }
 
 function initilizeMultimediaVideo(elem) {
@@ -448,55 +442,6 @@ function send_data(form) {
 			Materialize.toast("Se ha producido un fallo añadiendo el contenido", 4000);
 		}
 	});
-
-	// Avoid to send form on action
-	return false;
-}
-
-function send_image(form) {
-
-	var jsonObj = new FormData();
-	jQuery.each(form.find('#content_image')[0].files, function(i, file) {
-		jsonObj.append('file-'+i, file);
-	});
-
-	console.log('jsonObj', jsonObj);
-
-	form.ajaxSubmit({
-		error: function(xhr) {
-			status('Error: ' + xhr.status);
-		},
-
-		success: function(response) {
-			$("#status").empty().text(response);
-			console.log(response);
-		}
-	});
-
-	/*$.ajax({
-		type: "POST",
-		url: '/api/content/image/add?email=' + $("#email").text(),
-		data: JSON.stringify(jsonObj),
-		contentType: 'application/json',
-		datatype: 'json',
-		success: function(jsondata){
-			console.log(jsondata);
-
-			if(jsondata.ok === 'failed') {
-				Materialize.toast('Se ha producido un fallo interno', 4000);
-			}
-			else if(jsondata.ok === 'not_allowed') {
-				Materialize.toast('No tiene los permisos suficientes para añadir contenido', 4000);
-			}
-			else {
-				// Notify user of success
-				Materialize.toast('Se ha guardado el contenido con éxito', 4000);
-			}
-		},
-		error: function(xhr, status){
-			Materialize.toast("Se ha producido un fallo añadiendo el contenido", 4000);
-		}
-	});*/
 
 	// Avoid to send form on action
 	return false;
