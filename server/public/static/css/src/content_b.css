@@ -207,3 +207,21 @@ main {
 .picker__footer button {
   color: #345f7f;
 }
+#modal_content_image {
+  width: 65%;
+  height: 80%;
+  max-height: 80%;
+}
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  #modal_content_image {
+    width: 80%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  #modal_content_image {
+    width: 90%;
+    height: 90%;
+    max-height: 90%;
+    top: 5% !important;
+  }
+}

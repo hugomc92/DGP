@@ -1,6 +1,8 @@
 var currentLangs = [];
 var choosenAddLang;
 var form;
+var multimediaImg;
+var multimediaVideo;
 var langs;
 var contentId;
 var dateInUpdate;
@@ -19,22 +21,28 @@ $(document).ready(function() {
 	if($('#contents').attr('content-id') !== '')
 		contentId = $('#contents').attr('content-id');
 
-	console.log("contentId", contentId);
-
 	if(action === 'add') {
 		form = $('#español_content').find('.info_form').parent().html();
 
+		multimediaImg = $('#español_content').find('.img_content').html();
+		multimediaVideo = $('#español_content').find('.video_content').html();
+
 		initilizeForm($('#español_content'), 1);
+		initilizeMultimediaImage($('#español_content'));
 	}
 	else {
 		var elems = $('.info_form').parent().parent();
 
 		form = $(elems[0]).find('.info_form').parent().html();
 
+		multimediaImg = $(elems[0]).find('.img_content').html();
+		multimediaVideo = $(elems[0]).find('.video_content').html();
+
 		for(var i=0; i<elems.length; i++) {
 			var elem = $(elems[i]);
 
 			initilizeForm(elem, elem.attr('content-lang'));
+			initilizeMultimediaImage(elem);
 		}
 
 		$('.multimedia').css('display', 'block');
@@ -111,8 +119,6 @@ $(document).ready(function() {
 				}
 			}
 
-			console.log(lang.ID);
-
 			// Add new Tab
 			$('.tabs').append('<li class="tab col"><a href="#' + lang.NAME.toLowerCase() + '_content"><img src="' + lang.FLAG + '" alt="Bandera ' + lang.NAME + '" width="25px"/><span class="hide-on-small-only">' + lang.NAME + '</span></a></li>');
 
@@ -120,7 +126,7 @@ $(document).ready(function() {
 			$('ul.tabs').tabs();
 
 			// Add new content tab
-			$('#contents').append('<div id="' + lang.NAME.toLowerCase() + '_content" class="col s12" content-lang="' + lang.ID + '" info-id="" style="display:none"><div class="row">' + form + '</div></div>');
+			$('#contents').append('<div id="' + lang.NAME.toLowerCase() + '_content" class="col s12" content-lang="' + lang.ID + '" info-id="" style="display:none"><div class="row">' + form + '</div><div class="multimedia img_content row z-depth-1" style="display: block;">' + multimediaImg + '</div><div class="multimedia video_content row z-depth-1" style="display: block;">' + multimediaVideo + '</div></div>');
 
 			// Clean all values
 			$('#' + lang.NAME.toLowerCase() + '_content').find('.info_form').find('input:not([type=hidden]):not([type=date])').each(function() {
@@ -128,9 +134,11 @@ $(document).ready(function() {
 			});
 			$('#' + lang.NAME.toLowerCase() + '_content').find('.info_form').find('textarea').each(function() {
 				$(this).text('');
+				$(this).trigger('autoresize');
 			});
 
 			initilizeForm($('#' + lang.NAME.toLowerCase() + '_content'), langId);
+			initilizeMultimediaImage($('#' + lang.NAME.toLowerCase() + '_content'));
 		}
 
 		cleanAddLangModal();
@@ -161,9 +169,9 @@ function initilizeForm(elem, langId) {
 			if($(selects[i]).val() !== null) {
 				/*console.log($(selects[i]).parent().find('.select-dropdown'));
 				$(selects[i]).parent().find('input.select-dropdown').css('color', 'black');*/
-				console.log($(selects[i]).parent().find('input.select-dropdown').css('color'));
+				//console.log($(selects[i]).parent().find('input.select-dropdown').css('color'));
 				$(selects[i]).trigger('change');
-				console.log($(selects[i]).parent().find('input.select-dropdown').css('color'));
+				//console.log($(selects[i]).parent().find('input.select-dropdown').css('color'));
 			}
 		}
 	}
@@ -204,7 +212,7 @@ function initilizeForm(elem, langId) {
 			var year = infoUpdate[2];
 
 			dateOutHidden.val(day + '/' + month + '/' + year);
-		}, 500);		
+		}, 500);
 	});
 
 	form.on('submit', function(event) {
@@ -212,6 +220,38 @@ function initilizeForm(elem, langId) {
 
 		send_data($(this));
 	});
+}
+
+function initilizeMultimediaImage(elem) {
+
+	elem.find('.new_image').click(function() {
+		$('#modal_content_image .modal-header h4').text('Añadir Imagen');
+
+		$('#modal_content_image').openModal( {
+			complete: function() {
+				$('#modal_content_image').find('modal-header h4').text('');
+
+				$('#modal_content_image').find('input').each(function() {
+					$(this).val('');
+				});
+
+				Materialize.updateTextFields();
+
+				$("#contentImagePreview").attr('src', '/static/img/img_not_available.png');
+			}
+		});
+	});
+
+	$('#modal_content_image').find('form').on('submit', function(event) {
+		event.preventDefault();
+
+		send_image($(this));
+	});
+}
+
+function initilizeMultimediaVideo(elem) {
+
+	
 }
 
 function cleanAddLangModal() {
@@ -343,3 +383,11 @@ function send_data(form) {
 	// Avoid to send form on action
 	return false;
 }
+
+function send_image(form) {
+
+	// Avoid to send form on action
+	return false;
+}
+
+imagePrevisualization($('#content_image'), $('#contentImagePreview'));

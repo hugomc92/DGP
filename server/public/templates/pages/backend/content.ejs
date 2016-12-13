@@ -131,7 +131,7 @@
 											<% } 
 										} %>
 										<li class="col s12 m6 l4">
-											<a class="add_multimedia waves-effect waves-light btn">
+											<a class="add_multimedia new_image waves-effect waves-light btn">
 												<i class="material-icons">add</i>
 												<span>Añadir imagen</span>
 											</a>
@@ -147,7 +147,7 @@
 											<% } 
 										} %>
 										<li class="col s12 m6 l4">
-											<a class="add_multimedia waves-effect waves-light btn">
+											<a class="add_multimedia  waves-effect waves-light btn">
 												<i class="material-icons">add</i>
 												<span>Añadir Video</span>
 											</a>
@@ -221,7 +221,7 @@
 							<h5 class="col s12">IMÁGENES</h5>
 							<ul class="content_multimedia row">
 								<li class="col s12 m6 l4">
-									<a class="add_multimedia waves-effect waves-light btn">
+									<a class="add_multimedia new_image waves-effect waves-light btn">
 										<i class="material-icons">add</i>
 										<span>Añadir imagen</span>
 									</a>
@@ -247,6 +247,9 @@
 
 			<!-- Selector new Lang modal-->
 			<% include ../../partials/backend/modals/modal_add_lang_content %>
+
+			<!-- Image modal-->
+			<% include ../../partials/backend/modals/modal_content_image %>
 		</main>
 
 		<footer class="page-footer">
@@ -255,7 +258,8 @@
 
 		<% include ../../partials/backend/script_backend %>
 		<% include ../../partials/backend/server_messages %>
-		<script src="http://momentjs.com/downloads/moment.min.js"></script>
+		<script src="/static/js/lib/moment.min.js"></script>
+		<script src="/static/js/src/imagePrevisualization.js"></script>
 		<script src="/static/js/src/content_b.js"></script>
 	</body>
 </html>
