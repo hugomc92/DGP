@@ -228,3 +228,7 @@ main {
 #modal_content_image .modal-content .input-field .prefix {
   font-size: 2.5em;
 }
+#materialbox-overlay {
+  opacity: 0.93 !important;
+  background: #121212 !important;
+}
