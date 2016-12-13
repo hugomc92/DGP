@@ -174,7 +174,7 @@ ContentService.prototype.initializeRouter = function() {
 
 											var jsonResObj= {};
 
-											jsonResObj.localization = contLocation;
+											jsonResObj.location = contLocation;
 											jsonResObj.content = cont;
 											jsonResObj.content_information = contInformation;
 											jsonResObj.content_type = contType;
@@ -494,6 +494,40 @@ ContentService.prototype.initializeRouter = function() {
 
 						res.json(jsonResObj);
 					});
+				}
+				else {
+					jsonResObj.ok = 'not_allowed';
+
+					res.json(jsonResObj);
+				}
+			}, function(err) {
+				jsonResObj.ok = 'failed';
+
+				res.json(jsonResObj);
+			});
+		}
+		else {
+			jsonResObj.ok = 'not_allowed';
+
+			res.json(jsonResObj);
+		}
+	});
+
+	self.router.route('/image/add').post(function(req, res) {
+		console.log('IMAGE ADD');
+
+		email = req.query.email;
+		user = User.build();
+
+		var jsonResObj = {};
+
+		if(typeof email !== 'undefined') {
+			user.retrieveByEmail(email).then(function(result) {
+				if(result.ADMIN) {
+					var jsonObj = req.body;
+
+					console.log(jsonObj);
+					console.log(req.files);
 				}
 				else {
 					jsonResObj.ok = 'not_allowed';

@@ -21,6 +21,21 @@ $(document).ready(function() {
 	if($('#contents').attr('content-id') !== '')
 		contentId = $('#contents').attr('content-id');
 
+	$.ajax({
+		type: "GET",
+		url: "/api/lang?email="+$("#email").text(),
+		datatype: "json",
+		success: function(jsondata) {
+			langs = jsondata;
+
+			console.log('langs', langs);
+		},
+		error : function(xhr, status) {
+			console.log(xhr);
+			console.log(status);
+		}
+	});
+
 	if(action === 'add') {
 		form = $('#español_content').find('.info_form').parent().html();
 
@@ -53,51 +68,85 @@ $(document).ready(function() {
 			complete: cleanAddLangModal
 		});
 
-		$.ajax({
-			type: "GET",
-			url: "/api/lang?email="+$("#email").text(),
-			datatype: "json",
-			success: function(jsondata) {
-				langs = jsondata;
+		if(typeof(langs) === 'undefined') {
+			$.ajax({
+				type: "GET",
+				url: "/api/lang?email="+$("#email").text(),
+				datatype: "json",
+				success: function(jsondata) {
+					langs = jsondata;
 
-				var selectionHTML = '<select id="lang_select"><option value="" disabled selected>Elige un idioma</option>';
+					var selectionHTML = '<select id="lang_select"><option value="" disabled selected>Elige un idioma</option>';
 
-				for(var i=0; i<jsondata.length; i++) {
-					var alreadyAdded = false;
+					for(var i=0; i<jsondata.length; i++) {
+						var alreadyAdded = false;
 
-					for(var j=0; j<currentLangs.length; j++)
-						if(jsondata[i].ID === currentLangs[j])
-							alreadyAdded = true;
+						for(var j=0; j<currentLangs.length; j++)
+							if(jsondata[i].ID === currentLangs[j])
+								alreadyAdded = true;
 
-					if(!alreadyAdded)
-						selectionHTML += '<option value="' + jsondata[i].ID + '" data-icon="' + jsondata[i].FLAG + '" class="left circle">' + jsondata[i].NAME + '</option>';
+						if(!alreadyAdded)
+							selectionHTML += '<option value="' + jsondata[i].ID + '" data-icon="' + jsondata[i].FLAG + '" class="left circle">' + jsondata[i].NAME + '</option>';
+					}
+
+					selectionHTML += '</select>';
+
+					if(selectionHTML !== '<select id="lang_select"><option value="" disabled selected>Elige un idioma</option></select>') {
+						$('#lang_selection').append(selectionHTML);
+
+						$('select').material_select();
+
+						$('#add_lang_submit').text('AÑADIR');
+					}
+					else {
+						$('#lang_selection').append('<h4>ESTE CONTENIDO YA ESTÁ EN TODOS LOS IDIOMAS DISPONIBLES</h4>');
+
+						$('#add_lang_submit').text('CERRAR');
+					}
+
+					$('#add_lang_loader').css('opacity', '0');
+					setTimeout(function() { $('#add_lang_loader').css('display', 'none'); }, 1000);
+				},
+				error : function(xhr, status) {
+					console.log(xhr);
+					console.log(status);
+
+					Materialize.toast("Se ha producido un error recuperando los idiomas", 4000,'', function() { $('#add_lang_content').closeModal(); });
 				}
+			});
+		}
+		else {
+			var selectionHTML = '<select id="lang_select"><option value="" disabled selected>Elige un idioma</option>';
 
-				selectionHTML += '</select>';
+			for(var i=0; i<langs.length; i++) {
+				var alreadyAdded = false;
 
-				if(selectionHTML !== '<select id="lang_select"><option value="" disabled selected>Elige un idioma</option></select>') {
-					$('#lang_selection').append(selectionHTML);
+				for(var j=0; j<currentLangs.length; j++)
+					if(langs[i].ID === currentLangs[j])
+						alreadyAdded = true;
 
-					$('select').material_select();
-
-					$('#add_lang_submit').text('AÑADIR');
-				}
-				else {
-					$('#lang_selection').append('<h4>ESTE CONTENIDO YA ESTÁ EN TODOS LOS IDIOMAS DISPONIBLES</h4>');
-
-					$('#add_lang_submit').text('CERRAR');
-				}
-
-				$('#add_lang_loader').css('opacity', '0');
-				setTimeout(function() { $('#add_lang_loader').css('display', 'none'); }, 1000);
-			},
-			error : function(xhr, status) {
-				console.log(xhr);
-				console.log(status);
-
-				Materialize.toast("Se ha producido un error recuperando los idiomas", 4000,'', function() { $('#add_lang_content').closeModal(); });
+				if(!alreadyAdded)
+					selectionHTML += '<option value="' + langs[i].ID + '" data-icon="' + langs[i].FLAG + '" class="left circle">' + langs[i].NAME + '</option>';
 			}
-		});
+
+			selectionHTML += '</select>';
+
+			if(selectionHTML !== '<select id="lang_select"><option value="" disabled selected>Elige un idioma</option></select>') {
+				$('#lang_selection').append(selectionHTML);
+
+				$('select').material_select();
+
+				$('#add_lang_submit').text('AÑADIR');
+			}
+			else {
+				$('#lang_selection').append('<h4>ESTE CONTENIDO YA ESTÁ EN TODOS LOS IDIOMAS DISPONIBLES</h4>');
+
+				$('#add_lang_submit').text('CERRAR');
+			}
+
+			$('#add_lang_loader').css('opacity', '0');
+			setTimeout(function() { $('#add_lang_loader').css('display', 'none'); }, 1000);
+		}
 	});
 
 	$('#add_lang_submit').click(function() {
@@ -227,6 +276,19 @@ function initilizeMultimediaImage(elem) {
 	elem.find('.new_image').click(function() {
 		$('#modal_content_image .modal-header h4').text('Añadir Imagen');
 
+		console.log('langs', langs);
+
+		for(var i=0; i<langs.length; i++) {
+			var alreadyAdded = false;
+
+			for(var j=0; j<currentLangs.length; j++)
+				if(langs[i].ID === currentLangs[j])
+					alreadyAdded = true;
+
+			if(alreadyAdded)
+				$('#modal_content_image').find('#alt_texts_container').append('<div class="alt_text input-field col s12"><i class="material-icons prefix"><img src="' + langs[i].FLAG + '" class="circle" width="30px" height="30px"/>\</i><input id="alt_text_' + langs[i].ID + '" name="alt_text_' + langs[i].ID + '" type="text" class="validate" required><label for="' + langs[i].ID + '">Texto Alternativo (' + langs[i].NAME + ')</label></div>');
+		}
+
 		$('#modal_content_image').openModal( {
 			complete: function() {
 				$('#modal_content_image').find('modal-header h4').text('');
@@ -236,6 +298,8 @@ function initilizeMultimediaImage(elem) {
 					$(this).trigger('autoresize');
 				});
 
+				$('#modal_content_image').find('#alt_texts').text('');
+
 				Materialize.updateTextFields();
 
 				$("#contentImagePreview").attr('src', '/static/img/img_not_available.png');
@@ -243,11 +307,11 @@ function initilizeMultimediaImage(elem) {
 		});
 	});
 
-	$('#modal_content_image').find('form').on('submit', function(event) {
+	/*$('#modal_content_image').find('form').on('submit', function(event) {
 		event.preventDefault();
 
 		send_image($(this));
-	});
+	});*/
 }
 
 function initilizeMultimediaVideo(elem) {
@@ -370,6 +434,10 @@ function send_data(form) {
 				// Save ContentId && Modify all forms
 				if(action === 'add') {
 
+					var modalForm = $('#modal_content_image').find('form');
+					
+					modalForm.attr('action', modalForm.attr() + '/' + modalForm);
+
 					action = 'edit';
 
 					$('.multimedia').css('display', 'block');
@@ -386,6 +454,49 @@ function send_data(form) {
 }
 
 function send_image(form) {
+
+	var jsonObj = new FormData();
+	jQuery.each(form.find('#content_image')[0].files, function(i, file) {
+		jsonObj.append('file-'+i, file);
+	});
+
+	console.log('jsonObj', jsonObj);
+
+	form.ajaxSubmit({
+		error: function(xhr) {
+			status('Error: ' + xhr.status);
+		},
+
+		success: function(response) {
+			$("#status").empty().text(response);
+			console.log(response);
+		}
+	});
+
+	/*$.ajax({
+		type: "POST",
+		url: '/api/content/image/add?email=' + $("#email").text(),
+		data: JSON.stringify(jsonObj),
+		contentType: 'application/json',
+		datatype: 'json',
+		success: function(jsondata){
+			console.log(jsondata);
+
+			if(jsondata.ok === 'failed') {
+				Materialize.toast('Se ha producido un fallo interno', 4000);
+			}
+			else if(jsondata.ok === 'not_allowed') {
+				Materialize.toast('No tiene los permisos suficientes para añadir contenido', 4000);
+			}
+			else {
+				// Notify user of success
+				Materialize.toast('Se ha guardado el contenido con éxito', 4000);
+			}
+		},
+		error: function(xhr, status){
+			Materialize.toast("Se ha producido un fallo añadiendo el contenido", 4000);
+		}
+	});*/
 
 	// Avoid to send form on action
 	return false;
