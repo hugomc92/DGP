@@ -151,7 +151,8 @@ main {
   margin: 0 auto;
 }
 #contents .multimedia .content_multimedia li .image_alt_text {
-  margin-top: -21px;
+  padding: 5px;
+  margin-top: -31px;
   background: rgba(0, 0, 0, 0.65);
   z-index: 100;
   position: relative;
