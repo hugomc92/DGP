@@ -144,7 +144,7 @@ main {
   margin: 10px auto;
 }
 #contents .multimedia .content_multimedia li:hover .multimedia_actions .btn-floating {
-  max-height: 50px;
+  max-height: 100px;
 }
 #contents .multimedia .content_multimedia li img {
   display: block;
@@ -158,12 +158,12 @@ main {
 }
 @media only screen and (min-width: 601px) and (max-width: 992px) {
   #contents .multimedia .content_multimedia li .multimedia_actions .btn-floating {
-    max-height: 50px;
+    max-height: 100px;
   }
 }
 @media only screen and (max-width: 600px) {
   #contents .multimedia .content_multimedia li .multimedia_actions .btn-floating {
-    max-height: 50px;
+    max-height: 100px;
   }
 }
 #contents .multimedia .content_multimedia li .multimedia_actions .btn-floating:hover {
