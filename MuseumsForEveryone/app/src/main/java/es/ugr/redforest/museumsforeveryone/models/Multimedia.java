@@ -1,5 +1,6 @@
 package es.ugr.redforest.museumsforeveryone.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -23,21 +24,22 @@ public class Multimedia {
         this.type = type;
         this.alternativeText = alternativeText;
     }
-
-    public String getSubtitle() {
-        return subtitle;
-    }
     public Multimedia(){
 
     }
+    @JsonProperty("SUBTITLE")
+    public String getSubtitle() {
+        return subtitle;
+    }
+    @JsonProperty("SUBTITLE")
     public void setSubtitle(String subtitle) {
         this.subtitle = subtitle;
     }
-
+    @JsonProperty("ALT_TEXT")
     public String getAlternativeText() {
         return alternativeText;
     }
-
+    @JsonProperty("ALT_TEXT")
     public void setAlternativeText(String alternativeText) {
         this.alternativeText = alternativeText;
     }
@@ -49,7 +51,7 @@ public class Multimedia {
     public String getUrl() {
         return url;
     }
-    @JsonProperty("TYPE")
+    @JsonIgnore
     public String getType() {
         return type;
     }
@@ -61,7 +63,7 @@ public class Multimedia {
     public void setUrl(String url) {
         this.url = url;
     }
-    @JsonProperty("TYPE")
+    @JsonIgnore
     public void setType(String type) {
         this.type = type;
     }

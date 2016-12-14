@@ -89,7 +89,9 @@ public class AdapterArtworkList extends RecyclerView.Adapter<AdapterArtworkList.
         ContentInformation contentType = contentInformationList.get(position);
 
         holder.contentInformationTxt.setText(contentType.getName());
-        Picasso.with(context).load(QueryBBDD.server+Uri.parse(images.get(position).getUrl())).into(holder.contentInformationImage);
+        if(images.get(position).getUrl()!=null)
+        Picasso.with(context).load(QueryBBDD.server+images.get(position).getUrl()).into(holder.contentInformationImage);
+        if(images.get(position).getAlternativeText()!=null)
         holder.contentInformationImage.setContentDescription(images.get(position).getAlternativeText());
 
     }

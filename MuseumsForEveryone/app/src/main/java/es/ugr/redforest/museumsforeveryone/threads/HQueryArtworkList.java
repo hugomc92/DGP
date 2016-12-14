@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
@@ -89,8 +90,10 @@ public class HQueryArtworkList extends AsyncTask<Void, Integer, String> {
                             JSONArray imagesJson = item.getJSONArray("images");
                             for (int i = 0; i < imagesJson.length(); ++i) {
                                 JSONObject imageJson = imagesJson.getJSONObject(i);
-                                Multimedia image = mapper.readValue(imageJson.toString(), Multimedia.class);
+                                JSONObject imgJson = imageJson.getJSONObject("image");
+                                Multimedia image = mapper.readValue(imgJson.toString(), Multimedia.class);
                                 image.setType("image");
+                                image.setAlternativeText(imageJson.getString("alt_text"));
                                 images.add(image);
                             }
                         }
@@ -136,6 +139,10 @@ public class HQueryArtworkList extends AsyncTask<Void, Integer, String> {
             LinearLayoutManager layMan = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL,
                     false);
 
+            //Add line decoration to RecyclerView
+            DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(recyclerContentInformation.getContext(),
+                    layMan.getOrientation());
+            recyclerContentInformation.addItemDecoration(mDividerItemDecoration);
             //Find selection point on recyclerview
             final GestureDetector mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
 
