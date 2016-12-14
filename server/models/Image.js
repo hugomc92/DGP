@@ -9,6 +9,9 @@ var Image = DBConnector.connectM4E().define('IMAGE', {
 },
 {
 	instanceMethods: {
+		retrieveLast: function() {
+			return Image.findOne({order: 'ID DESC'});
+		},
 		retrieveAll: function() {
 			return Image.findAll();
 		},
@@ -16,7 +19,7 @@ var Image = DBConnector.connectM4E().define('IMAGE', {
 			return Image.findAll({ where: {CONTENT_ID: contentId }});
 		},
 		retrieveAllByContentIds: function(contentIds) {
-			return Image.findAll({ where: {ID: {in: contentIds}}});
+			return Image.findAll({ where: {CONTENT_ID: {in: contentIds}}});
 		},
 		retrieveById: function(id) {
 			return Image.findOne({where: {ID: id}});

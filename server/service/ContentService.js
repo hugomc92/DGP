@@ -6,7 +6,9 @@ var ContentInformation = require('../models/ContentInformation');
 var ContentType = require('../models/ContentType');
 var Language = require('../models/Language');
 var Localization = require('../models/Localization');
+var User = require('../models/User');
 var Image = require('../models/Image');
+var AltImage = require('../models/AltImage');
 
 // Constructor for ContentService
 function ContentService() {
@@ -50,12 +52,9 @@ ContentService.prototype.initializeRouter = function() {
 				};
 
 				var contentIds = [];
-				var contentTypesIds = [];
 
-				for(var i=0; i<contents.length; i++) {
+				for(var i=0; i<contents.length; i++)
 					contentIds.push(contents[i].ID);
-					contentTypesIds.push(contents[i].CONTENT_TYPE_ID);
-				}
 
 				var lang = Language.build();
 
@@ -70,49 +69,66 @@ ContentService.prototype.initializeRouter = function() {
 
 							var contentType = ContentType.build();
 
-							contentType.retrieveAllByListIds(contentTypesIds).then(function(success) {
-								var contentTypes = success;
+							contentType.retrieveById(type).then(function(success) {
+								var contentType = success;
 
 								var image = Image.build();
 
 								image.retrieveAllByContentIds(contentIds).then(function(success) {
 									var images = success;
+									
+									var imageIds = [];
 
-									for(var i=0; i<contents.length; i++) {
-										var contentInfo;
-										var contenType;
-										var contentImages = [];
-										var contentInfofound = false;
-										var contentTypefound = false;
+									for(var i=0; i<images.length; i++)
+										imageIds.push(images[i].ID);
 
-										for(var j=0; j<contentInfos.length && !contentInfofound; j++) {
-											if(contentInfos[j].CONTENT_ID === contents[i].ID) {
-												contentInfo = contentInfos[j];
-												contentInfofound = true;
+									var altImage = AltImage.build();
+
+									altImage.retrieveAllByImageIdsByLangId(imageIds, langId).then(function(success) {
+										var imagesAltText = success;
+
+										console.log('altTexts', imagesAltText);
+										
+										for(var i=0; i<contents.length; i++) {
+											var contentInfo;
+											var contentImages = [];
+											var contentInfofound = false;
+
+											for(var j=0; j<contentInfos.length && !contentInfofound; j++) {
+												if(contentInfos[j].CONTENT_ID === contents[i].ID) {
+													contentInfo = contentInfos[j];
+													contentInfofound = true;
+												}
 											}
-										}
 
-										for(var k=0; k<contentTypes.length && !contentTypefound; k++) {
-											if(contentTypes[k].ID === contents[i].CONTENT_TYPE_ID) {
-												contentType = contentTypes[k];
-												contentTypefound = true;
+											for(var k=0; k<images.length; k++) {
+												if(images[k].CONTENT_ID === contents[i].ID) {
+													var altTextFound = false;
+
+													for(var l=0; l<imagesAltText.length && !altTextFound; l++) {
+														if(imagesAltText[l].IMAGE_ID === images[k].ID && imagesAltText[l].LANG_ID === langId) {
+															contentImages.push({
+																image: images[k],
+																alt_text: imagesAltText[l].ALT_TEXT
+															});
+
+															altTextFound = true;
+														}
+													}
+												}
 											}
+											
+											jsonResObj.contents.push( {
+												content: contents[i],
+												content_information: contentInfo,
+												content_type: contentType,
+												images: contentImages
+											});
 										}
-
-										for(var l=0; l<images.length; l++) {
-											if(images[l].CONTENT_ID === contents[i].ID) {
-												contentImages.push(images[l]);
-											}
-										}
-
-										jsonResObj.contents.push( {
-											content: contents[i],
-											content_information: contentInfo,
-											content_type: contentType,
-											images: contentImages
-										});
-									}
-									res.json(jsonResObj);
+										res.json(jsonResObj);
+									}, function(err) {
+										res.status(404).send("Images Alt Texts not found");
+									});
 								}, function(err) {
 									res.status(404).send("Images not found");
 								});
@@ -171,14 +187,51 @@ ContentService.prototype.initializeRouter = function() {
 										if(success !== null) {
 											var contType = success;
 
-											var jsonResObj= {};
+											var image = Image.build();
 
-											jsonResObj.localization = contLocation;
-											jsonResObj.content = cont;
-											jsonResObj.content_information = contInformation;
-											jsonResObj.content_type = contType;
+											image.retrieveAllByContentId(cont.ID).then(function(success) {
+												var images = success;
 
-											res.json(jsonResObj);
+												var imageIds = [];
+
+												for(var i=0; i<images.length; i++)
+													imageIds.push(images[i].ID);
+
+												var altImage = AltImage.build();
+
+												altImage.retrieveAllByImageIdsByLangId(imageIds, langId).then(function(success) {
+													var altImages = success;
+
+													var jsonResObj= {};
+
+													jsonResObj.location = contLocation;
+													jsonResObj.content = cont;
+													jsonResObj.content_information = contInformation;
+													jsonResObj.content_type = contType;
+													jsonResObj.images = [];
+
+													for(var i=0; i<images.length; i++) {
+														var altImageFound = false;
+
+														for(var j=0; j<altImages.length && !altImageFound; j++) {
+															if(altImages[j].IMAGE_ID === images[i].ID) {
+																jsonResObj.images.push( {
+																	image: images[i],
+																	alt_text: altImages[i].ALT_TEXT
+																});
+
+																altImageFound = true;
+															}
+														}
+													}
+
+													res.json(jsonResObj);
+												}, function(err) {
+													res.status(404).send("Images Alt Texts not found");
+												});
+											}, function(err){
+												res.status(404).send("Images not found");
+											});
 										}
 										else
 											res.status(401).send("Content Type not found");
@@ -231,6 +284,10 @@ ContentService.prototype.initializeRouter = function() {
 							if(success !== null && success.length > 0) {
 								var contents = success;
 
+								var	jsonResObj = {
+									contents: []
+								};
+
 								var contentIds = [];
 								var contentTypeIds = [];
 
@@ -251,35 +308,64 @@ ContentService.prototype.initializeRouter = function() {
 											if(success !== null && success.length > 0) {
 												var contentTypes = success;
 
-												var jsonResObj = {
-													location: locat,
-													contents: []
-												};
+												var image = Image.build();
 
-												for(var i=0; i<contents.length; i++) {
-													var contentInfo;
-													var contentInfofound = false;
-													var contentTypefound = false;
+												image.retrieveAllByContentIds(contentIds).then(function(success) {
+													var images = success;
+													
+													var imageIds = [];
 
-													for(var j=0; j<contentInfos.length && !contentInfofound; j++) {
-														if(contentInfos[j].CONTENT_ID === contents[i].ID) {
-															contentInfo = contentInfos[j];
-															contentInfofound = true;
-														}
-													}
+													for(var i=0; i<images.length; i++)
+														imageIds.push(images[i].ID);
 
-													for(var k=0; k<contentTypes.length && !contentTypefound; k++) {
-														if(contentTypes[k].ID === contents[i].CONTENT_TYPE_ID) {
+													var altImage = AltImage.build();
+
+													altImage.retrieveAllByImageIdsByLangId(imageIds, langId).then(function(success) {
+														var imagesAltText = success;
+														
+														for(var i=0; i<contents.length; i++) {
+															var contentInfo;
+															var contentImages = [];
+															var contentInfofound = false;
+
+															for(var j=0; j<contentInfos.length && !contentInfofound; j++) {
+																if(contentInfos[j].CONTENT_ID === contents[i].ID) {
+																	contentInfo = contentInfos[j];
+																	contentInfofound = true;
+																}
+															}
+
+															for(var k=0; k<images.length; k++) {
+																if(images[k].CONTENT_ID === contents[i].ID) {
+																	var altTextFound = false;
+
+																	for(var l=0; l<imagesAltText.length && !altTextFound; l++) {
+																		if(imagesAltText[l].IMAGE_ID === images[k].ID && imagesAltText[l].LANG_ID === langId) {
+																			contentImages.push({
+																				image: images[k],
+																				alt_text: imagesAltText[l].ALT_TEXT
+																			});
+
+																			altTextFound = true;
+																		}
+																	}
+																}
+															}
+
 															jsonResObj.contents.push( {
 																content: contents[i],
 																content_information: contentInfo,
-																content_type: contentTypes[k]
+																content_type: contentType,
+																images: contentImages
 															});
-															contentTypefound = true;
 														}
-													}
-												}
-												res.json(jsonResObj);
+														res.json(jsonResObj);
+													}, function(err) {
+														res.status(404).send("Images Alt Texts not found");
+													});
+												}, function(err) {
+													res.status(404).send("Images not found");
+												});
 											}
 											else
 												res.status(401).send("Content Types not found");
@@ -313,7 +399,6 @@ ContentService.prototype.initializeRouter = function() {
 	});
 
 	self.router.route('/add').post(function(req, res) {
-		console.log('CONTENT ADD');
 
 		email = req.query.email;
 		user = User.build();
@@ -354,9 +439,18 @@ ContentService.prototype.initializeRouter = function() {
 
 							contentInformation.add(jsonObj.CONTENT_INFO.NAME, jsonObj.CONTENT_INFO.DESCRIPTION, jsonObj.CONTENT_INFO.BLIND_DESCRIPTION, lastContent.ID, jsonObj.CONTENT_INFO.LANG).then(function(success) {
 								
-								jsonResObj.ok = lastContent.ID;
+								contentInformation.retrieveLast().then(function(success) {
 
-								res.json(jsonResObj);
+									jsonResObj.ok = 'ok';
+									jsonResObj.contentId = lastContent.ID;
+									jsonResObj.contentInfoId = success.ID;
+
+									res.json(jsonResObj);
+								}, function(err) {
+									jsonResObj.ok = 'failed';
+
+									res.json(jsonResObj);
+								});
 							}, function(err) {
 								jsonResObj.ok = 'failed';
 
@@ -392,7 +486,6 @@ ContentService.prototype.initializeRouter = function() {
 	});
 
 	self.router.route('/edit').post(function(req, res) {
-		console.log('CONTENT EDIT');
 
 		email = req.query.email;
 		user = User.build();
@@ -403,8 +496,6 @@ ContentService.prototype.initializeRouter = function() {
 			user.retrieveByEmail(email).then(function(result) {
 				if(result.ADMIN) {
 					var jsonObj = req.body;
-
-					console.log(jsonObj);
 
 					var dateIn;
 					var dateOut;
@@ -427,17 +518,25 @@ ContentService.prototype.initializeRouter = function() {
 
 					var content = Content.build();
 
-					content.updateById(dateIn, dateOut, jsonObj.CONTENT.LOCATION, jsonObj.CONTENT.TYPE).then(function(success) {
-						content.retrieveLast().then(function(success) {
-							var lastContent = success;
+					content.dateIn = dateIn;
+					content.dateOut = dateOut;
+					content.locationId = jsonObj.CONTENT.LOCATION;
+					content.contentTypeID = jsonObj.CONTENT.TYPE;
 
-							console.log("Last", lastContent);
+					var contentId = jsonObj.CONTENT_ID;
 
-							var contentInformation = ContentInformation.build();
+					content.updateById(contentId).then(function(success) {
+						var contentInformation = ContentInformation.build();
 
-							contentInformation.updateById(jsonObj.CONTENT_INFO.NAME, jsonObj.CONTENT_INFO.DESCRIPTION, jsonObj.CONTENT_INFO.BLIND_DESCRIPTION, lastContent.ID, jsonObj.CONTENT_INFO.LANG).then(function(success) {
+						if(jsonObj.CONTENT_INFO_ID !== '') {
+
+							contentInformation.name = jsonObj.CONTENT_INFO.NAME;
+							contentInformation.description = jsonObj.CONTENT_INFO.DESCRIPTION;
+							contentInformation.blindDescription = jsonObj.CONTENT_INFO.BLIND_DESCRIPTION;
+
+							contentInformation.updateById(jsonObj.CONTENT_INFO_ID).then(function(success) {
 								
-								jsonResObj.ok = lastContent.ID;
+								jsonResObj.ok = contentId;
 
 								res.json(jsonResObj);
 							}, function(err) {
@@ -445,11 +544,28 @@ ContentService.prototype.initializeRouter = function() {
 
 								res.json(jsonResObj);
 							});
-						}, function(err) {
-							jsonResObj.ok = 'failed';
+						}
+						else {
+							contentInformation.add(jsonObj.CONTENT_INFO.NAME, jsonObj.CONTENT_INFO.DESCRIPTION, jsonObj.CONTENT_INFO.BLIND_DESCRIPTION, contentId, jsonObj.CONTENT_INFO.LANG).then(function(success) {
+								
+								contentInformation.retrieveLast().then(function(success) {
 
-							res.json(jsonResObj);
-						});
+									jsonResObj.ok = 'ok';
+									jsonResObj.contentId = contentId;
+									jsonResObj.contentInfoId = success.ID;
+
+									res.json(jsonResObj);
+								}, function(err) {
+									jsonResObj.ok = 'failed';
+
+									res.json(jsonResObj);
+								});
+							}, function(err) {
+								jsonResObj.ok = 'failed';
+
+								res.json(jsonResObj);
+							});
+						}
 					}, function(err) {
 						jsonResObj.ok = 'failed';
 

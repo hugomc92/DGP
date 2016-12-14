@@ -39,16 +39,16 @@ public class ActivityInstructions extends AppCompatActivity {
 
 		switch (accessibility){
 			case 0:
-				instructions.append("Instrucciones sin discapacidad");
+				instructions.append(getString(R.string.instructions_without_discapacity));
 				break;
 			case 1:
-				instructions.append("Instrucciones problemas de visión");
+				instructions.append(getString(R.string.instructions_with_sight_discapacity));
 				break;
 			case 2:
-				instructions.append("Instrucciones problemas auditivos");
+				instructions.append(getString(R.string.instructions_with_sound_problems));
 				break;
 			default:
-				instructions.append("No se han cargado instrucciones");
+				instructions.append(getString(R.string.instructions_Error));
 		}
     }
 

@@ -9,12 +9,16 @@ var Utils = require('../utils/Util');
 var Content = require('../models/Content');
 var ContentInformation = require('../models/ContentInformation');
 var Image = require('../models/Image');
+var AltImage = require('../models/AltImage');
 
 // Constructor for ContentController
 function ContentController(json, activityLogC, contentTypeC, localizationC, langC) {
 	this.renderJson = json;
+	
 	this.uploadpath = path.join(__dirname, '..', 'public', 'static', 'upload') + '/';
-	this.uploadimgpath = path.join(__dirname, '..', 'public', 'static', 'img', 'contents') + '/';
+	this.uploadimgpath = path.join(__dirname, '..', 'public', 'static', 'img', 'content_images') + '/';
+	this.uploadvideopath = path.join(__dirname, '..', 'public', 'static', 'img', 'content_videos') + '/';
+	this.uploadsubtitlepath = path.join(__dirname, '..', 'public', 'static', 'img', 'content_videos_subtitles') + '/';
 
 	this.activityLogController = activityLogC;
 	this.contentTypeController = contentTypeC;
@@ -136,8 +140,6 @@ ContentController.prototype.initBackend = function() {
 		
 		var contentId = req.params.contentId;
 
-		console.log('contentId', contentId);
-
 		self.renderJson.breadcrumb = {'LINK': '/backend/contents/', 'SECTION': 'Contenido'};
 
 		self.renderJson.action = 'add';
@@ -150,7 +152,7 @@ ContentController.prototype.initBackend = function() {
 				self.renderJson.contentTypes = success;
 
 				self.localizationController.getAllLocalizations().then(function(success) {
-					self.renderJson.localizations = success;
+					self.renderJson.locations = success;
 
 					var contentInformation = ContentInformation.build();
 
@@ -174,13 +176,28 @@ ContentController.prototype.initBackend = function() {
 								image.retrieveAllByContentId(contentId).then(function(success) {
 									self.renderJson.images = success;
 
-									res.render('pages/backend/content', self.renderJson);
-									self.clearMessages();
-								}, function(err) {
+									var imageIds = [];
 
+									for(var i=0; i<success.length; i++)
+										imageIds.push(success[i].ID);
+
+									var altImage = AltImage.build();
+
+									altImage.retrieveAllByImageIds(imageIds).then(function(success) {
+										self.renderJson.altTexts = success;
+
+										res.render('pages/backend/content', self.renderJson);
+										self.clearMessages();
+									}, function(err) {
+										self.renderJson.error = 'Se ha producido un error interno recuperando la información de las imágenes';
+										res.redirect('/backend/contents/');
+									});									
+								}, function(err) {
+									self.renderJson.error = 'Se ha producido un error interno recuperando las imágenes';
+									res.redirect('/backend/contents/');
 								});
 							}, function(err) {
-								self.renderJson.error = 'Se ha producido un error interno recuperando las imágenes';
+								self.renderJson.error = 'Se ha producido un error interno recuperando el contenido';
 								res.redirect('/backend/contents/');
 							});
 						}, function(err) {
@@ -202,6 +219,107 @@ ContentController.prototype.initBackend = function() {
 		}
 		else {
 			res.redirect('/');
+		}
+	});
+
+	self.routerBackend.route('/image/add/:contentId').post(upload.array('content_image', 1), function(req, res) {
+		console.log('IMAGE ADD');
+
+		var contentId = req.params.contentId;
+
+		self.renderJson.user = req.session.user;
+
+		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
+
+			// Check if there's files to upload
+			if(req.files.length > 0) {
+				var file = Utils.normalizeStr(req.files[0].originalname);
+				var extension = '.'+file.substr(file.lastIndexOf('.')+1);
+
+				file = file.split('.').splice(0,1).join('.');
+
+				var dst = self.uploadimgpath + file + extension;
+
+				// Check if the file exist. If there's an error it doesn't exist
+				try {
+					fs.accessSync(dst, fs.F_OK);
+
+					file += Date.now();
+					file += extension;
+				} catch(e) {		// File not found
+					file += extension;
+				}
+
+				dst = self.uploadimgpath + file;
+
+				var tmp = self.uploadpath+req.files[0].filename;
+
+				fs.createReadStream(tmp).pipe(fs.createWriteStream(dst));
+
+				// Delete created tmp file
+				fs.unlink(tmp, function(error) {
+					if(error)
+						console.log(error);
+					else
+						console.log('successfully deleted ' + tmp);
+				});
+
+				// Path to the file, to be sabed in DB
+				var newImage = '/static/img/content_images/' + file;
+
+				var altTexts = [];
+
+				for(var key in req.body) {
+					if(key.indexOf('alt_text') > -1) {
+						var langRes = key.split('_');
+						var langId = langRes[langRes.length-1];
+
+						console.log(key, req.body[key]);
+						altTexts.push( {
+							alt: req.body[key],
+							lang: langId
+						});
+					}
+				}
+
+				var image = Image.build();
+
+				image.add(newImage, contentId).then(function(success) {
+					image.retrieveLast().then(function(success) {
+						var img = success;
+
+						var altImage = AltImage.build();
+
+						altImage.addSome(altTexts, img.ID).then(function(success) {
+							self.renderJson.msg = 'Imagen Añadida correctamente';
+
+							res.redirect('/backend/contents/edit/' + contentId + '/');
+						}, function(err) {
+							self.renderJson.error = 'Error interno añadiendo los textos alternativos';
+
+							res.redirect('/backend/contents/edit/' + contentId + '/');
+						});
+					}, function(err) {
+						self.renderJson.error = 'Error interno recuperando información';
+
+						res.redirect('/backend/contents/edit/' + contentId + '/');
+					});
+				}, function(err) {
+					self.renderJson.error = 'Error interno añadiendo la imagen';
+
+					res.redirect('/backend/contents/edit/' + contentId + '/');
+				});
+			}
+			else {
+				self.renderJson.error = 'Error interno con los archivos enviados';
+
+				res.redirect('/backend/contents/edit/' + contentId + '/');
+			}		
+		}
+		else {
+			self.renderJson.error = 'No tiene los permisos necesarios';
+
+			res.redirect('/backend/contents/edit/' + contentId + '/');
 		}
 	});
 };
