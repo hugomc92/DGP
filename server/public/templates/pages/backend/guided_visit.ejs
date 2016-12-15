@@ -47,7 +47,7 @@
 						for(var j=0; j<langs.length; j++) { %>
 							<div id="<%= langs[j].NAME.toLowerCase() %>_visit" class="col s12" visit-lang="<%= langs[j].ID %>" info-id="<%= visitInformations[j].ID %>">
 								<div class="row">
-									<form method="post" action="#" class="info_form col s12 z-depth-1">
+									<form method="post" action="/backend/guided_visits/add_visit/" enctype="multipart/form-data" class="info_form col s12 z-depth-1">
 										
 										<!-- Submit form -->
 										<div class="input-field col s12">
@@ -58,10 +58,6 @@
 										</div>
 									</form>
 								</div>
-								<div class="visit_locations row z-depth-1">
-									<h5 class="col s12">LOCALIZACIONES DE LA VISITA</h5>
-									
-								</div>
 							</div>
 						<% }
 					}
@@ -69,7 +65,7 @@
 					
 					<div id="español_visit" class="col s12" visit-lang="1" info-id="">
 						<div class="row">
-							<form method="post" action="#" class="info_form col s12 z-depth-1">
+							<form method="post" action="/backend/guided_visits/add_visit/" enctype="multipart/form-data" class="info_form col s12 z-depth-1">
 								<h5>INFORMACIÓN</h5>
 								<!-- Visit name -->
 								<div class="input-field col s12">
@@ -108,6 +104,21 @@
 										<textarea id="visit_blind_description" name="visit_blind_description" class="materialize-textarea" required></textarea>
 										<label for="visit_blind_description">Descripción alternativa de la Visita (en idioma seleccionado)</label>
 									</div>
+									<!-- Visit locations -->
+									<h5 class="col s12">LOCALIZACIONES</h5>
+									<ul id="visit_locations" class=" col s12">
+										<li>
+											<div class="order col s2"><p>1º</p></div>
+											<div class="input-field col s10">
+												<select id="visit_location_1" name="visit_location_1">
+													<option value="" disabled selected>Localización de la Visita</option>
+													<% for(var i=0; i<locations.length; i++) { %>
+														<option value="<%= locations[i].ID %>"><%= locations[i].DESCRIPTION %></option>
+													<% } %>
+												</select>
+											</div>
+										</li>
+									</ul>
 								</div>
 								<!-- Submit form -->
 								<div class="input-field col s12">

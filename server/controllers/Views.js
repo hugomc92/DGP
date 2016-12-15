@@ -38,7 +38,7 @@ Views.prototype.initPages = function() {
 	var localizationC = new LocalizationController(self.renderJson);
 	var langC = new LangController(self.renderJson, activityLogC);
 	var contentC = new ContentController(self.renderJson, activityLogC, contentTypeC, localizationC, langC);
-	var guidedVisitC = new GuidedVisitController(self.renderJson, activityLogC);
+	var guidedVisitC = new GuidedVisitController(self.renderJson, activityLogC, localizationC);
 
 
 	// -- BACKEND VIEWS --

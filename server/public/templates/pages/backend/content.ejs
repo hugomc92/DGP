@@ -187,8 +187,8 @@
 								<div class="input-field col s12 m6">
 									<select required id="content_type" name="content_type">
 										<option value="" disabled selected>Tipo de contenido</option>
-										<% for(var i=0; i<contentTypes.length; i++) { %>
-											<option value="<%= contentTypes[i].ID %>" data-icon="<%= contentTypes[i].ICON %>" class="left circle"><%= contentTypes[i].NAME %></option>
+										<% for(var i=0; i<locations.length; i++) { %>
+											<option value="<%= locations[i].ID %>" class="left circle"><%= locations[i].NAME %></option>
 										<% } %>
 									</select>
 								</div>
