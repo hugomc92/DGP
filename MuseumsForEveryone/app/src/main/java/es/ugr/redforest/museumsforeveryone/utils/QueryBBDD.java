@@ -17,14 +17,14 @@ import java.net.URL;
 public class QueryBBDD {
 
 
-    public static String server ="http://hugomaldonado.ddns.net:2424/";
+    public static String server ="http://hugomaldonado.ddns.net:2424";
 
 
 
-    public static final String queryType = "api/content_type/";
-    public static final String queryContentInformationOfType ="api/content/type";
-    public static final String queryContent ="api/content/id";
-    public static final String queryContentOfLocalization ="api/content/location";
+    public static final String queryType = "/api/content_type/";
+    public static final String queryContentInformationOfType ="/api/content/type";
+    public static final String queryContent ="/api/content/id";
+    public static final String queryContentOfLocalization ="/api/content/location";
 
     public static String doQuery(String urlREST, String parameters, String metodo) {
 

@@ -29,9 +29,6 @@ import es.ugr.redforest.museumsforeveryone.utils.SliderMenu;
  */
 public class ActivityArtworkList extends AppCompatActivity {
 
-    private ArrayList<ContentInformation> contents;   //List of artworks available
-    private ArrayList<Multimedia> images;   //List of images of all artworks
-
     private Context context;
 
     @Override
@@ -41,8 +38,7 @@ public class ActivityArtworkList extends AppCompatActivity {
 
         String id="";
         context=this;
-        contents = new ArrayList<>();
-        images = new ArrayList<>();
+
         SliderMenu mySlide = new SliderMenu(this,this);
         mySlide.inicializarToolbar(R.menu.menu_main,getString(R.string.app_name));
         Bundle bundle = getIntent().getExtras();
@@ -50,7 +46,7 @@ public class ActivityArtworkList extends AppCompatActivity {
             id = String.valueOf(bundle.getInt("id_type"));
 
         //Query to bring all artworks
-        HQueryArtworkList hQueryContentsInformation = new HQueryArtworkList(this,contents,id,images);
+        HQueryArtworkList hQueryContentsInformation = new HQueryArtworkList(this,id);
         hQueryContentsInformation.execute();
 
     }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
@@ -47,17 +48,15 @@ public class HQueryArtworkList extends AsyncTask<Void, Integer, String> {
     Context context;
     String result;
     ProgressDialog pDialog;
-    ArrayList<Multimedia> images;
     ArrayList<ContentInformation> contentInformationList;
     ArrayList<Content> contents;
     String typeContent="";
 
 
-    public HQueryArtworkList(Context c , ArrayList<ContentInformation> contentInformationList, String typeContent,ArrayList<Multimedia> images) {
+    public HQueryArtworkList(Context c , String typeContent) {
         this.context=c;
-        this.contentInformationList = contentInformationList;
+        this.contentInformationList = new ArrayList<>();
         this.typeContent = typeContent;
-        this.images = images;
         this.contents = new ArrayList<>();
 
     }
@@ -79,6 +78,8 @@ public class HQueryArtworkList extends AsyncTask<Void, Integer, String> {
                         JSONObject item = contentType.getJSONObject(j);
                         JSONObject itemContentInformation = item.getJSONObject("content_information");
 
+                        JSONObject itemContent = item.getJSONObject("content");
+                        content = mapper.readValue(itemContent.toString(), Content.class);
 
                         contentInformation = mapper.readValue(itemContentInformation.toString(), ContentInformation.class);
 
@@ -89,13 +90,13 @@ public class HQueryArtworkList extends AsyncTask<Void, Integer, String> {
                             JSONArray imagesJson = item.getJSONArray("images");
                             for (int i = 0; i < imagesJson.length(); ++i) {
                                 JSONObject imageJson = imagesJson.getJSONObject(i);
-                                Multimedia image = mapper.readValue(imageJson.toString(), Multimedia.class);
+                                JSONObject imgJson = imageJson.getJSONObject("image");
+                                Multimedia image = mapper.readValue(imgJson.toString(), Multimedia.class);
                                 image.setType("image");
-                                images.add(image);
+                                image.setAlternativeText(imageJson.getString("alt_text"));
+                                content.addMultimedia(image);
                             }
                         }
-                        JSONObject itemContent = item.getJSONObject("content");
-                        content = mapper.readValue(itemContent.toString(), Content.class);
                         contents.add(content);
                     }
                 }
@@ -130,12 +131,16 @@ public class HQueryArtworkList extends AsyncTask<Void, Integer, String> {
             final RecyclerView recyclerContentInformation = (RecyclerView) ((Activity)context).findViewById(R.id.recycler_artwork_list);
 
             //Creates an Adapter with the list of languages
-            AdapterArtworkList contentInformationAdapter = new AdapterArtworkList(contentInformationList,images,context);
+            AdapterArtworkList contentInformationAdapter = new AdapterArtworkList(contentInformationList,contents,context);
 
             //Creates an Android default layout to show elements on the RecyclerView
             LinearLayoutManager layMan = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL,
                     false);
 
+            //Add line decoration to RecyclerView
+            DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(recyclerContentInformation.getContext(),
+                    layMan.getOrientation());
+            recyclerContentInformation.addItemDecoration(mDividerItemDecoration);
             //Find selection point on recyclerview
             final GestureDetector mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
 
