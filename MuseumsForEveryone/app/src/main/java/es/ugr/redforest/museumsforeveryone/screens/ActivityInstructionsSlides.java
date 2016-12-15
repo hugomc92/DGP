@@ -10,12 +10,15 @@ import android.view.View;
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 
+import java.util.ArrayList;
+
 import es.ugr.redforest.museumsforeveryone.R;
 
 /**
  * Created by mrsas on 15/12/2016.
  */
 public class ActivityInstructionsSlides extends AppIntro {
+    private int index = 0;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,11 @@ public class ActivityInstructionsSlides extends AppIntro {
 
         */
 
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(R.color.colorPrimaryDark));
+        colors.add(getResources().getColor(R.color.colorPrimarySoft));
+        colors.add(getResources().getColor(R.color.colorPrimary));
+
         addSlide(AppIntroFragment.newInstance("Prueba", "Hola hola 1", R.drawable.icon, getResources().getColor(R.color.colorPrimaryDark)));
         addSlide(AppIntroFragment.newInstance("Prueba2", "Hola hola 2", R.drawable.icon, getResources().getColor(R.color.colorPrimarySoft)));
         addSlide(AppIntroFragment.newInstance("Prueba3", "Hola hola 3", R.drawable.icon, getResources().getColor(R.color.colorPrimary)));
@@ -46,8 +54,13 @@ public class ActivityInstructionsSlides extends AppIntro {
         /*
         setBarColor(Color.parseColor("#colo"));
         setSeparatorColor(Color.parseColor("#2196F3"));*/
+        setSeparatorColor(getResources().getColor(R.color.colorPrimaryDark));
 
         // Hide Skip/Done button.
+        for(int i =0; i < colors.size(); i++){
+
+        }
+
         showSkipButton(true);
         setProgressButtonEnabled(true);
 
@@ -55,6 +68,7 @@ public class ActivityInstructionsSlides extends AppIntro {
         // NOTE: you will probably need to ask VIBRATE permission in Manifest.
         setVibrate(true);
         setVibrateIntensity(30);
+        setFadeAnimation();
     }
 
     public void launchMainActivity(){
@@ -90,6 +104,7 @@ public class ActivityInstructionsSlides extends AppIntro {
     @Override
     public void onSlideChanged(@Nullable Fragment oldFragment, @Nullable Fragment newFragment) {
         super.onSlideChanged(oldFragment, newFragment);
+        setSeparatorColor(getResources().getColor(R.color.colorPrimaryDark));
         // Do something when the slide changes.
     }
 }
