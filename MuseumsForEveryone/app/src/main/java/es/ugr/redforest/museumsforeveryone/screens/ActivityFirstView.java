@@ -47,7 +47,7 @@ public class ActivityFirstView extends AppCompatActivity {
 	public void buttonEnterMuseum(View v){
 		ControllerPreferences preferences= ControllerPreferences.getInstance();
 		preferences.savePreferencesDisability(this,0);
-		Intent instructionIntent = new Intent(ActivityFirstView.this, ActivityInstructions.class);
+		Intent instructionIntent = new Intent(ActivityFirstView.this, ActivityInstructionsSlides.class);
 		instructionIntent.putExtra("FirstTime","True");
 		startActivity(instructionIntent);
 	}

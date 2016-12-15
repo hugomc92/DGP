@@ -41,6 +41,7 @@ import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
 /**
  * Thread to connect to the server and get the localization information
  * @author Miguel Ángel Torres López
+ * @author Emilio Chica Jiménez
  * @version 1.0.0
  */
 

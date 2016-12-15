@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import es.ugr.redforest.museumsforeveryone.models.ContentType;
 import es.ugr.redforest.museumsforeveryone.R;
+import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
 
 /**
  * Adapter used in RecyclerView to display a list of Content Types
@@ -85,7 +86,7 @@ public class AdapterContentType extends RecyclerView.Adapter<AdapterContentType.
         ContentType contentType = contentTypeList.get(position);
 
         holder.contentTypeTxt.setText(contentType.getName());
-        Picasso.with(context).load(contentType.getIcon()).into(holder.contentTypeImg);
+        Picasso.with(context).load(QueryBBDD.server+contentType.getIcon()).into(holder.contentTypeImg);
     }
 
     /**

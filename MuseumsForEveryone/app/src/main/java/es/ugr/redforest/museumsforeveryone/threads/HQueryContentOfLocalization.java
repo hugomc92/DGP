@@ -123,8 +123,10 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
                                 JSONArray imagesJson = item.getJSONArray("images");
                                 for (int i = 0; i < imagesJson.length(); ++i) {
                                     JSONObject imageJson = imagesJson.getJSONObject(i);
-                                    Multimedia image = mapper.readValue(imageJson.toString(), Multimedia.class);
+                                    JSONObject imgJson = imageJson.getJSONObject("image");
+                                    Multimedia image = mapper.readValue(imgJson.toString(), Multimedia.class);
                                     image.setType("image");
+                                    image.setAlternativeText(imageJson.getString("alt_text"));
                                     content.addMultimedia(image);
                                 }
                             }
