@@ -9,6 +9,7 @@ var ContentTypeController = require('./ContentTypeController');
 var LocalizationController = require('./LocalizationController');
 var ActivityLogController = require('./ActivityLogController');
 var LangController = require('./LangController');
+var GuidedVisitController = require('./GuidedVisitController');
 
 function Views(app) {
 	this.expressContext = app;
@@ -37,6 +38,7 @@ Views.prototype.initPages = function() {
 	var localizationC = new LocalizationController(self.renderJson);
 	var langC = new LangController(self.renderJson, activityLogC);
 	var contentC = new ContentController(self.renderJson, activityLogC, contentTypeC, localizationC, langC);
+	var guidedVisitC = new GuidedVisitController(self.renderJson, activityLogC);
 
 
 	// -- BACKEND VIEWS --
@@ -47,6 +49,7 @@ Views.prototype.initPages = function() {
 	self.routerBackend.use('/activityLogs', activityLogC.getRouterBackend());
 	self.routerBackend.use('/contents', contentC.getRouterBackend());
 	self.routerBackend.use('/langs', langC.getRouterBackend());
+	self.routerBackend.use('/guided_visits', guidedVisitC.getRouterBackend());
 
 	// -- FRONTEND VIEWS --
 	self.routerFrontend.use(indexC.getRouterFrontend());
