@@ -16,8 +16,8 @@ $(document).ready(function() {
 		active_li = setActiveLi("Tipos");
 	else if (pathname.indexOf('activityLogs') > 0)
 		active_li = setActiveLi("Histórico");
-	else if (pathname.indexOf('guided_visit') > 0)
-		active_li = setActiveLi("Visita Guiadas");
+	else if (pathname.indexOf('guided_visits') > 0)
+		active_li = setActiveLi("Visitas Guiadas");
 	else if (pathname.indexOf('users') > 0)
 		active_li = setActiveLi("Usuarios");
 	else if (pathname.indexOf('langs') > 0)

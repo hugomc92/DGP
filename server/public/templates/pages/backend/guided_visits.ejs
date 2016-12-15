@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<% include ../../partials/backend/head_backend %>
+		<link rel="stylesheet" href="/static/css/src/visits_b.css">
+	</head>
+	<body>
+		<% include ../../partials/backend/sidemenu_backend %>
+
+		<main class="grey lighten-3">
+			<!-- Nav -->
+			<% include ../../partials/backend/header_backend %>
+
+			<div class="row content_start">
+				<div id="btn_add_container" class="col s12">
+				<!-- Add new content type button -->
+				<a class="waves-effect waves-light btn modal-trigger" href="/backend/guided_visits/add/">Añadir Visita Guiada</a>
+				</div>
+			</div>
+
+			<!-- Table all guided visits -->
+			<div id="visit-table" class="row">
+				<table class="striped">
+					<thead>
+						<tr>
+							<th data-field="id">#</th>
+							<th data-field="name">Nombre</th>
+							<th data-field="description">Descripción</th>
+							<th data-field="languages">Idiomas</th>
+							<th data-field="actions">Acción</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<% var count = 0;
+						for(var i=0; i<visits.length; i++) { %>
+							<td><%= visits[i].ID %></td>
+							<td class="actions">
+								<a href="/backend/guided_visits/edit/<%= visits[i].ID %>/"><i class="material-icons">mode_edit</i></a>
+								<a class="modal-trigger" href="#delete_visit"><i class="material-icons">delete</i></a>
+							</td>
+						<% }
+						if(count === 0) { %>
+							<td colspan="5" id="no_visits">NO HAY VISITAS GUIADAS ACTUALMENTE</td>
+						<% } %>
+					</tbody>
+				</table>
+			</div>
+
+			<!-- Delete Guided Visits Modal -->
+			<% include ../../partials/backend/modals/modal_delete_guided_visit %>
+
+		</main>
+
+		<footer class="page-footer">
+			<% include ../../partials/backend/footer_backend %>
+		</footer>
+
+		<% include ../../partials/backend/script_backend %>
+		<% include ../../partials/backend/server_messages %>
+		<script src="/static/js/src/visits_b.js"></script>
+	</body>
+</html>
