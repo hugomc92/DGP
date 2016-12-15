@@ -5,7 +5,10 @@ repositories {
 
     maven {
         url "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/"
+
     }
+
+    mavenCentral()
 }
 
 android {
@@ -43,6 +46,7 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.2'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.1'
+    compile 'com.github.paolorotolo:appintro:4.1.0'
 
     testCompile 'junit:junit:4.12'
 }
