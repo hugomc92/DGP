@@ -89,7 +89,10 @@ public class ActivityRequestCameraPermission extends Activity {
         if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.CAMERA)){
             //Toast.makeText(this, this.getString(R.string.Camera_Permit),Toast.LENGTH_SHORT).show();
             alertBasicDialog();
+        }else{
+            alertBasicDialog();
         }
+
     }
     //Method that explain the reason for accepting the NFC permission
     private void explainNFCPermisUse() {
