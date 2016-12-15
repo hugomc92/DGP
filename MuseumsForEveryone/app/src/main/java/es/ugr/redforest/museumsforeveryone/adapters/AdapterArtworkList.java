@@ -31,7 +31,7 @@ import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
 
 public class AdapterArtworkList extends RecyclerView.Adapter<AdapterArtworkList.ContentInformationViewHolder> {
     private ArrayList<ContentInformation> contentInformationList;   // ArrayList containing the Content Types to show
-    private ArrayList<Multimedia> images; //ArrayList images to show
+    private ArrayList<Content> contents; //ArrayList contents with images to show
     private Context context; //App's context
 
     /**
@@ -62,12 +62,12 @@ public class AdapterArtworkList extends RecyclerView.Adapter<AdapterArtworkList.
      * Constructor method.
      *
      * @param contentInformationList List of languages to show
-     * @param images ArrayList images to show
+     * @param contents ArrayList contents with images to show
      * @param context App's context
      */
-    public AdapterArtworkList(ArrayList<ContentInformation> contentInformationList, ArrayList<Multimedia> images, Context context) {
+    public AdapterArtworkList(ArrayList<ContentInformation> contentInformationList, ArrayList<Content> contents, Context context) {
         this.contentInformationList = contentInformationList;
-        this.images = images;
+        this.contents = contents;
         this.context = context;
     }
 
@@ -89,10 +89,13 @@ public class AdapterArtworkList extends RecyclerView.Adapter<AdapterArtworkList.
         ContentInformation contentType = contentInformationList.get(position);
 
         holder.contentInformationTxt.setText(contentType.getName());
-        if(images.get(position).getUrl()!=null)
-        Picasso.with(context).load(QueryBBDD.server+images.get(position).getUrl()).into(holder.contentInformationImage);
-        if(images.get(position).getAlternativeText()!=null)
-        holder.contentInformationImage.setContentDescription(images.get(position).getAlternativeText());
+        final ArrayList<Multimedia> imageMultimedia = contents.get(position).getMultimediaByType("image");
+        if(imageMultimedia.size()>0) {
+            if (imageMultimedia.get(0).getUrl() != null)
+                Picasso.with(context).load(QueryBBDD.server + imageMultimedia.get(0).getUrl()).into(holder.contentInformationImage);
+            if (imageMultimedia.get(0).getAlternativeText() != null)
+                holder.contentInformationImage.setContentDescription(imageMultimedia.get(0).getAlternativeText());
+        }
 
     }
 

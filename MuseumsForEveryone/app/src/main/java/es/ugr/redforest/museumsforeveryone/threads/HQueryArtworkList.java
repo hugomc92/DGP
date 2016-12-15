@@ -48,17 +48,15 @@ public class HQueryArtworkList extends AsyncTask<Void, Integer, String> {
     Context context;
     String result;
     ProgressDialog pDialog;
-    ArrayList<Multimedia> images;
     ArrayList<ContentInformation> contentInformationList;
     ArrayList<Content> contents;
     String typeContent="";
 
 
-    public HQueryArtworkList(Context c , ArrayList<ContentInformation> contentInformationList, String typeContent,ArrayList<Multimedia> images) {
+    public HQueryArtworkList(Context c , String typeContent) {
         this.context=c;
-        this.contentInformationList = contentInformationList;
+        this.contentInformationList = new ArrayList<>();
         this.typeContent = typeContent;
-        this.images = images;
         this.contents = new ArrayList<>();
 
     }
@@ -80,6 +78,8 @@ public class HQueryArtworkList extends AsyncTask<Void, Integer, String> {
                         JSONObject item = contentType.getJSONObject(j);
                         JSONObject itemContentInformation = item.getJSONObject("content_information");
 
+                        JSONObject itemContent = item.getJSONObject("content");
+                        content = mapper.readValue(itemContent.toString(), Content.class);
 
                         contentInformation = mapper.readValue(itemContentInformation.toString(), ContentInformation.class);
 
@@ -94,11 +94,9 @@ public class HQueryArtworkList extends AsyncTask<Void, Integer, String> {
                                 Multimedia image = mapper.readValue(imgJson.toString(), Multimedia.class);
                                 image.setType("image");
                                 image.setAlternativeText(imageJson.getString("alt_text"));
-                                images.add(image);
+                                content.addMultimedia(image);
                             }
                         }
-                        JSONObject itemContent = item.getJSONObject("content");
-                        content = mapper.readValue(itemContent.toString(), Content.class);
                         contents.add(content);
                     }
                 }
@@ -133,7 +131,7 @@ public class HQueryArtworkList extends AsyncTask<Void, Integer, String> {
             final RecyclerView recyclerContentInformation = (RecyclerView) ((Activity)context).findViewById(R.id.recycler_artwork_list);
 
             //Creates an Adapter with the list of languages
-            AdapterArtworkList contentInformationAdapter = new AdapterArtworkList(contentInformationList,images,context);
+            AdapterArtworkList contentInformationAdapter = new AdapterArtworkList(contentInformationList,contents,context);
 
             //Creates an Android default layout to show elements on the RecyclerView
             LinearLayoutManager layMan = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL,
