@@ -7,8 +7,9 @@ var GuidedVisitInfo = DBConnector.connectM4E().define('GUIDED_VISIT_INFO', {
 	GUIDED_VISIT_ID: {type: Sequelize.INTEGER, allowNull: false },
 	NAME: {type: Sequelize.STRING(100), allowNull: false },
 	DESCRIPTION: {type: Sequelize.STRING(), allowNull: true },
+	BLIND_DESCRIPTION: {type: Sequelize.STRING(), allowNull: false },
+	PHOTO_ALT_TEXT: {type: Sequelize.STRING(), allowNull: false },
 	LANG_ID: {type: Sequelize.INTEGER, allowNull: false }
-
 },
 {
 	instanceMethods: {
@@ -21,11 +22,13 @@ var GuidedVisitInfo = DBConnector.connectM4E().define('GUIDED_VISIT_INFO', {
 		retrieveByVisitIdListByLangId: function(visitIds, langId) {
 			return GuidedVisitInfo.findAll( {where: {GUIDED_VISIT_ID: {in: visitIds}, LANG_ID: langId}});
 		},
-		add: function(visitId, name, description, langId) {
+		add: function(visitId, name, description, blindDescription, photoAltText, langId) {
 			return GuidedVisitInfo.create({
 				GUIDED_VISIT_ID: visitId,
 				NAME: name,
 				DESCRIPTION: description,
+				BLIND_DESCRIPTION: blindDescription,
+				PHOTO_ALT_TEXT: photoAltText,
 				LANG_ID: langId
 			});
 		},
@@ -33,6 +36,8 @@ var GuidedVisitInfo = DBConnector.connectM4E().define('GUIDED_VISIT_INFO', {
 			return GuidedVisitInfo.update({
 				NAME: this.name,
 				DESCRIPTION: this.description,
+				BLIND_DESCRIPTION: this.blindDescription,
+				PHOTO_ALT_TEXT: this.photoAltText,
 			}, {where: {ID: id}});
 		}
 	},

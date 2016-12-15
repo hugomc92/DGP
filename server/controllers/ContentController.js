@@ -38,7 +38,6 @@ ContentController.prototype.initFrontend = function() {
 ContentController.prototype.initBackend = function() {
 	var self = this;
 
-	// Launch Content section
 	self.routerBackend.route('/').get(function(req, res) {
 		self.renderJson.breadcrumb = {'LINK': '/backend/contents/', 'SECTION': 'Contenido'};
 		self.renderJson.user = req.session.user;

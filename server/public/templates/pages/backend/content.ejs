@@ -90,7 +90,7 @@
 										<!-- Content blind description -->
 										<div class="input-field col s12">
 											<textarea id="content_blind_description" name="content_blind_description" class="materialize-textarea" required><%= contentInformations[j].BLIND_DESCRIPTION %></textarea>
-											<label for="content_blind_description">Descripción ciegos (en idioma seleccionado)</label>
+											<label for="content_blind_description">Descripción alternativa (en idioma seleccionado)</label>
 										</div>
 										<% moment.updateLocale('es', {
 											months: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ]
@@ -209,7 +209,7 @@
 								<!-- Content blind description -->
 								<div class="input-field col s12">
 									<textarea id="content_blind_description" name="content_blind_description" class="materialize-textarea" required></textarea>
-									<label for="content_blind_description">Descripción ciegos (en idioma seleccionado)</label>
+									<label for="content_blind_description">Descripción alternativa (en idioma seleccionado)</label>
 								</div>
 								<!-- Content date in  -->
 								<div class="input-field col s12 m6">
@@ -261,7 +261,7 @@
 			</div>
 
 			<!-- Selector new Lang modal-->
-			<% include ../../partials/backend/modals/modal_add_lang_content %>
+			<% include ../../partials/backend/modals/modal_select_lang %>
 
 			<!-- Image modal-->
 			<% include ../../partials/backend/modals/modal_content_image %>

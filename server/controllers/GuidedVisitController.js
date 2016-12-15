@@ -30,14 +30,29 @@ GuidedVisitController.prototype.initFrontend = function() {
 GuidedVisitController.prototype.initBackend = function () {
 	var self = this;
 
-	// Launch Content Type section
 	self.routerBackend.route('/').get(function(req, res) {
 		self.renderJson.breadcrumb = {'LINK': '/backend/contentTypes/', 'SECTION': 'Visitas Guiadas'};
 		self.renderJson.user = req.session.user;
 
 		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
-			self.renderJson.visits = [];
+			
 			res.render('pages/backend/guided_visits', self.renderJson);
+			self.clearMessages();
+		}
+		else {
+			res.redirect('/');
+		}
+	});
+
+	self.routerBackend.route('/add').get(function(req, res) {
+		self.renderJson.breadcrumb = {'LINK': '/backend/guided_visits/', 'SECTION': 'Visitas Guiadas'};
+
+		self.renderJson.moreContent = {'LINK': '/backend/guided_visits/add', 'SECTION': 'Añadir Visita'};
+		self.renderJson.user = req.session.user;
+
+		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
+			
+			res.render('pages/backend/guided_visit', self.renderJson);
 			self.clearMessages();
 		}
 		else {
@@ -60,6 +75,7 @@ GuidedVisitController.prototype.getRouterFrontend = function() {
 GuidedVisitController.prototype.clearMessages = function() {
 	delete this.renderJson.msg;
 	delete this.renderJson.error;
+	delete this.renderJson.moreContent;
 };
 
 module.exports = GuidedVisitController;

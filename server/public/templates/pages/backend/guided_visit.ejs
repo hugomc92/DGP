@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<% include ../../partials/backend/head_backend %>
+		<link rel="stylesheet" href="/static/css/src/guided_visit_b.css">
+	</head>
+	<body>
+		<% include ../../partials/backend/sidemenu_backend %>
+
+		<main class="grey lighten-3">
+			<!-- Nav -->
+			<% include ../../partials/backend/header_backend %>
+
+			<div class="row content_start">
+				<div id="tabs_container" class="col s11">
+					<ul class="tabs">
+						<% if(typeof(langs) !== 'undefined') {
+							for(var i=0; i<langs.length; i++) { %>
+								<li class="tab col">
+									<% if(i === 0) { %>
+									<a class="active" href="#<%= langs[i].NAME.toLowerCase() %>_visit">
+									<% } 
+									else { %>
+									<a href="#<%= langs[i].NAME.toLowerCase() %>_visit">
+									<% } %>
+										<img src="<%= langs[i].FLAG %>" alt="Bandera <%= langs[i].NAME %>" width="25px"/>
+										<span class="hide-on-small-only"><%= langs[i].NAME %></span>
+									</a>
+								</li>
+							<% }
+						}
+						else { %>
+						<li class="tab col">
+							<a class="active" href="#español_visit">
+								<img src="/static/img/langs/flag_of_spain_(civil).png" alt="Bandera Español" width="25px"/>
+								<span class="hide-on-small-only">Español</span>
+							</a>
+						</li>
+						<% } %>
+					</ul>
+				</div>
+				<div id="more_langs" class="col s1"><a class="modal-trigger waves-effect waves-light"><i class="material-icons">add</i></a></div>
+				
+				<!-- All tabs visit -->
+				<div id="visits" visit-id="<% if(typeof(cont) !== 'undefined') { %> <%= cont.ID %> <% } %>">
+					<% if(typeof(langs) !== 'undefined') {
+						for(var j=0; j<langs.length; j++) { %>
+							<div id="<%= langs[j].NAME.toLowerCase() %>_visit" class="col s12" visit-lang="<%= langs[j].ID %>" info-id="<%= visitInformations[j].ID %>">
+								<div class="row">
+									<form method="post" action="#" class="info_form col s12 z-depth-1">
+										
+										<!-- Submit form -->
+										<div class="input-field col s12">
+											<button id="submit_visit_form" class="btn waves-effect waves-light right" type="submit" name="submit_visit_form">
+												<span>Guardar</span>
+												<i class="material-icons right">save</i>
+											</button>
+										</div>
+									</form>
+								</div>
+								<div class="visit_locations row z-depth-1">
+									<h5 class="col s12">LOCALIZACIONES DE LA VISITA</h5>
+									
+								</div>
+							</div>
+						<% }
+					}
+					else { %>
+					
+					<div id="español_visit" class="col s12" visit-lang="1" info-id="">
+						<div class="row">
+							<form method="post" action="#" class="info_form col s12 z-depth-1">
+								<h5>INFORMACIÓN</h5>
+								<!-- Visit name -->
+								<div class="input-field col s12">
+									<input id="visit_name" name="visit_name" type="text" class="validate" length="100" required>
+									<label for="visit_name">Nombre</label>
+								</div>
+								<!-- Visit Photo Preview -->
+								<div id="imgPreview" class="col s12 m6 push-m6">
+									<img src="/static/img/img_not_available.png" id="visitImagePreview" class="imagePreview materialboxed responsive-img"/>
+								</div>
+								<div id="moreInfo" class="col s12 m6 pull-m6">
+									<!-- Visit Photo -->
+									<div class="file-field input-field col s12">
+										<div class="btn">
+											<span>Imagen</span>
+											<input id="visit_image" name="visit_image"type="file" required>
+										</div>
+										<div class="file-path-wrapper">
+											<div class="file-path-wrapper">
+												<input class="file-path validate" type="text">
+											</div>
+										</div>
+									</div>
+									<!-- Photo Alt Text -->
+									<div class="input-field col s12">
+										<textarea id="visit_image_alt_text" name="visit_image_alt_text" class="materialize-textarea" required></textarea>
+										<label for="visit_image_alt_text">Descripción alternativa de la Imagen (en idioma seleccionado)</label>
+									</div>
+									<!-- Visit description -->
+									<div class="input-field col s12">
+										<textarea id="visit_description" name="visit_description" class="materialize-textarea"></textarea>
+										<label for="visit_description">Descripción de la Visita</label>
+									</div>
+									<!-- Visit blind description -->
+									<div class="input-field col s12">
+										<textarea id="visit_blind_description" name="visit_blind_description" class="materialize-textarea" required></textarea>
+										<label for="visit_blind_description">Descripción alternativa de la Visita (en idioma seleccionado)</label>
+									</div>
+								</div>
+								<!-- Submit form -->
+								<div class="input-field col s12">
+									<button id="submit_visit_form" class="btn waves-effect waves-light right" type="submit" name="submit_visit_form">
+										<span>Guardar</span>
+										<i class="material-icons right">save</i>
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<% } %>
+				</div>
+			</div>
+
+			<!-- Selector new Lang modal-->
+			<% include ../../partials/backend/modals/modal_select_lang %>
+
+		</main>
+
+		<footer class="page-footer">
+			<% include ../../partials/backend/footer_backend %>
+		</footer>
+
+		<% include ../../partials/backend/script_backend %>
+		<% include ../../partials/backend/server_messages %>
+		<script src="/static/js/src/imagePrevisualization.js"></script>
+		<script src="/static/js/src/guided_visit_b.js"></script>
+	</body>
+</html>
