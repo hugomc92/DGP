@@ -15,11 +15,8 @@
             android:orientation="vertical">
 
             <include layout="@layout/toolbar" />
-
+            <include layout="@layout/shadow_toolbar" />
         </LinearLayout>
-        <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_artwork_display"
@@ -129,7 +126,6 @@
         android:layout_marginTop="20dp"/>
 
 </RelativeLayout>
-        </ScrollView>
     </LinearLayout>
 
 <android.support.v7.widget.RecyclerView
