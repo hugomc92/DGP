@@ -67,6 +67,7 @@
 						<div class="row">
 							<form method="post" action="/backend/guided_visits/add_visit/" enctype="multipart/form-data" class="info_form col s12 z-depth-1">
 								<h5>INFORMACIÓN</h5>
+								<input type="hidden" id="visit_lang" name="visit_lang"/>
 								<!-- Visit name -->
 								<div class="input-field col s12">
 									<input id="visit_name" name="visit_name" type="text" class="validate" length="100" required>
@@ -81,7 +82,7 @@
 									<div class="file-field input-field col s12">
 										<div class="btn">
 											<span>Imagen</span>
-											<input id="visit_image" name="visit_image"type="file" required>
+											<input id="visit_image" name="visit_image" class="image_visit" type="file" required>
 										</div>
 										<div class="file-path-wrapper">
 											<div class="file-path-wrapper">

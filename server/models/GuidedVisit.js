@@ -8,6 +8,9 @@ var GuidedVisit = DBConnector.connectM4E().define('GUIDED_VISIT', {
 },
 {
 	instanceMethods: {
+		retrieveLast: function() {
+			return GuidedVisit.findOne({order: 'ID DESC'});
+		},
 		retrieveAll: function() {
 			return GuidedVisit.findAll();
 		},

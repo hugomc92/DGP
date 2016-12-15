@@ -13,6 +13,10 @@ $(document).ready(function() {
 	else 
 		action = 'edit';
 
+	if(action === 'edit') {
+		$('.image_visit').removeAttr('required');
+	}
+
 	if($('#visits').attr('visit-id') !== '')
 		visitId = $('#visits').attr('visit-id');
 
@@ -215,6 +219,10 @@ function initilizeForm(elem, langId) {
 	imagePrevisualization(form.find('#visit_image'), form.find('#visitImagePreview'));
 
 	form.submit( function( e ) {
+		var langId = form.parent().parent().attr('visit-lang');
+
+		form.find('#visit_lang').val(langId);
+
 		$.ajax( {
 			url: '/api/guided_visit/' + action  + '?email="+$("#email").text()',
 			type: 'POST',
@@ -233,6 +241,8 @@ function initilizeForm(elem, langId) {
 
 					if(action === 'add') {
 						action = 'edit';
+						
+						$('.image_visit').removeAttr('required');
 
 						// visitId = jsondata.ok;
 					}

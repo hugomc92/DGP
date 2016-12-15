@@ -7,6 +7,7 @@ var path = require('path');
 var Utils = require('../utils/Util');
 var GuidedVisit = require('../models/GuidedVisit');
 var GuidedVisitInfo = require('../models/GuidedVisitInfo');
+var LocalizationVisit = require('../models/LocalizationVisit');
 
 // Constructor for GuidedVisitService
 function GuidedVisitService() {
@@ -66,13 +67,62 @@ GuidedVisitService.prototype.initializeRouter = function() {
 				// Path to the file, to be sabed in DB
 				var newImage = '/static/img/guided_visits/' + file;
 
-				/*self.renderJson.error = 'Visita Guiada añadida con éxito';
+				var visitLang = req.body.visit_lang;
+				var visitName = req.body.visit_name;
+				var visitImageAltText = req.body.visit_image_alt_text;
+				var visitDescription = req.body.visit_description;
+				var visitBlindDescription = req.body.visit_description;
 
-				res.redirect('/backend/guided_visits/edit/' + visitId + '/');*/
+				var locationOrder = [];
 
-				jsonResObj.ok = 'ok';
+				for(var key in req.body) {
+					if(key.indexOf('visit_location') > -1) {
+						var keyRes = key.split('_');
+						var ord = keyRes[keyRes.length-1];
 
-				res.json(jsonResObj);
+						locationOrder.push( {
+							locationId: req.body[key],
+							order: ord
+						});
+					}
+				}
+
+				var guidedVisit = GuidedVisit.build();
+
+				guidedVisit.add(newImage).then(function(success) {
+					guidedVisit.retrieveLast().then(function(success) {
+						var gv = success;
+
+						var guidedVisitInfo = GuidedVisitInfo.build();
+
+						guidedVisitInfo.add(gv.ID, visitName, visitDescription, visitBlindDescription, visitImageAltText, visitLang).then(function(success) {
+							
+							var localizationVisit = LocalizationVisit.build();
+
+							localizationVisit.addSome(locationOrder, gv.ID).then(function(success) {
+								jsonResObj.ok = 'ok';
+
+								res.json(jsonResObj);
+							}, function(err) {
+								jsonResObj.ok = 'failed';
+
+								res.json(jsonResObj);
+							});
+						}, function(err) {
+							jsonResObj.ok = 'failed';
+
+							res.json(jsonResObj);
+						});
+					}, function(err) {
+						jsonResObj.ok = 'failed';
+
+						res.json(jsonResObj);
+					});
+				}, function(err) {
+					jsonResObj.ok = 'failed';
+
+					res.json(jsonResObj);
+				});
 			}
 			else {
 				jsonResObj.ok = 'failed';
