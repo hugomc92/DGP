@@ -9,6 +9,7 @@ var ContentService = require('../service/ContentService');
 var LocalizationService = require('../service/LocalizationService');
 var ActivityLogService = require('../service/ActivityLogService');
 var LangService = require('../service/LangService');
+var GuidedVisitService = require('../service/GuidedVisitService');
 
 function ApiRest() {
 	this.publicTokenList = [];
@@ -47,6 +48,7 @@ ApiRest.prototype.defineApiServices = function() {
 	this.serviceRouter.use('/localization', new LocalizationService().getRouter());
 	this.serviceRouter.use('/activity_log', new ActivityLogService().getRouter());
 	this.serviceRouter.use('/lang', new LangService().getRouter());
+	this.serviceRouter.use('/guided_visit', new GuidedVisitService().getRouter());
 };
 
 // Get Router of API Rest

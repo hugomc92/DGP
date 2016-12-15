@@ -110,7 +110,18 @@
 										<li>
 											<div class="order col s2"><p>1º</p></div>
 											<div class="input-field col s10">
-												<select id="visit_location_1" name="visit_location_1">
+												<select id="visit_location_1" name="visit_location_1" required>
+													<option value="" disabled selected>Localización de la Visita</option>
+													<% for(var i=0; i<locations.length; i++) { %>
+														<option value="<%= locations[i].ID %>"><%= locations[i].DESCRIPTION %></option>
+													<% } %>
+												</select>
+											</div>
+										</li>
+										<li>
+											<div class="order col s2"><p>2º</p></div>
+											<div class="input-field col s10">
+												<select id="visit_location_2" name="visit_location_2" required>
 													<option value="" disabled selected>Localización de la Visita</option>
 													<% for(var i=0; i<locations.length; i++) { %>
 														<option value="<%= locations[i].ID %>"><%= locations[i].DESCRIPTION %></option>
@@ -137,9 +148,7 @@
 
 			<!-- Selector new Lang modal-->
 			<% include ../../partials/backend/modals/modal_select_lang %>
-
 		</main>
-
 		<footer class="page-footer">
 			<% include ../../partials/backend/footer_backend %>
 		</footer>

@@ -59,7 +59,7 @@
 											<select required id="content_type" name="content_type">
 												<option value="" disabled>Tipo de contenido</option>
 												<% for(var i=0; i<contentTypes.length; i++) {
-													if(contentTypes[i] === cont.CONTENT_TYPE_ID) { %>
+													if(contentTypes[i].ID === cont.CONTENT_TYPE_ID) { %>
 														<option value="<%= contentTypes[i].ID %>" selected data-icon="<%= contentTypes[i].ICON %>" class="left circle"><%= contentTypes[i].NAME %></option>
 													<% }
 													else { %>
@@ -187,8 +187,8 @@
 								<div class="input-field col s12 m6">
 									<select required id="content_type" name="content_type">
 										<option value="" disabled selected>Tipo de contenido</option>
-										<% for(var i=0; i<locations.length; i++) { %>
-											<option value="<%= locations[i].ID %>" class="left circle"><%= locations[i].NAME %></option>
+										<% for(var i=0; i<contentTypes.length; i++) { %>
+											<option value="<%= contentTypes[i].ID %>" data-icon="<%= contentTypes[i].ICON %>" class="left circle"><%= contentTypes[i].NAME %></option>
 										<% } %>
 									</select>
 								</div>
@@ -196,8 +196,8 @@
 								<div class="input-field col s12 m6">
 									<select id="content_location" name="content_location">
 										<option value="" disabled selected>Localización  (opcional)</option>
-										<% for(var i=0; i<localizations.length; i++) { %>
-											<option value="<%= localizations[i].ID %>"><%= localizations[i].DESCRIPTION %></option>
+										<% for(var i=0; i<locations.length; i++) { %>
+											<option value="<%= locations[i].ID %>"><%= locations[i].DESCRIPTION %></option>
 										<% } %>
 									</select>
 								</div>

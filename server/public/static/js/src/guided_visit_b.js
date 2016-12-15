@@ -2,8 +2,16 @@ var currentLangs = [];
 var form;
 var langs;
 var visitId;
+var locations;
+var selectLocation;
+var action;
 
 $(document).ready(function() {
+
+	if($('#content_action').text().indexOf('Añadir') > -1)
+		action = 'add';
+	else 
+		action = 'edit';
 
 	if($('#visits').attr('visit-id') !== '')
 		visitId = $('#visits').attr('visit-id');
@@ -20,6 +28,29 @@ $(document).ready(function() {
 			console.log(status);
 		}
 	});
+
+	$.ajax({
+		type: "GET",
+		url: "/api/localization/all?email="+$("#email").text(),
+		datatype: "json",
+		success: function(jsondata) {
+			locations = jsondata;
+
+			selectLocation = '<option value="" disabled selected>Localización de la Visita</option>';
+			
+			for(var i=0; i<locations.length; i++) {
+				selectLocation += '<option value="' + locations[i].ID + '">' + locations[i].DESCRIPTION + '</option>';
+			}
+			
+			selectLocation += '</select></div>';
+		},
+		error : function(xhr, status) {
+			console.log(xhr);
+			console.log(status);
+		}
+	});
+
+	
 
 	var elems = $('.info_form').parent().parent();
 
@@ -179,13 +210,68 @@ function initilizeForm(elem, langId) {
 
 	form.find('input, textarea').characterCounter();
 
-	$('select').material_select();
+	initializeLocationSelects(form.find(('select')));
 
-	form.find('select').change(function() {
-		$(this).parent().find('input.select-dropdown').css('color', '#000');
+	imagePrevisualization(form.find('#visit_image'), form.find('#visitImagePreview'));
+
+	form.submit( function( e ) {
+		$.ajax( {
+			url: '/api/guided_visit/' + action  + '?email="+$("#email").text()',
+			type: 'POST',
+			data: new FormData( this ),
+			processData: false,
+			contentType: false,
+			success: function(jsondata) {
+				if(jsondata.ok === 'failed') {
+					Materialize.toast('Se ha producido un fallo interno', 4000);
+				}
+				else if(jsondata.ok === 'not_allowed') {
+					Materialize.toast('No tiene los permisos suficientes para añadir una visita', 4000);
+				}
+				else {
+					Materialize.toast('La visita se ha añadido con éxito', 4000);
+
+					if(action === 'add') {
+						action = 'edit';
+
+						// visitId = jsondata.ok;
+					}
+				}
+			},
+			error : function(xhr, status) {
+				Materialize.toast("Se ha producido un fallo añadiendo la visita", 4000);
+			}
+		} );
+
+		e.preventDefault();
+	} );
+}
+
+function initializeLocationSelects(elems) {
+
+	for(var i=0; i<elems.length; i++)
+		initializeLocationSelect(elems[i]);
+}
+
+function initializeLocationSelect(elem) {
+	$(elem).material_select();
+
+	$(elem).change(function() {
+		var ulParent = $(this).parent().parent().parent().parent();
+
+		// Check if it's needed to add a new location select
+		if(ulParent.children('li').last().find('select').attr('id') === $(this).attr('id')) {
+			var liParent = ulParent.children('li').last();
+
+			var order = liParent.find('.order').text();
+
+			order = parseInt(order.substring(0, order.indexOf('º'))) + 1;
+
+			ulParent.append('<li><div class="order col s2"><p>' + order + 'º</p></div><div class="input-field col s10"><select id="visit_location_' + order + '" name="visit_location_' + order + '">' + selectLocation + '</li>');
+
+			initializeLocationSelect(ulParent.children('li').last().find('select'));
+		}
 	});
-
-	imagePrevisualization(form.find('#visit_image'), $('#visitImagePreview'));
 }
 
 function cleanAddLangModal() {
