@@ -39,14 +39,17 @@ public class ActivityInstructionsSlides extends AppIntro {
         */
 
         addSlide(AppIntroFragment.newInstance("Prueba", "Hola hola 1", R.drawable.icon, getResources().getColor(R.color.colorPrimaryDark)));
+        addSlide(AppIntroFragment.newInstance("Prueba2", "Hola hola 2", R.drawable.icon, getResources().getColor(R.color.colorPrimarySoft)));
+        addSlide(AppIntroFragment.newInstance("Prueba3", "Hola hola 3", R.drawable.icon, getResources().getColor(R.color.colorPrimary)));
         // OPTIONAL METHODS
         // Override bar/separator color.
-        setBarColor(Color.parseColor("#3F51B5"));
-        setSeparatorColor(Color.parseColor("#2196F3"));
+        /*
+        setBarColor(Color.parseColor("#colo"));
+        setSeparatorColor(Color.parseColor("#2196F3"));*/
 
         // Hide Skip/Done button.
-        showSkipButton(false);
-        setProgressButtonEnabled(false);
+        showSkipButton(true);
+        setProgressButtonEnabled(true);
 
         // Turn vibration on and set intensity.
         // NOTE: you will probably need to ask VIBRATE permission in Manifest.
@@ -72,6 +75,7 @@ public class ActivityInstructionsSlides extends AppIntro {
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
+        launchMainActivity();
         // Do something when users tap on Skip button.
     }
 

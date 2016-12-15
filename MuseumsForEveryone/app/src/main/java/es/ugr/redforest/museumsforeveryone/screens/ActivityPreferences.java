@@ -34,7 +34,7 @@ public class ActivityPreferences extends AppCompatActivity {
      * @version 1.0.0
      */
     public void launchInstructionsActivity(View v){
-        Intent instructionsIntent = new Intent(ActivityPreferences.this, ActivityInstructions.class);
+        Intent instructionsIntent = new Intent(ActivityPreferences.this, ActivityInstructionsSlides.class);
         instructionsIntent.putExtra("FirstTime","False");
         startActivity(instructionsIntent);
     }
