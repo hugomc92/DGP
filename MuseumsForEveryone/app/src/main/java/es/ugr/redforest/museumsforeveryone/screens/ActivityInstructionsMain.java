@@ -45,9 +45,11 @@ public class ActivityInstructionsMain extends AppIntro {
         colors.add(getResources().getColor(R.color.colorPrimary));
 
         addSlide(AppIntroFragment.newInstance(getString(R.string.main_menu), getString(R.string.main_menu_description_instructions), R.drawable.pantallainstruccionesmain, getResources().getColor(R.color.colorPrimaryDark)));
-        addSlide(AppIntroFragment.newInstance(getString(R.string.scann_code), getString(R.string.scan_code_instructions_description), R.drawable.scan_instructions, getResources().getColor(R.color.colorPrimarySoft)));
-        addSlide(AppIntroFragment.newInstance(getString(R.string.artwork_list), getString(R.string.artwork_instruction_description), R.drawable.list_instructions, getResources().getColor(R.color.colorPrimaryDark)));
-        addSlide(AppIntroFragment.newInstance(getString(R.string.guided_visit), getString(R.string.guided_visit_instruction_description), R.drawable.guided_instructions, getResources().getColor(R.color.colorPrimarySoft)));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.slider_menu), getString(R.string.slider_instruction_description), R.drawable.slider_instructions, getResources().getColor(R.color.colorPrimarySoft)));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.scann_code), getString(R.string.scan_code_instructions_description), R.drawable.scan_instructions, getResources().getColor(R.color.colorPrimaryDark)));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.artwork_list), getString(R.string.artwork_instruction_description), R.drawable.list_instructions, getResources().getColor(R.color.colorPrimarySoft)));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.guided_visit), getString(R.string.guided_visit_instruction_description), R.drawable.guided_instructions, getResources().getColor(R.color.colorPrimaryDark)));
+
         // OPTIONAL METHODS
         // Override bar/separator color.
         /*
