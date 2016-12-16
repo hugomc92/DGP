@@ -67,6 +67,7 @@ public class SliderMenu extends AppCompatActivity{
         //////////////////////////////////CODIGASOOO///////////////////////////
         toolbar.inflateMenu(xml);
         toolbar.setTitle(nombre);
+
         //////////////////////////////////CODIGASOOO///////////////////////////
 
         mRecyclerView.setHasFixedSize(true);                            // Letting the system know that the list objects are of fixed size

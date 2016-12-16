@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/lib/com.app.chasebank"
+    xmlns:app1="http://schemas.android.com/apk/res-auto"
     android:id="@+id/tool_bar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="#ffffff"
+    android:background="#376080"
     android:theme="@style/ThemeOverlay.AppCompat.Light"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     app:layout_scrollFlags="scroll|enterAlways"
     app:layout_collapseMode="pin"
+    app1:titleTextColor="#ffff"
+    android:subtitleTextColor="#ffff"
     android:elevation="5dp"
     android:transitionGroup="false" />

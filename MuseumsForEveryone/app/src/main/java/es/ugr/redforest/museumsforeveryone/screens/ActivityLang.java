@@ -93,7 +93,7 @@ public class ActivityLang extends AppCompatActivity {
 				{
 					ControllerPreferences preferences= ControllerPreferences.getInstance();
 					preferences.savePreferencesLanguage(context,"es-es");
-					Intent FirstViewIntent = new Intent(ActivityLang.this, ActivityFirstView.class);
+					Intent FirstViewIntent = new Intent(ActivityLang.this, ActivityInstructionsSlides.class);
 					startActivity(FirstViewIntent);
 				}
 				else

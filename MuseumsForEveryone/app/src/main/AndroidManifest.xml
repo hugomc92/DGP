@@ -64,13 +64,13 @@
             android:label="Preferencias" />
         <activity android:name=".screens.ActivityAccessibilityPreferences"
             android:label="Accesibilidad"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity android:name=".screens.ActivityRequestCameraPermission"
             android:screenOrientation="portrait"/>
         <activity android:name=".screens.ActivityNFCScanner"
             android:screenOrientation="portrait"/>
-        <activity android:name=".screens.ActivityInstructionsSlides"
-             />
+        <activity android:name=".screens.ActivityInstructionsSlides"/>
+        <activity android:name=".screens.ActivityInstructionsMain"/>
     </application>
 
 </manifest>

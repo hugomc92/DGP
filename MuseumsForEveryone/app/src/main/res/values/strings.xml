@@ -52,5 +52,19 @@
     <string name="instructions_with_sight_discapacity">Instrucciones problemas de visión</string>
     <string name="instructions_with_sound_problems">Instrucciones problemas auditivos</string>
     <string name="instructions_Error">No se han cargado instrucciones</string>
+    <string name="main_instructions_1">Bienvenido a Museums For Everyone, la aplicación para el Museo Fundación Caja Granada. A través de esta aplicación podrás explorar todos los contenidos del museo. ¿Comenzamos?</string>
+    <string name="instructions_Main2">A continuación podrás seleccionar la configuración de accesibilidad que desees para la aplicación o bien entrar directamente al museo. Entre las opciones de accesibilidad se pueden escoger herramientas de narración de voz o textos y videos adaptados para el lenguaje de signos</string>
+    <string name="accesibility">Accesibilidad</string>
+    <string name="scan_code_Accesibility">Escanear código de un contenido. Botón.</string>
+    <string name="description_Main_Photo">Fotografía aérea del museo fundación caja granada</string>
+    <string name="scann_code">Escanear código</string>
+    <string name="list_content_Accesibility">Listar contenidos del museo. Botón.</string>
+    <string name="listar_contenido">Listar contenido</string>
+    <string name="guided_visit_Accesibility">Visita guiada por las obras del museo. Botón.</string>
+    <string name="main_menu">Menú principal</string>
+    <string name="main_menu_description_instructions">En el menú principal encontrarás las opciones más importantes de la aplicación.</string>
+    <string name="scan_code_instructions_description">"Durante la visita al museo podrá encontrar códigos que podrá escanear usando el botón escanear código y con ello saber más información sobre las obras. "</string>
+    <string name="artwork_instruction_description">También podrá listar todas las obras disponibles en el museo usando el botón listar obras y seleccionar la categoría deseada.</string>
+    <string name="guided_visit_instruction_description">Seleccionando el botón de visitas guiadas podrás recorrer las obras del museo en diferentes tipos de visitas programadas por el museo.</string>
 
 </resources>

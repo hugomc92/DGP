@@ -1,11 +1,9 @@
 package es.ugr.redforest.museumsforeveryone.screens;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.View;
 
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
@@ -17,7 +15,7 @@ import es.ugr.redforest.museumsforeveryone.R;
 /**
  * Created by mrsas on 15/12/2016.
  */
-public class ActivityInstructionsSlides extends AppIntro {
+public class ActivityInstructionsMain extends AppIntro {
     private int index = 0;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,8 +44,10 @@ public class ActivityInstructionsSlides extends AppIntro {
         colors.add(getResources().getColor(R.color.colorPrimarySoft));
         colors.add(getResources().getColor(R.color.colorPrimary));
 
-        addSlide(AppIntroFragment.newInstance(getString(R.string.app_name), getString(R.string.main_instructions_1), R.drawable.icon, getResources().getColor(R.color.colorPrimaryDark)));
-        addSlide(AppIntroFragment.newInstance(getString(R.string.accesibility), getString(R.string.instructions_Main2), R.drawable.accesibility_instructions_image, getResources().getColor(R.color.colorPrimarySoft)));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.main_menu), getString(R.string.main_menu_description_instructions), R.drawable.pantallainstruccionesmain, getResources().getColor(R.color.colorPrimaryDark)));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.scann_code), getString(R.string.scan_code_instructions_description), R.drawable.scan_instructions, getResources().getColor(R.color.colorPrimarySoft)));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.artwork_list), getString(R.string.artwork_instruction_description), R.drawable.list_instructions, getResources().getColor(R.color.colorPrimaryDark)));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.guided_visit), getString(R.string.guided_visit_instruction_description), R.drawable.guided_instructions, getResources().getColor(R.color.colorPrimarySoft)));
         // OPTIONAL METHODS
         // Override bar/separator color.
         /*
@@ -67,23 +67,20 @@ public class ActivityInstructionsSlides extends AppIntro {
         setVibrateIntensity(30);
     }
 
-    public void launchMainActivity(){
-        Intent myIntent = getIntent(); // gets the previously created intent
-        Intent MainIntent = new Intent(this, ActivityFirstView.class);
-        startActivity(MainIntent);
-    }
 
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
-        launchMainActivity();
+        Intent MainIntent = new Intent(this, MainActivity.class);
+        startActivity(MainIntent);
         // Do something when users tap on Skip button.
     }
 
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
-        launchMainActivity();
+        Intent MainIntent = new Intent(this, MainActivity.class);
+        startActivity(MainIntent);
         // Do something when users tap on Done button.
 
     }
