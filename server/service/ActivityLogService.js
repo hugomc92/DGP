@@ -1,5 +1,4 @@
 var express = require("express");
-var crypto = require("crypto");
 var ActivityLog = require("../models/ActivityLog");
 
 // Constructor for ActivityLogService

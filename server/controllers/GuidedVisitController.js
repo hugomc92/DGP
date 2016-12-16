@@ -3,19 +3,17 @@ var multer = require('multer');
 var upload = multer({dest: __dirname + '/../public/static/upload'});
 var fs = require('fs');
 var path = require('path');
-var moment = require('moment');
 
 var Utils = require('../utils/Util');
 var GuidedVisit = require('../models/GuidedVisit');
 var GuidedVisitInfo = require('../models/GuidedVisitInfo');
 
 // Constructor for ContentTypeController
-function GuidedVisitController(json, activityLogC) {
+function GuidedVisitController(json, activityLogC, localizationC) {
 	this.renderJson = json;
-	this.uploadpath = path.join(__dirname, '..', 'public', 'static', 'upload') + '/';
-	this.uploadimgpath = path.join(__dirname, '..', 'public', 'static', 'img', 'guided_visits') + '/';
 
 	this.activityLogController = activityLogC;
+	this.localizationController = localizationC;
 
 	this.routerBackend = express.Router();
 	this.initBackend();
@@ -30,15 +28,38 @@ GuidedVisitController.prototype.initFrontend = function() {
 GuidedVisitController.prototype.initBackend = function () {
 	var self = this;
 
-	// Launch Content Type section
 	self.routerBackend.route('/').get(function(req, res) {
 		self.renderJson.breadcrumb = {'LINK': '/backend/contentTypes/', 'SECTION': 'Visitas Guiadas'};
 		self.renderJson.user = req.session.user;
 
 		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
-			self.renderJson.visits = [];
+			
 			res.render('pages/backend/guided_visits', self.renderJson);
 			self.clearMessages();
+		}
+		else {
+			res.redirect('/');
+		}
+	});
+
+	self.routerBackend.route('/add').get(function(req, res) {
+		self.renderJson.breadcrumb = {'LINK': '/backend/guided_visits/', 'SECTION': 'Visitas Guiadas'};
+
+		self.renderJson.moreContent = {'LINK': '/backend/guided_visits/add/', 'SECTION': 'Añadir Visita'};
+		self.renderJson.user = req.session.user;
+
+		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
+		
+			self.localizationController.getAllLocalizations().then(function(success) {
+				self.renderJson.locations = success;
+
+				res.render('pages/backend/guided_visit', self.renderJson);
+				self.clearMessages();
+			}, function(err) {
+				self.renderJson.error = 'Se ha producido un error interno';
+
+				res.redirect('/backend/guided_visits/');
+			});
 		}
 		else {
 			res.redirect('/');
@@ -60,6 +81,7 @@ GuidedVisitController.prototype.getRouterFrontend = function() {
 GuidedVisitController.prototype.clearMessages = function() {
 	delete this.renderJson.msg;
 	delete this.renderJson.error;
+	delete this.renderJson.moreContent;
 };
 
 module.exports = GuidedVisitController;

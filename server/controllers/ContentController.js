@@ -38,7 +38,6 @@ ContentController.prototype.initFrontend = function() {
 ContentController.prototype.initBackend = function() {
 	var self = this;
 
-	// Launch Content section
 	self.routerBackend.route('/').get(function(req, res) {
 		self.renderJson.breadcrumb = {'LINK': '/backend/contents/', 'SECTION': 'Contenido'};
 		self.renderJson.user = req.session.user;
@@ -118,7 +117,7 @@ ContentController.prototype.initBackend = function() {
 				self.renderJson.contentTypes = success;
 
 				self.localizationController.getAllLocalizations().then(function(success) {
-					self.renderJson.localizations = success;
+					self.renderJson.locations = success;
 
 					res.render('pages/backend/content', self.renderJson);
 					self.clearMessages();

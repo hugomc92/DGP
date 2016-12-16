@@ -59,7 +59,7 @@
 											<select required id="content_type" name="content_type">
 												<option value="" disabled>Tipo de contenido</option>
 												<% for(var i=0; i<contentTypes.length; i++) {
-													if(contentTypes[i] === cont.CONTENT_TYPE_ID) { %>
+													if(contentTypes[i].ID === cont.CONTENT_TYPE_ID) { %>
 														<option value="<%= contentTypes[i].ID %>" selected data-icon="<%= contentTypes[i].ICON %>" class="left circle"><%= contentTypes[i].NAME %></option>
 													<% }
 													else { %>
@@ -90,7 +90,7 @@
 										<!-- Content blind description -->
 										<div class="input-field col s12">
 											<textarea id="content_blind_description" name="content_blind_description" class="materialize-textarea" required><%= contentInformations[j].BLIND_DESCRIPTION %></textarea>
-											<label for="content_blind_description">Descripción ciegos (en idioma seleccionado)</label>
+											<label for="content_blind_description">Descripción alternativa (en idioma seleccionado)</label>
 										</div>
 										<% moment.updateLocale('es', {
 											months: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ]
@@ -196,8 +196,8 @@
 								<div class="input-field col s12 m6">
 									<select id="content_location" name="content_location">
 										<option value="" disabled selected>Localización  (opcional)</option>
-										<% for(var i=0; i<localizations.length; i++) { %>
-											<option value="<%= localizations[i].ID %>"><%= localizations[i].DESCRIPTION %></option>
+										<% for(var i=0; i<locations.length; i++) { %>
+											<option value="<%= locations[i].ID %>"><%= locations[i].DESCRIPTION %></option>
 										<% } %>
 									</select>
 								</div>
@@ -209,7 +209,7 @@
 								<!-- Content blind description -->
 								<div class="input-field col s12">
 									<textarea id="content_blind_description" name="content_blind_description" class="materialize-textarea" required></textarea>
-									<label for="content_blind_description">Descripción ciegos (en idioma seleccionado)</label>
+									<label for="content_blind_description">Descripción alternativa (en idioma seleccionado)</label>
 								</div>
 								<!-- Content date in  -->
 								<div class="input-field col s12 m6">
@@ -261,7 +261,7 @@
 			</div>
 
 			<!-- Selector new Lang modal-->
-			<% include ../../partials/backend/modals/modal_add_lang_content %>
+			<% include ../../partials/backend/modals/modal_select_lang %>
 
 			<!-- Image modal-->
 			<% include ../../partials/backend/modals/modal_content_image %>

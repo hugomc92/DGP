@@ -11,11 +11,10 @@ function LocalizationService() {
 LocalizationService.prototype.initializeRouter = function() {
 	var self = this;
 
-	self.router.route('/id/:localization_id').get(function(req, res) {
-		var id_localization = req.params.localization_id;
+	self.router.route('/all').get(function(req, res) {
 		var localization = Localization.build();
 
-		localization.retrieveById(id_localization).then(function(result) {
+		localization.retrieveAll().then(function(result) {
 			if(result)
 				res.json(result);
 			else
