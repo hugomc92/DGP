@@ -5,6 +5,7 @@ var fs = require('fs');
 var path = require('path');
 
 var Utils = require('../utils/Util');
+var Language = require('../models/Language');
 var GuidedVisit = require('../models/GuidedVisit');
 var GuidedVisitInfo = require('../models/GuidedVisitInfo');
 var LocalizationVisit = require('../models/LocalizationVisit');
@@ -21,6 +22,66 @@ function GuidedVisitService() {
 
 GuidedVisitService.prototype.initializeRouter = function() {
 	var self = this;
+
+	self.router.route('/:langCode').get(function(req, res) {
+
+		var langCode = req.params.langCode;
+
+		var guidedVisit = GuidedVisit.build();
+
+		guidedVisit.retrieveAll().then(function(success) {
+			if(success.length > 0) {
+
+				var visits = success;
+
+				var visitIds = [];
+				for(var i=0; i<visits.length; i++)
+					visitIds.push(visits[i].ID);
+
+				var language = Language.build();
+
+				language.retrieveByCode(langCode).then(function(success) {
+					if(success) {
+						var lang = success;
+
+						var guidedVisitInfo = GuidedVisitInfo.build();
+
+						guidedVisitInfo.retrieveByVisitIdListByLangId(visitIds, lang.ID).then(function(success) {
+							var visitInfos = success;
+
+							var jsonResObj = {
+								visits : []
+							};
+
+							for(var i=0; i<visits.length; i++) {
+								for(var j=0; j<visitInfos.length; j++) {
+									if(visitInfos[j].GUIDED_VISIT_ID === visits[i].ID) {
+										jsonResObj.visits.push({
+											guided_visit: visits[i],
+											guided_visit_info: visitInfos[j]
+										});
+									}
+								}
+							}
+
+							res.json(jsonResObj);
+
+						}, function(err) {
+							res.status(404).send("Guided Visit Info not found");
+						});
+					}
+					else
+						res.status(401).send("Not Language Found");
+				}, function(err) {
+					res.status(404).send("Language not found");
+				});
+			}
+			else
+				res.status(401).send("Not Guided Visits Found");
+		}, function(err) {
+			res.status(404).send("Guided Visit not found");
+		});
+	});
 
 	self.router.route('/add').post(upload.array('visit_image', 1), function(req, res) {
 
@@ -181,10 +242,6 @@ GuidedVisitService.prototype.initializeRouter = function() {
 
 				// Path to the file, to be sabed in DB
 				var newImage = '/static/img/guided_visits/' + file;
-
-				/*self.renderJson.error = 'Visita Guiada añadida con éxito';
-
-				res.redirect('/backend/guided_visits/edit/' + visitId + '/');*/
 
 				jsonResObj.ok = 'ok';
 
