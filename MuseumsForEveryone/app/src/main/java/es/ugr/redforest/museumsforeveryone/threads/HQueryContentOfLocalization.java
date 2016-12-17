@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -65,9 +66,6 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
         this.index = index;
         this.artworkName = artworkName;
         this.qrornfc = qrornfc;
-    }
-    private void fillContent(JSONObject item ){
-
     }
 
     @Override
@@ -286,6 +284,13 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
             descriptionArtwork.setText(content.getContentInformation().getDescription());
             artworkName = content.getContentType().getName();
             titleImage.setText(artworkName);
+            //position scroll to top
+            ((ScrollView) ((Activity)context).findViewById(R.id.scrollView)).post(new Runnable()
+            {
+                public void run() {
+                    ((ScrollView) ((Activity)context).findViewById(R.id.scrollView)).fullScroll(ScrollView.FOCUS_UP);
+                }
+            });
         }
         pDialog.dismiss();
     }

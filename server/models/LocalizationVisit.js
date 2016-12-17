@@ -12,6 +12,9 @@ var LocalizationVisit = DBConnector.connectM4E().define('LOCALIZATION_VISIT', {
 		retrieveAll: function() {
 			return LocalizationVisit.findAll();
 		},
+		retrieveAllByVisitId: function(visitId) {
+			return LocalizationVisit.findAll({where: {VISIT_ID: visitId}});
+		},
 		add: function(locId, visitId, order) {
 			return LocalizationVisit.create( {
 				LOC_ID: locId,
