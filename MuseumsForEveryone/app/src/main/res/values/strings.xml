@@ -68,5 +68,8 @@
     <string name="guided_visit_instruction_description">Seleccionando el botón de visitas guiadas podrás recorrer las obras del museo en diferentes tipos de visitas programadas por el museo.</string>
     <string name="slider_instruction_description">"Pulsando en el icono del menú en la esquina superior izquierda o deslizando el dedo desde el lateral izquierdo hacia el centro de la pantalla podrás abrir el menú lateral en cualquier sección de la aplicación. "</string>
     <string name="slider_menu">Menú lateral</string>
+    <string name="error_reading_NFC">No se ha encontrado código NFC</string>
+    <string name="invalid_NFC_code">El código NFC no es válido</string>
+    <string name="NFC_code_not_found">No se ha encontrado código NFC</string>
 
 </resources>
