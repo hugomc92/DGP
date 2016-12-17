@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
@@ -28,14 +27,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import es.ugr.redforest.museumsforeveryone.R;
-import es.ugr.redforest.museumsforeveryone.adapters.AdapterContentType;
-import es.ugr.redforest.museumsforeveryone.adapters.AdapterGuidedVisit;
-import es.ugr.redforest.museumsforeveryone.models.ContentType;
+import es.ugr.redforest.museumsforeveryone.adapters.AdapterVisitGuide;
 import es.ugr.redforest.museumsforeveryone.models.GuidedVisit;
-import es.ugr.redforest.museumsforeveryone.screens.ActivityArtworkList;
-import es.ugr.redforest.museumsforeveryone.screens.ActivityFirstView;
-import es.ugr.redforest.museumsforeveryone.screens.ActivityGuidedVisit;
-import es.ugr.redforest.museumsforeveryone.screens.ActivityVisitDisplay;
+import es.ugr.redforest.museumsforeveryone.models.Location;
+import es.ugr.redforest.museumsforeveryone.screens.ActivityArtworkDisplay;
 import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
 import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
 
@@ -45,42 +40,45 @@ import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
  * @author Emilio Chica Jiménez
  * @version 1.0.0
  */
-public class HQueryVisitsGuides extends AsyncTask<Void, Integer, String> {
+public class HQueryVisitGuide extends AsyncTask<Void, Integer, String> {
 
         Context context;
         String resultado;
         ProgressDialog pDialog;
-        ArrayList<GuidedVisit> guidedVisits;
+        ArrayList<Location> locations;
+        String id="";
 
 
-        public HQueryVisitsGuides(Context c) {
+        public HQueryVisitGuide(Context c,String id) {
             context=c;
-            this.guidedVisits = new ArrayList<>();
+            this.locations = new ArrayList<>();
+            this.id = id;
         }
 
         @Override
         protected String doInBackground(Void... params) {
             ObjectMapper mapper = new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-            //Esta es la consulta real
-            resultado = QueryBBDD.doQuery(QueryBBDD.queryGuidesVisits+"/"+ ControllerPreferences.getLanguage(), "", "GET");
-            //Esto es solo para pruebas
-            //resultado = QueryBBDD.doQuery(QueryBBDD.queryType, "", "GET");
+            resultado = QueryBBDD.doQuery(QueryBBDD.queryGuideVisit+"/"+id+"/"+ ControllerPreferences.getLanguage(), "", "GET");
             JSONObject res =null;
             GuidedVisit itemGuidedVisit =null;
             try {
                 if(resultado!=null) {
                     res = new JSONObject(resultado);
-                    if (!res.isNull("visits")) {
-                        JSONArray visits = res.getJSONArray("visits");
+                    if (!res.isNull("visit")) {
+                        JSONObject itemVisit = res.getJSONObject("visit");
+                        JSONArray itemVisitInfo = res.getJSONArray("visit_info");
+                        itemGuidedVisit = mapper.readValue(itemVisitInfo.getJSONObject(0).toString(), GuidedVisit.class);
+                        itemGuidedVisit.setPhoto(itemVisit.getString("PHOTO"));
+                        itemGuidedVisit.setId(itemVisit.getInt("ID"));
 
-                        for (int j = 0; j < visits.length(); ++j) {
-                            JSONObject item = visits.getJSONObject(j);
-                            JSONObject itemVisit = item.getJSONObject("guided_visit");
-                            JSONObject itemVisitInfo = item.getJSONObject("guided_visit_info");
-                            itemGuidedVisit = mapper.readValue(itemVisitInfo.toString(), GuidedVisit.class);
-                            itemGuidedVisit.setPhoto(itemVisit.getString("PHOTO"));
-                            itemGuidedVisit.setId(itemVisit.getInt("ID"));
-                            guidedVisits.add(itemGuidedVisit);
+                        JSONArray visitlocation = res.getJSONArray("visit_locations");
+                        for (int j = 0; j < visitlocation.length(); ++j) {
+                            JSONObject item = visitlocation.getJSONObject(j);
+                            JSONObject itemLocation = item.getJSONObject("location");
+                            int itemOrder =  item.getInt("order");
+                            Location location = mapper.readValue(itemLocation.toString(), Location.class);
+                            location.setOrder(itemOrder);
+                            locations.add(location);
                         }
                     }
                 }
@@ -112,20 +110,17 @@ public class HQueryVisitsGuides extends AsyncTask<Void, Integer, String> {
         }else{
 
             //Gets reference of the RecyclerView
-            final RecyclerView recyclerGuidedVisit = (RecyclerView) ((Activity)context).findViewById(R.id.recycler_guided_visit);
+            final RecyclerView recyclerGuidedVisit = (RecyclerView) ((Activity)context).findViewById(R.id.recycler_visit_guide);
 
             //Creates an Adapter with the list of languages
-            AdapterGuidedVisit guidedVisitAdapter = new AdapterGuidedVisit(guidedVisits,context);
+            AdapterVisitGuide guidedVisitAdapter = new AdapterVisitGuide(locations,context);
 
             //Creates an Android default layout to show elements on the RecyclerView
             LinearLayoutManager layMan = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL,
                     false);
 
 
-            //Set all previous elements to the RecyclerView
-            recyclerGuidedVisit.setLayoutManager(layMan);
-            recyclerGuidedVisit.setItemAnimator(new DefaultItemAnimator());
-            recyclerGuidedVisit.setAdapter(guidedVisitAdapter);
+
             //Find selection point on recyclerview
             final GestureDetector mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
 
@@ -144,9 +139,9 @@ public class HQueryVisitsGuides extends AsyncTask<Void, Integer, String> {
 
                     View child = recyclerGuidedVisit.findChildViewUnder(e.getX(), e.getY());
                     if(child!=null && mGestureDetector.onTouchEvent(e)) {
-                        Intent ActivityVisitGuideIntent = new Intent(context, ActivityVisitDisplay.class);
-                        ActivityVisitGuideIntent.putExtra("id", guidedVisits.get(recyclerGuidedVisit.getChildAdapterPosition(child)).getId());
-                        ((Activity)context).startActivity(ActivityVisitGuideIntent);
+                        Intent ActivityArtworkIntent = new Intent(context, ActivityArtworkDisplay.class);
+                        ActivityArtworkIntent.putExtra("id", locations.get(recyclerGuidedVisit.getChildAdapterPosition(child)).getId());
+                        ((Activity)context).startActivity(ActivityArtworkIntent);
                     }
                     return false;
                 }
@@ -161,6 +156,10 @@ public class HQueryVisitsGuides extends AsyncTask<Void, Integer, String> {
 
                 }
             });
+            //Set all previous elements to the RecyclerView
+            recyclerGuidedVisit.setLayoutManager(layMan);
+            recyclerGuidedVisit.setItemAnimator(new DefaultItemAnimator());
+            recyclerGuidedVisit.setAdapter(guidedVisitAdapter);
         }
         pDialog.dismiss();
     }
