@@ -18,13 +18,14 @@ public class GuidedVisit {
     private int id;
     private String name;
     private String description;
-    private Date dateOut;
+    private String blindDescription;
+    private String photo_alt_text;
+    private String photo;
 
-    public GuidedVisit(int id, String name, String description, Date dateOut) {
+    public GuidedVisit(int id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.dateOut = dateOut;
     }
     public GuidedVisit()
     {}
@@ -40,10 +41,6 @@ public class GuidedVisit {
     public String getDescription() {
         return description;
     }
-    @JsonProperty("DATE_OUT")
-    public Date getDateOut() {
-        return dateOut;
-    }
     @JsonProperty("ID")
     public void setId(int id) {
         this.id = id;
@@ -56,8 +53,28 @@ public class GuidedVisit {
     public void setDescription(String description) {
         this.description = description;
     }
-    @JsonProperty("DATE_OUT")
-    public void setDateOut(Date dateOut) {
-        this.dateOut = dateOut;
+    @JsonProperty("BLIN_DESCRIPTION")
+    public String getBlindDescription() {
+        return blindDescription;
+    }
+    @JsonProperty("BLIN_DESCRIPTION")
+    public void setBlindDescription(String blindDescription) {
+        this.blindDescription = blindDescription;
+    }
+    @JsonProperty("PHOTO_ALT_TEXT")
+    public String getPhoto_alt_text() {
+        return photo_alt_text;
+    }
+    @JsonProperty("PHOTO_ALT_TEXT")
+    public void setPhoto_alt_text(String photo_alt_text) {
+        this.photo_alt_text = photo_alt_text;
+    }
+    @JsonProperty("PHOTO")
+    public String getPhoto() {
+        return photo;
+    }
+    @JsonProperty("PHOTO")
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }
