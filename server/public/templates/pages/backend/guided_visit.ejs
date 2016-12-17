@@ -42,13 +42,86 @@
 				<div id="more_langs" class="col s1"><a class="modal-trigger waves-effect waves-light"><i class="material-icons">add</i></a></div>
 				
 				<!-- All tabs visit -->
-				<div id="visits" visit-id="<% if(typeof(cont) !== 'undefined') { %> <%= cont.ID %> <% } %>">
+				<div id="visits" visit-id="<% if(typeof(visit) !== 'undefined') { %> <%= visit.ID %> <% } %>">
 					<% if(typeof(langs) !== 'undefined') {
 						for(var j=0; j<langs.length; j++) { %>
-							<div id="<%= langs[j].NAME.toLowerCase() %>_visit" class="col s12" visit-lang="<%= langs[j].ID %>" info-id="<%= visitInformations[j].ID %>">
+							<div id="<%= langs[j].NAME.toLowerCase() %>_visit" class="col s12" visit-lang="<%= langs[j].ID %>" info-id="<%= visitInfos[j].ID %>">
 								<div class="row">
 									<form method="post" action="/backend/guided_visits/add_visit/" enctype="multipart/form-data" class="info_form col s12 z-depth-1">
-										
+										<h5>INFORMACIÓN</h5>
+										<input type="hidden" id="visit_lang" name="visit_lang" value="<%= langs[j].ID %>"/>
+										<input type="hidden" id="info_id" name="info_id" value="<%= visitInfos[j].ID %>"/>
+										<!-- Visit name -->
+										<div class="input-field col s12">
+											<input id="visit_name" name="visit_name" type="text" class="validate" length="100" required value="<%= visitInfos[j].NAME %>">
+											<label for="visit_name">Nombre</label>
+										</div>
+										<!-- Visit Photo Preview -->
+										<div id="imgPreview" class="col s12 m6 push-m6">
+											<img src="<%= visit.PHOTO %>" id="visitImagePreview" class="imagePreview materialboxed responsive-img"/>
+										</div>
+										<div id="moreInfo" class="col s12 m6 pull-m6">
+											<!-- Visit Photo -->
+											<div class="file-field input-field col s12">
+												<div class="btn">
+													<span>Imagen</span>
+													<input id="visit_image" name="visit_image" class="image_visit" type="file">
+												</div>
+												<div class="file-path-wrapper">
+													<div class="file-path-wrapper">
+														<input class="file-path validate" type="text">
+													</div>
+												</div>
+											</div>
+											<!-- Photo Alt Text -->
+											<div class="input-field col s12">
+												<textarea id="visit_image_alt_text" name="visit_image_alt_text" class="materialize-textarea" required><%= visitInfos[j].PHOTO_ALT_TEXT %></textarea>
+												<label for="visit_image_alt_text">Descripción alternativa de la Imagen (en idioma seleccionado)</label>
+											</div>
+											<!-- Visit description -->
+											<div class="input-field col s12">
+												<textarea id="visit_description" name="visit_description" class="materialize-textarea"><%= visitInfos[j].DESCRIPTION %></textarea>
+												<label for="visit_description">Descripción de la Visita</label>
+											</div>
+											<!-- Visit blind description -->
+											<div class="input-field col s12">
+												<textarea id="visit_blind_description" name="visit_blind_description" class="materialize-textarea" required><%= visitInfos[j].BLIND_DESCRIPTION %></textarea>
+												<label for="visit_blind_description">Descripción alternativa de la Visita (en idioma seleccionado)</label>
+											</div>
+											<!-- Visit locations -->
+											<h5 class="col s12">LOCALIZACIONES</h5>
+											<ul id="visit_locations" class=" col s12">
+												<% for(var k=0; k<locationsVisit.length; k++) { %>
+													<li>
+														<div class="order col s2"><p><%= (k+1) %>º</p></div>
+														<div class="input-field col s10">
+															<select id="visit_location_<%= (k+1) %>" name="visit_location_<%= (k+1) %>">
+																<option value="" disabled>Añadir Localización</option>
+																<% for(var i=0; i<locations.length; i++) {
+																	if(locations[i].ID === locationsVisit[k].LOC_ID) { %>
+																	<option value="<%= locations[i].ID %>" selected><%= locations[i].DESCRIPTION %></option>
+																	<% }
+																	else { %>
+																	<option value="<%= locations[i].ID %>"><%= locations[i].DESCRIPTION %></option>
+																	<% } %>
+																<% } %>
+															</select>
+														</div>
+													</li>
+												<% } %>
+												<li>
+													<div class="order col s2"><p><%= (locationsVisit.length+1) %>º</p></div>
+													<div class="input-field col s10">
+														<select id="visit_location_<%= (locationsVisit.length+1) %>" name="visit_location_<%= (locationsVisit.length+1) %>">
+															<option value="" disabled selected>Añadir Localización</option>
+															<% for(var i=0; i<locations.length; i++) { %>
+																<option value="<%= locations[i].ID %>"><%= locations[i].DESCRIPTION %></option>
+															<% } %>
+														</select>
+													</div>
+												</li>
+											</ul>
+										</div>
 										<!-- Submit form -->
 										<div class="input-field col s12">
 											<button id="submit_visit_form" class="btn waves-effect waves-light right" type="submit" name="submit_visit_form">
@@ -68,6 +141,7 @@
 							<form method="post" action="/backend/guided_visits/add_visit/" enctype="multipart/form-data" class="info_form col s12 z-depth-1">
 								<h5>INFORMACIÓN</h5>
 								<input type="hidden" id="visit_lang" name="visit_lang"/>
+								<input type="hidden" id="info_id" name="info_id"/>
 								<!-- Visit name -->
 								<div class="input-field col s12">
 									<input id="visit_name" name="visit_name" type="text" class="validate" length="100" required>
@@ -112,7 +186,7 @@
 											<div class="order col s2"><p>1º</p></div>
 											<div class="input-field col s10">
 												<select id="visit_location_1" name="visit_location_1" required>
-													<option value="" disabled selected>Localización de la Visita</option>
+													<option value="" disabled selected>Añadir Localización</option>
 													<% for(var i=0; i<locations.length; i++) { %>
 														<option value="<%= locations[i].ID %>"><%= locations[i].DESCRIPTION %></option>
 													<% } %>
@@ -123,7 +197,7 @@
 											<div class="order col s2"><p>2º</p></div>
 											<div class="input-field col s10">
 												<select id="visit_location_2" name="visit_location_2" required>
-													<option value="" disabled selected>Localización de la Visita</option>
+													<option value="" disabled selected>Añadir Localización</option>
 													<% for(var i=0; i<locations.length; i++) { %>
 														<option value="<%= locations[i].ID %>"><%= locations[i].DESCRIPTION %></option>
 													<% } %>

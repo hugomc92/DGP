@@ -13,17 +13,23 @@ var GuidedVisitInfo = DBConnector.connectM4E().define('GUIDED_VISIT_INFO', {
 },
 {
 	instanceMethods: {
+		retrieveLast: function() {
+			return GuidedVisitInfo.findOne({order: 'ID DESC'});
+		},
 		retrieveById: function(id) {
 			return GuidedVisitInfo.findOne({where: {ID: id}});
+		},
+		retrieveByVisitId: function(visitId) {
+			return GuidedVisitInfo.findAll({ where: {GUIDED_VISIT_ID: visitId}});
 		},
 		retrieveByVisitIdByLangId: function(visitId, langId) {
 			return GuidedVisitInfo.findAll({ where: {GUIDED_VISIT_ID: visitId}, LANG_ID: langId});
 		},
-		retrieveByVisitIdListByLangId: function(visitIds, langId) {
-			return GuidedVisitInfo.findAll( {where: {GUIDED_VISIT_ID: {in: visitIds}, LANG_ID: langId}});
-		},
 		retrieveByVisitIdList: function(visitIds) {
 			return GuidedVisitInfo.findAll( {where: {GUIDED_VISIT_ID: {in: visitIds}}});
+		},
+		retrieveByVisitIdListByLangId: function(visitIds, langId) {
+			return GuidedVisitInfo.findAll( {where: {GUIDED_VISIT_ID: {in: visitIds}, LANG_ID: langId}});
 		},
 		add: function(visitId, name, description, blindDescription, photoAltText, langId) {
 			return GuidedVisitInfo.create({

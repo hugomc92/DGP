@@ -36,18 +36,18 @@
 							for(var i=0; i<visits.length; i++) { %>
 								<td><%= visits[i].ID %></td>
 								<% var found = false;
-								for(var j=0; j<visitsInfos.length && !found; j++) {
-									if(visitsInfos[j].GUIDED_VISIT_ID === visits[i].ID) { %>
-										<td><%= visitsInfos[j].NAME %></td>
-										<td><%= visitsInfos[j].DESCRIPTION %></td>
+								for(var j=0; j<visitInfos.length && !found; j++) {
+									if(visitInfos[j].GUIDED_VISIT_ID === visits[i].ID) { %>
+										<td><%= visitInfos[j].NAME %></td>
+										<td><%= visitInfos[j].DESCRIPTION %></td>
 										<% found = true;
 									}
 								} %>
 								<td><ul>
-								<% for(var j=0; j<visitsInfos.length; j++) {
-									if(visitsInfos[j].GUIDED_VISIT_ID === visits[i].ID) { %>
+								<% for(var j=0; j<visitInfos.length; j++) {
+									if(visitInfos[j].GUIDED_VISIT_ID === visits[i].ID) { %>
 										<% for(var k=0; k<langs.length; k++) {
-											if(langs[k].ID === visitsInfos[j].LANG_ID) { %>
+											if(langs[k].ID === visitInfos[j].LANG_ID) { %>
 												<li><img src="<%= langs[k].FLAG %>" width="30px" /></li>
 											<% }
 										} %>

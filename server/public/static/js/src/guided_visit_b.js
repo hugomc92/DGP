@@ -13,12 +13,16 @@ $(document).ready(function() {
 	else 
 		action = 'edit';
 
+	console.log('action', action);
+
 	if(action === 'edit') {
 		$('.image_visit').removeAttr('required');
 	}
 
 	if($('#visits').attr('visit-id') !== '')
 		visitId = $('#visits').attr('visit-id');
+
+	console.log('visitId', visitId);
 
 	$.ajax({
 		type: "GET",
@@ -40,7 +44,7 @@ $(document).ready(function() {
 		success: function(jsondata) {
 			locations = jsondata;
 
-			selectLocation = '<option value="" disabled selected>Localización de la Visita</option>';
+			selectLocation = '<option value="" disabled selected>Añadir Localización</option>';
 			
 			for(var i=0; i<locations.length; i++) {
 				selectLocation += '<option value="' + locations[i].ID + '">' + locations[i].DESCRIPTION + '</option>';
@@ -53,8 +57,6 @@ $(document).ready(function() {
 			console.log(status);
 		}
 	});
-
-	
 
 	var elems = $('.info_form').parent().parent();
 
@@ -223,6 +225,12 @@ function initilizeForm(elem, langId) {
 
 		form.find('#visit_lang').val(langId);
 
+		if(action === 'edit') {
+			var langId = form.parent().parent().attr('info-id');
+
+			form.find('#info_id').val(langId);
+		}
+
 		$.ajax( {
 			url: '/api/guided_visit/' + action  + '?email="+$("#email").text()',
 			type: 'POST',
@@ -239,12 +247,15 @@ function initilizeForm(elem, langId) {
 				else {
 					Materialize.toast('La visita se ha añadido con éxito', 4000);
 
+					visitId = jsondata.visitId;
+					form.parent().parent().attr('info-id', jsondata.visitInfoId);
+
 					if(action === 'add') {
 						action = 'edit';
 						
 						$('.image_visit').removeAttr('required');
 
-						// visitId = jsondata.ok;
+						visitId = jsondata.visitId;
 					}
 				}
 			},
