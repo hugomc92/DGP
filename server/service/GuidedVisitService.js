@@ -9,6 +9,7 @@ var Language = require('../models/Language');
 var GuidedVisit = require('../models/GuidedVisit');
 var GuidedVisitInfo = require('../models/GuidedVisitInfo');
 var LocalizationVisit = require('../models/LocalizationVisit');
+var Localization = require('../models/Localization');
 
 // Constructor for GuidedVisitService
 function GuidedVisitService() {
@@ -80,6 +81,98 @@ GuidedVisitService.prototype.initializeRouter = function() {
 				res.status(401).send("Not Guided Visits Found");
 		}, function(err) {
 			res.status(404).send("Guided Visit not found");
+		});
+	});
+
+	self.router.route('/id/:id/:langCode').get(function(req, res) {
+		
+		var visitId = req.params.id;
+		var langCode = req.params.langCode;
+
+		var visit = GuidedVisit.build();
+
+		visit.retrieveById(visitId).then(function(success) {
+			if(success) {
+				var guidedVisit = success;
+
+				var language = Language.build();
+
+				language.retrieveByCode(langCode).then(function(success) {
+					if(success) {
+						var lang = success;
+
+						var visitInfo = GuidedVisitInfo.build();
+
+						visitInfo.retrieveByVisitIdByLangId(visitId, lang.ID).then(function(success) {
+							if(success) {
+								var guidedVisitInfo = success;
+
+								var localizationVisit = LocalizationVisit.build();
+
+								localizationVisit.retrieveAllByVisitId(visitId).then(function(success) {
+									if(success) {
+										var locationVisits = success;
+
+										var locationIds = [];
+										for(var i=0; i<locationVisits.length; i++)
+											locationIds.push(locationVisits[i].LOC_ID);
+
+										var localization = Localization.build();
+										
+										localization.retrieveAllByListIds(locationIds).then(function(success) {
+											if(success.length > 0) {
+												var locations = success;
+
+												var jsonResObj = {
+													visit: guidedVisit,
+													visit_info: guidedVisitInfo,
+													visit_locations: []
+												};
+
+												for(var i=0; i<locationVisits.length; i++) {
+													for(var j=0; j<locations.length; j++) {
+														if(locationVisits[i].LOC_ID === locations[j].ID) {
+															jsonResObj.visit_locations.push( {
+																location: locations[j],
+																order: locationVisits[i].ORDER
+															});
+														}
+													}
+													
+												}
+
+												res.json(jsonResObj);
+											}
+											else
+												res.status(401).send("Locations Not Found");
+										}, function(err) {
+											res.status(404).send("Locations Not Found");
+										});
+									}
+									else
+										res.status(404).send("Location Visit Not Found");
+								}, function(err) {
+									res.status(401).send("Location Visit Not Found");
+								});
+							}
+							else
+								res.status(401).send("Guided Visit Info Not Found");
+						}, function(err) {
+							res.status(401).send("Guided Visit Info Not Found");
+						});
+					}
+					else {
+						res.status(401).send("Language Not Found");
+					}
+				}, function(err) {
+					res.status(404).send("Language Not Found");
+				});
+			}
+			else {
+				res.status(401).send("Guided Visit Not Found");
+			}
+		}, function(err) {
+			res.status(404).send("Guided Visits Not Found");
 		});
 	});
 
