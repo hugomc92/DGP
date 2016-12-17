@@ -20,6 +20,7 @@ public class Location {
     private String nfc;
     private String qr;
     private String coordinates;
+    private int order;
     @JsonIgnoreProperties
     private ArrayList<Content> contents;
 
@@ -80,5 +81,13 @@ public class Location {
     @JsonProperty("COORDINATES")
     public void setCoordinates(String coordinates) {
         this.coordinates = coordinates;
+    }
+    @JsonProperty("ORDER")
+    public int getOrder() {
+        return order;
+    }
+    @JsonProperty("ORDER")
+    public void setOrder(int order) {
+        this.order = order;
     }
 }

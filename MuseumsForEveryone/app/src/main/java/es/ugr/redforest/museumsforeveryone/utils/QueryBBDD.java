@@ -25,7 +25,9 @@ public class QueryBBDD {
     public static final String queryContentInformationOfType ="/api/content/type";
     public static final String queryContent ="/api/content/id";
     public static final String queryContentOfLocalization ="/api/content/location";
-    public static final String queryGuidesVisits = "/api/guided_visit/";
+    public static final String queryGuidesVisits = "/api/guided_visit";
+    public static final String queryGuideVisit = "/api/guided_visit/id";
+
 
     public static String doQuery(String urlREST, String parameters, String metodo) {
 
