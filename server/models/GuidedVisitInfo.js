@@ -22,6 +22,9 @@ var GuidedVisitInfo = DBConnector.connectM4E().define('GUIDED_VISIT_INFO', {
 		retrieveByVisitIdListByLangId: function(visitIds, langId) {
 			return GuidedVisitInfo.findAll( {where: {GUIDED_VISIT_ID: {in: visitIds}, LANG_ID: langId}});
 		},
+		retrieveByVisitIdList: function(visitIds) {
+			return GuidedVisitInfo.findAll( {where: {GUIDED_VISIT_ID: {in: visitIds}}});
+		},
 		add: function(visitId, name, description, blindDescription, photoAltText, langId) {
 			return GuidedVisitInfo.create({
 				GUIDED_VISIT_ID: visitId,

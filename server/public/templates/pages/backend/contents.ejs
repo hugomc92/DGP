@@ -46,13 +46,13 @@
 										<td><%= contentInformations[j].NAME %></td>
 										<% found = true;
 									}
-								} %>
-								<% for(var j=0; j<contentTypes.length; j++) {
+								} 
+								for(var j=0; j<contentTypes.length; j++) {
 									if(contentTypes[j].ID === contents[i].CONTENT_TYPE_ID) { %>
 										<td><%= contentTypes[j].NAME %></td>
 									<% }
-								} %>
-								<% var found = false;
+								} 
+								var found = false;
 								for(var j=0; j<locations.length; j++) {
 									if(locations[j].ID === contents[i].LOCALIZATION_ID) { %>
 										<td><%= locations[j].DESCRIPTION %></td>
@@ -65,7 +65,6 @@
 								<td><ul>
 								<% for(var j=0; j<contentInformations.length; j++) {
 									if(contentInformations[j].CONTENT_ID === contents[i].ID) { %>
-										
 										<% for(var k=0; k<langs.length; k++) {
 											if(langs[k].ID === contentInformations[j].LANG_ID) { %>
 												<li><img src="<%= langs[k].FLAG %>" width="30px" /></li>
