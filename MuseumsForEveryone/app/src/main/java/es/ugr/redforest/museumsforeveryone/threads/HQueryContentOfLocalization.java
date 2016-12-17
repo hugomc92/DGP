@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -58,9 +59,9 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
     private boolean qrornfc=true;
     private Content content=null;
 
-    public HQueryContentOfLocalization(Context c , Location location, String id, int index, String artworkName, boolean qrornfc) {
+    public HQueryContentOfLocalization(Context c , String id, int index, String artworkName, boolean qrornfc) {
         this.context=c;
-        this.location = location;
+        this.location = new Location();
         this.id = id;
         this.index = index;
         this.artworkName = artworkName;
@@ -85,11 +86,12 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
         try {
             if(result !=null) {
                 res = new JSONObject(result);
-                if (!res.isNull("location")) {
+                if (!res.isNull("content") || !res.isNull("contents") ) {
                     //Transform JSON location to model location
-                    JSONObject loc = res.getJSONObject("location");
-                    location =  mapper.readValue(loc.toString(), Location.class);
-
+                    if(!res.isNull("location")) {
+                        JSONObject loc = res.getJSONObject("location");
+                        location = mapper.readValue(loc.toString(), Location.class);
+                    }
                     ContentInformation itemContentInformation =null;
                     ContentType itemContentType =null;
 
@@ -171,6 +173,8 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
                         //add content information and content type to content
                         content.setContentInformation(itemContentInformation);
                         content.setContentType(itemContentType);
+                        //add content to location
+                        location.addContent(content);
                     }
 
                 }
@@ -259,13 +263,13 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
             //If array contains video put video and subtitles in videoview else hide videoview
             if(videoMultimedia!=null)
             if(videoMultimedia.size()>0){
-                Uri uri = Uri.parse(videoMultimedia.get(0).getUrl());
+                Uri uri = Uri.parse(QueryBBDD.server+videoMultimedia.get(0).getUrl());
                 videoView.setVideoURI(uri);
                 MediaController mediaController = new MediaController(context);
                 mediaController.setAnchorView(videoView);
                 videoView.setMediaController(mediaController);
                 try {
-                    URL url = new URL(videoMultimedia.get(0).getSubtitle());
+                    URL url = new URL(QueryBBDD.server+videoMultimedia.get(0).getSubtitle());
                     InputStream stream = url.openStream();
                     videoView.addSubtitleSource(stream, MediaFormat.createSubtitleFormat("text/vtt",ControllerPreferences.getLanguage()));
                 } catch (MalformedURLException e) {
@@ -283,6 +287,12 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
             descriptionArtwork.setText(content.getContentInformation().getDescription());
             artworkName = content.getContentType().getName();
             titleImage.setText(artworkName);
+            ((ScrollView) ((Activity)context).findViewById(R.id.scrollView)).post(new Runnable()
+            {
+                public void run() {
+                    ((ScrollView) ((Activity)context).findViewById(R.id.scrollView)).fullScroll(ScrollView.FOCUS_UP);
+                }
+            });
         }
         pDialog.dismiss();
     }
