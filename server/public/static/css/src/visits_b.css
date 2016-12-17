@@ -9,6 +9,9 @@ main {
     padding: 0 20px;
   }
 }
+#visit-table .actions {
+  min-width: 65px;
+}
 #no_visits {
   text-align: center;
 }
