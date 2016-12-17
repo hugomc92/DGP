@@ -67,9 +67,6 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
         this.artworkName = artworkName;
         this.qrornfc = qrornfc;
     }
-    private void fillContent(JSONObject item ){
-
-    }
 
     @Override
     protected String doInBackground(Void... params) {
@@ -287,6 +284,7 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
             descriptionArtwork.setText(content.getContentInformation().getDescription());
             artworkName = content.getContentType().getName();
             titleImage.setText(artworkName);
+            //position scroll to top
             ((ScrollView) ((Activity)context).findViewById(R.id.scrollView)).post(new Runnable()
             {
                 public void run() {
