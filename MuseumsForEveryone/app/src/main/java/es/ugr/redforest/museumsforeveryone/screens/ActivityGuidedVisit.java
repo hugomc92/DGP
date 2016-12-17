@@ -14,6 +14,7 @@ import es.ugr.redforest.museumsforeveryone.R;
 
 import es.ugr.redforest.museumsforeveryone.adapters.AdapterGuidedVisit;
 import es.ugr.redforest.museumsforeveryone.models.GuidedVisit;
+import es.ugr.redforest.museumsforeveryone.threads.HQueryVisitsGuides;
 
 /**
  * Activity which shows a list of available guided visits to select one of them
@@ -32,9 +33,7 @@ public class ActivityGuidedVisit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guided_visit);
 
-
-        //DEBUGGING PURPOSES
-        //HQueryContentType hQueryContentType = new HQueryContentType(this);
-        //hQueryContentType.execute();
+        HQueryVisitsGuides hQueryVisitsGuides = new HQueryVisitsGuides(this);
+        hQueryVisitsGuides.execute();
     }
 }

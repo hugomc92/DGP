@@ -77,6 +77,8 @@ public class HQueryVisitsGuides extends AsyncTask<Void, Integer, String> {
                             JSONObject itemVisit = item.getJSONObject("guided_visit");
                             JSONObject itemVisitInfo = item.getJSONObject("guided_visit_info");
                             itemGuidedVisit = mapper.readValue(itemVisitInfo.toString(), GuidedVisit.class);
+                            itemGuidedVisit.setPhoto(itemVisit.getString("PHOTO"));
+                            itemGuidedVisit.setId(itemVisit.getInt("ID"));
                             guidedVisits.add(itemGuidedVisit);
                         }
                     }
@@ -112,7 +114,7 @@ public class HQueryVisitsGuides extends AsyncTask<Void, Integer, String> {
             final RecyclerView recyclerGuidedVisit = (RecyclerView) ((Activity)context).findViewById(R.id.recycler_guided_visit);
 
             //Creates an Adapter with the list of languages
-            AdapterGuidedVisit guidedVisitAdapter = new AdapterGuidedVisit(guidedVisits);
+            AdapterGuidedVisit guidedVisitAdapter = new AdapterGuidedVisit(guidedVisits,context);
 
             //Creates an Android default layout to show elements on the RecyclerView
             LinearLayoutManager layMan = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL,
