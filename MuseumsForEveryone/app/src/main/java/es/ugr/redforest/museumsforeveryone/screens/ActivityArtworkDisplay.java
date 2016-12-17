@@ -17,7 +17,6 @@ import es.ugr.redforest.museumsforeveryone.utils.SliderMenu;
 public class ActivityArtworkDisplay extends AppCompatActivity {
 
     String artworkName="";
-    Location location = null;
     String id="";
     Context context;
 
@@ -36,12 +35,12 @@ public class ActivityArtworkDisplay extends AppCompatActivity {
         }
         if(bundle.containsKey("qrornfc")) {
             id = bundle.getString("qrornfc");
-            HQueryContentOfLocalization queryContent = new HQueryContentOfLocalization(this, location, id,index,artworkName,true);
+            HQueryContentOfLocalization queryContent = new HQueryContentOfLocalization(this, id,index,artworkName,true);
             queryContent.execute();
         }else if(bundle.containsKey("id"))
         {
             id = String.valueOf(bundle.getInt("id"));
-            HQueryContentOfLocalization queryContent = new HQueryContentOfLocalization(this, location, id,index,artworkName,false);
+            HQueryContentOfLocalization queryContent = new HQueryContentOfLocalization(this, id,index,artworkName,false);
             queryContent.execute();
         }
 
