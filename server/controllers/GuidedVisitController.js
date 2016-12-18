@@ -178,6 +178,52 @@ GuidedVisitController.prototype.initBackend = function () {
 		else
 			res.redirect('/');
 	});
+
+	self.routerBackend.route('/delete').post(function(req, res) {
+		console.log('delete', req.body);
+
+		self.renderJson.user = req.session.user;
+
+		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
+			var idVisit = req.body.delete_id_guided_visit;
+			var delete_visit = req.body.delete_guided_visit;
+
+			if(delete_visit === 'yes') {
+				var localizationVisit = LocalizationVisit.build();
+
+				localizationVisit.deleteByVisitId(idVisit).then(function(success) {
+					var guidedVisitInfo = GuidedVisitInfo.build();
+
+					guidedVisitInfo.deleteByVisitId(idVisit).then(function(success) {
+						var guidedVisit = GuidedVisit.build();
+
+						guidedVisit.deleteById(idVisit).then(function(success) {
+							self.renderJson.msg = 'Se ha borrado correctamente la visita';
+
+							res.redirect('/backend/guided_visits/');
+						}, function(err) {
+							self.renderJson.error = 'Se ha producido un error interno borrando la información de la visita';
+
+							res.redirect('/backend/guided_visits/');
+						});
+					}, function(err) {
+						self.renderJson.error = 'Se ha producido un error interno borrando las localizaciones de la visita';
+
+						res.redirect('/backend/guided_visits/');
+					});
+				}, function(err) {
+
+				});
+			}
+			else {
+				self.renderJson.error = 'No se ha efectuado su acción';
+
+				res.redirect('/backend/guided_visits/');
+			}
+		}
+		else
+			res.redirect('/');
+	});
 };
 
 // Get the Backend router

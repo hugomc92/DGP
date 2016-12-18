@@ -48,6 +48,9 @@ var GuidedVisitInfo = DBConnector.connectM4E().define('GUIDED_VISIT_INFO', {
 				BLIND_DESCRIPTION: this.blindDescription,
 				PHOTO_ALT_TEXT: this.photoAltText,
 			}, {where: {ID: id}});
+		},
+		deleteByVisitId: function(visitId) {
+			return GuidedVisitInfo.destroy({where: {GUIDED_VISIT_ID: visitId}});
 		}
 	},
 	freezeTableName: true

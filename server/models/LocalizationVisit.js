@@ -60,6 +60,9 @@ var LocalizationVisit = DBConnector.connectM4E().define('LOCALIZATION_VISIT', {
 				promises.push(self.createOrUpdate(visitId, visitsLocations[i].order, visitsLocations[i].locationId));
 
 			return Sequelize.Promise.all(promises);
+		},
+		deleteByVisitId: function(visitId) {
+			return LocalizationVisit.destroy({where: {VISIT_ID: visitId}});
 		}
 	},
 	freezeTableName: true

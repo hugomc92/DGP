@@ -12,7 +12,7 @@ var GuidedVisit = DBConnector.connectM4E().define('GUIDED_VISIT', {
 			return GuidedVisit.findOne({order: 'ID DESC'});
 		},
 		retrieveAll: function() {
-			return GuidedVisit.findAll();
+			return GuidedVisit.findAll({order: 'ID DESC'});
 		},
 		retrieveById: function(id) {
 			return GuidedVisit.findOne({where: {ID: id}});
@@ -32,6 +32,9 @@ var GuidedVisit = DBConnector.connectM4E().define('GUIDED_VISIT', {
 			return GuidedVisit.update({
 				PHOTO: this.photo
 			}, {where: {ID: id}});
+		},
+		deleteById: function(id) {
+			return GuidedVisit.destroy({where: {ID: id}});
 		}
 	},
 	freezeTableName: true

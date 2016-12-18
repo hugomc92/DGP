@@ -35,7 +35,7 @@
 						<% if(typeof(visits) !== 'undefined') {
 							for(var i=0; i<visits.length; i++) { %>
 								<tr>
-										<td><%= visits[i].ID %></td>
+									<td class="id_visit"><%= visits[i].ID %></td>
 									<% var found = false;
 									for(var j=0; j<visitInfos.length && !found; j++) {
 										if(visitInfos[j].GUIDED_VISIT_ID === visits[i].ID) { %>
