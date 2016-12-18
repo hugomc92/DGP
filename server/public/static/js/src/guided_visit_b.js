@@ -5,6 +5,7 @@ var visitId;
 var locations;
 var selectLocation;
 var action;
+var photoAdd;
 
 $(document).ready(function() {
 
@@ -199,7 +200,7 @@ $(document).ready(function() {
 			
 			$('#' + lang.NAME.toLowerCase() + '_visit').find('.materialboxed').materialbox();
 
-			if(action === 'add') {
+			if(action === 'edit') {
 				$('.image_visit').removeAttr('required');
 			}
 
@@ -224,10 +225,16 @@ function initilizeForm(elem, langId) {
 
 	imagePrevisualization(form.find('#visit_image'), form.find('#visitImagePreview'));
 
+	if(action === 'edit') {
+		form.find('#visitImagePreview').attr('src', photoAdd);
+	}
+
 	form.submit( function( e ) {
 		var langId = form.parent().parent().attr('visit-lang');
 
 		form.find('#visit_lang').val(langId);
+
+		photoAdd = form.find('#visitImagePreview').attr('src');
 
 		if(action === 'edit') {
 			var visitInfoId = form.parent().parent().attr('info-id');
@@ -250,7 +257,7 @@ function initilizeForm(elem, langId) {
 					Materialize.toast('No tiene los permisos suficientes para añadir una visita', 4000);
 				}
 				else {
-					Materialize.toast('La visita se ha añadido con éxito', 4000);
+					Materialize.toast('Se ha guardado la visita con éxito', 4000);
 
 					visitId = jsondata.visitId;
 
@@ -262,6 +269,8 @@ function initilizeForm(elem, langId) {
 						
 						$('.image_visit').removeAttr('required');
 					}
+
+					$('.imagePreview').attr('src', photoAdd);
 				}
 			},
 			error : function(xhr, status) {

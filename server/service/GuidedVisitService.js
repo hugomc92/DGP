@@ -379,12 +379,26 @@ GuidedVisitService.prototype.initializeRouter = function() {
 						var localizationVisit = LocalizationVisit.build();
 
 						localizationVisit.updateSome(visitId, locationOrder).then(function(success) {
-							jsonResObj.visitId = visitId;
-							jsonResObj.visitInfoId = gVI.ID;
+							if(newImage !== '') {
+								var guidedVisit = GuidedVisit.build();
+
+								guidedVisit.photo = newImage;
+
+								guidedVisit.updateById(visitId).then(function(success) {
+									jsonResObj.visitId = visitId;
+									jsonResObj.visitInfoId = gVI.ID;
+
+									res.json(jsonResObj);
+								}, function(err) {
+									jsonResObj.ok = 'failed';
+
+									res.json(jsonResObj);
+								});
+							}
+						}, function(err){
+							jsonResObj.ok = 'failed';
 
 							res.json(jsonResObj);
-						}, function(err){
-
 						});
 					}, function(err){
 						jsonResObj.ok = 'failed';
@@ -407,10 +421,22 @@ GuidedVisitService.prototype.initializeRouter = function() {
 					var localizationVisit = LocalizationVisit.build();
 							
 					localizationVisit.updateSome(visitId, locationOrder).then(function(success) {
-						jsonResObj.visitId = visitId;
-						jsonResObj.visitInfoId = visitInfoId;
+						if(newImage !== '') {
+							var guidedVisit = GuidedVisit.build();
 
-						res.json(jsonResObj);
+							guidedVisit.photo = newImage;
+
+							guidedVisit.updateById(visitId).then(function(success) {
+								jsonResObj.visitId = visitId;
+								jsonResObj.visitInfoId = gVI.ID;
+
+								res.json(jsonResObj);
+							}, function(err) {
+								jsonResObj.ok = 'failed';
+
+								res.json(jsonResObj);
+							});
+						}
 					}, function(err){
 						jsonResObj.ok = 'failed';
 
