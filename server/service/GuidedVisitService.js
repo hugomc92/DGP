@@ -347,8 +347,7 @@ GuidedVisitService.prototype.initializeRouter = function() {
 				newImage = '/static/img/guided_visits/' + file;
 			}
 
-			var guidedVisitInfo = GuidedVisitInfo.build();
-
+			var visitId = req.body.visit_id;
 			var visitInfoId = req.body.info_id;
 			var visitLang = req.body.visit_lang;
 			var visitName = req.body.visit_name;
@@ -372,11 +371,57 @@ GuidedVisitService.prototype.initializeRouter = function() {
 
 			var guidedVisitInfo = GuidedVisitInfo.build();
 
-			guidedVisitInfo.updateById(visitInfoId).then(function(success) {
+			if(visitInfoId === '') {
+				guidedVisitInfo.add(visitId, visitName, visitDescription, visitBlindDescription, visitImageAltText, visitLang).then(function(success) {
+					guidedVisitInfo.retrieveLast().then(function(success) {
+						var gVI = success;
 
-			}, function(err) {
+						var localizationVisit = LocalizationVisit.build();
 
-			});
+						localizationVisit.updateSome(visitId, locationOrder).then(function(success) {
+							jsonResObj.visitId = visitId;
+							jsonResObj.visitInfoId = gVI.ID;
+
+							res.json(jsonResObj);
+						}, function(err){
+
+						});
+					}, function(err){
+						jsonResObj.ok = 'failed';
+
+						res.json(jsonResObj);
+					});
+				}, function(err) {
+					jsonResObj.ok = 'failed';
+
+					res.json(jsonResObj);
+				});
+			}
+			else {
+				guidedVisitInfo.name = visitName;
+				guidedVisitInfo.description = visitDescription;
+				guidedVisitInfo.blindDescription = visitBlindDescription;
+				guidedVisitInfo.photoAltText = visitImageAltText;
+
+				guidedVisitInfo.updateById(visitInfoId).then(function(success) {
+					var localizationVisit = LocalizationVisit.build();
+							
+					localizationVisit.updateSome(visitId, locationOrder).then(function(success) {
+						jsonResObj.visitId = visitId;
+						jsonResObj.visitInfoId = visitInfoId;
+
+						res.json(jsonResObj);
+					}, function(err){
+						jsonResObj.ok = 'failed';
+
+						res.json(jsonResObj);
+					});
+				}, function(err) {
+					jsonResObj.ok = 'failed';
+
+					res.json(jsonResObj);
+				});
+			}
 		}
 		else {
 			jsonResObj.ok = 'not_allowed';

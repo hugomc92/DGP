@@ -35,10 +35,31 @@ var LocalizationVisit = DBConnector.connectM4E().define('LOCALIZATION_VISIT', {
 
 			return LocalizationVisit.bulkCreate(jsonBulk);
 		},
-		update: function() {
+		update: function(visitId, order, locId) {
 			return LocalizationVisit.update( {
-				LOC_ID: this.locId,
-			}, { where: { VISIT_ID: this.visitId, ORDER: this.order }});
+				LOC_ID: locId,
+			}, { where: { VISIT_ID: visitId, ORDER: order }});
+		},
+		createOrUpdate: function(visitId, order, locationId) {
+
+			return LocalizationVisit.findOne({where: {VISIT_ID: visitId, ORDER: order}}).then(function(success) {
+				if(success === null) {
+					return LocalizationVisit.create( {VISIT_ID: visitId, ORDER: order, LOC_ID: locationId});
+				}
+				else {
+					return LocalizationVisit.update( { LOC_ID: locationId }, { where: { VISIT_ID: visitId, ORDER: order }});
+				}
+			});
+		},
+		updateSome: function(visitId, visitsLocations){
+			var self = this;
+
+			promises = [];
+
+			for(var i=0; i<visitsLocations.length; i++)
+				promises.push(self.createOrUpdate(visitId, visitsLocations[i].order, visitsLocations[i].locationId));
+
+			return Sequelize.Promise.all(promises);
 		}
 	},
 	freezeTableName: true

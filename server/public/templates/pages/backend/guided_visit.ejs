@@ -49,6 +49,7 @@
 								<div class="row">
 									<form method="post" action="/backend/guided_visits/add_visit/" enctype="multipart/form-data" class="info_form col s12 z-depth-1">
 										<h5>INFORMACIÓN</h5>
+										<input type="hidden" id="visit_id" name="visit_id" value="<%= visit.ID %>"/>
 										<input type="hidden" id="visit_lang" name="visit_lang" value="<%= langs[j].ID %>"/>
 										<input type="hidden" id="info_id" name="info_id" value="<%= visitInfos[j].ID %>"/>
 										<!-- Visit name -->
@@ -140,6 +141,7 @@
 						<div class="row">
 							<form method="post" action="/backend/guided_visits/add_visit/" enctype="multipart/form-data" class="info_form col s12 z-depth-1">
 								<h5>INFORMACIÓN</h5>
+								<input type="hidden" id="visit_id" name="visit_id"/>
 								<input type="hidden" id="visit_lang" name="visit_lang"/>
 								<input type="hidden" id="info_id" name="info_id"/>
 								<!-- Visit name -->

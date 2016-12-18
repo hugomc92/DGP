@@ -34,31 +34,33 @@
 					<tbody>
 						<% if(typeof(visits) !== 'undefined') {
 							for(var i=0; i<visits.length; i++) { %>
-								<td><%= visits[i].ID %></td>
-								<% var found = false;
-								for(var j=0; j<visitInfos.length && !found; j++) {
-									if(visitInfos[j].GUIDED_VISIT_ID === visits[i].ID) { %>
-										<td><%= visitInfos[j].NAME %></td>
-										<td><%= visitInfos[j].DESCRIPTION %></td>
-										<% found = true;
-									}
-								} %>
-								<td><ul>
-								<% for(var j=0; j<visitInfos.length; j++) {
-									if(visitInfos[j].GUIDED_VISIT_ID === visits[i].ID) { %>
-										<% for(var k=0; k<langs.length; k++) {
-											if(langs[k].ID === visitInfos[j].LANG_ID) { %>
-												<li><img src="<%= langs[k].FLAG %>" width="30px" /></li>
-											<% }
-										} %>
-										
-									<% }
-								} %>
-								</ul></td>						
-								<td class="actions">
-									<a href="/backend/guided_visits/edit/<%= visits[i].ID %>/"><i class="material-icons">mode_edit</i></a>
-									<a class="modal-trigger" href="#delete_visit"><i class="material-icons">delete</i></a>
-								</td>
+								<tr>
+										<td><%= visits[i].ID %></td>
+									<% var found = false;
+									for(var j=0; j<visitInfos.length && !found; j++) {
+										if(visitInfos[j].GUIDED_VISIT_ID === visits[i].ID) { %>
+											<td><%= visitInfos[j].NAME %></td>
+											<td><%= visitInfos[j].DESCRIPTION %></td>
+											<% found = true;
+										}
+									} %>
+									<td><ul>
+									<% for(var j=0; j<visitInfos.length; j++) {
+										if(visitInfos[j].GUIDED_VISIT_ID === visits[i].ID) { %>
+											<% for(var k=0; k<langs.length; k++) {
+												if(langs[k].ID === visitInfos[j].LANG_ID) { %>
+													<li><img src="<%= langs[k].FLAG %>" width="30px" /></li>
+												<% }
+											} %>
+											
+										<% }
+									} %>
+									</ul></td>						
+									<td class="actions">
+										<a href="/backend/guided_visits/edit/<%= visits[i].ID %>/"><i class="material-icons">mode_edit</i></a>
+										<a class="modal-trigger" href="#delete_visit"><i class="material-icons">delete</i></a>
+									</td>
+								</tr>
 							<% }
 						}
 						else { %>

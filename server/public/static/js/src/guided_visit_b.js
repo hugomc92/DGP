@@ -199,6 +199,10 @@ $(document).ready(function() {
 			
 			$('#' + lang.NAME.toLowerCase() + '_visit').find('.materialboxed').materialbox();
 
+			if(action === 'add') {
+				$('.image_visit').removeAttr('required');
+			}
+
 			initilizeForm($('#' + lang.NAME.toLowerCase() + '_visit'), langId);
 		}
 
@@ -226,9 +230,10 @@ function initilizeForm(elem, langId) {
 		form.find('#visit_lang').val(langId);
 
 		if(action === 'edit') {
-			var langId = form.parent().parent().attr('info-id');
+			var visitInfoId = form.parent().parent().attr('info-id');
 
-			form.find('#info_id').val(langId);
+			form.find('#info_id').val(visitInfoId);
+			form.find('#visit_id').val(visitId);
 		}
 
 		$.ajax( {
@@ -248,14 +253,14 @@ function initilizeForm(elem, langId) {
 					Materialize.toast('La visita se ha añadido con éxito', 4000);
 
 					visitId = jsondata.visitId;
+
+					form.find('#visit_id').val(visitId);
 					form.parent().parent().attr('info-id', jsondata.visitInfoId);
 
 					if(action === 'add') {
 						action = 'edit';
 						
 						$('.image_visit').removeAttr('required');
-
-						visitId = jsondata.visitId;
 					}
 				}
 			},
