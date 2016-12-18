@@ -22,10 +22,10 @@ $(document).ready(function() {
 		id_lang = parseInt(id_lang);
 
 		if(action == '#delete_lang') {
-			email = $(this).parent().parent().children()[1].innerHTML;
+			lang = $(this).parent().parent().children()[1].innerHTML;
 
 			$("#delete_id_lang").val(id_lang);
-			$("#delete_titulo").text('Se borrará "' + email + '"');
+			$("#delete_titulo").text('Se borrará el idioma "' + lang + '"');
 
 			$("#delete_lang_yes").removeAttr('checked');
 			$("#delete_lang_no").attr('checked','');
@@ -36,7 +36,14 @@ $(document).ready(function() {
 				url: "/api/lang/id/"+id_lang+"?email="+$("#email").text(),
 				datatype: "json",
 				success: function(jsondata) {
+					console.log('jsondata', jsondata);
+
+					$('#edit_id_lang').val(jsondata.ID);
+					$('#edit_name_lang').val(jsondata.NAME);
+					$('#edit_code_lang').val(jsondata.CODE);
+					$('#editFlagImgViewer').attr('src', jsondata.FLAG);
 					
+					Materialize.updateTextFields();
 
 					$('#lang_loader').css('opacity', '0');
 					setTimeout(function() { $('#lang_loader').css('display', 'none'); }, 1000);

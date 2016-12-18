@@ -1,0 +1,32 @@
+<div id="delete_lang" class="modal modal_material modal-fixed-footer">
+	<div class="modal-header z-depth-1">
+		<h4>Eliminar Idioma</h4>
+		<span><i class="modal_close modal-action modal-close material-icons right">close</i></span>
+	</div>
+	<form class="col s12" method="post" action="/backend/langs/delete/">
+		<div class="modal-content">
+			<div class="row">
+				<input id="delete_id_lang" name="delete_id_lang" type="hidden"/>
+
+				<h4 id="delete_titulo"></h4>
+
+				<!-- Warning -->
+				<p class="red-text text-darken-1">¿Realmente quiere borrar este idioma?</p>
+				<p class="red-text text-darken-1">La acción de borrado es irreversible, debe de estar completamente seguro que quiere eliminarlo.</p>
+
+				<!-- Confirmation -->
+				<p><input name="delete_lang" type="radio" id="delete_lang_yes" value="yes" /><label for="delete_lang_yes">Si</label></p>
+				<p><input name="delete_lang" type="radio" id="delete_lang_no" value="no" checked /><label for="delete_lang_no">No</label></p>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<!-- Submit -->
+			<div class="input field col s12 center-align submit_modal">
+				<button class="btn waves-effect waves-light red" type="submit">
+					<span>Eliminar</span>
+					<i class="material-icons right">send</i>
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

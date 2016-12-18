@@ -1,0 +1,60 @@
+<div id="edit_lang" class="modal modal_material modal-fixed-footer">
+	<div id="lang_loader" class="modal_loader preloader-wrapper big active">
+		<div class="spinner-layer spinner-custom">
+			<div class="circle-clipper left">
+				<div class="circle"></div>
+			</div>
+			<div class="gap-patch">
+				<div class="circle"></div>
+			</div>
+			<div class="circle-clipper right">
+				<div class="circle"></div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-header z-depth-1">
+		<h4>Editar idioma</h4>
+		<span><i class="modal_close modal-action modal-close material-icons right">close</i></span>
+	</div>
+	<form class="col s12 row" method="post" action="/backend/langs/edit/" enctype="multipart/form-data" autocomplete="off">
+		<div class="modal-content">
+			<input id="edit_id_lang" type="hidden" name="edit_id_lang" />
+			<!-- Name -->
+			<div class="input-field col s12 m6">
+				<input id="edit_name_lang" name="edit_name_lang" type="text" class="validate" required>
+				<label for="edit_name_lang">Nombre</label>
+			</div>
+
+			<!-- Code -->
+			<div class="input-field col s12 m6">
+				<input id="edit_code_lang" name="edit_code_lang" type="text" class="validate" required>
+				<label for="edit_code_lang">Código de idioma</label>
+			</div>
+
+			<!-- Photo -->
+			<div class="file-field input-field col s12 m6">
+				<div class="btn">
+					<span>Bandera</span>
+					<input id="edit_flag_lang" name="edit_flag_lang" type="file">
+				</div>
+					<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
+				</div>
+			</div>
+
+			<!-- Photo Preview -->
+			<div class="col s12 m6 center-align">
+				<img id="editFlagImgViewer" class="imagePreview responsive-img" src="/static/img/img_not_available.png" alt=""/>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<!-- Submit -->
+			<div class="input field col s12 center-align submit_modal">
+				<button class="btn waves-effect waves-light" type="submit" name="edit_submit_lang">
+					<span>Editar</span>
+					<i class="material-icons right">send</i>
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

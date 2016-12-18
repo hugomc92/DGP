@@ -30,11 +30,22 @@ var Language = DBConnector.connectM4E().define('LANGUAGE', {
 			});
 		},
 		updateById: function(id) {
-			return Language.update( {
-				NAME: this.name,
-				FLAG: this.flag,
-				CODE: this.code
-			}, { where: { ID: id }});
+			if(this.flag === '') {
+				return Language.update( {
+					NAME: this.name,
+					CODE: this.code
+				}, { where: { ID: id }});
+			}
+			else {
+				return Language.update( {
+					NAME: this.name,
+					FLAG: this.flag,
+					CODE: this.code
+				}, { where: { ID: id }});
+			}
+		},
+		removeById: function(id) {
+			return Language.destroy( {where: {ID: id }});
 		}
 	},
 	freezeTableName: true

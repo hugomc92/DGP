@@ -22,6 +22,21 @@ LangService.prototype.initializeRouter = function() {
 			res.status(404).send("Lang not found");
 		});
 	});
+
+	self.router.route('/id/:id').get(function(req, res) {
+		var langId = req.params.id;
+
+		var lang = Language.build();
+
+		lang.retrieveById(langId).then(function(success) {
+			if(success)
+				res.json(success);
+			else
+				res.status(401).send("Lang not found");
+		}, function(err) {
+			res.status(404).send("Lang not found");
+		});
+	});
 };
 
 LangService.prototype.getRouter = function() {
