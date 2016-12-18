@@ -292,6 +292,13 @@ ContentController.prototype.initBackend = function() {
 						altImage.addSome(altTexts, img.ID).then(function(success) {
 							self.renderJson.msg = 'Imagen Añadida correctamente';
 
+							// Add the event to a new Activity Log
+							var ct = "Inserción";
+							var desc = "Se ha insertado una imagen al contenido con ID " + contentId;
+							var date = new Date();
+							var uid = self.renderJson.user.ID;
+							self.activityLogController.addNewActivityLog(ct, desc, date, uid);
+
 							res.redirect('/backend/contents/edit/' + contentId + '/');
 						}, function(err) {
 							self.renderJson.error = 'Error interno añadiendo los textos alternativos';
@@ -320,6 +327,80 @@ ContentController.prototype.initBackend = function() {
 
 			res.redirect('/backend/contents/edit/' + contentId + '/');
 		}
+	});
+
+	self.routerBackend.route('/delete').post(function(req, res) {
+		self.renderJson.user = req.session.user;
+
+		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
+			
+			var contentId = req.body.delete_id_content;
+			var delete_content = req.body.delete_content;
+
+			if(delete_content === 'yes') {
+				var image = Image.build();
+
+				image.retrieveAllByContentId(contentId).then(function(success) {
+					var images = success;
+
+					var imageIds = [];
+					for(var i=0; i<images.length; i++)
+						imageIds.push(images[i].ID);
+
+					var altImage = AltImage.build();
+
+					altImage.removeByImagesIds(imageIds).then(function(success) {
+						image.removeByContentId(contentId).then(function(success) {
+							var contentInformation = ContentInformation.build();
+
+							contentInformation.removeByContentId(contentId).then(function(success) {
+								var content = Content.build();
+
+								content.removeById(contentId).then(function(success) {
+									self.renderJson.msg = 'Contenido borrado correctamente';
+
+									// Add the event to a new Activity Log
+									var ct = "Borrado";
+									var desc = "Se ha eliminado el contenido con ID " + contentId;
+									var date = new Date();
+									var uid = self.renderJson.user.ID;
+									self.activityLogController.addNewActivityLog(ct, desc, date, uid);
+									
+									res.redirect('/backend/contents');
+								}, function(err) {
+									self.renderJson.error = 'Se ha producido un error interno borrando el contenido';
+									
+									res.redirect('/backend/contents');
+								});
+							}, function(err) {
+								self.renderJson.error = 'Se ha producido un error interno borrando la información del contenido';
+									
+								res.redirect('/backend/contents');
+							});
+						}, function(err) {
+							self.renderJson.error = 'Se ha producido un error interno borrando las imágenes del contenido';
+									
+							res.redirect('/backend/contents');
+						});
+					}, function(err) {
+						self.renderJson.error = 'Se ha producido un error interno borrando la información de las imágenes del contenido';
+									
+						res.redirect('/backend/contents');
+					});
+				}, function(err) {
+					self.renderJson.error = 'Se ha producido un error interno';
+									
+					res.redirect('/backend/contents');
+				});
+			}
+			else {
+				self.renderJson.msg = 'No se ha efectuado su acción';
+
+				res.redirect('/backend/contents');
+			}
+		}
+		else
+			res.redirect('/');
 	});
 };
 

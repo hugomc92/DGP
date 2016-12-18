@@ -49,6 +49,9 @@ var Content = DBConnector.connectM4E().define('CONTENT', {
 				LOCALIZATION_ID: this.locationId,
 				CONTENT_TYPE_ID: this.contentTypeID
 			}, {where: {ID: id}});
+		},
+		removeById: function(id) {
+			return Content.destroy({ where: { ID: id }});
 		}
 	},
 	freezeTableName: true

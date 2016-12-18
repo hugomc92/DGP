@@ -1,6 +1,11 @@
 $(document).ready(function() {
+	$('.modal-trigger').leanModal();
+
 	$('.modal-trigger').click(function() {
-		$('#delete_visit').openModal();
+		var visit = $(this).parent().parent().children()[1].innerHTML;
+
+		$("#delete_titulo").text('Se borrará la visita "' + visit + '"');
+
 		$('#delete_visit').find('#delete_id_guided_visit').val($(this).parent().parent().find('.id_visit').text());
 	});
 
