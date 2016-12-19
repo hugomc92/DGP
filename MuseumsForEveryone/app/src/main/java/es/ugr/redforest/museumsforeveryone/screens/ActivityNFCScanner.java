@@ -165,27 +165,4 @@ public class ActivityNFCScanner extends ActionBarActivity {
     }
 
 
-/*
-    @Override
-    public void onQRCodeRead(String text, PointF[] points) {
-
-        try {
-            int id_result = Integer.parseInt(text);
-            Intent mainIntent = new Intent(this, ActivityArtworkDisplay.class);
-            mainIntent.putExtra("id",text);
-            startActivity(mainIntent);
-
-        }catch (Exception e){
-
-            Vibrator v = (Vibrator) this.getSystemService(this.VIBRATOR_SERVICE);
-
-            v.vibrate(50);
-            Toast.makeText(this,getString(R.string.QR_Error),Toast.LENGTH_LONG).show();
-
-        }
-
-
-    }*/
-
-
 }

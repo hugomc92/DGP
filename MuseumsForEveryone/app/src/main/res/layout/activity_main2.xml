@@ -5,7 +5,8 @@
     android:id="@+id/DrawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    >
 
 
     <LinearLayout
@@ -24,6 +25,17 @@
             android:layout_height="wrap_content"
             android:src="@drawable/sombra" />
 
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="0dp"
+            card_view:cardElevation="4dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            card_view:cardBackgroundColor="@color/cardview_light_background"
+            android:layout_gravity="center">
         <ImageView
             android:id="@+id/fotoMain"
             android:layout_width="match_parent"
@@ -32,72 +44,80 @@
             android:scaleType="fitXY"
             android:src="@drawable/fondo_main"
             android:contentDescription="@string/description_Main_Photo"
-            android:layout_marginTop="10dp"
             android:cropToPadding="false" />
-        <ImageView
-            android:layout_marginTop="-12dp"
-            android:layout_marginBottom="-12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/sombra2" />
 
-        <RelativeLayout
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="340dp"
-            android:layout_height="110dp"
-            android:background="#fff"
-            android:onClick="launchInfoObras"
-            android:contentDescription="@string/scan_code_Accesibility">
-
-
-
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="0dp"
+            card_view:cardElevation="4dp"
+            card_view:cardBackgroundColor="@color/cardview_light_background"
+            android:layout_margin="5dp"
+            android:layout_gravity="center">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:background="#7f8099"
-                android:orientation="vertical"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true">
+                android:layout_height="110dp"
+                android:background="#fff"
+                android:onClick="launchInfoObras"
+                android:contentDescription="@string/scan_code_Accesibility">
 
-                <TextView
-                    android:text="@string/scann_code"
-                    android:textStyle="bold"
-                    android:textColor="#fff"
-                    android:gravity="center"
+
+
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_height="35dp"
+                    android:background="#7f8099"
+                    android:orientation="vertical"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true">
+
+                    <TextView
+                        android:text="@string/scann_code"
+                        android:textStyle="bold"
+                        android:textColor="#fff"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentStart="true" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/qr_code_variant"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"/>
+
+
             </RelativeLayout>
+        </android.support.v7.widget.CardView>
 
-            <ImageView
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:src="@drawable/qr_code_variant"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"/>
-
-
-        </RelativeLayout>
-        <ImageView
-            android:layout_marginTop="-12dp"
-            android:layout_marginBottom="-12dp"
-            android:layout_width="340dp"
-            android:layout_marginLeft="10dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/sombra2" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <RelativeLayout
-                android:layout_marginLeft="10dp"
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                card_view:cardCornerRadius="0dp"
+                android:layout_margin="10dp"
+                card_view:cardElevation="4dp"
+                card_view:cardBackgroundColor="@color/cardview_light_background"
+
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_gravity="center">
+            <RelativeLayout
                 android:layout_width="160dp"
                 android:layout_height="110dp"
                 android:background="#fff"
@@ -137,74 +157,72 @@
 
 
 
+
+
             </RelativeLayout>
+            </android.support.v7.widget.CardView>
 
 
 
-            <RelativeLayout
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_width="160dp"
-            android:layout_height="110dp"
-            android:background="#fff"
-            android:onClick="launchGuidedVisit"
-            android:contentDescription="@string/guided_visit_Accesibility">
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:background="#7f8099"
-                android:orientation="vertical"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                >
-
-                <TextView
-                    android:text="@string/guided_visit"
-                    android:textStyle="bold"
-                    android:textColor="#fff"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true" />
-            </RelativeLayout>
-
-            <ImageView
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:src="@drawable/ic_assistant_photo_black_24dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"/>
-
-
-        </RelativeLayout>
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_marginTop="-14dp"
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="160dp"
-                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
+                card_view:cardCornerRadius="0dp"
+                android:layout_margin="10dp"
+                card_view:cardElevation="4dp"
+                card_view:cardBackgroundColor="@color/cardview_light_background"
+
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/sombra2" />
-            <ImageView
-                android:layout_marginTop="-14dp"
-                android:layout_width="160dp"
-                android:layout_marginLeft="10dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/sombra2" />
+                android:layout_gravity="center">
+                <RelativeLayout
+                    android:layout_width="160dp"
+                    android:layout_height="110dp"
+                    android:background="#fff"
+                    android:contentDescription="@string/guided_visit_Accesibility"
+                    android:onClick="launchArtworkListActivity"
+                    >
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:background="#7f8099"
+                        android:orientation="vertical"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentStart="true"
+                        >
+
+                        <TextView
+                            android:text="@string/guided_visit"
+                            android:textStyle="bold"
+                            android:textColor="#fff"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentStart="true" />
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:src="@drawable/ic_assistant_photo_black_24dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"/>
+
+
+
+
+
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
 
 
         </LinearLayout>
-
 
 
     </LinearLayout>

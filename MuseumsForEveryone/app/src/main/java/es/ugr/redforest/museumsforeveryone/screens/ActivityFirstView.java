@@ -24,7 +24,7 @@ public class ActivityFirstView extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_first_view);
+		setContentView(R.layout.activity_first_view2);
 	}
 
 	/**
