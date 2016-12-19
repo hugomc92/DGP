@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	xmlns:card_view="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:background="#5d707f"
+	android:gravity="center_vertical">
+
+
+
+	<android.support.v7.widget.CardView
+		xmlns:card_view="http://schemas.android.com/apk/res-auto"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		card_view:cardCornerRadius="0dp"
+		card_view:cardElevation="4dp"
+		card_view:cardBackgroundColor="@color/cardview_light_background"
+		android:layout_margin="5dp"
+		android:layout_gravity="center"
+		android:onClick="buttonVisionProblems"
+		android:contentDescription="@string/sight_problems_description_card">
+
+		<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<ImageView
+				android:layout_width="110dp"
+				android:layout_gravity="center|top"
+				android:scaleType="fitXY"
+				android:src="@drawable/sight_problems"
+				android:cropToPadding="false"
+				android:layout_height="110dp"
+				android:layout_marginBottom="10dp"
+				android:layout_marginTop="10dp"/>
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="50dp"
+				android:orientation="vertical"
+				android:background="#7f8099"
+				android:elevation="3dp">
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="@string/talckback_option"
+					android:gravity="center"
+					android:textSize="30dp"
+					android:textColor="#ffff"
+					android:textStyle="bold"
+					android:layout_weight="0.5"/>
+
+			</LinearLayout>
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/sight_problems_description"
+				android:elevation="1dp"
+				android:layout_marginLeft="30dp"
+				android:layout_marginRight="30dp"
+				android:layout_marginTop="7dp"
+				android:paddingBottom="7dp"
+				android:gravity="center"/>
+		</LinearLayout>
+	</android.support.v7.widget.CardView>
+
+
+	<android.support.v7.widget.CardView
+		xmlns:card_view="http://schemas.android.com/apk/res-auto"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		card_view:cardCornerRadius="0dp"
+		card_view:cardElevation="4dp"
+		card_view:cardBackgroundColor="@color/cardview_light_background"
+		android:layout_margin="5dp"
+		android:layout_gravity="center"
+		android:onClick="buttonHearingProblems"
+		android:contentDescription="@string/hear_problems_description_card">
+
+		<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<ImageView
+				android:layout_width="110dp"
+				android:layout_gravity="center|top"
+				android:scaleType="fitXY"
+				android:src="@drawable/hear_problems"
+
+				android:cropToPadding="false"
+				android:layout_height="110dp"
+				android:layout_marginBottom="10dp"
+				android:layout_marginTop="10dp"/>
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="50dp"
+				android:orientation="vertical"
+				android:background="#7f8099"
+				android:elevation="3dp">
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="@string/sign_language"
+					android:gravity="center"
+					android:textSize="30dp"
+					android:textColor="#ffff"
+					android:textStyle="bold"
+					android:layout_weight="0.5"/>
+
+			</LinearLayout>
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/hear_problems_description"
+				android:elevation="1dp"
+				android:layout_marginLeft="30dp"
+				android:layout_marginRight="30dp"
+				android:layout_marginTop="7dp"
+				android:gravity="center"
+				android:paddingBottom="7dp"/>
+		</LinearLayout>
+	</android.support.v7.widget.CardView>
+</LinearLayout>

@@ -71,6 +71,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".screens.ActivityInstructionsSlides"/>
         <activity android:name=".screens.ActivityInstructionsMain"/>
+        <activity android:name=".screens.ActivityInstructionsSightProblems"/>
     </application>
 
 </manifest>

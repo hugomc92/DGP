@@ -25,7 +25,7 @@ public class ActivityAccessibility extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_accessibility);
+		setContentView(R.layout.activity_accessibility2);
 	}
 
 	/**
@@ -38,7 +38,7 @@ public class ActivityAccessibility extends AppCompatActivity {
 	public void buttonVisionProblems(View v){
 		ControllerPreferences preferences= ControllerPreferences.getInstance();
 		preferences.savePreferencesDisability(this,1);
-		Intent instructionIntent = new Intent(ActivityAccessibility.this, ActivityInstructions.class);
+		Intent instructionIntent = new Intent(ActivityAccessibility.this, ActivityInstructionsSightProblems.class);
 		instructionIntent.putExtra("FirstTime","True");
 		startActivity(instructionIntent);
 	}

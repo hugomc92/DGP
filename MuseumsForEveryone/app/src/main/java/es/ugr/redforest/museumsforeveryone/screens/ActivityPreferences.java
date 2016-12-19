@@ -6,13 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 
 import es.ugr.redforest.museumsforeveryone.R;
+import es.ugr.redforest.museumsforeveryone.utils.SliderMenu;
 
 public class ActivityPreferences extends AppCompatActivity {
-
+    //SliderMenu mySlide = new SliderMenu(this,this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preferences);
+        setContentView(R.layout.activity_preferences2);
+
+        //mySlide.inicializarToolbar(R.menu.menu_main,getString(R.string.app_name));
     }
 
     /**
@@ -48,5 +51,13 @@ public class ActivityPreferences extends AppCompatActivity {
     public void launchAccesibility(View v){
         Intent accessibilityIntent = new Intent(ActivityPreferences.this, ActivityAccessibilityPreferences.class);
         startActivity(accessibilityIntent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(mainIntent);
+
     }
 }

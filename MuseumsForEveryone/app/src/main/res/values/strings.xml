@@ -71,5 +71,17 @@
     <string name="error_reading_NFC">No se ha encontrado código NFC</string>
     <string name="invalid_NFC_code">El código NFC no es válido</string>
     <string name="NFC_code_not_found">No se ha encontrado código NFC</string>
+    <string name="accesibility_description">Opciones de accesibilidad. Ajuste las herramientas de accesibilidad disponibles.Botón.</string>
+    <string name="enter_museum_description">Entrar al contenido principal de la aplicación. Botón.</string>
+    <string name="accesibility_description_card">Opciones de accesibilidad. \nAjuste las herramientas de accesibilidad disponibles.</string>
+    <string name="enter_museum_description_card">Entrar al contenido principal de la aplicación.</string>
+    <string name="talckback_option">Narrador de voz</string>
+    <string name="sign_language">Lenguaje de signos</string>
+    <string name="sight_problems_description">Textos alternativos en todas las imágenes y los videos de la aplicación.</string>
+    <string name="sight_problems_description_card">Textos alternativos en todas las imágenes y los videos de la aplicación.Botón.</string>
+    <string name="hear_problems_description">Textos adaptados y videos en lenguaje de signos.</string>
+    <string name="hear_problems_description_card">Textos adaptados y videos en lenguaje de signos.Botón.</string>
+    <string name="talckback_enabled">Se ha activado la narración de textos alternativos en imágenes y vídeos.</string>
+    <string name="preferences_description">Para volver a ajustar las opciones de accesibilidad, el idioma o volver a visualizar las instrucciones vaya en cualquier momento a preferencias.</string>
 
 </resources>
