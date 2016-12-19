@@ -13,7 +13,7 @@ app.use(compression());
 app.use(helmet());
 
 // sesion of 10 min
-var sessionTimeout = 10 * 60 * 1000;
+var sessionTimeout = 120 * 60 * 1000;
 app.use(session({
 	secret: '}]QrgL{MWT8vE8F?t&?S',
 	resave: false,

@@ -588,6 +588,73 @@ ContentService.prototype.initializeRouter = function() {
 			res.json(jsonResObj);
 		}
 	});
+
+	self.router.route('/alt_images/id/:id').get(function(req, res) {
+
+		var imageId = req.params.id;
+
+		var user = req.session.user;
+
+		var jsonResObj = {};
+
+		if(typeof user !== 'undefined' && user.ADMIN) {
+			var altImage = AltImage.build();
+
+			altImage.retrieveAllByImageId(imageId).then(function(success) {
+				if(success.length > 0)
+					jsonResObj.altTexts = success;
+				else
+					jsonResObj.altTexts = 'failed';
+
+				res.json(jsonResObj);	
+			}, function(err) {
+				jsonResObj.ok = 'failed';
+
+				res.json(jsonResObj);
+			});
+		}
+		else {
+			jsonResObj.ok = 'not_allowed';
+
+			res.json(jsonResObj);
+		}
+	});
+
+	self.router.route('/delete_image/:imageId').post(function(req, res) {
+		
+		var imageId = req.params.imageId;
+
+		var user = req.session.user;
+
+		var jsonResObj = {};
+
+		if(typeof user !== 'undefined' && user.ADMIN) {
+			var altImage = AltImage.build();
+
+			altImage.removeByImageId(imageId).then(function(success) {
+				var image = Image.build();
+
+				image.removeById(imageId).then(function(success) {
+					jsonResObj.ok = 'ok';
+
+					res.json(jsonResObj);
+				}, function(err) {
+					jsonResObj.ok = 'failed';
+
+					res.json(jsonResObj);
+				});
+			}, function(err) {
+				jsonResObj.ok = 'failed';
+
+				res.json(jsonResObj);
+			})
+		}
+		else {
+			jsonResObj.ok = 'not_allowed';
+
+			res.json(jsonResObj);
+		}
+	});
 };
 
 ContentService.prototype.getRouter = function() {

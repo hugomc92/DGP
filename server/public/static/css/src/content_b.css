@@ -142,6 +142,15 @@ main {
 #contents .multimedia .content_multimedia li {
   text-align: center;
   margin: 10px auto;
+  position: relative;
+}
+#contents .multimedia .content_multimedia li:hover .multimedia_actions {
+  max-height: 100px;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
 }
 #contents .multimedia .content_multimedia li:hover .multimedia_actions .btn-floating {
   max-height: 100px;
@@ -154,10 +163,28 @@ main {
   padding: 5px;
   margin-top: -31px;
   background: rgba(0, 0, 0, 0.65);
-  z-index: 100;
+  z-index: 85;
   position: relative;
   /* margin: 0; */
   color: white;
+}
+#contents .multimedia .content_multimedia li .multimedia_actions {
+  max-height: 0;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  #contents .multimedia .content_multimedia li .multimedia_actions {
+    max-height: 100px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  #contents .multimedia .content_multimedia li .multimedia_actions {
+    max-height: 100px;
+  }
 }
 #contents .multimedia .content_multimedia li .multimedia_actions .btn-floating {
   background: #18405d;
@@ -240,4 +267,25 @@ main {
 #materialbox-overlay {
   opacity: 0.93 !important;
   background: #121212 !important;
+}
+.del_loader {
+  display: none;
+  position: absolute;
+  z-index: 85;
+  width: 100px !important;
+  height: 100px !important;
+  left: calc(50% - 50px);
+  top: calc(50% - 100px);
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.del_loader .spinner-custom {
+  color: #ffab91 !important;
+  border-color: #ffab91 !important;
+}
+.del_loader .spinner-custom .circle {
+  border-width: 5px !important;
 }
