@@ -647,7 +647,7 @@ ContentService.prototype.initializeRouter = function() {
 				jsonResObj.ok = 'failed';
 
 				res.json(jsonResObj);
-			})
+			});
 		}
 		else {
 			jsonResObj.ok = 'not_allowed';
