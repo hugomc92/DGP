@@ -86,9 +86,8 @@ ContentService.prototype.initializeRouter = function() {
 
 									altImage.retrieveAllByImageIdsByLangId(imageIds, langId).then(function(success) {
 										var imagesAltText = success;
-
-										console.log('altTexts', imagesAltText);
 										
+																		
 										for(var i=0; i<contents.length; i++) {
 											var contentInfo;
 											var contentImages = [];

@@ -45,6 +45,9 @@ var ContentInformation = DBConnector.connectM4E().define('CONTENT_INFORMATION', 
 				DESCRIPTION: this.description,
 				BLIND_DESCRIPTION: this.blindDescription,
 			}, {where: {ID: id}});
+		},
+		removeByContentId: function(contentId) {
+			return ContentInformation.destroy({where: {CONTENT_ID: contentId}});
 		}
 	},
 	freezeTableName: true

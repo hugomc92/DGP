@@ -27,6 +27,21 @@ ContentTypeService.prototype.initializeRouter = function() {
 			res.send("No se ha podido completar su solicitud");
 		});
 	});
+
+	self.router.route('/id/:id').get(function(req, res) {
+		var contentTypeId = req.params.id;
+
+		var contentType = ContentType.build();
+		
+		contentType.retrieveById(contentTypeId).then(function(result) {
+			if(result) 
+				res.json(result);
+			else
+				res.status(401).send("Content Type Not found");
+		}, function(error) {
+			res.status(404).send("Content Type Not found");
+		});
+	});
 };
 
 ContentTypeService.prototype.getRouter = function() {

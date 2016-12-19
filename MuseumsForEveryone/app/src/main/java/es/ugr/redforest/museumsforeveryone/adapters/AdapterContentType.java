@@ -20,6 +20,7 @@ import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
  * Adapter used in RecyclerView to display a list of Content Types
  *
  * @author Miguel Ángel Torres López
+ * @author Emilio Chica Jiénez
  * @version 1.0.0
  * @see ContentType
  * @see RecyclerView
@@ -36,6 +37,7 @@ public class AdapterContentType extends RecyclerView.Adapter<AdapterContentType.
      * ViewHolder needed to handle how to show elements
      *
      * @author Miguel Angel Torres Lopez
+     * @author Emilio Chica Jiénez
      * @version 1.0.0
      * @see "layout/lang_list_row.xml"
      */

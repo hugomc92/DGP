@@ -69,6 +69,9 @@ var AltImage = DBConnector.connectM4E().define('ALT_IMAGE', {
 		},
 		removeById: function(altImageId) {
 			return AltImage.destroy({where: {ID: altImageId}});
+		},
+		removeByImagesIds: function(imagesIds) {
+			return AltImage.destroy({ where: {IMAGE_ID: {in: imagesIds}}});
 		}
 	},
 	freezeTableName: true

@@ -425,7 +425,7 @@ function send_data(form) {
 				Materialize.toast('Se ha guardado el contenido con éxito', 4000);
 
 				contentId = jsondata.contentId;
-				form.parent().attr('info-id', jsondata.contentInfoId);
+				form.parent().parent().attr('info-id', jsondata.contentInfoId);
 
 				// Save ContentId && Modify all forms
 				if(action === 'add') {

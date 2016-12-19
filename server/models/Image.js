@@ -44,6 +44,9 @@ var Image = DBConnector.connectM4E().define('IMAGE', {
 		},
 		removeById: function(imageId) {
 			return Image.destroy({where: {ID: imageId}});
+		},
+		removeByContentId: function(contentId) {
+			return Image.destroy({where: {CONTENT_ID: contentId}});
 		}
 	},
 	freezeTableName: true

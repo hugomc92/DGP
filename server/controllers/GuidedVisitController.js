@@ -5,8 +5,11 @@ var fs = require('fs');
 var path = require('path');
 
 var Utils = require('../utils/Util');
+var Language = require('../models/Language');
 var GuidedVisit = require('../models/GuidedVisit');
 var GuidedVisitInfo = require('../models/GuidedVisitInfo');
+var LocalizationVisit = require('../models/LocalizationVisit');
+var Localization = require('../models/Localization');
 
 // Constructor for ContentTypeController
 function GuidedVisitController(json, activityLogC, localizationC) {
@@ -29,13 +32,55 @@ GuidedVisitController.prototype.initBackend = function () {
 	var self = this;
 
 	self.routerBackend.route('/').get(function(req, res) {
-		self.renderJson.breadcrumb = {'LINK': '/backend/contentTypes/', 'SECTION': 'Visitas Guiadas'};
+		self.renderJson.breadcrumb = {'LINK': '/backend/guided_visits/', 'SECTION': 'Visitas Guiadas'};
 		self.renderJson.user = req.session.user;
 
 		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
-			
-			res.render('pages/backend/guided_visits', self.renderJson);
-			self.clearMessages();
+			var guidedVisit = GuidedVisit.build();
+
+			guidedVisit.retrieveAll().then(function(success) {
+				var visits = success;
+
+				var visitIds = [];
+				for(var i=0; i<visits.length; i++)
+					visitIds.push(visits[i].ID);
+
+				var guidedVisitInfo = GuidedVisitInfo.build();
+
+				guidedVisitInfo.retrieveByVisitIdList(visitIds).then(function(success) {
+					var visitInfos = success;
+
+					var langIds = [];
+					for(var i=0; i<visitInfos.length; i++)
+						langIds.push(visitInfos[i].LANG_ID);
+
+					var language = Language.build();
+
+					language.retrieveAllByListIds(langIds).then(function(success) {
+						var langs = success;
+
+						self.renderJson.visits = visits;
+						self.renderJson.visitInfos = visitInfos;
+						self.renderJson.langs = langs;
+
+						res.render('pages/backend/guided_visits', self.renderJson);
+						self.clearMessages();
+					}, function(err) {
+						self.renderJson.error = 'Error interno recuperando los idiomas de las visitas';
+
+						res.redirect('/backend/');
+					});
+				}, function(err) {
+					self.renderJson.error = 'Error interno recuperando la información de las visitas';
+
+					res.redirect('/backend/');
+				});
+				
+			}, function(err) {
+				self.renderJson.error = 'Error interno recuperando las visitas';
+
+				res.redirect('/backend/');
+			});
 		}
 		else {
 			res.redirect('/');
@@ -65,6 +110,120 @@ GuidedVisitController.prototype.initBackend = function () {
 			res.redirect('/');
 		}
 	});
+
+	self.routerBackend.route('/edit/:id').get(function(req, res) {
+
+		var visitId = req.params.id;
+
+		self.renderJson.breadcrumb = {'LINK': '/backend/guided_visits/', 'SECTION': 'Visitas Guiadas'};
+
+		self.renderJson.moreContent = {'LINK': '/backend/guided_visits/edit/' + visitId + '/', 'SECTION': 'Editar Visita'};
+		self.renderJson.user = req.session.user;
+
+		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
+		
+			var guidedVisit = GuidedVisit.build();
+
+			guidedVisit.retrieveById(visitId).then(function(success) {
+				self.renderJson.visit = success;
+
+				var guidedVisitInfo = GuidedVisitInfo.build();
+
+				guidedVisitInfo.retrieveByVisitId(visitId).then(function(success) {
+					self.renderJson.visitInfos = success;
+
+					var langIds = [];
+					for(var i=0; i<success.length; i++)
+						langIds.push(success[i].LANG_ID);
+
+					var language = Language.build();
+
+					language.retrieveAllByListIds(langIds).then(function(success) {
+						self.renderJson.langs = success;
+
+						self.localizationController.getAllLocalizations().then(function(success) {
+							self.renderJson.locations = success;
+
+							var localizationVisit = LocalizationVisit.build();
+
+							localizationVisit.retrieveAllByVisitId(visitId).then(function(success) {
+								self.renderJson.locationsVisit = success;
+								
+								res.render('pages/backend/guided_visit', self.renderJson);
+								self.clearMessages();
+							}, function(err) {
+
+							});
+						}, function(err) {
+							self.renderJson.error = 'Se ha producido un error interno';
+
+							res.redirect('/backend/guided_visits/');
+						});
+					}, function(err) {
+						self.renderJson.error = 'Se ha producido un error interno recuperando los idiomas de la visita';
+
+						res.redirect('/backend/guided_visits/');
+					});
+				}, function(err) {
+					self.renderJson.error = 'Se ha producido un error interno recuperando la información de la visita';
+
+					res.redirect('/backend/guided_visits/');
+				});
+			}, function(err) {
+				self.renderJson.error = 'Se ha producido un error interno recuperando la visita';
+
+				res.redirect('/backend/guided_visits/');
+			});
+		}
+		else
+			res.redirect('/');
+	});
+
+	self.routerBackend.route('/delete').post(function(req, res) {
+		console.log('delete', req.body);
+
+		self.renderJson.user = req.session.user;
+
+		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
+			var idVisit = req.body.delete_id_guided_visit;
+			var delete_visit = req.body.delete_guided_visit;
+
+			if(delete_visit === 'yes') {
+				var localizationVisit = LocalizationVisit.build();
+
+				localizationVisit.deleteByVisitId(idVisit).then(function(success) {
+					var guidedVisitInfo = GuidedVisitInfo.build();
+
+					guidedVisitInfo.deleteByVisitId(idVisit).then(function(success) {
+						var guidedVisit = GuidedVisit.build();
+
+						guidedVisit.deleteById(idVisit).then(function(success) {
+							self.renderJson.msg = 'Se ha borrado correctamente la visita';
+
+							res.redirect('/backend/guided_visits/');
+						}, function(err) {
+							self.renderJson.error = 'Se ha producido un error interno borrando la información de la visita';
+
+							res.redirect('/backend/guided_visits/');
+						});
+					}, function(err) {
+						self.renderJson.error = 'Se ha producido un error interno borrando las localizaciones de la visita';
+
+						res.redirect('/backend/guided_visits/');
+					});
+				}, function(err) {
+
+				});
+			}
+			else {
+				self.renderJson.error = 'No se ha efectuado su acción';
+
+				res.redirect('/backend/guided_visits/');
+			}
+		}
+		else
+			res.redirect('/');
+	});
 };
 
 // Get the Backend router
@@ -82,6 +241,13 @@ GuidedVisitController.prototype.clearMessages = function() {
 	delete this.renderJson.msg;
 	delete this.renderJson.error;
 	delete this.renderJson.moreContent;
+
+	delete this.renderJson.visits;
+	delete this.renderJson.visitsInfos;
+	delete this.renderJson.langs;
+
+	delete this.renderJson.locations;
+	delete this.renderJson.visit;
 };
 
 module.exports = GuidedVisitController;

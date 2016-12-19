@@ -98,10 +98,6 @@ LangController.prototype.initBackend = function() {
 
 			var lang = Language.build();
 
-			console.log("name", name);
-			console.log("flag", flag);
-			console.log("code", code);
-
 			lang.add(name, flag, code).then(function(success) {
 				self.renderJson.msg = 'Idioma añadido correctamente';
 
@@ -122,19 +118,17 @@ LangController.prototype.initBackend = function() {
 			res.redirect('/');
 	});
 
-	self.routerBackend.route('/edit').post(upload.array('edit_photo_user', 1), function(req, res) {
+	self.routerBackend.route('/edit').post(upload.array('edit_flag_lang', 1), function(req, res) {
 		self.renderJson.user = req.session.user;
 
 		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
-			var user = Lang.build();
+			var lang = Language.build();
 
-			var id_user = req.body.edit_id_user;
+			var id_lang = req.body.edit_id_lang;
 
-			user.email = req.body.edit_email_user;
-			user.password = req.body.edit_password_user;
-			user.name = req.body.edit_name_user;
-			user.surname = req.body.edit_surname_user;
-			user.photo = req.body.edit_photo_anterior_user;
+			lang.name = req.body.edit_name_lang;
+			lang.flag = '';
+			lang.code = req.body.edit_code_lang;
 
 			// Check if there're files to upload
 			if(req.files.length > 0) {
@@ -169,15 +163,15 @@ LangController.prototype.initBackend = function() {
 				});
 
 				// Path to the file, to be sabed in DB
-				user.photo = '/static/img/langs/' + file;
+				lang.flag = '/static/img/langs/' + file;
 			}
 
-			user.updateById(id_user).then(function(result) {
-				self.renderJson.msg = 'Se ha editado correctamente';
+			lang.updateById(id_lang).then(function(result) {
+				self.renderJson.msg = 'Idioma editado correctamente';
 
 				// Add the event to a new Activity Log
 				var ct = "Edición";
-				var desc = "Se ha editado al usuario " + user.name + " " + user.surname;
+				var desc = "Se ha editado el idioma " + lang.name;
 				var date = new Date();
 				var uid = self.renderJson.user.ID;
 				self.activityLogController.addNewActivityLog(ct, desc, date, uid);
@@ -196,17 +190,17 @@ LangController.prototype.initBackend = function() {
 		self.renderJson.user = req.session.user;
 
 		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
-			var id_user = req.body.delete_id_user;
-			var delete_user = req.body.delete_user;
+			var id_lang = req.body.delete_id_lang;
+			var delete_lang = req.body.delete_lang;
 
-			if(delete_user === 'yes') {
-				var user = Lang.build();
+			if(delete_lang === 'yes') {
+				var lang = Language.build();
 
-				// Get the user to get the photo to delete
-				user.retrieveById(id_user).then(function(result) {
+				// Get the lang to get the photo to delete
+				lang.retrieveById(id_lang).then(function(result) {
 					// delete the photo
-					if(result.PHOTO !== '/static/img/img_not_available.png') {
-						var dst = path.join(__dirname, '..', 'public') + result.PHOTO;
+					if(result.FLAG !== '/static/img/img_not_available.png') {
+						var dst = path.join(__dirname, '..', 'public') + result.FLAG;
 
 						fs.unlink(dst, function(error) {
 							if(error)
@@ -216,14 +210,14 @@ LangController.prototype.initBackend = function() {
 						});
 					}
 
-					var deleted_user = Lang.build();
+					var deleted_lang = Language.build();
 
-					deleted_user.removeById(id_user).then(function(result) {
-						self.renderJson.msg = 'Se ha eliminado correctamente';
+					deleted_lang.removeById(id_lang).then(function(result) {
+						self.renderJson.msg = 'Idioma eliminado correctamente';
 
 						// Add the event to a new Activity Log
 						var ct = "Borrado";
-						var desc = "Se ha eliminado al usuario con ID " + id_user;
+						var desc = "Se ha eliminado el idioma con ID " + id_lang;
 						var date = new Date();
 						var uid = self.renderJson.user.ID;
 						self.activityLogController.addNewActivityLog(ct, desc, date, uid);

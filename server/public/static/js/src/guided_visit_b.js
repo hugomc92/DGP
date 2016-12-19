@@ -5,6 +5,7 @@ var visitId;
 var locations;
 var selectLocation;
 var action;
+var photoAdd;
 
 $(document).ready(function() {
 
@@ -13,12 +14,16 @@ $(document).ready(function() {
 	else 
 		action = 'edit';
 
+	console.log('action', action);
+
 	if(action === 'edit') {
 		$('.image_visit').removeAttr('required');
 	}
 
 	if($('#visits').attr('visit-id') !== '')
 		visitId = $('#visits').attr('visit-id');
+
+	console.log('visitId', visitId);
 
 	$.ajax({
 		type: "GET",
@@ -40,7 +45,7 @@ $(document).ready(function() {
 		success: function(jsondata) {
 			locations = jsondata;
 
-			selectLocation = '<option value="" disabled selected>Localización de la Visita</option>';
+			selectLocation = '<option value="" disabled selected>Añadir Localización</option>';
 			
 			for(var i=0; i<locations.length; i++) {
 				selectLocation += '<option value="' + locations[i].ID + '">' + locations[i].DESCRIPTION + '</option>';
@@ -53,8 +58,6 @@ $(document).ready(function() {
 			console.log(status);
 		}
 	});
-
-	
 
 	var elems = $('.info_form').parent().parent();
 
@@ -197,6 +200,10 @@ $(document).ready(function() {
 			
 			$('#' + lang.NAME.toLowerCase() + '_visit').find('.materialboxed').materialbox();
 
+			if(action === 'edit') {
+				$('.image_visit').removeAttr('required');
+			}
+
 			initilizeForm($('#' + lang.NAME.toLowerCase() + '_visit'), langId);
 		}
 
@@ -218,10 +225,23 @@ function initilizeForm(elem, langId) {
 
 	imagePrevisualization(form.find('#visit_image'), form.find('#visitImagePreview'));
 
+	if(action === 'edit') {
+		form.find('#visitImagePreview').attr('src', photoAdd);
+	}
+
 	form.submit( function( e ) {
 		var langId = form.parent().parent().attr('visit-lang');
 
 		form.find('#visit_lang').val(langId);
+
+		photoAdd = form.find('#visitImagePreview').attr('src');
+
+		if(action === 'edit') {
+			var visitInfoId = form.parent().parent().attr('info-id');
+
+			form.find('#info_id').val(visitInfoId);
+			form.find('#visit_id').val(visitId);
+		}
 
 		$.ajax( {
 			url: '/api/guided_visit/' + action  + '?email="+$("#email").text()',
@@ -237,15 +257,20 @@ function initilizeForm(elem, langId) {
 					Materialize.toast('No tiene los permisos suficientes para añadir una visita', 4000);
 				}
 				else {
-					Materialize.toast('La visita se ha añadido con éxito', 4000);
+					Materialize.toast('Se ha guardado la visita con éxito', 4000);
+
+					visitId = jsondata.visitId;
+
+					form.find('#visit_id').val(visitId);
+					form.parent().parent().attr('info-id', jsondata.visitInfoId);
 
 					if(action === 'add') {
 						action = 'edit';
 						
 						$('.image_visit').removeAttr('required');
-
-						// visitId = jsondata.ok;
 					}
+
+					$('.imagePreview').attr('src', photoAdd);
 				}
 			},
 			error : function(xhr, status) {

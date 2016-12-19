@@ -250,13 +250,21 @@ GuidedVisitService.prototype.initializeRouter = function() {
 						var guidedVisitInfo = GuidedVisitInfo.build();
 
 						guidedVisitInfo.add(gv.ID, visitName, visitDescription, visitBlindDescription, visitImageAltText, visitLang).then(function(success) {
-							
-							var localizationVisit = LocalizationVisit.build();
+							guidedVisitInfo.retrieveLast().then(function(success) {
+								var gVI = success;
 
-							localizationVisit.addSome(locationOrder, gv.ID).then(function(success) {
-								jsonResObj.ok = 'ok';
+								var localizationVisit = LocalizationVisit.build();
 
-								res.json(jsonResObj);
+								localizationVisit.addSome(locationOrder, gv.ID).then(function(success) {
+									jsonResObj.visitId = gv.ID;
+									jsonResObj.visitInfoId = gVI.ID;
+
+									res.json(jsonResObj);
+								}, function(err) {
+									jsonResObj.ok = 'failed';
+
+									res.json(jsonResObj);
+								});
 							}, function(err) {
 								jsonResObj.ok = 'failed';
 
@@ -300,6 +308,8 @@ GuidedVisitService.prototype.initializeRouter = function() {
 		var jsonResObj = {};
 
 		if(typeof user !== 'undefined' && parseInt(user.ADMIN)) {
+			var newImage = '';
+
 			// Check if there's files to upload
 			if(req.files.length > 0) {
 				var file = Utils.normalizeStr(req.files[0].originalname);
@@ -334,16 +344,109 @@ GuidedVisitService.prototype.initializeRouter = function() {
 				});
 
 				// Path to the file, to be sabed in DB
-				var newImage = '/static/img/guided_visits/' + file;
+				newImage = '/static/img/guided_visits/' + file;
+			}
 
-				jsonResObj.ok = 'ok';
+			var visitId = req.body.visit_id;
+			var visitInfoId = req.body.info_id;
+			var visitLang = req.body.visit_lang;
+			var visitName = req.body.visit_name;
+			var visitImageAltText = req.body.visit_image_alt_text;
+			var visitDescription = req.body.visit_description;
+			var visitBlindDescription = req.body.visit_description;
 
-				res.json(jsonResObj);
+			var locationOrder = [];
+
+			for(var key in req.body) {
+				if(key.indexOf('visit_location') > -1) {
+					var keyRes = key.split('_');
+					var ord = keyRes[keyRes.length-1];
+
+					locationOrder.push( {
+						locationId: req.body[key],
+						order: ord
+					});
+				}
+			}
+
+			var guidedVisitInfo = GuidedVisitInfo.build();
+
+			if(visitInfoId === '') {
+				guidedVisitInfo.add(visitId, visitName, visitDescription, visitBlindDescription, visitImageAltText, visitLang).then(function(success) {
+					guidedVisitInfo.retrieveLast().then(function(success) {
+						var gVI = success;
+
+						var localizationVisit = LocalizationVisit.build();
+
+						localizationVisit.updateSome(visitId, locationOrder).then(function(success) {
+							if(newImage !== '') {
+								var guidedVisit = GuidedVisit.build();
+
+								guidedVisit.photo = newImage;
+
+								guidedVisit.updateById(visitId).then(function(success) {
+									jsonResObj.visitId = visitId;
+									jsonResObj.visitInfoId = gVI.ID;
+
+									res.json(jsonResObj);
+								}, function(err) {
+									jsonResObj.ok = 'failed';
+
+									res.json(jsonResObj);
+								});
+							}
+						}, function(err){
+							jsonResObj.ok = 'failed';
+
+							res.json(jsonResObj);
+						});
+					}, function(err){
+						jsonResObj.ok = 'failed';
+
+						res.json(jsonResObj);
+					});
+				}, function(err) {
+					jsonResObj.ok = 'failed';
+
+					res.json(jsonResObj);
+				});
 			}
 			else {
-				jsonResObj.ok = 'failed';
+				guidedVisitInfo.name = visitName;
+				guidedVisitInfo.description = visitDescription;
+				guidedVisitInfo.blindDescription = visitBlindDescription;
+				guidedVisitInfo.photoAltText = visitImageAltText;
 
-				res.json(jsonResObj);
+				guidedVisitInfo.updateById(visitInfoId).then(function(success) {
+					var localizationVisit = LocalizationVisit.build();
+							
+					localizationVisit.updateSome(visitId, locationOrder).then(function(success) {
+						if(newImage !== '') {
+							var guidedVisit = GuidedVisit.build();
+
+							guidedVisit.photo = newImage;
+
+							guidedVisit.updateById(visitId).then(function(success) {
+								jsonResObj.visitId = visitId;
+								jsonResObj.visitInfoId = gVI.ID;
+
+								res.json(jsonResObj);
+							}, function(err) {
+								jsonResObj.ok = 'failed';
+
+								res.json(jsonResObj);
+							});
+						}
+					}, function(err){
+						jsonResObj.ok = 'failed';
+
+						res.json(jsonResObj);
+					});
+				}, function(err) {
+					jsonResObj.ok = 'failed';
+
+					res.json(jsonResObj);
+				});
 			}
 		}
 		else {

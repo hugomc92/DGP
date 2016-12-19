@@ -23,6 +23,21 @@ LocalizationService.prototype.initializeRouter = function() {
 				res.send("No se ha podido completar su solicitud");
 		});
 	});
+
+	self.router.route('/id/:id').get(function(req, res) {
+		var locationId = req.params.id;
+
+		var localization = Localization.build();
+		
+		localization.retrieveById(locationId).then(function(result) {
+			if(result) 
+				res.json(result);
+			else
+				res.status(401).send("Localization Not found");
+		}, function(error) {
+			res.status(404).send("Localization Not found");
+		});
+	});
 };
 
 LocalizationService.prototype.getRouter = function() {

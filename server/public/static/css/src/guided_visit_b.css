@@ -132,6 +132,7 @@ main {
 #visits .info_form #imgPreview img {
   display: block;
   margin: 0 auto;
+  margin-top: 20px;
 }
 #visits .info_form #visit_locations {
   margin: 0;
