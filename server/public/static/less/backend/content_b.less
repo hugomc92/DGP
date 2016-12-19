@@ -209,12 +209,17 @@ main {
 						}
 
 						&.edit_multimedia {
-							margin-right: 5px;
+							margin-right: 50%;
+
+							@media @tablet {
+								margin-right: 10px;
+							}
+
+							@media @mobile {
+								margin-right: 10px;
+							}
 						}
 
-						&.remove_multimedia {
-							margin-left: 5px;
-						}
 					}
 				}
 

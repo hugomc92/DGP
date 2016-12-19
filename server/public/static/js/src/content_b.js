@@ -438,6 +438,12 @@ function initilizeMultimediaImage(elem) {
 					setTimeout(function() { 
 						elem.animate( { 'opacity': '0', left: "-=100", height: "toggle" }, 500, function(){ elem.remove();
 						Materialize.toast('Se ha eliminado la foto correctamente', 4000); }); 
+
+						$('.img_content .content_multimedia li').each(function() {
+							if($(this).find('.materialboxed').attr('pic') === imageId) {
+								$(this).remove();
+							}
+						});
 					}, 500);
 				}
 			},

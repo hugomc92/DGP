@@ -219,10 +219,17 @@ main {
   background: #345f7f;
 }
 #contents .multimedia .content_multimedia li .multimedia_actions .btn-floating.edit_multimedia {
-  margin-right: 5px;
+  margin-right: 50%;
 }
-#contents .multimedia .content_multimedia li .multimedia_actions .btn-floating.remove_multimedia {
-  margin-left: 5px;
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  #contents .multimedia .content_multimedia li .multimedia_actions .btn-floating.edit_multimedia {
+    margin-right: 10px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  #contents .multimedia .content_multimedia li .multimedia_actions .btn-floating.edit_multimedia {
+    margin-right: 10px;
+  }
 }
 #contents .multimedia .content_multimedia li .add_multimedia {
   height: 100px;
