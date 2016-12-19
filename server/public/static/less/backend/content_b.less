@@ -141,6 +141,17 @@ main {
 				&:hover {
 					.multimedia_actions {
 						max-height: 100px;
+						margin-top: -85px;
+						z-index: 85;
+    					position: relative;
+
+						@media @tablet {
+							margin-top: 0;
+						}
+
+						@media @mobile {
+							margin-top: 0;
+						}
 
 						.transition(all 0.3s);
 
@@ -284,7 +295,7 @@ main {
 	width: 100px !important;
 	height: 100px !important;
 	left: ~"calc(50% - 50px)";
-	top: ~"calc(50% - 100px)";
+	top: ~"calc(50% - 50px)";
 
 	.transition(all 0.5s);
 
