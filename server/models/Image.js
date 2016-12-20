@@ -38,8 +38,7 @@ var Image = DBConnector.connectM4E().define('IMAGE', {
 		},
 		updateById: function(imageId) {
 			return Image.update({
-				URL: this.url,
-				CONTENT_ID: this.contentId,
+				URL: this.url
 			}, {where: {ID: imageId}});
 		},
 		removeById: function(imageId) {

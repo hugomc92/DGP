@@ -42,7 +42,7 @@
 				<div id="more_langs" class="col s1"><a class="modal-trigger waves-effect waves-light"><i class="material-icons">add</i></a></div>
 				
 				<!-- All tabs content -->
-				<div id="contents" content-id="<% if(typeof(cont) !== 'undefined') { %> <%= cont.ID %> <% } %>">
+				<div id="contents" content-id="<% if(typeof(cont) !== 'undefined') { %><%= cont.ID %><% }%>">
 					<% if(typeof(langs) !== 'undefined') {
 						for(var j=0; j<langs.length; j++) { %>
 							<div id="<%= langs[j].NAME.toLowerCase() %>_content" class="col s12" content-lang="<%= langs[j].ID %>" info-id="<%= contentInformations[j].ID %>">
@@ -141,6 +141,19 @@
 													<div class="multimedia_actions">
 														<a class="edit_multimedia btn-floating btn-large waves-effect waves-light"><i class="material-icons">edit</i></a>
 														<a class="remove_multimedia btn-floating btn-large waves-effect waves-light red"><i class="material-icons">delete</i></a>
+													</div>
+													<div class="del_loader preloader-wrapper big active">
+														<div class="spinner-layer spinner-custom">
+															<div class="circle-clipper left">
+																<div class="circle"></div>
+															</div>
+															<div class="gap-patch">
+																<div class="circle"></div>
+															</div>
+															<div class="circle-clipper right">
+																<div class="circle"></div>
+															</div>
+														</div>
 													</div>
 												</li>
 											<% } 

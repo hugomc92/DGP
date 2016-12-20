@@ -37,7 +37,7 @@ LangController.prototype.initBackend = function() {
 		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
 			var langs = Language.build();
 
-			langs.retrieveAll().then(function(success) {
+			langs.retrieveAllDesc().then(function(success) {
 				self.renderJson.langs = success;
 
 				res.render('pages/backend/lang', self.renderJson);

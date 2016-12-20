@@ -6,6 +6,7 @@ var langs;
 var contentId;
 var dateInUpdate;
 var action;
+var imageModalSubmit;
 
 $(document).ready(function() {
 
@@ -29,6 +30,8 @@ $(document).ready(function() {
 			console.log(status);
 		}
 	});
+
+	imageModalSubmit = $('#modal_content_image').find('form').attr('action');
 
 	if(action === 'add') {
 		form = $('#español_content').find('.info_form').parent().html();
@@ -275,10 +278,18 @@ function initilizeForm(elem, langId) {
 
 function initilizeMultimediaImage(elem) {
 
+	if(action === 'add')
+		$('.multimedia').css('display', 'none');
+
 	elem.find('.new_image').click(function() {
+		$('#modal_content_image #image_loader').css('display', 'none');
 		$('#modal_content_image .modal-header h4').text('Añadir Imagen');
 
-		console.log('langs', langs);
+		var modalForm = $('#modal_content_image').find('form');
+
+		var newAction = imageModalSubmit + 'add/' + contentId;
+
+		modalForm.attr('action', newAction);
 
 		for(var i=0; i<langs.length; i++) {
 			var alreadyAdded = false;
@@ -305,6 +316,140 @@ function initilizeMultimediaImage(elem) {
 				Materialize.updateTextFields();
 
 				$("#contentImagePreview").attr('src', '/static/img/img_not_available.png');
+				$('#modal_content_image #image_loader').css('display', 'block');
+			}
+		});
+	});
+
+	elem.find('.multimedia_actions .edit_multimedia').click(function() {
+		
+		$.ajax({
+			type: "GET",
+			url: '/api/content/alt_images/id/' + $(this).parent().parent().find('.materialboxed').attr('pic') + '?email='+$("#email").text(),
+			datatype: "json",
+			success: function(jsondata) {
+				if(jsondata.ok === 'failed') {
+					Materialize.toast('Se ha producido un fallo interno', 4000);
+				}
+				else if(jsondata.ok === 'not_allowed') {
+					Materialize.toast('No tiene los permisos suficientes para editar la imagen', 4000);
+				}
+				else {
+					var altTexts = jsondata.altTexts;
+
+					console.log(altTexts, altTexts.length);
+
+					for(var i=0; i<langs.length; i++) {
+						var alreadyAdded = false;
+						var altText = null;
+
+						for(var j=0; j<currentLangs.length; j++)
+							if(langs[i].ID === currentLangs[j])
+								alreadyAdded = true;
+
+						for(var k=0; k<altTexts.length; k++)
+							if(langs[i].ID === altTexts[k].LANG_ID)
+								altText = altTexts[k];
+
+						if(alreadyAdded) {
+							var altTextHtml = '<div class="alt_text input-field col s12"><i class="material-icons prefix"><img src="' + langs[i].FLAG + '" class="circle" width="30px" height="30px"/>\</i><input id="alt_text_' + langs[i].ID + '" name="alt_text_' + langs[i].ID + '" type="text" class="validate" required';
+
+							if(altText !== null)
+								altTextHtml += ' value="' + altText.ALT_TEXT + '"';
+							
+							altTextHtml += '><label for="' + langs[i].ID + '">Texto Alternativo (' + langs[i].NAME + ')</label></div>';
+
+							$('#modal_content_image').find('#alt_texts_container').append(altTextHtml);
+						}
+					}
+
+					Materialize.updateTextFields();
+
+					$('#modal_content_image #image_loader').css('opacity', '0');
+					setTimeout(function() { $('#modal_content_image #image_loader').css('display', 'none'); }, 500);
+				}
+			},
+			error : function(xhr, status) {
+				console.log(xhr);
+				console.log(status);
+			}
+		});
+
+		$('#modal_content_image .modal-header h4').text('Editar Imagen');
+
+		var modalForm = $('#modal_content_image').find('form');
+
+		var newAction = imageModalSubmit + 'edit/' + $(this).parent().parent().find('.materialboxed').attr('pic') + '/' + contentId;
+
+		modalForm.attr('action', newAction);
+
+		$('#modal_content_image').find('#contentImagePreview').attr('src', $(this).parent().parent().find('.materialboxed').attr('src'));
+
+		$('#modal_content_image').find('#content_image').removeAttr('required');
+
+		$('#modal_content_image').openModal( {
+			complete: function() {
+				$('#modal_content_image').find('modal-header h4').text('');
+
+				$('#modal_content_image').find('input, textarea').each(function() {
+					$(this).val('');
+					$(this).trigger('autoresize');
+				});
+
+				$('#modal_content_image').find('#alt_texts_container').text('');
+
+				Materialize.updateTextFields();
+
+				$("#contentImagePreview").attr('src', '/static/img/img_not_available.png');
+
+				$('#modal_content_image').find('#content_image').attr('required', true);
+
+				$('#modal_content_image #image_loader').css('opacity', '1');
+				$('#modal_content_image #image_loader').css('display', 'block');
+			}
+		});
+	});
+
+	elem.find('.multimedia_actions .remove_multimedia').click(function() {
+		var elem = $(this).parent().parent();
+
+		elem.find('.del_loader').css('display', 'block');
+
+		var imageId = elem.find('.materialboxed').attr('pic');
+
+		$.ajax({
+			type: "POST",
+			url: '/api/content/delete_image/' + imageId + '?email='+$("#email").text(),
+			datatype: "json",
+			success: function(jsondata) {
+				if(jsondata.ok === 'failed') {
+					Materialize.toast('Se ha producido un fallo interno', 4000);
+
+					elem.find('.del_loader').css('opacity', '0');
+					setTimeout(function() { elem.find('.del_loader').css('display', 'block'); }, 500);
+				}
+				else if(jsondata.ok === 'not_allowed') {
+					Materialize.toast('No tiene los permisos suficientes para borrar la imagen', 4000);
+
+					elem.find('.del_loader').css('opacity', '0');
+					setTimeout(function() { elem.find('.del_loader').css('display', 'block'); }, 500);
+				}
+				else {
+					setTimeout(function() { 
+						elem.animate( { 'opacity': '0', left: "-=100", height: "toggle" }, 500, function(){ elem.remove();
+						Materialize.toast('Se ha eliminado la foto correctamente', 4000); }); 
+
+						$('.img_content .content_multimedia li').each(function() {
+							if($(this).find('.materialboxed').attr('pic') === imageId) {
+								$(this).remove();
+							}
+						});
+					}, 500);
+				}
+			},
+			error : function(xhr, status) {
+				console.log(xhr);
+				console.log(status);
 			}
 		});
 	});
@@ -429,13 +574,6 @@ function send_data(form) {
 
 				// Save ContentId && Modify all forms
 				if(action === 'add') {
-
-					var modalForm = $('#modal_content_image').find('form');
-
-					var newAction = modalForm.attr('action') + contentId;
-
-					modalForm.attr('action', newAction);
-
 					action = 'edit';
 
 					$('.multimedia').css('display', 'block');

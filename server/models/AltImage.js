@@ -67,8 +67,36 @@ var AltImage = DBConnector.connectM4E().define('ALT_IMAGE', {
 				ALT_TEXT: this.altText
 			}, {where: {ID: altImageId}});
 		},
+		createOrUpdate: function(imageId, langId, altText) {
+
+			console.log(imageId, langId, altText);
+
+			return AltImage.findOne({where: {IMAGE_ID: imageId, LANG_ID: langId}}).then(function(success) {
+				console.log(success);
+
+				if(success === null) {
+					return AltImage.create( { IMAGE_ID: imageId, LANG_ID: langId, ALT_TEXT: altText });
+				}
+				else {
+					return AltImage.update( { ALT_TEXT: altText }, {where: {IMAGE_ID: imageId, LANG_ID: langId }});
+				}
+			});
+		},
+		updateSome: function(imageId, altTexts){
+			var self = this;
+
+			promises = [];
+
+			for(var i=0; i<altTexts.length; i++)
+				promises.push(self.createOrUpdate(imageId, altTexts[i].lang, altTexts[i].alt));
+
+			return Sequelize.Promise.all(promises);
+		},
 		removeById: function(altImageId) {
 			return AltImage.destroy({where: {ID: altImageId}});
+		},
+		removeByImageId: function(imagesId) {
+			return AltImage.destroy({ where: {IMAGE_ID: imagesId}});
 		},
 		removeByImagesIds: function(imagesIds) {
 			return AltImage.destroy({ where: {IMAGE_ID: {in: imagesIds}}});

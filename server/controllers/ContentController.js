@@ -329,6 +329,102 @@ ContentController.prototype.initBackend = function() {
 		}
 	});
 
+	self.routerBackend.route('/image/edit/:imageId/:contentId').post(upload.array('content_image', 1), function(req, res) {
+
+		var contentId = req.params.contentId;
+
+		self.renderJson.user = req.session.user;
+
+		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
+			var imageId = req.params.imageId;
+			var newImage = '';
+
+			if(req.files.length > 0) {
+				var file = Utils.normalizeStr(req.files[0].originalname);
+				var extension = '.'+file.substr(file.lastIndexOf('.')+1);
+
+				file = file.split('.').splice(0,1).join('.');
+
+				var dst = self.uploadimgpath + file + extension;
+
+				// Check if the file exist. If there's an error it doesn't exist
+				try {
+					fs.accessSync(dst, fs.F_OK);
+
+					file += Date.now();
+					file += extension;
+				} catch(e) {		// File not found
+					file += extension;
+				}
+
+				dst = self.uploadimgpath + file;
+
+				var tmp = self.uploadpath+req.files[0].filename;
+
+				fs.createReadStream(tmp).pipe(fs.createWriteStream(dst));
+
+				// Delete created tmp file
+				fs.unlink(tmp, function(error) {
+					if(error)
+						console.log(error);
+					else
+						console.log('successfully deleted ' + tmp);
+				});
+
+				// Path to the file, to be sabed in DB
+				newImage = '/static/img/content_images/' + file;
+			}
+
+			var altTexts = [];
+
+			for(var key in req.body) {
+				if(key.indexOf('alt_text') > -1) {
+					var langRes = key.split('_');
+					var langId = langRes[langRes.length-1];
+
+					altTexts.push( {
+						alt: req.body[key],
+						lang: langId
+					});
+				}
+			}
+
+			var altImage = AltImage.build();
+
+			altImage.updateSome(imageId, altTexts).then(function(success) {
+				if(newImage !== '') {
+					var image = Image.build();
+
+					image.url = newImage;
+
+					image.updateById(imageId).then(function(success) {
+						self.renderJson.msg = 'La imagen ha sido editada correctamente';
+
+						res.redirect('/backend/contents/edit/' + contentId + '/');
+					}, function(err) {
+						self.renderJson.error = 'Se ha producido un error interno editando la imagen';
+
+						res.redirect('/backend/contents/edit/' + contentId + '/');
+					});
+				}
+				else {
+					self.renderJson.msg = 'La imagen ha sido editada correctamente';
+
+					res.redirect('/backend/contents/edit/' + contentId + '/');
+				}
+			}, function(err) {
+				self.renderJson.error = 'Se ha producido un error interno';
+
+				res.redirect('/backend/contents/edit/' + contentId + '/');
+			});
+		}
+		else {
+			self.renderJson.error = 'No tiene los permisos necesarios';
+
+			res.redirect('/backend/contents/edit/' + contentId + '/');
+		}
+	});
+
 	self.routerBackend.route('/delete').post(function(req, res) {
 		self.renderJson.user = req.session.user;
 

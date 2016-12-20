@@ -1,9 +1,22 @@
 <div id="modal_content_image" class="modal modal_material modal-fixed-footer">
+	<div id="image_loader" class="modal_loader preloader-wrapper big active">
+		<div class="spinner-layer spinner-custom">
+			<div class="circle-clipper left">
+				<div class="circle"></div>
+			</div>
+			<div class="gap-patch">
+				<div class="circle"></div>
+			</div>
+			<div class="circle-clipper right">
+				<div class="circle"></div>
+			</div>
+		</div>
+	</div>
 	<div class="modal-header z-depth-1">
 		<h4></h4>
 		<span><i class="modal_close modal-action modal-close material-icons right">close</i></span>
 	</div>
-	<form class="col s12 row" method="post" action="/backend/contents/image/add/<% if(typeof(cont) !== 'undefined') { %><%= cont.ID %><% } %>" enctype="multipart/form-data" autocomplete="off">
+	<form class="col s12 row" method="post" action="/backend/contents/image/" enctype="multipart/form-data" autocomplete="off">
 		<div class="modal-content">
 			<!-- Image -->
 			<div class="row">
