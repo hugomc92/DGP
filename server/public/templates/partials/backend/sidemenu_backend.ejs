@@ -1,8 +1,8 @@
 <header>
 	<ul id="slide-out" class="side-nav fixed">
-		<li><div class="userView">
+		<li><div class="userView z-depth-1">
 			<img class="background" src="/static/img/material.png">
-			<img id="user_photo" class="circle" src="<%= user.PHOTO %>" alt="<%= user.NAME + ' ' + user.SURNAME%>" width="100px">
+			<img id="user_photo" class="circle z-depth-2" src="<%= user.PHOTO %>" alt="<%= user.NAME + ' ' + user.SURNAME%>" width="100px">
 			<span id="username" class="white-text name"><%= user.NAME %></span>
 			<span id="user_id" class="hide"><%= user.ID %></span>
 			<span id="email" class="white-text email"><%= user.EMAIL %></span>
