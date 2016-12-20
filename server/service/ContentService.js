@@ -232,7 +232,7 @@ ContentService.prototype.initializeRouter = function() {
 															}
 
 															for(var k=0; k<videos.length; k++) {
-																jsonResObj.videos.push(videos[i]);
+																jsonResObj.videos.push({ video: videos[i] });
 															}
 														}
 
