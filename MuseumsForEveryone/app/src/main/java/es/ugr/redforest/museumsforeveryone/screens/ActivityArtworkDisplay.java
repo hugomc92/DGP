@@ -16,7 +16,7 @@ import es.ugr.redforest.museumsforeveryone.utils.SliderMenu;
 
 public class ActivityArtworkDisplay extends AppCompatActivity {
 
-    String artworkName="";
+    String artworkName= "Obra";
     String id="";
     Context context;
 
@@ -46,6 +46,6 @@ public class ActivityArtworkDisplay extends AppCompatActivity {
 
 
 
-        mySlide.inicializarToolbar(R.menu.menu_main, artworkName);
+        mySlide.inicializarToolbar(R.menu.menu_main, artworkName );
     }
 }

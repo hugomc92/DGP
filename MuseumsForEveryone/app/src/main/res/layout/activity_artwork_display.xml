@@ -9,7 +9,8 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#5d707f">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,7 +21,17 @@
             <include layout="@layout/shadow_toolbar" />
 
         </LinearLayout>
-
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            card_view:cardCornerRadius="0dp"
+            card_view:cardElevation="4dp"
+            card_view:cardBackgroundColor="@color/cardview_light_background"
+            android:layout_margin="5dp"
+            android:layout_gravity="center"
+            >
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -29,63 +40,51 @@
             android:id="@+id/scrollView">
 
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:id="@+id/activity_artwork_display"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:paddingTop="@dimen/activity_vertical_margin"
+                        android:orientation="vertical"
                         tools:context="es.ugr.redforest.museumsforeveryone.screens.ActivityArtworkDisplay">
 
-                        <RelativeLayout
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:background="@color/colorPrimary"
-                            android:id="@+id/carrousel_images"
-                            >
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:background="#376080">
                             <Button
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="50dp"
+                                android:layout_height="55dp"
                                 android:id="@+id/btPreviousImage"
                                 android:background="@drawable/ic_menu_left"
-                                android:layout_alignParentStart="true"
                                 android:textColor="@color/abc_primary_text_material_dark"
-                                android:layout_marginStart="10dp"
                                 android:contentDescription="@string/show_previous_image"/>
 
-                            <TextView
-                                android:id="@+id/titleImage"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:textSize="23dp"
-                                android:textStyle="bold"
-                                android:gravity="center"
-                                android:layout_marginBottom="5dp"
-                                android:layout_gravity="center_horizontal"
-                                android:text="@string/images_of_content"
-                                android:textColor="@color/abc_primary_text_material_dark"
-                                android:layout_marginTop="10dp"/>
+                            <ImageView
+                                android:id="@+id/imgArtwork"
+                                android:layout_width="250dp"
+                                android:layout_height="250dp"
+                                android:layout_gravity="center|top"
+                                android:adjustViewBounds="true"
+                                android:scaleType="fitCenter"
+                                android:paddingTop="15dp"
+                                android:paddingBottom="15dp"
+                                android:contentDescription="@string/image_description"
+                                />
+
                             <Button
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="50dp"
+                                android:layout_height="55dp"
                                 android:id="@+id/btNextImage"
                                 android:background="@drawable/ic_menu_right"
-                                android:layout_alignParentEnd="true"
                                 android:textColor="@color/abc_primary_text_material_dark"
-                                android:layout_marginEnd="10dp"
                                 android:contentDescription="@string/show_next_image"/>
-                        </RelativeLayout>
-                        <ImageView
-                            android:id="@+id/imgArtwork"
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:layout_gravity="center|top"
-                            android:adjustViewBounds="true"
-                            android:scaleType="fitCenter"
-                            android:contentDescription="@string/image_description"
-                            android:layout_below="@id/carrousel_images"/>
+
+
+                        </LinearLayout>
+
 
 
                         <TextView
@@ -97,8 +96,6 @@
                             android:textStyle="bold"
                             android:gravity="center"
                             android:layout_gravity="center_horizontal"
-                            android:text="@string/type_artwork"
-                            android:layout_below="@id/imgArtwork"
                             android:layout_marginTop="15dp"/>
 
                         <TextView
@@ -108,9 +105,9 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textSize="23sp"
                             android:textStyle="bold"
+                            android:textColor="@color/colorPrimarySoft"
                             android:gravity="center"
                             android:layout_gravity="center_horizontal"
-                            android:text="@string/title_artwork"
                             android:layout_below="@id/typeArtWork"
                             android:layout_marginTop="15dp"/>
                         <TextView
@@ -120,10 +117,12 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:gravity="center"
                             android:layout_gravity="center_horizontal"
-                            android:text="@string/description_artwork"
                             android:layout_below="@+id/titleArtwork"
                             android:layout_alignParentStart="true"
-                            android:layout_marginTop="20dp"/>
+                            android:layout_marginTop="20dp"
+                            android:layout_marginLeft="50dp"
+                            android:layout_marginRight="50dp"
+                            android:paddingBottom="20dp"/>
 
 
 
@@ -136,8 +135,9 @@
                             android:contentDescription="@string/video_description"
                             android:layout_below="@id/descriptionArtwork"
                             android:layout_marginTop="20dp"/>
-                            </RelativeLayout>
+                            </LinearLayout>
         </ScrollView>
+        </android.support.v7.widget.CardView>
 
     </LinearLayout>
 

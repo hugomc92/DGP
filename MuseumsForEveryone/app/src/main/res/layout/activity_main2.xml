@@ -181,7 +181,7 @@
                     android:layout_height="110dp"
                     android:background="#fff"
                     android:contentDescription="@string/guided_visit_Accesibility"
-                    android:onClick="launchArtworkListActivity"
+                    android:onClick="launchGuidedVisit"
                     >
 
 
