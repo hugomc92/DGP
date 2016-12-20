@@ -17,8 +17,8 @@ function ContentController(json, activityLogC, contentTypeC, localizationC, lang
 	
 	this.uploadpath = path.join(__dirname, '..', 'public', 'static', 'upload') + '/';
 	this.uploadimgpath = path.join(__dirname, '..', 'public', 'static', 'img', 'content_images') + '/';
-	this.uploadvideopath = path.join(__dirname, '..', 'public', 'static', 'img', 'content_videos') + '/';
-	this.uploadsubtitlepath = path.join(__dirname, '..', 'public', 'static', 'img', 'content_videos_subtitles') + '/';
+	this.uploadvideopath = path.join(__dirname, '..', 'public', 'static', 'video', 'content_videos') + '/';
+	this.uploadsubtitlepath = path.join(__dirname, '..', 'public', 'static', 'video', 'content_videos_subtitles') + '/';
 
 	this.activityLogController = activityLogC;
 	this.contentTypeController = contentTypeC;

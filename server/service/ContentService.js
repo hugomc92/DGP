@@ -9,6 +9,7 @@ var Localization = require('../models/Localization');
 var User = require('../models/User');
 var Image = require('../models/Image');
 var AltImage = require('../models/AltImage');
+var Video = require('../models/Video');
 
 // Constructor for ContentService
 function ContentService() {
@@ -201,30 +202,44 @@ ContentService.prototype.initializeRouter = function() {
 												altImage.retrieveAllByImageIdsByLangId(imageIds, langId).then(function(success) {
 													var altImages = success;
 
-													var jsonResObj= {};
+													var video = Video.build();
 
-													jsonResObj.location = contLocation;
-													jsonResObj.content = cont;
-													jsonResObj.content_information = contInformation;
-													jsonResObj.content_type = contType;
-													jsonResObj.images = [];
+													video.retrieveAllByContentId(contentId).then(function(success) {
+														var videos = success;
 
-													for(var i=0; i<images.length; i++) {
-														var altImageFound = false;
+														var jsonResObj= {};
 
-														for(var j=0; j<altImages.length && !altImageFound; j++) {
-															if(altImages[j].IMAGE_ID === images[i].ID) {
-																jsonResObj.images.push( {
-																	image: images[i],
-																	alt_text: altImages[i].ALT_TEXT
-																});
+														jsonResObj.location = contLocation;
+														jsonResObj.content = cont;
+														jsonResObj.content_information = contInformation;
+														jsonResObj.content_type = contType;
+														jsonResObj.images = [];
+														jsonResObj.videos = [];
 
-																altImageFound = true;
+														for(var i=0; i<images.length; i++) {
+															var altImageFound = false;
+															var altImage = '';
+
+															for(var j=0; j<altImages.length && !altImageFound; j++) {
+																if(altImages[j].IMAGE_ID === images[i].ID) {
+																	jsonResObj.images.push( {
+																		image: images[i],
+																		alt_text: altImages[i].ALT_TEXT
+																	});
+
+																	altImageFound = true;
+																}
+															}
+
+															for(var k=0; k<videos.length; k++) {
+																jsonResObj.videos.push(videos[i]);
 															}
 														}
-													}
 
-													res.json(jsonResObj);
+														res.json(jsonResObj);
+													}, function(err) {
+														res.status(404).send("Videos not found");
+													});
 												}, function(err) {
 													res.status(404).send("Images Alt Texts not found");
 												});
