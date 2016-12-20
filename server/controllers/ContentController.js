@@ -10,6 +10,7 @@ var Content = require('../models/Content');
 var ContentInformation = require('../models/ContentInformation');
 var Image = require('../models/Image');
 var AltImage = require('../models/AltImage');
+var Video = require('../models/Video');
 
 // Constructor for ContentController
 function ContentController(json, activityLogC, contentTypeC, localizationC, langC) {
@@ -185,8 +186,17 @@ ContentController.prototype.initBackend = function() {
 									altImage.retrieveAllByImageIds(imageIds).then(function(success) {
 										self.renderJson.altTexts = success;
 
-										res.render('pages/backend/content', self.renderJson);
-										self.clearMessages();
+										var video = Video.build();
+
+										video.retrieveAllByContentId(contentId).then(function(success) {
+											self.renderJson.videos = success;
+											
+											res.render('pages/backend/content', self.renderJson);
+											self.clearMessages();
+										}, function(err) {
+											self.renderJson.error = 'Se ha producido un error interno recuperando los videos';
+											res.redirect('/backend/contents/');
+										});
 									}, function(err) {
 										self.renderJson.error = 'Se ha producido un error interno recuperando la información de las imágenes';
 										res.redirect('/backend/contents/');
