@@ -197,7 +197,7 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
 
         if (resultado==null || resultado.compareTo("")==0) {
             Toast toast = Toast.makeText(context,
-                    "Conection problems, try again",
+                    R.string.conection_Problems,
                     Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
             toast.show();
@@ -208,7 +208,7 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
             TextView typeArtWork = (TextView)  ((Activity)context).findViewById(R.id.typeArtWork);
             TextView titleArtwork = (TextView)  ((Activity)context).findViewById(R.id.titleArtwork);
             TextView descriptionArtwork = (TextView)  ((Activity)context).findViewById(R.id.descriptionArtwork);
-            TextView titleImage = (TextView)  ((Activity)context).findViewById(R.id.titleImage);
+            //TextView titleImage = (TextView)  ((Activity)context).findViewById(R.id.titleImage);
             VideoView videoView = (VideoView)((Activity) context).findViewById(R.id.videoArtwork);
 
             //If content is scan by nfc or qr gets all contents in this location
@@ -223,8 +223,13 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
                 imageView.setContentDescription(imageMultimedia.get(0).getAlternativeText());
                 //If arrays only contains one image hide carrousel control else add listener to carrousel
                 if (imageMultimedia.size() == 1) {
-                    RelativeLayout relativeLayout = (RelativeLayout) ((Activity) context).findViewById(R.id.carrousel_images);
-                    relativeLayout.setVisibility(View.GONE);
+                    //RelativeLayout relativeLayout = (RelativeLayout) ((Activity) context).findViewById(R.id.carrousel_images);
+                    Button btn1 = (Button) ((Activity) context).findViewById(R.id.btPreviousImage);
+                    Button btn2 = (Button) ((Activity) context).findViewById(R.id.btNextImage);
+
+                    btn1.setVisibility(View.GONE);
+                    btn2.setVisibility(View.GONE);
+                    //relativeLayout.setVisibility(View.GONE);
                 } else {
                     Button previosImage = (Button) ((Activity) context).findViewById(R.id.btPreviousImage);
                     Button nextImage = (Button) ((Activity) context).findViewById(R.id.btNextImage);
@@ -253,7 +258,9 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
                 }
             }else {
                 imageView.setVisibility(View.GONE);
-                ((Activity)context).findViewById(R.id.carrousel_images).setVisibility(View.GONE);
+                //((Activity)context).findViewById(R.id.carrousel_images).setVisibility(View.GONE);
+                ((Activity)context).findViewById(R.id.btNextImage).setVisibility(View.GONE);
+                ((Activity)context).findViewById(R.id.btPreviousImage).setVisibility(View.GONE);
             }
 
             ArrayList<Multimedia> videoMultimedia = content.getMultimediaByType("video");
@@ -283,7 +290,7 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
             titleArtwork.setText(content.getContentInformation().getName());
             descriptionArtwork.setText(content.getContentInformation().getDescription());
             artworkName = content.getContentType().getName();
-            titleImage.setText(artworkName);
+            //titleImage.setText(artworkName);
             //position scroll to top
             ((ScrollView) ((Activity)context).findViewById(R.id.scrollView)).post(new Runnable()
             {
@@ -300,7 +307,7 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
     protected void onPreExecute() {
         super.onPreExecute();
         pDialog = new ProgressDialog(context);
-        pDialog.setMessage("Loading Data");
+        pDialog.setMessage(context.getString(R.string.loading));
         pDialog.setCancelable(false);
         pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         pDialog.show();

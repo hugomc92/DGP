@@ -103,7 +103,7 @@ public class HQueryVisitGuide extends AsyncTask<Void, Integer, String> {
 
         if (resultado==null || resultado.compareTo("")==0) {
             Toast toast = Toast.makeText(context,
-                    "Conection problems, try again",
+                    R.string.conection_Problems,
                     Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
             toast.show();
@@ -169,7 +169,7 @@ public class HQueryVisitGuide extends AsyncTask<Void, Integer, String> {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(context);
-            pDialog.setMessage("Loading Data");
+            pDialog.setMessage(context.getString(R.string.loading));
             pDialog.setCancelable(false);
             pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             pDialog.show();

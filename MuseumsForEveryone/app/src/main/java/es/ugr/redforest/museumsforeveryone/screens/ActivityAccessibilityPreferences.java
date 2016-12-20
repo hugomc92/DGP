@@ -13,7 +13,7 @@ public class ActivityAccessibilityPreferences extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_accesibility_preferences);
+        setContentView(R.layout.activity_accesibility_preferences2);
     }
 
     /**

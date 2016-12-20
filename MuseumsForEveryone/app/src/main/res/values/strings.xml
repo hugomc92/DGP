@@ -83,5 +83,10 @@
     <string name="hear_problems_description_card">Textos adaptados y videos en lenguaje de signos.Botón.</string>
     <string name="talckback_enabled">Se ha activado la narración de textos alternativos en imágenes y vídeos.</string>
     <string name="preferences_description">Para volver a ajustar las opciones de accesibilidad, el idioma o volver a visualizar las instrucciones vaya en cualquier momento a preferencias.</string>
+    <string name="disable_accesibility">Desactivar accesibilidad</string>
+    <string name="disable_accesibility_description">Desactivar accesibilidad. Botón.</string>
+    <string name="conection_Problems">Problemas de conexión. Pruebe de nuevo.</string>
+    <string name="loading">Cargando...</string>
+    <string name="artwork">Obra</string>
 
 </resources>

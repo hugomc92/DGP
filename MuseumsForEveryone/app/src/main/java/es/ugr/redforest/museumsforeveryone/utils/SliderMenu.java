@@ -29,6 +29,7 @@ import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.adapters.AdapterMenuLateral;
 import es.ugr.redforest.museumsforeveryone.screens.ActivityArtworkList;
 import es.ugr.redforest.museumsforeveryone.screens.ActivityContactInform;
+import es.ugr.redforest.museumsforeveryone.screens.ActivityContentType;
 import es.ugr.redforest.museumsforeveryone.screens.ActivityGuidedVisit;
 import es.ugr.redforest.museumsforeveryone.screens.ActivityPreferences;
 import es.ugr.redforest.museumsforeveryone.screens.ActivityQRScanner;
@@ -105,7 +106,7 @@ public class SliderMenu extends AppCompatActivity{
                         actualActivity.finish();
                     }else if(recyclerView.getChildAdapterPosition(child)==3){
                         Drawer.closeDrawers();
-                        Intent mainIntent = new Intent(recyclerView.getContext(), ActivityArtworkList.class);
+                        Intent mainIntent = new Intent(recyclerView.getContext(), ActivityContentType.class);
                         context.startActivity(mainIntent);
                         actualActivity.finish();
                     }else if(recyclerView.getChildAdapterPosition(child)==4){

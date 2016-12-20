@@ -14,8 +14,8 @@ public class ActivityPreferences extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences2);
+        
 
-        //mySlide.inicializarToolbar(R.menu.menu_main,getString(R.string.app_name));
     }
 
     /**
