@@ -5,7 +5,7 @@ var DBConnector = require("../utils/DBConnector");
 var Video = DBConnector.connectM4E().define('VIDEO', {
 	ID: {type: Sequelize.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true},
 	URL: {type: Sequelize.STRING(), allowNull: false},
-	SUBTITLE: {type: Sequelize.STRING(), allowNull: false},
+	SUBTITLE: {type: Sequelize.STRING(), allowNull: true},
 	ALT_TEXT: {type: Sequelize.STRING(), allowNull: false},
 	CONTENT_ID: {type: Sequelize.INTEGER, allowNull: false},
 	LANG_ID: {type: Sequelize.INTEGER, allowNull: true},

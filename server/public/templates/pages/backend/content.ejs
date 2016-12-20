@@ -175,7 +175,7 @@
 													<video class="responsive-video" controls>
 														<source src="<%= videos[i].URL %>">
 														<% var resCode = langs[i].CODE.split('-');
-														var langCode = resCode[resCode.length - 1]; %>
+														var langCode = resCode[0]; %>
 														<track src="<%= videos[i].SUBTITLE %>" kind="subtitles" srclang="<%= langCode %>>" label="<%= langs[i].NAME %>">
 													</video>
 												</li>

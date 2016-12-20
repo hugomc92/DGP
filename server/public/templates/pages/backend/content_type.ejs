@@ -24,9 +24,10 @@
 					<thead>
 						<tr>
 							<th data-field="id">#</th>
-							<th data-field="nombre">Nombre</th>
-							<th data-field="descripcion">Descripción</th>
-							<th data-field="accion">Acción</th>
+							<th data-field="picture">Icono</th>
+							<th data-field="name">Nombre</th>
+							<th data-field="description">Descripción</th>
+							<th data-field="action">Acción</th>
 						</tr>
 					</thead>
 
@@ -36,6 +37,7 @@
 							<% count++; %>
 							<tr>
 							<td><%= contentTypes[i].ID %></td>
+							<td><img src="<%= contentTypes[i].ICON %>" width="50px"/></td>
 							<td><%= contentTypes[i].NAME %></td>
 							<td><%= contentTypes[i].DESCRIPTION %></td>
 							<td class="actions">
