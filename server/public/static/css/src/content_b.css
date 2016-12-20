@@ -144,6 +144,14 @@ main {
   margin: 10px auto;
   position: relative;
 }
+#contents .multimedia .content_multimedia li:hover img {
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
 #contents .multimedia .content_multimedia li:hover .multimedia_actions {
   max-height: 100px;
   margin-top: -85px;
@@ -171,6 +179,11 @@ main {
 #contents .multimedia .content_multimedia li img {
   display: block;
   margin: 0 auto;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
 }
 #contents .multimedia .content_multimedia li .image_alt_text {
   padding: 5px;
