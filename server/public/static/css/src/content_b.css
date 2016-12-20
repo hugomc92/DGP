@@ -41,7 +41,7 @@ main {
   transition: all 0.3s;
 }
 #tabs_container .tabs li a.active {
-  background: #5f9ecc;
+  color: #5f9ecc;
 }
 #tabs_container .tabs li a.active:hover {
   cursor: default !important;
@@ -69,7 +69,8 @@ main {
   margin-top: 3px;
 }
 #tabs_container .indicator {
-  background-color: white;
+  background-color: #5f9ecc;
+  height: 3px;
 }
 #more_langs {
   height: 48px;
