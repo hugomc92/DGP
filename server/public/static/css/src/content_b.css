@@ -144,6 +144,11 @@ main {
   text-align: center;
   margin: 10px auto;
   position: relative;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
 }
 #contents .multimedia .content_multimedia li:hover img,
 #contents .multimedia .content_multimedia li:hover video {
@@ -157,8 +162,6 @@ main {
 #contents .multimedia .content_multimedia li:hover .multimedia_actions {
   max-height: 100px;
   margin-top: -85px;
-  z-index: 85;
-  /*position: relative;*/
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -ms-transition: all 0.3s;
@@ -204,11 +207,21 @@ main {
   padding: 5px;
   margin-top: -31px;
   background: rgba(0, 0, 0, 0.65);
-  z-index: 85;
+  z-index: 84;
+  position: relative;
+  color: white;
+}
+#contents .multimedia .content_multimedia li .video_alt_text {
+  padding: 5px;
+  margin: 0;
+  margin-bottom: -31px;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 84;
   position: relative;
   color: white;
 }
 #contents .multimedia .content_multimedia li .multimedia_actions {
+  z-index: 85;
   max-height: 0;
   position: absolute;
   width: 92%;
@@ -229,9 +242,6 @@ main {
     max-height: 100px;
     position: relative;
   }
-}
-#contents .multimedia .content_multimedia li .multimedia_actions.video_actions {
-  position: absolute;
 }
 @media only screen and (min-width: 601px) and (max-width: 992px) {
   #contents .multimedia .content_multimedia li .multimedia_actions.video_actions {
@@ -285,6 +295,13 @@ main {
 #contents .multimedia .content_multimedia li .add_multimedia span {
   display: block;
   margin-top: 10px;
+}
+#contents .multimedia.video_content .content_multimedia li {
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
 }
 @media only screen and (min-width: 601px) and (max-width: 992px) {
   #contents .multimedia.video_content .content_multimedia li {

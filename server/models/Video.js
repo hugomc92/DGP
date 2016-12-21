@@ -51,7 +51,34 @@ var Video = DBConnector.connectM4E().define('VIDEO', {
 			}
 		},
 		updateById: function(id) {
-			
+			if(this.url === null && this.subtitle === null) {
+				return Video.update( {
+					ALT_TEXT: this.altText,
+					LANG_ID: this.langId
+				}, {where: {ID: id}});
+			}
+			else if(this.url === null) {
+				return Video.update( {
+					SUBTITLE: this.substitle,
+					ALT_TEXT: this.altText,
+					LANG_ID: this.langId
+				}, {where: {ID: id}});
+			}
+			else if(this.subtitle === null) {
+				return Video.update( {
+					URL: this.url,
+					ALT_TEXT: this.altText,
+					LANG_ID: this.langId
+				}, {where: {ID: id}});
+			}
+			else {
+				return Video.update( {
+					URL: this.url,
+					SUBTITLE: this.substitle,
+					ALT_TEXT: this.altText,
+					LANG_ID: this.langId
+				}, {where: {ID: id}});
+			}
 		},
 		removeById: function(id) {
 			return Video.destroy({where: {ID: id}});

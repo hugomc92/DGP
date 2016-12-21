@@ -16,12 +16,12 @@ function videoPrevisualization(input, subs, output) {
 
 		output.children('source').attr('src', URL.createObjectURL(file));
 		
-		output.load();
+		output[0].load();
 	});
 
 	$(subs).on('change', function() {
 		output.append('<track src="' + URL.createObjectURL($(this)[0].files[0]) + '" kind="subtitles" label="Subtitulos">');
 
-		output.load();
+		output[0].load();
 	});
 }

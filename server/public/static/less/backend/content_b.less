@@ -139,17 +139,18 @@ main {
 				margin: 10px auto;
 				position: relative;
 
+				.transition(all 0.3s);
+
 				&:hover {
 					img, video {
 						box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 						.transition(all 0.3s);
 					}
+
 					.multimedia_actions {
 						max-height: 100px;
 						margin-top: -85px;
-						z-index: 85;
-    					/*position: relative;*/
 
 						&.video_actions {
 							margin-top: 0;
@@ -190,13 +191,23 @@ main {
 					padding: 5px;
 					margin-top: -31px;
 					background: rgba(0, 0, 0, 0.65);
-					z-index: 85;
+					z-index: 84;
 					position: relative;
 					color: white;
+				}
 
+				.video_alt_text {
+					padding: 5px;
+					margin: 0;
+					margin-bottom: -31px;
+					background: rgba(0, 0, 0, 0.65);
+					z-index: 84;
+					position: relative;
+					color: white;
 				}
 
 				.multimedia_actions {
+					z-index: 85;
 					max-height: 0;
 					position: absolute;
 					width: 92%;
@@ -214,8 +225,6 @@ main {
 					.transition(all 0.3s);
 
 					&.video_actions {
-						position: absolute;
-
 						@media @tablet {
 							padding-top: 55%;
 						}
@@ -275,6 +284,8 @@ main {
 
 		&.video_content {
 			.content_multimedia li {
+				.transition(all 0.3s);
+				
 				@media @tablet {
 					margin-bottom: 65px;
 				}

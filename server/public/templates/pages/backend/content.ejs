@@ -105,7 +105,7 @@
 										<div class="input-field col s12 m6">
 											<input type="hidden" id="content_date_out_hidden" name="content_date_out_hidden" value="<%= moment(cont.DATE_OUT).format('DD/MM/YYYY') %>">
 											<input type="date" id="content_date_out" name="content_date_out" class="datepicker" value="<%= moment(cont.DATE_OUT).format('DD MMMM, YYYY') %>">
-											<label for="content_date_out">Fecha Salida (opcional)</label>
+											<label for="content_date_out">Fecha Salida</label>
 										</div>
 										<!-- Submit form -->
 										<div class="input-field col s12">
@@ -179,6 +179,9 @@
 														</div>
 														<% if(videos[i].LANG_ID === null) { %>
 															<img class="sign_lang" src="/static/img/sign_lang.png" width="50px"/>
+														<% } %>
+														<% if(videos[i].ALT_TEXT !== null) { %>
+															<p class="video_alt_text truncate"><%= videos[i].ALT_TEXT %></p>
 														<% } %>
 														<video vid="<%= videos[i].ID %>" class="responsive-video z-depth-1" controls>
 															<source src="<%= videos[i].URL %>">
@@ -264,7 +267,7 @@
 								<div class="input-field col s12 m6">
 									<input type="hidden" id="content_date_out_hidden" name="content_date_out_hidden">
 									<input type="date" id="content_date_out" name="content_date_out" class="datepicker">
-									<label for="content_date_out">Fecha Salida (opcional)</label>
+									<label for="content_date_out">Fecha Salida</label>
 								</div>
 								<!-- Submit form -->
 								<div class="input-field col s12">

@@ -446,7 +446,6 @@ ContentController.prototype.initBackend = function() {
 			var newVideo = '';
 			var newSubstitle = '';
 
-
 			if(req.files.length > 0) {
 				
 				var file = Utils.normalizeStr(req.files[0].originalname);
@@ -553,7 +552,7 @@ ContentController.prototype.initBackend = function() {
 
 					res.redirect('/backend/contents/edit/' + contentId + '/');
 				}, function(err) {
-					self.renderJson.error = 'Error mandando los archivos al servidor';
+					self.renderJson.error = 'Error añadiendo el video';
 
 					res.redirect('/backend/contents/edit/' + contentId + '/');
 				});
@@ -567,7 +566,138 @@ ContentController.prototype.initBackend = function() {
 		}
 		else 
 			res.redirect('/');
+	});
+
+	self.routerBackend.route('/video/edit/:videoId/:contentId').post(upload.array('content_video', 2), function(req, res) {
 		
+		var videoId = req.params.videoId;
+		var contentId = req.params.contentId;
+
+		self.renderJson.user = req.session.user;
+
+		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
+			var newVideo = '';
+			var newSubstitle = '';
+
+			var signLang = req.body.sign_lang;
+
+			console.log('body', req.body);
+			console.log('files', req.files);
+
+			if(req.files.length > 0) {
+				var file = Utils.normalizeStr(req.files[0].originalname);
+				var extension = '.'+file.substr(file.lastIndexOf('.')+1);
+
+				file = file.split('.').splice(0,1).join('.');
+
+				var dst = self.uploadvideopath + file + extension;
+
+				// Check if the file exist. If there's an error it doesn't exist
+				try {
+					fs.accessSync(dst, fs.F_OK);
+
+					file += Date.now();
+					file += extension;
+				} catch(e) {		// File not found
+					file += extension;
+				}
+
+				dst = self.uploadvideopath + file;
+
+				var tmp = self.uploadpath+req.files[0].filename;
+
+				fs.createReadStream(tmp).pipe(fs.createWriteStream(dst));
+
+				// Delete created tmp file
+				fs.unlink(tmp, function(error) { 
+					if(error)
+						console.log(error);
+					else
+						console.log('successfully deleted ' + tmp);	
+				});
+
+				// Path to the file, to be sabed in DB
+				newVideo = '/static/video/content_videos/' + file;
+
+				if(typeof signLang === 'undefined' && typeof(req.files[1]) !== 'undefined') {
+					file = Utils.normalizeStr(req.files[1].originalname);
+					extension = '.'+file.substr(file.lastIndexOf('.')+1);
+
+					file = file.split('.').splice(0,1).join('.');
+
+					dst = self.uploadsubtitlepath + file + extension;
+
+					// Check if the file exist. If there's an error it doesn't exist
+					try {
+						fs.accessSync(dst, fs.F_OK);
+
+						file += Date.now();
+						file += extension;
+					} catch(e) {		// File not found
+						file += extension;
+					}
+
+					dst = self.uploadsubtitlepath + file;
+
+					tmp = self.uploadpath+req.files[1].filename;
+
+					fs.createReadStream(tmp).pipe(fs.createWriteStream(dst));
+
+					// Delete created tmp file
+					fs.unlink(tmp, function(error) {
+						if(error)
+							console.log(error);
+						else
+							console.log('successfully deleted ' + tmp);	
+					});
+
+					// Path to the file, to be sabed in DB
+					newSubstitle = '/static/video/content_videos_subtitles/' + file;
+				}
+			}
+
+			var video = Video.build();
+
+			if(newVideo === '')
+				video.url = null;
+			else
+				video.url = newVideo;
+
+			if(newSubstitle === '')
+				video.substitle = null;
+			else
+				video.substitle = newSubstitle;
+
+			var altText = {};
+
+			if(typeof signLang !== 'undefined' && signLang === 'on') {
+				video.altText = null;
+				video.langId = null;
+			}
+			else {
+				for(var key in req.body) {
+					if(key.indexOf('alt_text') > -1) {
+						var langRes = key.split('_');
+						var langId = langRes[langRes.length-1];
+
+						video.altText = req.body[key];
+						video.langId = langId;
+					}
+				}
+			}
+
+			video.updateById(videoId).then(function(success) {
+				self.renderJson.msg = 'Se ha editado el video correctamente';
+
+				res.redirect('/backend/contents/edit/' + contentId + '/');
+			}, function(err) {
+				self.renderJson.error = 'Error editando el video';
+
+				res.redirect('/backend/contents/edit/' + contentId + '/');
+			});
+		}
+		else
+			res.redirect('/');
 	});
 
 	self.routerBackend.route('/delete').post(function(req, res) {

@@ -34,34 +34,23 @@ $(document).ready(function() {
 	imageModalSubmit = $('#modal_content_image').find('form').attr('action');
 	videoModalSubmit = $('#modal_content_video').find('form').attr('action');
 
-	if(action === 'add') {
-		form = $('#español_content').find('.info_form').parent().html();
+	var elems = $('.info_form').parent().parent();
 
-		multimediaImg = $('#español_content').find('.img_content').html();
-		multimediaVideo = $('#español_content').find('.video_content').html();
+	form = $(elems[0]).find('.info_form').parent().html();
 
-		initilizeForm($('#español_content'), 1);
-		initilizeMultimediaImage($('#español_content'));
-		initilizeMultimediaVideo($('#español_content'));
+	multimediaImg = $(elems[0]).find('.img_content').html();
+	multimediaVideo = $(elems[0]).find('.video_content').html();
+
+	for(var i=0; i<elems.length; i++) {
+		var elem = $(elems[i]);
+
+		initilizeForm(elem, elem.attr('content-lang'));
+		initilizeMultimediaImage(elem);
+		initilizeMultimediaVideo(elem);
 	}
-	else {
-		var elems = $('.info_form').parent().parent();
 
-		form = $(elems[0]).find('.info_form').parent().html();
-
-		multimediaImg = $(elems[0]).find('.img_content').html();
-		multimediaVideo = $(elems[0]).find('.video_content').html();
-
-		for(var i=0; i<elems.length; i++) {
-			var elem = $(elems[i]);
-
-			initilizeForm(elem, elem.attr('content-lang'));
-			initilizeMultimediaImage(elem);
-			initilizeMultimediaVideo(elem);
-		}
-
+	if(action === 'edit')
 		$('.multimedia').css('display', 'block');
-	}
 
 	$('#more_langs').click(function() {
 		$('#select_lang').openModal( {
@@ -443,7 +432,9 @@ function initilizeMultimediaImage(elem) {
 						elem.animate( { 'opacity': '0', left: "-=100", height: "toggle" }, 500, function(){
 							elem.remove();
 							Materialize.toast('Se ha eliminado la foto correctamente', 4000);
-						}); 
+						});
+						
+						//elem.hide('slow', function(){elem.remove();}); 
 
 						$('.img_content .content_multimedia li').each(function() {
 							if($(this).find('.materialboxed').attr('pic') === imageId) {
@@ -500,7 +491,7 @@ function initilizeMultimediaVideo(elem) {
 
 				$("#contentVideoPreview").children('source').attr('src', '');
 				$("#contentVideoPreview").children('track').remove();
-				$("#contentVideoPreview").load();
+				$("#contentVideoPreview")[0].load();
 				$('#modal_content_video #video_loader').css('display', 'block');
 			}
 		});
@@ -535,15 +526,24 @@ function initilizeMultimediaVideo(elem) {
 
 		var modalForm = $('#modal_content_video').find('form');
 
+		modalForm.find('#content_video').change(function() {
+			modalForm.find('#content_video_substitles').attr('required', true);
+		});
+
+		modalForm.find('#content_video_substitles').change(function() {
+			modalForm.find('#content_video').attr('required', true);
+		});
+
 		var newAction = videoModalSubmit + 'edit/' + video.attr('vid') + '/' + contentId;
 
 		modalForm.attr('action', newAction);
 
 		modalForm.find('#content_video').removeAttr('required');
+		modalForm.find('#content_video_substitles').removeAttr('required');
 
 		modalForm.find('video').children('source').attr('src', video.children('source').attr('src'));
 		modalForm.find('video').append(video.children('track'));
-		modalForm.find('video').load();
+		modalForm.find('video')[0].load();
 
 		$.ajax({
 			type: "GET",
@@ -610,10 +610,11 @@ function initilizeMultimediaVideo(elem) {
 
 				$("#contentVideoPreview").children('source').attr('src', '');
 				$("#contentVideoPreview").children('track').remove();
-				$("#contentVideoPreview").load();
+				$("#contentVideoPreview")[0].load();
 				$('#modal_content_video #video_loader').css('display', 'block');
 
 				modalForm.find('#content_video').attr('required', true);
+				modalForm.find('#content_video_substitles').attr('required', true);
 				
 				if($('#modal_content_video #sign_lang').is(":checked"))
 					$('#modal_content_video #sign_lang').trigger('click');
@@ -647,10 +648,12 @@ function initilizeMultimediaVideo(elem) {
 				}
 				else {
 					setTimeout(function() { 
-						elem.animate( { 'opacity': '0', left: "-=100", height: "toggle" }, 500, function(){ 
+						elem.animate( { 'opacity': '0' }, 500, function(){ 
 							elem.remove();
 							Materialize.toast('Se ha eliminado el video correctamente', 4000);
-						}); 
+						});
+
+						//elem.hide('slow', function(){elem.remove();}); 
 
 						$('.video_content .content_multimedia li').each(function() {
 							if($(this).find('video').attr('vid') === videoId) {
