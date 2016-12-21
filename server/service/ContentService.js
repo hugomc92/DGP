@@ -680,7 +680,6 @@ ContentService.prototype.initializeRouter = function() {
 		var jsonResObj = {};
 
 		if(typeof user !== 'undefined' && user.ADMIN) {
-
 			var video = Video.build();
 
 			video.removeById(videoId).then(function(success) {
@@ -698,7 +697,33 @@ ContentService.prototype.initializeRouter = function() {
 
 			res.json(jsonResObj);
 		}
+	});
 
+	self.router.route('/video/:videoId').get(function(req, res) {
+		var user = req.session.user;
+		
+		var videoId = req.params.videoId;
+
+		var jsonResObj = {};
+
+		if(typeof user !== 'undefined' && user.ADMIN) {
+			var video = Video.build();
+
+			video.retrieveById(videoId).then(function(success) {
+				jsonResObj.video = success;
+
+				res.json(jsonResObj);
+			}, function(err) {
+				jsonResObj.ok = 'failed';
+
+				res.json(jsonResObj);
+			});
+		}
+		else {
+			jsonResObj.ok = 'not_allowed';
+
+			res.json(jsonResObj);
+		}
 	});
 };
 

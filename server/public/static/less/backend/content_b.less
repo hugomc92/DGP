@@ -341,11 +341,17 @@ main {
 }
 
 #modal_content_video {
-	.alt_text i img.disabled {
-		-moz-filter: grayscale(100%);
-		-o-filter: grayscale(100%);
-		-webkit-filter: grayscale(100%);
-    	filter: grayscale(100%);
+	.alt_text i img {
+		.transition(all 0.3s);
+		
+		&.disabled {
+			-moz-filter: grayscale(100%);
+			-o-filter: grayscale(100%);
+			-webkit-filter: grayscale(100%);
+			filter: grayscale(100%);
+		}
+
+		.transition(all 0.3s);
 	}
 }
 

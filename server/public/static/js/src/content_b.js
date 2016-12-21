@@ -527,6 +527,100 @@ function initilizeMultimediaVideo(elem) {
 		}
 	});
 
+	elem.find('.video_actions .edit_multimedia').click(function() {
+		var video = $(this).parent().parent().find('video');
+		var langId = video.parent().parent().parent().parent().attr('content-lang');
+
+		$('#modal_content_video .modal-header h4').text('Editar Video');
+
+		var modalForm = $('#modal_content_video').find('form');
+
+		var newAction = videoModalSubmit + 'edit/' + video.attr('vid') + '/' + contentId;
+
+		modalForm.attr('action', newAction);
+
+		modalForm.find('#content_video').removeAttr('required');
+
+		modalForm.find('video').children('source').attr('src', video.children('source').attr('src'));
+		modalForm.find('video').append(video.children('track'));
+		modalForm.find('video').load();
+
+		$.ajax({
+			type: "GET",
+			url: '/api/content/video/' + video.attr('vid') + '?email='+$("#email").text(),
+			datatype: "json",
+			success: function(jsondata) {
+				if(jsondata.ok === 'failed') {
+					Materialize.toast('Se ha producido un fallo interno', 4000);
+				}
+				else if(jsondata.ok === 'not_allowed') {
+					Materialize.toast('No tiene los permisos suficientes para editar el video', 4000);
+				}
+				else {
+					var video = jsondata.video;
+
+					var langFound = false;
+					for(var i=0; i<langs.length && !langFound; i++) {
+						if(langs[i].ID === parseInt(video.LANG_ID) || langs[i].ID === parseInt(langId)) {
+							langFound = true;
+							var altHtml = '<div class="alt_text input-field col s12"><i class="material-icons prefix"><img src="' + langs[i].FLAG + '" class="circle" width="30px" height="30px"/>\</i><input id="alt_text_' + langs[i].ID + '" name="alt_text_' + langs[i].ID + '" type="text" class="validate"';
+
+							if(parseInt(langId) === parseInt(video.LANG_ID))
+								altHtml += 'value="' + video.ALT_TEXT + '"';
+
+							altHtml += 'required><label for="' + langs[i].ID + '">Texto Alternativo (' + langs[i].NAME + ')</label></div>';
+
+							$('#modal_content_video').find('#alt_texts_container').append(altHtml);
+						}
+					}
+
+					if(video.LANG_ID === null) {
+						if(!$('#modal_content_video #sign_lang').is(":checked"))
+							$('#modal_content_video #sign_lang').trigger('click');
+						else {
+							$('#modal_content_video #sign_lang').trigger('click');
+							$('#modal_content_video #sign_lang').trigger('click');
+						}
+					}
+
+					Materialize.updateTextFields();
+
+					$('#modal_content_video #video_loader').css('opacity', '0');
+					setTimeout(function() { $('#modal_content_video #video_loader').css('display', 'none'); }, 500);
+				}
+			},
+			error : function(xhr, status) {
+				console.log(xhr);
+				console.log(status);
+			}
+		});
+
+		$('#modal_content_video').openModal( {
+			complete: function() {
+				$('#modal_content_video').find('modal-header h4').text('');
+
+				$('#modal_content_video').find('input, textarea').each(function() {
+					$(this).val('');
+					$(this).trigger('autoresize');
+				});
+
+				$('#modal_content_video').find('#alt_texts_container').text('');
+
+				Materialize.updateTextFields();
+
+				$("#contentVideoPreview").children('source').attr('src', '');
+				$("#contentVideoPreview").children('track').remove();
+				$("#contentVideoPreview").load();
+				$('#modal_content_video #video_loader').css('display', 'block');
+
+				modalForm.find('#content_video').attr('required', true);
+				
+				if($('#modal_content_video #sign_lang').is(":checked"))
+					$('#modal_content_video #sign_lang').trigger('click');
+			}
+		});
+	});
+
 	elem.find('.video_actions .remove_multimedia').click(function() {
 		var elem = $(this).parent().parent();
 

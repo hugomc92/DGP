@@ -344,6 +344,13 @@ main {
 #modal_content_image .modal-content .input-field .prefix {
   font-size: 2.5em;
 }
+#modal_content_video .alt_text i img {
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
 #modal_content_video .alt_text i img.disabled {
   -moz-filter: grayscale(100%);
   -o-filter: grayscale(100%);
