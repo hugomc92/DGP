@@ -171,12 +171,15 @@
 									<ul class="content_multimedia row">
 										<% if(typeof(videos) !== 'undefined') {
 											for(var i=0; i<videos.length; i++) {
-												if(videos[i].LANG_ID === langs[j].ID) { %>
+												if(videos[i].LANG_ID === langs[j].ID || videos[i].LANG_ID === null) { %>
 													<li class="col s12 m6 l4">
 														<div class="multimedia_actions video_actions">
 															<a class="edit_multimedia btn-floating btn-large waves-effect waves-light"><i class="material-icons">edit</i></a>
 															<a class="remove_multimedia btn-floating btn-large waves-effect waves-light red"><i class="material-icons">delete</i></a>
 														</div>
+														<% if(videos[i].LANG_ID === null) { %>
+															<img class="sign_lang" src="/static/img/sign_lang.png" width="50px"/>
+														<% } %>
 														<video class="responsive-video z-depth-1" controls>
 															<source src="<%= videos[i].URL %>">
 															<% var resCode = langs[j].CODE.split('-');

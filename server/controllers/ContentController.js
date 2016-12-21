@@ -553,11 +553,11 @@ ContentController.prototype.initBackend = function() {
 					self.renderJson.msg = 'Video Añadido Correctamente';
 
 					// Add the event to a new Activity Log
-					/*var ct = "Inserción";
+					var ct = "Inserción";
 					var desc = "Se ha insertado un video al contenido con ID " + contentId;
 					var date = new Date();
 					var uid = self.renderJson.user.ID;
-					self.activityLogController.addNewActivityLog(ct, desc, date, uid);*/
+					self.activityLogController.addNewActivityLog(ct, desc, date, uid);
 
 					res.redirect('/backend/contents/edit/' + contentId + '/');
 				}, function(err) {

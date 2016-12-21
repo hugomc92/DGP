@@ -190,6 +190,9 @@ main {
   -o-transition: all 0.3s;
   transition: all 0.3s;
 }
+#contents .multimedia .content_multimedia li img.sign_lang {
+  position: absolute;
+}
 #contents .multimedia .content_multimedia li video {
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
