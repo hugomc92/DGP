@@ -670,6 +670,36 @@ ContentService.prototype.initializeRouter = function() {
 			res.json(jsonResObj);
 		}
 	});
+
+	self.router.route('/delete_video/:videoId').post(function(req, res) {
+
+		var user = req.session.user;
+		
+		var videoId = req.params.videoId;
+
+		var jsonResObj = {};
+
+		if(typeof user !== 'undefined' && user.ADMIN) {
+
+			var video = Video.build();
+
+			video.removeById(videoId).then(function(success) {
+				jsonResObj.ok = 'ok';
+
+				res.json(jsonResObj);
+			}, function(err) {
+				jsonResObj.ok = 'failed';
+
+				res.json(jsonResObj);
+			});
+		}
+		else {
+			jsonResObj.ok = 'not_allowed';
+
+			res.json(jsonResObj);
+		}
+
+	});
 };
 
 ContentService.prototype.getRouter = function() {

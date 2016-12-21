@@ -440,8 +440,10 @@ function initilizeMultimediaImage(elem) {
 				}
 				else {
 					setTimeout(function() { 
-						elem.animate( { 'opacity': '0', left: "-=100", height: "toggle" }, 500, function(){ elem.remove();
-						Materialize.toast('Se ha eliminado la foto correctamente', 4000); }); 
+						elem.animate( { 'opacity': '0', left: "-=100", height: "toggle" }, 500, function(){
+							elem.remove();
+							Materialize.toast('Se ha eliminado la foto correctamente', 4000);
+						}); 
 
 						$('.img_content .content_multimedia li').each(function() {
 							if($(this).find('.materialboxed').attr('pic') === imageId) {
@@ -505,7 +507,6 @@ function initilizeMultimediaVideo(elem) {
 	});
 
 	$('#modal_content_video #sign_lang').change(function() {
-
 		if($(this).is(":checked")) {
 			//$('#modal_content_video #content_video_substitles').removeAttr('required');
 			$('#modal_content_video #content_video_substitles').attr('disabled', true);
@@ -513,6 +514,7 @@ function initilizeMultimediaVideo(elem) {
 			$('#modal_content_video #content_video_substitles').parent().parent().find('.file-path').attr('disabled', true);
 
 			$('#modal_content_video .alt_text').find('input').attr('disabled', true);
+			$('#modal_content_video .alt_text').find('img').addClass('disabled');
 		}
 		else {
 			//$('#modal_content_video #content_video_substitles').attr('required', true);
@@ -521,7 +523,54 @@ function initilizeMultimediaVideo(elem) {
 			$('#modal_content_video #content_video_substitles').parent().parent().find('.file-path').removeAttr('disabled');
 
 			$('#modal_content_video .alt_text').find('input').removeAttr('disabled');
+			$('#modal_content_video .alt_text').find('img').removeClass('disabled');
 		}
+	});
+
+	elem.find('.video_actions .remove_multimedia').click(function() {
+		var elem = $(this).parent().parent();
+
+		elem.find('.del_loader').css('display', 'block');
+
+		var videoId = elem.find('video').attr('vid');
+
+		$.ajax({
+			type: "POST",
+			url: '/api/content/delete_video/' + videoId + '?email='+$("#email").text(),
+			datatype: "json",
+			success: function(jsondata) {
+				if(jsondata.ok === 'failed') {
+					Materialize.toast('Se ha producido un fallo interno', 4000);
+
+					elem.find('.del_loader').css('opacity', '0');
+					setTimeout(function() { elem.find('.del_loader').css('display', 'block'); }, 500);
+				}
+				else if(jsondata.ok === 'not_allowed') {
+					Materialize.toast('No tiene los permisos suficientes para borrar el video', 4000);
+
+					elem.find('.del_loader').css('opacity', '0');
+					setTimeout(function() { elem.find('.del_loader').css('display', 'block'); }, 500);
+				}
+				else {
+					setTimeout(function() { 
+						elem.animate( { 'opacity': '0', left: "-=100", height: "toggle" }, 500, function(){ 
+							elem.remove();
+							Materialize.toast('Se ha eliminado el video correctamente', 4000);
+						}); 
+
+						$('.video_content .content_multimedia li').each(function() {
+							if($(this).find('video').attr('vid') === videoId) {
+								$(this).remove();
+							}
+						});
+					}, 500);
+				}
+			},
+			error : function(xhr, status) {
+				console.log(xhr);
+				console.log(status);
+			}
+		});
 	});
 }
 

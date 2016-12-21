@@ -180,14 +180,13 @@
 														<% if(videos[i].LANG_ID === null) { %>
 															<img class="sign_lang" src="/static/img/sign_lang.png" width="50px"/>
 														<% } %>
-														<video class="responsive-video z-depth-1" controls>
+														<video vid="<%= videos[i].ID %>" class="responsive-video z-depth-1" controls>
 															<source src="<%= videos[i].URL %>">
 															<% var resCode = langs[j].CODE.split('-');
 															var langCode = resCode[0]; %>
 															<track src="<%= videos[i].SUBTITLE %>" kind="subtitles" srclang="<%= langCode %>" label="<%= langs[j].NAME %>">
 															<p>El navegador no soporta la etiqueta de video, no podrá previsualizarlo.</p>
 														</video>
-														
 														<div class="del_loader preloader-wrapper big active">
 															<div class="spinner-layer spinner-custom">
 																<div class="circle-clipper left">

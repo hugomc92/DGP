@@ -53,7 +53,7 @@ var Video = DBConnector.connectM4E().define('VIDEO', {
 		updateById: function(id) {
 			
 		},
-		deleteById: function(id) {
+		removeById: function(id) {
 			return Video.destroy({where: {ID: id}});
 		}
 	},

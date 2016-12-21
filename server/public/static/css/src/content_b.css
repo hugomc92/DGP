@@ -344,6 +344,12 @@ main {
 #modal_content_image .modal-content .input-field .prefix {
   font-size: 2.5em;
 }
+#modal_content_video .alt_text i img.disabled {
+  -moz-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
 [type="checkbox"].filled-in:checked + label:after {
   border: #345f7f;
   background-color: #345f7f;

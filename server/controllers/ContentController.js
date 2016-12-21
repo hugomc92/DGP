@@ -523,29 +523,21 @@ ContentController.prototype.initBackend = function() {
 
 				var altText = {};
 
-				console.log('signLang', signLang);
+				if(typeof signLang !== 'undefined' && signLang === 'on') {
+					altText.langId = null;
+					altText.alt = null;
+				}
+				else {
+					for(var key in req.body) {
+						if(key.indexOf('alt_text') > -1) {
+							var langRes = key.split('_');
+							var langId = langRes[langRes.length-1];
 
-				for(var key in req.body) {
-					console.log(key, req.body[key]);
-
-					if(key.indexOf('alt_text') > -1) {
-						console.log('if', key, req.body[key]);
-
-						var langRes = key.split('_');
-						var langId = langRes[langRes.length-1];
-						var alt = req.body[key];
-
-						if(typeof signLang !== 'undefined' && signLang === 'on') {
-							langId = null;
-							alt = null;
+							altText.alt = req.body[key];
+							altText.lang = langId;
 						}
-
-						altText.alt = alt;
-						altText.lang = langId;
 					}
 				}
-
-				console.log('altText', altText);
 
 				var video = Video.build();
 
