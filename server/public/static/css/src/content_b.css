@@ -158,7 +158,7 @@ main {
   max-height: 100px;
   margin-top: -85px;
   z-index: 85;
-  position: relative;
+  /*position: relative;*/
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -ms-transition: all 0.3s;
@@ -203,11 +203,12 @@ main {
   background: rgba(0, 0, 0, 0.65);
   z-index: 85;
   position: relative;
-  /* margin: 0; */
   color: white;
 }
 #contents .multimedia .content_multimedia li .multimedia_actions {
   max-height: 0;
+  position: absolute;
+  width: 92%;
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -ms-transition: all 0.3s;
@@ -217,15 +218,29 @@ main {
 @media only screen and (min-width: 601px) and (max-width: 992px) {
   #contents .multimedia .content_multimedia li .multimedia_actions {
     max-height: 100px;
+    position: relative;
   }
 }
 @media only screen and (max-width: 600px) {
   #contents .multimedia .content_multimedia li .multimedia_actions {
     max-height: 100px;
+    position: relative;
+  }
+}
+#contents .multimedia .content_multimedia li .multimedia_actions.video_actions {
+  position: absolute;
+}
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  #contents .multimedia .content_multimedia li .multimedia_actions.video_actions {
+    padding-top: 55%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  #contents .multimedia .content_multimedia li .multimedia_actions.video_actions {
+    padding-top: 55%;
   }
 }
 #contents .multimedia .content_multimedia li .multimedia_actions .btn-floating {
-  background: #18405d;
   margin: 5px 0;
   display: inline-block;
   max-height: 0;
@@ -239,9 +254,6 @@ main {
   #contents .multimedia .content_multimedia li .multimedia_actions .btn-floating {
     max-height: 100px;
   }
-}
-#contents .multimedia .content_multimedia li .multimedia_actions .btn-floating:hover {
-  background: #345f7f;
 }
 #contents .multimedia .content_multimedia li .multimedia_actions .btn-floating.edit_multimedia {
   margin-right: 50%;
@@ -270,6 +282,26 @@ main {
 #contents .multimedia .content_multimedia li .add_multimedia span {
   display: block;
   margin-top: 10px;
+}
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  #contents .multimedia.video_content .content_multimedia li {
+    margin-bottom: 65px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  #contents .multimedia.video_content .content_multimedia li {
+    margin-bottom: 65px;
+  }
+}
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  #contents .multimedia.video_content .content_multimedia li:last-child {
+    margin-bottom: 0;
+  }
+}
+@media only screen and (max-width: 600px) {
+  #contents .multimedia.video_content .content_multimedia li:last-child {
+    margin-bottom: 0;
+  }
 }
 .picker__date-display {
   background: #345f7f;

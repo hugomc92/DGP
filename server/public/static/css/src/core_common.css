@@ -15,10 +15,12 @@
   -webkit-transform: translate(0px, 0px);
   transform: translate(0px, 0px);
 }
-.btn {
+.btn,
+.btn-floating {
   background: #18405d;
 }
-.btn:hover {
+.btn:hover,
+.btn-floating:hover {
   background: #345f7f;
 }
 .btn.red:hover,

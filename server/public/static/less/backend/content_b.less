@@ -140,7 +140,6 @@ main {
 				position: relative;
 
 				&:hover {
-					
 					img, video {
 						box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
@@ -150,7 +149,7 @@ main {
 						max-height: 100px;
 						margin-top: -85px;
 						z-index: 85;
-    					position: relative;
+    					/*position: relative;*/
 
 						&.video_actions {
 							margin-top: 0;
@@ -189,26 +188,40 @@ main {
 					background: rgba(0, 0, 0, 0.65);
 					z-index: 85;
 					position: relative;
-					/* margin: 0; */
 					color: white;
 
 				}
 
 				.multimedia_actions {
 					max-height: 0;
+					position: absolute;
+					width: 92%;
 
 					@media @tablet {
 						max-height: 100px;
+						position: relative;
 					}
 
 					@media @mobile {
 						max-height: 100px;
+						position: relative;
 					}
 
 					.transition(all 0.3s);
+
+					&.video_actions {
+						position: absolute;
+
+						@media @tablet {
+							padding-top: 55%;
+						}
+
+						@media @mobile {
+							padding-top: 55%;
+						}
+					}
 					
 					.btn-floating {
-						background: @secondary_color_dark;
 						margin: 5px 0;
 						display: inline-block;
 						max-height: 0;
@@ -219,10 +232,6 @@ main {
 
 						@media @mobile {
 							max-height: 100px;
-						}
-
-						&:hover {
-							background: @secondary_color;
 						}
 
 						&.edit_multimedia {
@@ -255,6 +264,28 @@ main {
 					span {
 						display: block;
 						margin-top: 10px;
+					}
+				}
+			}
+		}
+
+		&.video_content {
+			.content_multimedia li {
+				@media @tablet {
+					margin-bottom: 65px;
+				}
+
+				@media @mobile {
+					margin-bottom: 65px;
+				}
+
+				&:last-child {
+					@media @tablet {
+						margin-bottom: 0;
+					}
+
+					@media @mobile {
+						margin-bottom: 0;
 					}
 				}
 			}

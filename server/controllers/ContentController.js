@@ -190,8 +190,6 @@ ContentController.prototype.initBackend = function() {
 
 										video.retrieveAllByContentId(contentId).then(function(success) {
 											self.renderJson.videos = success;
-
-											console.log('videos', success);
 											
 											res.render('pages/backend/content', self.renderJson);
 											self.clearMessages();
@@ -439,8 +437,6 @@ ContentController.prototype.initBackend = function() {
 
 	self.routerBackend.route('/video/add/:contentId').post(upload.array('content_video', 2), function(req, res) {
 
-		console.log('body', req.body);
-
 		var contentId = req.params.contentId;
 
 		self.renderJson.user = req.session.user;
@@ -526,10 +522,15 @@ ContentController.prototype.initBackend = function() {
 				}
 
 				var altText = {};
-				var altTextFound = false;
 
-				for(var key in req.body && !altTextFound) {
+				console.log('signLang', signLang);
+
+				for(var key in req.body) {
+					console.log(key, req.body[key]);
+
 					if(key.indexOf('alt_text') > -1) {
+						console.log('if', key, req.body[key]);
+
 						var langRes = key.split('_');
 						var langId = langRes[langRes.length-1];
 						var alt = req.body[key];
@@ -541,10 +542,10 @@ ContentController.prototype.initBackend = function() {
 
 						altText.alt = alt;
 						altText.lang = langId;
-
-						altTextFound = true;
 					}
 				}
+
+				console.log('altText', altText);
 
 				var video = Video.build();
 
