@@ -190,6 +190,8 @@ ContentController.prototype.initBackend = function() {
 
 										video.retrieveAllByContentId(contentId).then(function(success) {
 											self.renderJson.videos = success;
+
+											console.log('videos', success);
 											
 											res.render('pages/backend/content', self.renderJson);
 											self.clearMessages();
@@ -327,7 +329,7 @@ ContentController.prototype.initBackend = function() {
 				});
 			}
 			else {
-				self.renderJson.error = 'Error interno con los archivos enviados';
+				self.renderJson.error = 'Error mandando los archivos al servidor';
 
 				res.redirect('/backend/contents/edit/' + contentId + '/');
 			}		
@@ -437,23 +439,138 @@ ContentController.prototype.initBackend = function() {
 
 	self.routerBackend.route('/video/add/:contentId').post(upload.array('content_video', 2), function(req, res) {
 
-		console.log('files', req.files);
+		console.log('body', req.body);
 
 		var contentId = req.params.contentId;
 
 		self.renderJson.user = req.session.user;
 
 		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
-			self.renderJson.msg = 'Video Añadido Correctamente';
 
-			// Add the event to a new Activity Log
-			/*var ct = "Inserción";
-			var desc = "Se ha insertado un video al contenido con ID " + contentId;
-			var date = new Date();
-			var uid = self.renderJson.user.ID;
-			self.activityLogController.addNewActivityLog(ct, desc, date, uid);*/
+			var newVideo = '';
+			var newSubstitle = '';
 
-			res.redirect('/backend/contents/edit/' + contentId + '/');
+
+			if(req.files.length > 0) {
+				
+				var file = Utils.normalizeStr(req.files[0].originalname);
+				var extension = '.'+file.substr(file.lastIndexOf('.')+1);
+
+				file = file.split('.').splice(0,1).join('.');
+
+				var dst = self.uploadvideopath + file + extension;
+
+				// Check if the file exist. If there's an error it doesn't exist
+				try {
+					fs.accessSync(dst, fs.F_OK);
+
+					file += Date.now();
+					file += extension;
+				} catch(e) {		// File not found
+					file += extension;
+				}
+
+				dst = self.uploadvideopath + file;
+
+				var tmp = self.uploadpath+req.files[0].filename;
+
+				fs.createReadStream(tmp).pipe(fs.createWriteStream(dst));
+
+				// Delete created tmp file
+				fs.unlink(tmp, function(error) { 
+					if(error)
+						console.log(error);
+					else
+						console.log('successfully deleted ' + tmp);	
+				});
+
+				// Path to the file, to be sabed in DB
+				newVideo = '/static/video/content_videos/' + file;
+				
+				var signLang = req.body.sign_lang;
+
+				if(typeof signLang === 'undefined') {
+					file = Utils.normalizeStr(req.files[1].originalname);
+					extension = '.'+file.substr(file.lastIndexOf('.')+1);
+
+					file = file.split('.').splice(0,1).join('.');
+
+					dst = self.uploadsubtitlepath + file + extension;
+
+					// Check if the file exist. If there's an error it doesn't exist
+					try {
+						fs.accessSync(dst, fs.F_OK);
+
+						file += Date.now();
+						file += extension;
+					} catch(e) {		// File not found
+						file += extension;
+					}
+
+					dst = self.uploadsubtitlepath + file;
+
+					tmp = self.uploadpath+req.files[1].filename;
+
+					fs.createReadStream(tmp).pipe(fs.createWriteStream(dst));
+
+					// Delete created tmp file
+					fs.unlink(tmp, function(error) {
+						if(error)
+							console.log(error);
+						else
+							console.log('successfully deleted ' + tmp);	
+					});
+
+					// Path to the file, to be sabed in DB
+					newSubstitle = '/static/video/content_videos_subtitles/' + file;
+				}
+
+				var altText = {};
+				var altTextFound = false;
+
+				for(var key in req.body && !altTextFound) {
+					if(key.indexOf('alt_text') > -1) {
+						var langRes = key.split('_');
+						var langId = langRes[langRes.length-1];
+						var alt = req.body[key];
+
+						if(typeof signLang !== 'undefined' && signLang === 'on') {
+							langId = null;
+							alt = null;
+						}
+
+						altText.alt = alt;
+						altText.lang = langId;
+
+						altTextFound = true;
+					}
+				}
+
+				var video = Video.build();
+
+				video.add(newVideo, newSubstitle, altText.alt, contentId, altText.lang).then(function(success) {
+					self.renderJson.msg = 'Video Añadido Correctamente';
+
+					// Add the event to a new Activity Log
+					/*var ct = "Inserción";
+					var desc = "Se ha insertado un video al contenido con ID " + contentId;
+					var date = new Date();
+					var uid = self.renderJson.user.ID;
+					self.activityLogController.addNewActivityLog(ct, desc, date, uid);*/
+
+					res.redirect('/backend/contents/edit/' + contentId + '/');
+				}, function(err) {
+					self.renderJson.error = 'Error mandando los archivos al servidor';
+
+					res.redirect('/backend/contents/edit/' + contentId + '/');
+				});
+			}
+			else {
+				self.renderJson.error = 'Error mandando los archivos al servidor';
+
+				res.redirect('/backend/contents/edit/' + contentId + '/');
+			}
+			
 		}
 		else 
 			res.redirect('/');
@@ -574,6 +691,7 @@ ContentController.prototype.clearMessages = function() {
 
 	delete this.renderJson.cont;
 	delete this.renderJson.images;
+	delete this.renderJson.videos;
 };
 
 module.exports = ContentController;

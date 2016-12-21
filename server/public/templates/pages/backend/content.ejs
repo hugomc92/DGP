@@ -171,7 +171,7 @@
 									<ul class="content_multimedia row">
 										<% if(typeof(videos) !== 'undefined') {
 											for(var i=0; i<videos.length; i++) {
-												if(videos[i].LANG_ID === langs[j].ID ) { %>
+												if(videos[i].LANG_ID === langs[j].ID || videos[i].LANG_ID === null) { %>
 													<li class="col s12 m6 l4">
 														<video class="responsive-video z-depth-1" controls>
 															<source src="<%= videos[i].URL %>">

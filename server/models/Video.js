@@ -6,7 +6,7 @@ var Video = DBConnector.connectM4E().define('VIDEO', {
 	ID: {type: Sequelize.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true},
 	URL: {type: Sequelize.STRING(), allowNull: false},
 	SUBTITLE: {type: Sequelize.STRING(), allowNull: true},
-	ALT_TEXT: {type: Sequelize.STRING(), allowNull: false},
+	ALT_TEXT: {type: Sequelize.STRING(), allowNull: true},
 	CONTENT_ID: {type: Sequelize.INTEGER, allowNull: false},
 	LANG_ID: {type: Sequelize.INTEGER, allowNull: true},
 },
@@ -33,8 +33,22 @@ var Video = DBConnector.connectM4E().define('VIDEO', {
 		retrievePagination: function(inicio, fin){
 			return Video.findAll({order: 'ID DESC', offset: parseInt(inicio) - 1, limit: parseInt(fin) });
 		},
-		add: function(photo) {
-			
+		add: function(url, substitle, altText, contentId, langId) {
+			if(langId === null) {
+				return Video.create( {
+					URL: url,
+					CONTENT_ID: contentId,
+				});
+			}
+			else {
+				return Video.create( {
+					URL: url,
+					SUBTITLE: substitle,
+					ALT_TEXT: altText,
+					CONTENT_ID: contentId,
+					LANG_ID: langId
+				});
+			}
 		},
 		updateById: function(id) {
 			

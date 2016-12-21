@@ -503,6 +503,26 @@ function initilizeMultimediaVideo(elem) {
 			}
 		});
 	});
+
+	$('#modal_content_video #sign_lang').change(function() {
+
+		if($(this).is(":checked")) {
+			//$('#modal_content_video #content_video_substitles').removeAttr('required');
+			$('#modal_content_video #content_video_substitles').attr('disabled', true);
+			$('#modal_content_video #content_video_substitles').parent().attr('disabled', true);
+			$('#modal_content_video #content_video_substitles').parent().parent().find('.file-path').attr('disabled', true);
+
+			$('#modal_content_video .alt_text').find('input').attr('disabled', true);
+		}
+		else {
+			//$('#modal_content_video #content_video_substitles').attr('required', true);
+			$('#modal_content_video #content_video_substitles').removeAttr('disabled');
+			$('#modal_content_video #content_video_substitles').parent().removeAttr('disabled');
+			$('#modal_content_video #content_video_substitles').parent().parent().find('.file-path').removeAttr('disabled');
+
+			$('#modal_content_video .alt_text').find('input').removeAttr('disabled');
+		}
+	});
 }
 
 function cleanAddLangModal() {

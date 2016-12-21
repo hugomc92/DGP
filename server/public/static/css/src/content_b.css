@@ -309,6 +309,10 @@ main {
 #modal_content_image .modal-content .input-field .prefix {
   font-size: 2.5em;
 }
+[type="checkbox"].filled-in:checked + label:after {
+  border: #345f7f;
+  background-color: #345f7f;
+}
 #materialbox-overlay {
   opacity: 0.93 !important;
   background: #121212 !important;
