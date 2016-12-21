@@ -141,7 +141,7 @@ main {
 
 				&:hover {
 					
-					img {
+					img, video {
 						box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 						.transition(all 0.3s);
@@ -151,6 +151,10 @@ main {
 						margin-top: -85px;
 						z-index: 85;
     					position: relative;
+
+						&.video_actions {
+							margin-top: 0;
+						}
 
 						@media @tablet {
 							margin-top: 0;
@@ -172,6 +176,10 @@ main {
 					display: block;
 					margin: 0 auto;
 
+					.transition(all 0.3s);
+				}
+
+				video {
 					.transition(all 0.3s);
 				}
 

@@ -300,7 +300,7 @@ ContentController.prototype.initBackend = function() {
 						var altImage = AltImage.build();
 
 						altImage.addSome(altTexts, img.ID).then(function(success) {
-							self.renderJson.msg = 'Imagen Añadida correctamente';
+							self.renderJson.msg = 'Imagen Añadida Correctamente';
 
 							// Add the event to a new Activity Log
 							var ct = "Inserción";
@@ -433,6 +433,31 @@ ContentController.prototype.initBackend = function() {
 
 			res.redirect('/backend/contents/edit/' + contentId + '/');
 		}
+	});
+
+	self.routerBackend.route('/video/add/:contentId').post(upload.array('content_video', 2), function(req, res) {
+
+		console.log('files', req.files);
+
+		var contentId = req.params.contentId;
+
+		self.renderJson.user = req.session.user;
+
+		if(typeof self.renderJson.user !== 'undefined' && parseInt(self.renderJson.user.ADMIN)) {
+			self.renderJson.msg = 'Video Añadido Correctamente';
+
+			// Add the event to a new Activity Log
+			/*var ct = "Inserción";
+			var desc = "Se ha insertado un video al contenido con ID " + contentId;
+			var date = new Date();
+			var uid = self.renderJson.user.ID;
+			self.activityLogController.addNewActivityLog(ct, desc, date, uid);*/
+
+			res.redirect('/backend/contents/edit/' + contentId + '/');
+		}
+		else 
+			res.redirect('/');
+		
 	});
 
 	self.routerBackend.route('/delete').post(function(req, res) {

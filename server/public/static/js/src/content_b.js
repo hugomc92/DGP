@@ -32,6 +32,7 @@ $(document).ready(function() {
 	});
 
 	imageModalSubmit = $('#modal_content_image').find('form').attr('action');
+	videoModalSubmit = $('#modal_content_video').find('form').attr('action');
 
 	if(action === 'add') {
 		form = $('#español_content').find('.info_form').parent().html();
@@ -41,6 +42,7 @@ $(document).ready(function() {
 
 		initilizeForm($('#español_content'), 1);
 		initilizeMultimediaImage($('#español_content'));
+		initilizeMultimediaVideo($('#español_content'));
 	}
 	else {
 		var elems = $('.info_form').parent().parent();
@@ -55,6 +57,7 @@ $(document).ready(function() {
 
 			initilizeForm(elem, elem.attr('content-lang'));
 			initilizeMultimediaImage(elem);
+			initilizeMultimediaVideo(elem);
 		}
 
 		$('.multimedia').css('display', 'block');
@@ -193,6 +196,7 @@ $(document).ready(function() {
 
 			initilizeForm($('#' + lang.NAME.toLowerCase() + '_content'), langId);
 			initilizeMultimediaImage($('#' + lang.NAME.toLowerCase() + '_content'));
+			initilizeMultimediaVideo($('#' + lang.NAME.toLowerCase() + '_content'));
 		}
 
 		cleanAddLangModal();
@@ -321,7 +325,7 @@ function initilizeMultimediaImage(elem) {
 		});
 	});
 
-	elem.find('.multimedia_actions .edit_multimedia').click(function() {
+	elem.find('.image_actions .edit_multimedia').click(function() {
 		
 		$.ajax({
 			type: "GET",
@@ -410,7 +414,7 @@ function initilizeMultimediaImage(elem) {
 		});
 	});
 
-	elem.find('.multimedia_actions .remove_multimedia').click(function() {
+	elem.find('.image_actions .remove_multimedia').click(function() {
 		var elem = $(this).parent().parent();
 
 		elem.find('.del_loader').css('display', 'block');
@@ -457,7 +461,48 @@ function initilizeMultimediaImage(elem) {
 
 function initilizeMultimediaVideo(elem) {
 
-	
+	if(action === 'add')
+		$('.multimedia').css('display', 'none');
+
+	elem.find('.new_video').click(function() {
+		$('#modal_content_video #video_loader').css('display', 'none');
+		$('#modal_content_video .modal-header h4').text('Añadir Video');
+
+		var modalForm = $('#modal_content_video').find('form');
+
+		var newAction = videoModalSubmit + 'add/' + contentId;
+
+		modalForm.attr('action', newAction);
+
+		var langFound = false;
+		for(var i=0; i<langs.length && !langFound; i++) {
+			if(langs[i].ID === parseInt(elem.attr('content-lang'))) {
+				langFound = true;
+
+				$('#modal_content_video').find('#alt_texts_container').append('<div class="alt_text input-field col s12"><i class="material-icons prefix"><img src="' + langs[i].FLAG + '" class="circle" width="30px" height="30px"/>\</i><input id="alt_text_' + langs[i].ID + '" name="alt_text_' + langs[i].ID + '" type="text" class="validate" required><label for="' + langs[i].ID + '">Texto Alternativo (' + langs[i].NAME + ')</label></div>');
+			}
+		}
+
+		$('#modal_content_video').openModal( {
+			complete: function() {
+				$('#modal_content_video').find('modal-header h4').text('');
+
+				$('#modal_content_video').find('input, textarea').each(function() {
+					$(this).val('');
+					$(this).trigger('autoresize');
+				});
+
+				$('#modal_content_video').find('#alt_texts_container').text('');
+
+				Materialize.updateTextFields();
+
+				$("#contentVideoPreview").children('source').attr('src', '');
+				$("#contentVideoPreview").children('track').remove();
+				$("#contentVideoPreview").load();
+				$('#modal_content_video #video_loader').css('display', 'block');
+			}
+		});
+	});
 }
 
 function cleanAddLangModal() {
@@ -590,3 +635,4 @@ function send_data(form) {
 }
 
 imagePrevisualization($('#content_image'), $('#contentImagePreview'));
+videoPrevisualization($('#content_video'), $('#content_video_substitles'), $('#contentVideoPreview'));

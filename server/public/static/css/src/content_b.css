@@ -145,7 +145,8 @@ main {
   margin: 10px auto;
   position: relative;
 }
-#contents .multimedia .content_multimedia li:hover img {
+#contents .multimedia .content_multimedia li:hover img,
+#contents .multimedia .content_multimedia li:hover video {
   box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
@@ -164,6 +165,9 @@ main {
   -o-transition: all 0.3s;
   transition: all 0.3s;
 }
+#contents .multimedia .content_multimedia li:hover .multimedia_actions.video_actions {
+  margin-top: 0;
+}
 @media only screen and (min-width: 601px) and (max-width: 992px) {
   #contents .multimedia .content_multimedia li:hover .multimedia_actions {
     margin-top: 0;
@@ -180,6 +184,13 @@ main {
 #contents .multimedia .content_multimedia li img {
   display: block;
   margin: 0 auto;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+#contents .multimedia .content_multimedia li video {
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -ms-transition: all 0.3s;
