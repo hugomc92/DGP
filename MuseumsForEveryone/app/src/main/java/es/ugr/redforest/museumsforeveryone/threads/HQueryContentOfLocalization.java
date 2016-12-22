@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.media.MediaFormat;
+import android.media.MediaPlayer;
 import android.widget.MediaController;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -21,6 +22,30 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.exoplayer2.C;
+import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.Format;
+import com.google.android.exoplayer2.LoadControl;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.drm.DrmInitData;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.extractor.ExtractorsFactory;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.MergingMediaSource;
+import com.google.android.exoplayer2.source.SingleSampleMediaSource;
+import com.google.android.exoplayer2.trackselection.AdaptiveVideoTrackSelection;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.upstream.BandwidthMeter;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.MimeTypes;
+import com.google.android.exoplayer2.util.Util;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -32,6 +57,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.models.Content;
@@ -41,6 +67,9 @@ import es.ugr.redforest.museumsforeveryone.models.Location;
 import es.ugr.redforest.museumsforeveryone.models.Multimedia;
 import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
 import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
+import es.ugr.redforest.museumsforeveryone.utils.Subtitles;
+
+import static android.media.MediaFormat.MIMETYPE_TEXT_VTT;
 
 /**
  * Thread to connect to the server and get the location and contents in this location
@@ -146,13 +175,16 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
                         JSONObject content_type = res.getJSONObject("content_type");
                         itemContentType = mapper.readValue(content_type.toString(), ContentType.class);
                         //Add videos to content
-                        if (res.has("video")) {
-                            JSONArray videosJson = res.getJSONArray("video");
+                        if (res.has("videos")) {
+                            JSONArray videosJson = res.getJSONArray("videos");
                             for (int i = 0; i < videosJson.length(); ++i) {
                                 JSONObject videoJson = videosJson.getJSONObject(i);
-                                Multimedia video = mapper.readValue(videoJson.toString(), Multimedia.class);
-                                video.setType("video");
-                                content.addMultimedia(video);
+                                if(videoJson.has("video")) {
+                                    JSONObject videoJ = videoJson.getJSONObject("video");
+                                    Multimedia video = mapper.readValue(videoJ.toString(), Multimedia.class);
+                                    video.setType("video");
+                                    content.addMultimedia(video);
+                                }
                             }
                         }
                         //Add images to content
@@ -209,11 +241,30 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
             TextView titleArtwork = (TextView)  ((Activity)context).findViewById(R.id.titleArtwork);
             TextView descriptionArtwork = (TextView)  ((Activity)context).findViewById(R.id.descriptionArtwork);
             //TextView titleImage = (TextView)  ((Activity)context).findViewById(R.id.titleImage);
-            VideoView videoView = (VideoView)((Activity) context).findViewById(R.id.videoArtwork);
+            final SimpleExoPlayerView videoView = (SimpleExoPlayerView)((Activity) context).findViewById(R.id.videoArtwork);
 
             //If content is scan by nfc or qr gets all contents in this location
             if(qrornfc)
                 content = location.getContents().get(index);
+
+            //set values at textview
+            if(content.getContentType()!=null) {
+                typeArtWork.setText(content.getContentType().getName());
+                artworkName = content.getContentType().getName();
+            }
+            if(content.getContentInformation()!=null) {
+                titleArtwork.setText(content.getContentInformation().getName());
+                descriptionArtwork.setText(content.getContentInformation().getDescription());
+            }
+
+            //titleImage.setText(artworkName);
+            //position scroll to top
+            ((ScrollView) ((Activity)context).findViewById(R.id.scrollView)).post(new Runnable()
+            {
+                public void run() {
+                    ((ScrollView) ((Activity)context).findViewById(R.id.scrollView)).fullScroll(ScrollView.FOCUS_UP);
+                }
+            });
 
             final ArrayList<Multimedia> imageMultimedia = content.getMultimediaByType("image");
             //Set image in imageview and description
@@ -263,41 +314,58 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
                 ((Activity)context).findViewById(R.id.btPreviousImage).setVisibility(View.GONE);
             }
 
-            ArrayList<Multimedia> videoMultimedia = content.getMultimediaByType("video");
+            final ArrayList<Multimedia> videoMultimedia = content.getMultimediaByType("video");
             //If array contains video put video and subtitles in videoview else hide videoview
             if(videoMultimedia!=null)
             if(videoMultimedia.size()>0){
                 Uri uri = Uri.parse(QueryBBDD.server+videoMultimedia.get(0).getUrl());
-                videoView.setVideoURI(uri);
+                // 1. Create a default TrackSelector
+                BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+                TrackSelection.Factory videoTrackSelectionFactory =
+                        new AdaptiveVideoTrackSelection.Factory(bandwidthMeter);
+                TrackSelector trackSelector =
+                        new DefaultTrackSelector(videoTrackSelectionFactory);
+                // 2. Create a default LoadControl
+                LoadControl loadControl = new DefaultLoadControl();
+                // 3. Create the player
+                SimpleExoPlayer player =
+                        ExoPlayerFactory.newSimpleInstance(context, trackSelector, loadControl);
+
+                videoView.setPlayer(player);
+
+                // Produces DataSource instances through which media data is loaded.
+                DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context, Util.getUserAgent(context, "yourApplicationName"));
+                // Produces Extractor instances for parsing the media data.
+                ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+                // This is the MediaSource representing the media to be played.
+                MediaSource videoSource = new ExtractorMediaSource(uri,
+                        dataSourceFactory, extractorsFactory, null, null);
+                Uri subtitleUri = Uri.parse(QueryBBDD.server+videoMultimedia.get(0).getSubtitle());
+
+                Format textFormat = Format.createTextSampleFormat(null, MimeTypes.TEXT_VTT,
+                        null, Format.NO_VALUE, Format.NO_VALUE, "en", null);
+                MediaSource subtitleSource = new SingleSampleMediaSource(subtitleUri,dataSourceFactory,textFormat, C.TIME_UNSET);
+// Plays the video with the sideloaded subtitle.
+                MergingMediaSource mergedSource =
+                        new MergingMediaSource(videoSource, subtitleSource);
+                // Prepare the player with the source.
+                player.prepare(mergedSource);
+
+
+               /* videoView.setVideoURI(uri);
+
                 MediaController mediaController = new MediaController(context);
                 mediaController.setAnchorView(videoView);
                 videoView.setMediaController(mediaController);
-                try {
-                    URL url = new URL(QueryBBDD.server+videoMultimedia.get(0).getSubtitle());
-                    InputStream stream = url.openStream();
-                    videoView.addSubtitleSource(stream, MediaFormat.createSubtitleFormat("text/vtt",ControllerPreferences.getLanguage()));
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                String subtitles=QueryBBDD.server+videoMultimedia.get(0).getSubtitle();
+                if(subtitles!=null && subtitles.compareTo("")!=0 && subtitles.endsWith(".vtt")) {
+                    HSubtitles hSubtitles = new HSubtitles(context,videoView,subtitles);
+                    hSubtitles.execute();
+                }*/
             }else
             {
                 videoView.setVisibility(View.GONE);
             }
-            //set values at textview
-            typeArtWork.setText(content.getContentType().getName());
-            titleArtwork.setText(content.getContentInformation().getName());
-            descriptionArtwork.setText(content.getContentInformation().getDescription());
-            artworkName = content.getContentType().getName();
-            //titleImage.setText(artworkName);
-            //position scroll to top
-            ((ScrollView) ((Activity)context).findViewById(R.id.scrollView)).post(new Runnable()
-            {
-                public void run() {
-                    ((ScrollView) ((Activity)context).findViewById(R.id.scrollView)).fullScroll(ScrollView.FOCUS_UP);
-                }
-            });
         }
         pDialog.dismiss();
     }

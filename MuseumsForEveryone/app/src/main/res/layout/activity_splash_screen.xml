@@ -4,9 +4,11 @@
     android:id="@+id/activity_splash_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="es.ugr.redforest.museumsforeveryone.screens.ActivitySplashScreen"
-    android:background="@drawable/splashscreen">
+    tools:context="es.ugr.redforest.museumsforeveryone.screens.ActivitySplashScreen">
 
-
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:src="@drawable/splashscreen"/>
 
 </RelativeLayout>
