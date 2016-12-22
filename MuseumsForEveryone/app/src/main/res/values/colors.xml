@@ -5,5 +5,6 @@
     <color name="colorPrimarySoft">#5899CC</color>
     <color name="colorAccent">#6EBFFF</color>
     <color name="colorSoftest">#BAE1FF</color>
+    <color name="backgorundInput">#9e2e2f2f</color>
 
 </resources>

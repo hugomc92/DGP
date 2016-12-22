@@ -48,6 +48,7 @@ dependencies {
     compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.1'
     compile 'com.github.paolorotolo:appintro:4.1.0'
     compile 'com.android.support:cardview-v7:24.0.+'
+    compile 'com.android.support:design:24.0.+'
 
     testCompile 'junit:junit:4.12'
 }
