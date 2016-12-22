@@ -88,5 +88,15 @@
     <string name="conection_Problems">Problemas de conexión. Pruebe de nuevo.</string>
     <string name="loading">Cargando...</string>
     <string name="artwork">Obra</string>
+    <string name="CC">Contacto Museums For Everyone</string>
+    <string name="send_email">Enviar email</string>
+    <string name="email_sent">Se ha enviado el email</string>
+    <string name="email_error">No hay ningún cliente de correo instalado.</string>
+    <string name="subject">Asunto</string>
+    <string name="email_content">Contenido</string>
+    <string name="telephone">Teléfono</string>
+    <string name="message_hint">Escriba aquí su mensaje</string>
+    <string name="contact">Contacto</string>
+    <string name="email">Email</string>
 
 </resources>

@@ -28,6 +28,7 @@ import android.widget.Toast;
 import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.adapters.AdapterMenuLateral;
 import es.ugr.redforest.museumsforeveryone.screens.ActivityArtworkList;
+import es.ugr.redforest.museumsforeveryone.screens.ActivityContact;
 import es.ugr.redforest.museumsforeveryone.screens.ActivityContactInform;
 import es.ugr.redforest.museumsforeveryone.screens.ActivityContentType;
 import es.ugr.redforest.museumsforeveryone.screens.ActivityGuidedVisit;
@@ -121,7 +122,7 @@ public class SliderMenu extends AppCompatActivity{
                         actualActivity.finish();
                     }else if(recyclerView.getChildAdapterPosition(child)==6){
                         Drawer.closeDrawers();
-                        Intent mainIntent = new Intent(recyclerView.getContext(), ActivityContactInform.class);
+                        Intent mainIntent = new Intent(recyclerView.getContext(), ActivityContact.class);
                         context.startActivity(mainIntent);
                         actualActivity.finish();
                     }
