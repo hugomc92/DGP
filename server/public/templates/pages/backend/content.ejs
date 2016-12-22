@@ -105,7 +105,7 @@
 										<div class="input-field col s12 m6">
 											<input type="hidden" id="content_date_out_hidden" name="content_date_out_hidden" value="<%= moment(cont.DATE_OUT).format('DD/MM/YYYY') %>">
 											<input type="date" id="content_date_out" name="content_date_out" class="datepicker" value="<%= moment(cont.DATE_OUT).format('DD MMMM, YYYY') %>">
-											<label for="content_date_out">Fecha Salida (opcional)</label>
+											<label for="content_date_out">Fecha Salida</label>
 										</div>
 										<!-- Submit form -->
 										<div class="input-field col s12">
@@ -131,14 +131,14 @@
 														}
 													}
 													if(altTextFound) { %>
-														<img pic="<%= images[i].ID %>" class="responsive-img materialboxed" data-caption="<%= altText %>" alt="<%= altText %>" src="<%= images[i].URL %>">
+														<img pic="<%= images[i].ID %>" class="responsive-img materialboxed z-depth-1" data-caption="<%= altText %>" alt="<%= altText %>" src="<%= images[i].URL %>">
 														<p class="image_alt_text truncate"><%= altText %></p>
 													<% }
 													else { %>
 														<img pic="<%= images[i].ID %>" class="responsive-img materialboxed" data-caption="NO TIENE TEXTO ALTERNATIVO EN ESTE IDIOMA" alt="Imagen del contenido" src="<%= images[i].URL %>">
 														<p class="image_alt_text  truncate">NO TIENE TEXTO ALTERNATIVO EN ESTE IDIOMA</p>
 													<% } %>
-													<div class="multimedia_actions">
+													<div class="multimedia_actions image_actions">
 														<a class="edit_multimedia btn-floating btn-large waves-effect waves-light"><i class="material-icons">edit</i></a>
 														<a class="remove_multimedia btn-floating btn-large waves-effect waves-light red"><i class="material-icons">delete</i></a>
 													</div>
@@ -169,13 +169,46 @@
 								<div class="multimedia video_content row z-depth-1">
 									<h5 class="col s12">VIDEOS</h5>
 									<ul class="content_multimedia row">
-										<% if(typeof(videos) !== 'undefined') { 
-											for(var i=0; i<videos.length; i++) {%>
-												<li class="col s12 m6 l4"> <video class="responsive-video" controls><source src="<%= videos[i].URL %>"></video></li>
+										<% if(typeof(videos) !== 'undefined') {
+											for(var i=0; i<videos.length; i++) {
+												if(videos[i].LANG_ID === langs[j].ID || videos[i].LANG_ID === null) { %>
+													<li class="col s12 m6 l4">
+														<div class="multimedia_actions video_actions">
+															<a class="edit_multimedia btn-floating btn-large waves-effect waves-light"><i class="material-icons">edit</i></a>
+															<a class="remove_multimedia btn-floating btn-large waves-effect waves-light red"><i class="material-icons">delete</i></a>
+														</div>
+														<% if(videos[i].LANG_ID === null) { %>
+															<img class="sign_lang" src="/static/img/sign_lang.png" width="50px"/>
+														<% } %>
+														<% if(videos[i].ALT_TEXT !== null) { %>
+															<p class="video_alt_text truncate"><%= videos[i].ALT_TEXT %></p>
+														<% } %>
+														<video vid="<%= videos[i].ID %>" class="responsive-video z-depth-1" controls>
+															<source src="<%= videos[i].URL %>">
+															<% var resCode = langs[j].CODE.split('-');
+															var langCode = resCode[0]; %>
+															<track src="<%= videos[i].SUBTITLE %>" kind="subtitles" srclang="<%= langCode %>" label="<%= langs[j].NAME %>">
+															<p>El navegador no soporta la etiqueta de video, no podrá previsualizarlo.</p>
+														</video>
+														<div class="del_loader preloader-wrapper big active">
+															<div class="spinner-layer spinner-custom">
+																<div class="circle-clipper left">
+																	<div class="circle"></div>
+																</div>
+																<div class="gap-patch">
+																	<div class="circle"></div>
+																</div>
+																<div class="circle-clipper right">
+																	<div class="circle"></div>
+																</div>
+															</div>
+														</div>
+													</li>
 											<% } 
+											}
 										} %>
 										<li class="col s12 m6 l4">
-											<a class="add_multimedia  waves-effect waves-light btn">
+											<a class="add_multimedia new_video waves-effect waves-light btn">
 												<i class="material-icons">add</i>
 												<span>Añadir Video</span>
 											</a>
@@ -234,7 +267,7 @@
 								<div class="input-field col s12 m6">
 									<input type="hidden" id="content_date_out_hidden" name="content_date_out_hidden">
 									<input type="date" id="content_date_out" name="content_date_out" class="datepicker">
-									<label for="content_date_out">Fecha Salida (opcional)</label>
+									<label for="content_date_out">Fecha Salida</label>
 								</div>
 								<!-- Submit form -->
 								<div class="input-field col s12">
@@ -260,7 +293,7 @@
 							<h5 class="col s12">VIDEOS</h5>
 							<ul class="content_multimedia row">
 								<li class="col s12 m6 l4">
-									<a class="add_multimedia waves-effect waves-light btn">
+									<a class="add_multimedia new_video waves-effect waves-light btn">
 										<i class="material-icons">add</i>
 										<span>Añadir Video</span>
 									</a>
@@ -278,6 +311,9 @@
 
 			<!-- Image modal-->
 			<% include ../../partials/backend/modals/modal_content_image %>
+
+			<!-- Video modal-->
+			<% include ../../partials/backend/modals/modal_content_video %>
 		</main>
 
 		<footer class="page-footer">
@@ -288,6 +324,7 @@
 		<% include ../../partials/backend/server_messages %>
 		<script src="/static/js/lib/moment.min.js"></script>
 		<script src="/static/js/src/imagePrevisualization.js"></script>
+		<script src="/static/js/src/videoPrevisualization.js"></script>
 		<script src="/static/js/src/content_b.js"></script>
 	</body>
 </html>

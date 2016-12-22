@@ -26,7 +26,7 @@ main {
 			.transition(all 0.3s);
 
 			&.active {
-				background: @secondary_color_light;
+				color: @secondary_color_light;
 
 				&:hover {
 					cursor: default !important;
@@ -57,7 +57,8 @@ main {
 	}
 
 	.indicator {
-		background-color: white;
+		background-color: @secondary_color_light;
+		height: 3px;
 	}
 }
 
@@ -138,12 +139,22 @@ main {
 				margin: 10px auto;
 				position: relative;
 
+				.transition(all 0.3s);
+
 				&:hover {
+					img, video {
+						box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+						.transition(all 0.3s);
+					}
+
 					.multimedia_actions {
 						max-height: 100px;
 						margin-top: -85px;
-						z-index: 85;
-    					position: relative;
+
+						&.video_actions {
+							margin-top: 0;
+						}
 
 						@media @tablet {
 							margin-top: 0;
@@ -164,34 +175,66 @@ main {
 				img {
 					display: block;
 					margin: 0 auto;
+
+					.transition(all 0.3s);
+
+					&.sign_lang {
+						position: absolute;
+					}
+				}
+
+				video {
+					.transition(all 0.3s);
 				}
 
 				.image_alt_text {
 					padding: 5px;
 					margin-top: -31px;
 					background: rgba(0, 0, 0, 0.65);
-					z-index: 85;
+					z-index: 84;
 					position: relative;
-					/* margin: 0; */
 					color: white;
+				}
 
+				.video_alt_text {
+					padding: 5px;
+					margin: 0;
+					margin-bottom: -31px;
+					background: rgba(0, 0, 0, 0.65);
+					z-index: 84;
+					position: relative;
+					color: white;
 				}
 
 				.multimedia_actions {
+					z-index: 85;
 					max-height: 0;
+					position: absolute;
+					width: 92%;
 
 					@media @tablet {
 						max-height: 100px;
+						position: relative;
 					}
 
 					@media @mobile {
 						max-height: 100px;
+						position: relative;
 					}
 
 					.transition(all 0.3s);
+
+					&.video_actions {
+						@media @tablet {
+							padding-top: 55%;
+						}
+
+						@media @mobile {
+							padding-top: 55%;
+						}
+					}
 					
 					.btn-floating {
-						background: @secondary_color_dark;
 						margin: 5px 0;
 						display: inline-block;
 						max-height: 0;
@@ -202,10 +245,6 @@ main {
 
 						@media @mobile {
 							max-height: 100px;
-						}
-
-						&:hover {
-							background: @secondary_color;
 						}
 
 						&.edit_multimedia {
@@ -238,6 +277,30 @@ main {
 					span {
 						display: block;
 						margin-top: 10px;
+					}
+				}
+			}
+		}
+
+		&.video_content {
+			.content_multimedia li {
+				.transition(all 0.3s);
+				
+				@media @tablet {
+					margin-bottom: 65px;
+				}
+
+				@media @mobile {
+					margin-bottom: 65px;
+				}
+
+				&:last-child {
+					@media @tablet {
+						margin-bottom: 0;
+					}
+
+					@media @mobile {
+						margin-bottom: 0;
 					}
 				}
 			}
@@ -286,6 +349,26 @@ main {
 			font-size: 2.5em;
 		}
 	}
+}
+
+#modal_content_video {
+	.alt_text i img {
+		.transition(all 0.3s);
+		
+		&.disabled {
+			-moz-filter: grayscale(100%);
+			-o-filter: grayscale(100%);
+			-webkit-filter: grayscale(100%);
+			filter: grayscale(100%);
+		}
+
+		.transition(all 0.3s);
+	}
+}
+
+[type="checkbox"].filled-in:checked + label:after {
+	border: @secondary_color;
+	background-color: @secondary_color;
 }
 
 #materialbox-overlay {

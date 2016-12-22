@@ -1,0 +1,75 @@
+<div id="modal_content_video" class="modal modal_material modal-fixed-footer">
+	<div id="video_loader" class="modal_loader preloader-wrapper big active">
+		<div class="spinner-layer spinner-custom">
+			<div class="circle-clipper left">
+				<div class="circle"></div>
+			</div>
+			<div class="gap-patch">
+				<div class="circle"></div>
+			</div>
+			<div class="circle-clipper right">
+				<div class="circle"></div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-header z-depth-1">
+		<h4></h4>
+		<span><i class="modal_close modal-action modal-close material-icons right">close</i></span>
+	</div>
+	<form class="col s12 row" method="post" action="/backend/contents/video/" enctype="multipart/form-data" autocomplete="off">
+		<div class="modal-content">
+			<!-- Video -->
+			<div class="row">
+				<div class="file-field input-field col s12">
+					<div class="btn">
+						<span>Video</span>
+						<input id="content_video" name="content_video" type="file" required>
+					</div>
+						<div class="file-path-wrapper">
+						<input class="file-path" type="text" placeholder="Formato mp4, ogg o webm">
+					</div>
+				</div>
+			</div>
+			<!-- Video Preview -->
+			<div class="row">
+				<div class="col s12 center-align">
+					<video id="contentVideoPreview" class="videoPreview responsive-video" controls>
+						<source src="">
+						<p>El navegador no soporta la etiqueta de video, no podrá previsualizarlo.</p>
+					</video>
+				</div>
+			</div>
+			<!-- Sign language check -->
+			<div class="row">
+				<div class="col s12">
+					<p>
+						<input type="checkbox" class="filled-in" id="sign_lang" name="sign_lang"/>
+						<label for="sign_lang">Lengua de signos</label>
+					</p>
+				</div>
+			</div>
+			<!-- Subtitles -->
+			<div class="row">
+				<div class="file-field input-field col s12">
+					<div class="btn">
+						<span>Subtítulos</span>
+						<input id="content_video_substitles" name="content_video" type="file" required>
+					</div>
+						<div class="file-path-wrapper">
+						<input class="file-path" type="text" placeholder="Formato vtt">
+					</div>
+				</div>
+			</div>
+			<div id="alt_texts_container" class="row"></div>
+		</div>
+		<div class="modal-footer">
+			<!-- Submit -->
+			<div class="input field col s12 center-align submit_modal">
+				<button class="btn waves-effect waves-light" type="submit" name="add_submit_video">
+					<span>Enviar</span>
+					<i class="material-icons right">send</i>
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

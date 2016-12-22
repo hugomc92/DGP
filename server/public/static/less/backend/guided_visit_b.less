@@ -26,7 +26,7 @@ main {
 			.transition(all 0.3s);
 
 			&.active {
-				background: @secondary_color_light;
+				color: @secondary_color_light;
 
 				&:hover {
 					cursor: default !important;
@@ -57,7 +57,8 @@ main {
 	}
 
 	.indicator {
-		background-color: white;
+		background-color: @secondary_color_light;
+		height: 3px;
 	}
 }
 

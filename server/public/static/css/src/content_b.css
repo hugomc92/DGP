@@ -41,7 +41,7 @@ main {
   transition: all 0.3s;
 }
 #tabs_container .tabs li a.active {
-  background: #5f9ecc;
+  color: #5f9ecc;
 }
 #tabs_container .tabs li a.active:hover {
   cursor: default !important;
@@ -69,7 +69,8 @@ main {
   margin-top: 3px;
 }
 #tabs_container .indicator {
-  background-color: white;
+  background-color: #5f9ecc;
+  height: 3px;
 }
 #more_langs {
   height: 48px;
@@ -143,17 +144,32 @@ main {
   text-align: center;
   margin: 10px auto;
   position: relative;
-}
-#contents .multimedia .content_multimedia li:hover .multimedia_actions {
-  max-height: 100px;
-  margin-top: -85px;
-  z-index: 85;
-  position: relative;
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -ms-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
+}
+#contents .multimedia .content_multimedia li:hover img,
+#contents .multimedia .content_multimedia li:hover video {
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+#contents .multimedia .content_multimedia li:hover .multimedia_actions {
+  max-height: 100px;
+  margin-top: -85px;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+#contents .multimedia .content_multimedia li:hover .multimedia_actions.video_actions {
+  margin-top: 0;
 }
 @media only screen and (min-width: 601px) and (max-width: 992px) {
   #contents .multimedia .content_multimedia li:hover .multimedia_actions {
@@ -171,18 +187,44 @@ main {
 #contents .multimedia .content_multimedia li img {
   display: block;
   margin: 0 auto;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+#contents .multimedia .content_multimedia li img.sign_lang {
+  position: absolute;
+}
+#contents .multimedia .content_multimedia li video {
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
 }
 #contents .multimedia .content_multimedia li .image_alt_text {
   padding: 5px;
   margin-top: -31px;
   background: rgba(0, 0, 0, 0.65);
-  z-index: 85;
+  z-index: 84;
   position: relative;
-  /* margin: 0; */
+  color: white;
+}
+#contents .multimedia .content_multimedia li .video_alt_text {
+  padding: 5px;
+  margin: 0;
+  margin-bottom: -31px;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 84;
+  position: relative;
   color: white;
 }
 #contents .multimedia .content_multimedia li .multimedia_actions {
+  z-index: 85;
   max-height: 0;
+  position: absolute;
+  width: 92%;
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -ms-transition: all 0.3s;
@@ -192,15 +234,26 @@ main {
 @media only screen and (min-width: 601px) and (max-width: 992px) {
   #contents .multimedia .content_multimedia li .multimedia_actions {
     max-height: 100px;
+    position: relative;
   }
 }
 @media only screen and (max-width: 600px) {
   #contents .multimedia .content_multimedia li .multimedia_actions {
     max-height: 100px;
+    position: relative;
+  }
+}
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  #contents .multimedia .content_multimedia li .multimedia_actions.video_actions {
+    padding-top: 55%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  #contents .multimedia .content_multimedia li .multimedia_actions.video_actions {
+    padding-top: 55%;
   }
 }
 #contents .multimedia .content_multimedia li .multimedia_actions .btn-floating {
-  background: #18405d;
   margin: 5px 0;
   display: inline-block;
   max-height: 0;
@@ -214,9 +267,6 @@ main {
   #contents .multimedia .content_multimedia li .multimedia_actions .btn-floating {
     max-height: 100px;
   }
-}
-#contents .multimedia .content_multimedia li .multimedia_actions .btn-floating:hover {
-  background: #345f7f;
 }
 #contents .multimedia .content_multimedia li .multimedia_actions .btn-floating.edit_multimedia {
   margin-right: 50%;
@@ -245,6 +295,33 @@ main {
 #contents .multimedia .content_multimedia li .add_multimedia span {
   display: block;
   margin-top: 10px;
+}
+#contents .multimedia.video_content .content_multimedia li {
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  #contents .multimedia.video_content .content_multimedia li {
+    margin-bottom: 65px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  #contents .multimedia.video_content .content_multimedia li {
+    margin-bottom: 65px;
+  }
+}
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  #contents .multimedia.video_content .content_multimedia li:last-child {
+    margin-bottom: 0;
+  }
+}
+@media only screen and (max-width: 600px) {
+  #contents .multimedia.video_content .content_multimedia li:last-child {
+    margin-bottom: 0;
+  }
 }
 .picker__date-display {
   background: #345f7f;
@@ -283,6 +360,23 @@ main {
 }
 #modal_content_image .modal-content .input-field .prefix {
   font-size: 2.5em;
+}
+#modal_content_video .alt_text i img {
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+#modal_content_video .alt_text i img.disabled {
+  -moz-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+[type="checkbox"].filled-in:checked + label:after {
+  border: #345f7f;
+  background-color: #345f7f;
 }
 #materialbox-overlay {
   opacity: 0.93 !important;
