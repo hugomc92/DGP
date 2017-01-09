@@ -3,6 +3,9 @@ package es.ugr.redforest.museumsforeveryone.screens;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.google.android.exoplayer2.SimpleExoPlayer;
+
 import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.models.Location;
 import es.ugr.redforest.museumsforeveryone.threads.HQueryContentOfLocalization;
@@ -16,9 +19,9 @@ import es.ugr.redforest.museumsforeveryone.utils.SliderMenu;
 
 public class ActivityArtworkDisplay extends AppCompatActivity {
 
-    String artworkName= "Obra";
     String id="";
     Context context;
+    SimpleExoPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +38,23 @@ public class ActivityArtworkDisplay extends AppCompatActivity {
         }
         if(bundle.containsKey("qrornfc")) {
             id = bundle.getString("qrornfc");
-            HQueryContentOfLocalization queryContent = new HQueryContentOfLocalization(this, id,index,artworkName,true);
+            HQueryContentOfLocalization queryContent = new HQueryContentOfLocalization(this, id,index,mySlide,true,player);
             queryContent.execute();
         }else if(bundle.containsKey("id"))
         {
             id = String.valueOf(bundle.getInt("id"));
-            HQueryContentOfLocalization queryContent = new HQueryContentOfLocalization(this, id,index,artworkName,false);
+            HQueryContentOfLocalization queryContent = new HQueryContentOfLocalization(this, id,index,mySlide,false,player);
             queryContent.execute();
         }
-
-
-
-        mySlide.inicializarToolbar(R.menu.menu_main, artworkName );
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(player!=null){
+            player.stop();
+        }
+    }
+
+
 }

@@ -67,6 +67,7 @@ import es.ugr.redforest.museumsforeveryone.models.Location;
 import es.ugr.redforest.museumsforeveryone.models.Multimedia;
 import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
 import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
+import es.ugr.redforest.museumsforeveryone.utils.SliderMenu;
 import es.ugr.redforest.museumsforeveryone.utils.Subtitles;
 
 import static android.media.MediaFormat.MIMETYPE_TEXT_VTT;
@@ -87,14 +88,17 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
     private static int indexImage=0;
     private boolean qrornfc=true;
     private Content content=null;
+    private SimpleExoPlayer player;
+    private SliderMenu mySlide;
 
-    public HQueryContentOfLocalization(Context c , String id, int index, String artworkName, boolean qrornfc) {
+    public HQueryContentOfLocalization(Context c , String id, int index, SliderMenu mySlide, boolean qrornfc, SimpleExoPlayer player) {
         this.context=c;
         this.location = new Location();
         this.id = id;
         this.index = index;
-        this.artworkName = artworkName;
+        this.mySlide = mySlide;
         this.qrornfc = qrornfc;
+        this.player = player;
     }
 
     @Override
@@ -251,6 +255,7 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
             if(content.getContentType()!=null) {
                 typeArtWork.setText(content.getContentType().getName());
                 artworkName = content.getContentType().getName();
+                mySlide.inicializarToolbar(R.menu.menu_main, artworkName );
             }
             if(content.getContentInformation()!=null) {
                 titleArtwork.setText(content.getContentInformation().getName());
@@ -328,13 +333,12 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
                 // 2. Create a default LoadControl
                 LoadControl loadControl = new DefaultLoadControl();
                 // 3. Create the player
-                SimpleExoPlayer player =
-                        ExoPlayerFactory.newSimpleInstance(context, trackSelector, loadControl);
+                player = ExoPlayerFactory.newSimpleInstance(context, trackSelector, loadControl);
 
                 videoView.setPlayer(player);
 
                 // Produces DataSource instances through which media data is loaded.
-                DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context, Util.getUserAgent(context, "yourApplicationName"));
+                DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context, Util.getUserAgent(context, "Museums4EveryOne"));
                 // Produces Extractor instances for parsing the media data.
                 ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
                 // This is the MediaSource representing the media to be played.
