@@ -98,5 +98,8 @@
     <string name="message_hint">Escriba aquí su mensaje</string>
     <string name="contact">Contacto</string>
     <string name="email">Email</string>
+    <string name="info_text1">Es una aplicación para ayudar a realizar las visitas al Museo Fundación Caja Granada.</string>
+    <string name="info_text2">La aplicación está desarrollada en su totalidad por la startup</string>
+    <string name="contact_text">Si necesita contactar con nosotros rellene el siguiente formulario:</string>
 
 </resources>
