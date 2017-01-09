@@ -3,20 +3,15 @@ package es.ugr.redforest.museumsforeveryone.threads;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.media.MediaFormat;
-import android.media.MediaPlayer;
-import android.widget.MediaController;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -28,7 +23,6 @@ import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.drm.DrmInitData;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.extractor.ExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
@@ -53,11 +47,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.models.Content;
@@ -68,9 +58,6 @@ import es.ugr.redforest.museumsforeveryone.models.Multimedia;
 import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
 import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
 import es.ugr.redforest.museumsforeveryone.utils.SliderMenu;
-import es.ugr.redforest.museumsforeveryone.utils.Subtitles;
-
-import static android.media.MediaFormat.MIMETYPE_TEXT_VTT;
 
 /**
  * Thread to connect to the server and get the location and contents in this location
@@ -255,7 +242,7 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
             if(content.getContentType()!=null) {
                 typeArtWork.setText(content.getContentType().getName());
                 artworkName = content.getContentType().getName();
-                mySlide.inicializarToolbar(R.menu.menu_main, artworkName );
+                mySlide.inicializateToolbar(R.menu.menu_main, artworkName );
             }
             if(content.getContentInformation()!=null) {
                 titleArtwork.setText(content.getContentInformation().getName());

@@ -64,11 +64,11 @@ public class SliderMenu extends AppCompatActivity{
         Drawer = (DrawerLayout) v.findViewById(R.id.DrawerLayout);        // Drawer object Assigned to the view
 
     }
-    public void inicializarToolbar(int xml,String nombre){
+    public void inicializateToolbar(int xml, String titleActivity){
 
         //////////////////////////////////CODIGASOOO///////////////////////////
         toolbar.inflateMenu(xml);
-        toolbar.setTitle(nombre);
+        toolbar.setTitle(titleActivity);
 
         //////////////////////////////////CODIGASOOO///////////////////////////
 
@@ -215,9 +215,5 @@ public class SliderMenu extends AppCompatActivity{
         });
 
         builder.show();
-    }
-
-    public void inicializarToolbar(int xml){
-        //inicializarToolbar(xml,"FarmaSearch");
     }
 }

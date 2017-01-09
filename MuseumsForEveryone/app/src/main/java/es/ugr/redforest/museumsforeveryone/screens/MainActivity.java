@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main2);
 		SliderMenu mySlide = new SliderMenu(this,this);
-		mySlide.inicializarToolbar(R.menu.menu_main,getString(R.string.app_name));
+		mySlide.inicializateToolbar(R.menu.menu_main,getString(R.string.app_name));
 	}
 
 	@Override
