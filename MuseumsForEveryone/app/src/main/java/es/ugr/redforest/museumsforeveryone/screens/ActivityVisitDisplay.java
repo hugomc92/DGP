@@ -14,7 +14,7 @@ public class ActivityVisitDisplay extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visit_display);
         SliderMenu mySlide = new SliderMenu(this,this);
-        mySlide.inicializarToolbar(R.menu.menu_main, "Visita Guiada");
+        mySlide.inicializateToolbar(R.menu.menu_main, "Visita Guiada");
         Bundle bundle = getIntent().getExtras();
         if(bundle.containsKey("id")) {
             String id = String.valueOf(bundle.getInt("id"));

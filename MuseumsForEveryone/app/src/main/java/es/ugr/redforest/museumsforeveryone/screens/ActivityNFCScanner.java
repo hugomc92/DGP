@@ -5,13 +5,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
-import android.nfc.Tag;
-import android.nfc.tech.NdefFormatable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -35,7 +32,7 @@ public class ActivityNFCScanner extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc_scanner);
         SliderMenu mySlide = new SliderMenu(this,this);
-        mySlide.inicializarToolbar(R.menu.menu_main,getString(R.string.app_name));
+        mySlide.inicializateToolbar(R.menu.menu_main,getString(R.string.app_name));
 
         resultTextView = (TextView) findViewById(R.id.textView_Prueba2);
 
