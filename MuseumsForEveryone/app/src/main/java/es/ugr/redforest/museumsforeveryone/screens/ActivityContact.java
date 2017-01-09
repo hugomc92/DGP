@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import es.ugr.redforest.museumsforeveryone.R;
@@ -34,15 +35,20 @@ public class ActivityContact extends AppCompatActivity {
     protected void sendEmail() {
         Log.i(getString(R.string.send_email), "");
         String[] TO = {"redforestrf@gmail.com"};
-        String[] CC = {getString(R.string.CC)};
+        EditText topic = (EditText) findViewById(R.id.input_topic);
+        EditText name = (EditText) findViewById(R.id.input_name);
+        EditText email = (EditText) findViewById(R.id.input_email);
+        EditText telephone = (EditText) findViewById(R.id.input_phone);
+        EditText message = (EditText) findViewById(R.id.input_message);
+        String[] CC = {getString(R.string.CC)+topic.getText().toString()};
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
 
         emailIntent.setData(Uri.parse("mailto:"));
         emailIntent.setType("text/plain");
         emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
         emailIntent.putExtra(Intent.EXTRA_CC, CC);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.subject));
-        emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.email_content));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, topic.getText().toString());
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Datos de contacto:\n Nombre: "+ name.getText().toString() + "\nTeléfono: "+ telephone.getText().toString() + "\nEmail: " + email.getText().toString() + "\n\n" + message.getText().toString());
 
         try {
             startActivity(Intent.createChooser(emailIntent, getString(R.string.send_email)));
