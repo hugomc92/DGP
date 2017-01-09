@@ -15,11 +15,12 @@ public class ActivitySplashScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screen);
-    // Set portrait orientation
+        // Set portrait orientation
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         // Hide title bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        setContentView(R.layout.activity_splash_screen);
 
         ControllerPreferences preferences= ControllerPreferences.getInstance();
 
