@@ -1,5 +1,6 @@
 package es.ugr.redforest.museumsforeveryone.screens;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -52,7 +53,7 @@ public class ActivityAccessibility extends AppCompatActivity {
 	public void buttonHearingProblems(View v){
 		ControllerPreferences preferences= ControllerPreferences.getInstance();
 		preferences.savePreferencesDisability(this,2);
-		Intent instructionIntent = new Intent(ActivityAccessibility.this, ActivityInstructions.class);
+		Intent instructionIntent = new Intent(this,ActivityInstructionsSignLanguage.class);
 		instructionIntent.putExtra("FirstTime","True");
 		startActivity(instructionIntent);
 	}

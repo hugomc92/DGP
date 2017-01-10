@@ -72,10 +72,16 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".screens.ActivityNFCScanner"
             android:screenOrientation="portrait"/>
-        <activity android:name=".screens.ActivityInstructionsSlides"/>
-        <activity android:name=".screens.ActivityInstructionsMain"/>
-        <activity android:name=".screens.ActivityInstructionsSightProblems"/>
-        <activity android:name=".screens.ActivityContact"/>
+        <activity android:name=".screens.ActivityInstructionsSlides"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".screens.ActivityInstructionsMain"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".screens.ActivityInstructionsSightProblems"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".screens.ActivityInstructionsSignLanguage"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".screens.ActivityContact"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

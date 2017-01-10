@@ -120,6 +120,10 @@ public class HQueryVisitsGuides extends AsyncTask<Void, Integer, String> {
             //Creates an Android default layout to show elements on the RecyclerView
             LinearLayoutManager layMan = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL,
                     false);
+            //Add line decoration to RecyclerView
+            DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(recyclerGuidedVisit.getContext(),
+                    layMan.getOrientation());
+            recyclerGuidedVisit.addItemDecoration(mDividerItemDecoration);
 
 
             //Set all previous elements to the RecyclerView
