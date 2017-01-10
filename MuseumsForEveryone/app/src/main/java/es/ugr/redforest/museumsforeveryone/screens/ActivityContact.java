@@ -32,6 +32,14 @@ public class ActivityContact extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(mainIntent);
+
+    }
+
     protected void sendEmail() {
         Log.i(getString(R.string.send_email), "");
         String[] TO = {"redforestrf@gmail.com"};
