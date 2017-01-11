@@ -232,7 +232,7 @@ ContentService.prototype.initializeRouter = function() {
 															}
 
 															for(var k=0; k<videos.length; k++) {
-																jsonResObj.videos.push({ video: videos[i] });
+																jsonResObj.videos.push({ video: videos[k] });
 															}
 														}
 
@@ -336,44 +336,72 @@ ContentService.prototype.initializeRouter = function() {
 
 													altImage.retrieveAllByImageIdsByLangId(imageIds, langId).then(function(success) {
 														var imagesAltText = success;
-														
-														for(var i=0; i<contents.length; i++) {
-															var contentInfo;
-															var contentImages = [];
-															var contentInfofound = false;
 
-															for(var j=0; j<contentInfos.length && !contentInfofound; j++) {
-																if(contentInfos[j].CONTENT_ID === contents[i].ID) {
-																	contentInfo = contentInfos[j];
-																	contentInfofound = true;
+														var video = Video.build();
+
+														video.retrieveAllByContentIds(contentIds).then(function(success) {
+															var videos = success;
+
+															for(var i=0; i<contents.length; i++) {
+																var contentInfo;
+																var contentT;
+																var contentTypeFound = false;
+																var contentImages = [];
+																var contentInfofound = false;
+																var contentVideos = [];
+
+																for(var j=0; j<contentInfos.length && !contentInfofound; j++) {
+																	if(contentInfos[j].CONTENT_ID === contents[i].ID) {
+																		contentInfo = contentInfos[j];
+																		contentInfofound = true;
+																	}
 																}
-															}
 
-															for(var k=0; k<images.length; k++) {
-																if(images[k].CONTENT_ID === contents[i].ID) {
-																	var altTextFound = false;
+																for(var m=0; m<contentTypes.length && !contentTypeFound; m++) {
+																	if(contentTypes[m].ID === contents[i].CONTENT_TYPE_ID) {
+																		contentT = contentTypes[m];
+																		contentTypeFound = true;
+																	}
+																}
 
-																	for(var l=0; l<imagesAltText.length && !altTextFound; l++) {
-																		if(imagesAltText[l].IMAGE_ID === images[k].ID && imagesAltText[l].LANG_ID === langId) {
-																			contentImages.push({
-																				image: images[k],
-																				alt_text: imagesAltText[l].ALT_TEXT
-																			});
+																for(var k=0; k<images.length; k++) {
+																	if(images[k].CONTENT_ID === contents[i].ID) {
+																		var altTextFound = false;
 
-																			altTextFound = true;
+																		for(var l=0; l<imagesAltText.length && !altTextFound; l++) {
+																			if(imagesAltText[l].IMAGE_ID === images[k].ID && imagesAltText[l].LANG_ID === langId) {
+																				contentImages.push({
+																					image: images[k],
+																					alt_text: imagesAltText[l].ALT_TEXT
+																				});
+
+																				altTextFound = true;
+																			}
 																		}
 																	}
 																}
+
+																for(var n=0; n<videos.length; n++) {
+																	if(videos[n].CONTENT_ID === contents[i].ID) {
+																		contentVideos.push( {
+																			video: videos[n]
+																		});
+																	}
+																}
+
+																jsonResObj.contents.push( {
+																	content: contents[i],
+																	content_information: contentInfo,
+																	content_type: contentT,
+																	images: contentImages,
+																	videos: contentVideos
+																});
 															}
 
-															jsonResObj.contents.push( {
-																content: contents[i],
-																content_information: contentInfo,
-																content_type: contentType,
-																images: contentImages
-															});
-														}
-														res.json(jsonResObj);
+															res.json(jsonResObj);
+														}, function(err) {
+															res.status(404).send("Videos not found");
+														});
 													}, function(err) {
 														res.status(404).send("Images Alt Texts not found");
 													});

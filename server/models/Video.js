@@ -25,7 +25,7 @@ var Video = DBConnector.connectM4E().define('VIDEO', {
 			return Video.findAll({where: {CONTENT_ID: contentId }});
 		},
 		retrieveAllByContentIds: function(contentIds) {
-			return Video.findAll({where: {CONTENT_ID: {in: contentId }}});
+			return Video.findAll({where: {CONTENT_ID: {in: contentIds }}});
 		},
 		retrieveAllByListIds: function(listIds) {
 			return Video.findAll({where: {ID: {in: listIds}}});
