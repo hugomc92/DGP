@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
@@ -118,6 +119,10 @@ public class HQueryVisitGuide extends AsyncTask<Void, Integer, String> {
             //Creates an Android default layout to show elements on the RecyclerView
             LinearLayoutManager layMan = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL,
                     false);
+            //Add line decoration to RecyclerView
+            DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(recyclerGuidedVisit.getContext(),
+                    layMan.getOrientation());
+            recyclerGuidedVisit.addItemDecoration(mDividerItemDecoration);
 
 
 

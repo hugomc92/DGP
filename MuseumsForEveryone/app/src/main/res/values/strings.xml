@@ -103,6 +103,7 @@
     <string name="info_text1">Es una aplicación para ayudar a realizar las visitas al Museo Fundación Caja Granada.</string>
     <string name="info_text2">La aplicación está desarrollada en su totalidad por la startup</string>
     <string name="contact_text">Si necesita contactar con nosotros rellene el siguiente formulario:</string>
+    <string name="sign_languaje_instructions">Se ha activado la herramienta de lenguaje de signos. Con ella los vídeos de los contenidos del museo aparecerán en lenguaje de signos.</string>
     <string name="fecha_creacion_obra">"Fecha de creación: "</string>
     <string name="location_artwork">"Localizacion: "</string>
 
