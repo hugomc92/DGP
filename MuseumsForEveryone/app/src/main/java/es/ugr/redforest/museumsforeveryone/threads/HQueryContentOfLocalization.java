@@ -47,7 +47,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.models.Content;
@@ -73,6 +75,7 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
     private int index=0;
     private String artworkName="";
     private static int indexImage=0;
+    private static int indexVideo=0;
     private boolean qrornfc=true;
     private Content content=null;
     private SimpleExoPlayer player;
@@ -231,7 +234,8 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
             TextView typeArtWork = (TextView)  ((Activity)context).findViewById(R.id.typeArtWork);
             TextView titleArtwork = (TextView)  ((Activity)context).findViewById(R.id.titleArtwork);
             TextView descriptionArtwork = (TextView)  ((Activity)context).findViewById(R.id.descriptionArtwork);
-            //TextView titleImage = (TextView)  ((Activity)context).findViewById(R.id.titleImage);
+            TextView dateArtwork = (TextView)  ((Activity)context).findViewById(R.id.dateArtwork);
+            TextView locationArtwork = (TextView)  ((Activity)context).findViewById(R.id.locationArtwork);
             final SimpleExoPlayerView videoView = (SimpleExoPlayerView)((Activity) context).findViewById(R.id.videoArtwork);
 
             //If content is scan by nfc or qr gets all contents in this location
@@ -246,10 +250,17 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
             }
             if(content.getContentInformation()!=null) {
                 titleArtwork.setText(content.getContentInformation().getName());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy",Locale.getDefault());
+                if(content.getCreation_date()!=null)
+                    dateArtwork.setText(context.getString(R.string.fecha_creacion_obra)+ dateFormat.format(content.getCreation_date()));
                 descriptionArtwork.setText(content.getContentInformation().getDescription());
             }
-
+            if(location!=null){
+                if(location.getDescription()!=null)
+                locationArtwork.setText(context.getString(R.string.location_artwork) + location.getDescription());
+            }
             //titleImage.setText(artworkName);
+
             //position scroll to top
             ((ScrollView) ((Activity)context).findViewById(R.id.scrollView)).post(new Runnable()
             {
@@ -309,39 +320,39 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
             final ArrayList<Multimedia> videoMultimedia = content.getMultimediaByType("video");
             //If array contains video put video and subtitles in videoview else hide videoview
             if(videoMultimedia!=null)
-            if(videoMultimedia.size()>0){
-                Uri uri = Uri.parse(QueryBBDD.server+videoMultimedia.get(0).getUrl());
-                // 1. Create a default TrackSelector
-                BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
-                TrackSelection.Factory videoTrackSelectionFactory =
-                        new AdaptiveVideoTrackSelection.Factory(bandwidthMeter);
-                TrackSelector trackSelector =
-                        new DefaultTrackSelector(videoTrackSelectionFactory);
-                // 2. Create a default LoadControl
-                LoadControl loadControl = new DefaultLoadControl();
-                // 3. Create the player
-                player = ExoPlayerFactory.newSimpleInstance(context, trackSelector, loadControl);
+                if(videoMultimedia.size()==1){
+                    Button btn1 = (Button) ((Activity) context).findViewById(R.id.btNextVideo);
+                    Button btn2 = (Button) ((Activity) context).findViewById(R.id.btPreviousVideo);
 
-                videoView.setPlayer(player);
+                    btn1.setVisibility(View.GONE);
+                    btn2.setVisibility(View.GONE);
+                    indexVideo=0;
+                    changeVideo(videoMultimedia,videoView);
 
-                // Produces DataSource instances through which media data is loaded.
-                DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context, Util.getUserAgent(context, "Museums4EveryOne"));
-                // Produces Extractor instances for parsing the media data.
-                ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
-                // This is the MediaSource representing the media to be played.
-                MediaSource videoSource = new ExtractorMediaSource(uri,
-                        dataSourceFactory, extractorsFactory, null, null);
-                Uri subtitleUri = Uri.parse(QueryBBDD.server+videoMultimedia.get(0).getSubtitle());
-
-                Format textFormat = Format.createTextSampleFormat(null, MimeTypes.TEXT_VTT,
-                        null, Format.NO_VALUE, Format.NO_VALUE, "en", null);
-                MediaSource subtitleSource = new SingleSampleMediaSource(subtitleUri,dataSourceFactory,textFormat, C.TIME_UNSET);
-// Plays the video with the sideloaded subtitle.
-                MergingMediaSource mergedSource =
-                        new MergingMediaSource(videoSource, subtitleSource);
-                // Prepare the player with the source.
-                player.prepare(mergedSource);
-
+                }else if(videoMultimedia.size()>0){
+                    Button previousVideo = (Button) ((Activity) context).findViewById(R.id.btPreviousVideo);
+                    Button nextVideo = (Button) ((Activity) context).findViewById(R.id.btNextVideo);
+                    previousVideo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            indexVideo--;
+                            if (indexVideo < 0) {
+                                indexVideo = videoMultimedia.size()-1;
+                            }
+                            changeVideo(videoMultimedia,videoView);
+                        }
+                    });
+                    nextVideo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            indexVideo++;
+                            if (indexVideo >= videoMultimedia.size()) {
+                                indexVideo = 0;
+                            }
+                            changeVideo(videoMultimedia,videoView);
+                        }
+                    });
+                    changeVideo(videoMultimedia,videoView);
 
                /* videoView.setVideoURI(uri);
 
@@ -356,11 +367,38 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
             }else
             {
                 videoView.setVisibility(View.GONE);
+                ((Activity)context).findViewById(R.id.btNextVideo).setVisibility(View.GONE);
+                ((Activity)context).findViewById(R.id.btPreviousVideo).setVisibility(View.GONE);
             }
         }
         pDialog.dismiss();
     }
+    // Method to change video
+    private void changeVideo(ArrayList<Multimedia> videoMultimedia,SimpleExoPlayerView videoView){
+        Uri uri = Uri.parse(QueryBBDD.server+videoMultimedia.get(indexVideo).getUrl());
+        videoView.setPlayer(player);
+        // Produces DataSource instances through which media data is loaded.
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context, Util.getUserAgent(context, "Museums4EveryOne"));
+        // Produces Extractor instances for parsing the media data.
+        ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+        // This is the MediaSource representing the media to be played.
+        MediaSource videoSource = new ExtractorMediaSource(uri,
+                dataSourceFactory, extractorsFactory, null, null);
+        // If has subtitles load video with subtitles
+        if(videoMultimedia.get(indexVideo).getSubtitle()!=null && videoMultimedia.get(indexVideo).getSubtitle().compareTo("")!=0) {
+            Uri subtitleUri = Uri.parse(QueryBBDD.server + videoMultimedia.get(indexVideo).getSubtitle());
 
+            Format textFormat = Format.createTextSampleFormat(null, MimeTypes.TEXT_VTT,
+                    null, Format.NO_VALUE, Format.NO_VALUE, ControllerPreferences.getLanguage(), null);
+            MediaSource subtitleSource = new SingleSampleMediaSource(subtitleUri, dataSourceFactory, textFormat, C.TIME_UNSET);
+            // Plays the video with the sideloaded subtitle.
+            MergingMediaSource mergedSource =
+                    new MergingMediaSource(videoSource, subtitleSource);
+            // Prepare the player with the source.
+            player.prepare(mergedSource);
+        }else // if hasn't subtitles only video
+            player.prepare(videoSource);
+    }
 
     @Override
     protected void onPreExecute() {

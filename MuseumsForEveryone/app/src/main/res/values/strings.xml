@@ -30,6 +30,8 @@
     <string name="QR_Scan_Instrucctions">Para analizar un código QR apunte con el teléfono hacia el código QR hasta que aparezca centrado en la pantalla</string>
     <string name="show_next_image">mostrar la foto siguiente</string>
     <string name="show_previous_image">mostrar la foto anterior</string>
+    <string name="show_next_video">mostrar el video siguiente</string>
+    <string name="show_previous_video">mostrar el video anterior</string>
     <string name="Permit_Reason">Sin los permisos de la cámara no podrá escanear los códigos QR de la obra deseada.</string>
     <string name="QR_Error">El código QR no es válido</string>
     <string name="images_of_content">Images of content</string>
@@ -102,5 +104,7 @@
     <string name="info_text2">La aplicación está desarrollada en su totalidad por la startup</string>
     <string name="contact_text">Si necesita contactar con nosotros rellene el siguiente formulario:</string>
     <string name="sign_languaje_instructions">Se ha activado la herramienta de lenguaje de signos. Con ella los vídeos de los contenidos del museo aparecerán en lenguaje de signos.</string>
+    <string name="fecha_creacion_obra">"Fecha de creación: "</string>
+    <string name="location_artwork">"Localizacion: "</string>
 
 </resources>
