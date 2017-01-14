@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -26,6 +29,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.adapters.AdapterContentType;
@@ -37,6 +41,7 @@ import es.ugr.redforest.museumsforeveryone.screens.ActivityInstructionsSlides;
 import es.ugr.redforest.museumsforeveryone.screens.ActivityLang;
 import es.ugr.redforest.museumsforeveryone.screens.ActivityPreferences;
 import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
+import es.ugr.redforest.museumsforeveryone.utils.Languages;
 import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
 
 
@@ -144,6 +149,7 @@ public class HQueryLang extends AsyncTask<Void, Integer, String> {
                         {
                             ControllerPreferences preferences= ControllerPreferences.getInstance();
                             preferences.savePreferencesLanguage(context,Lang_code);
+                            Languages.setLocale(Lang_code,context);
                             Intent FirstViewIntent = new Intent(context, ActivityInstructionsSlides.class);
                         ((Activity)context).startActivity(FirstViewIntent);
                         }
@@ -151,6 +157,7 @@ public class HQueryLang extends AsyncTask<Void, Integer, String> {
                         {
                             ControllerPreferences preferences= ControllerPreferences.getInstance();
                             preferences.savePreferencesLanguage(context,Lang_code);
+                            Languages.setLocale(Lang_code,context);
                             Intent PreferencesIntent = new Intent(context, ActivityPreferences.class);
                             ((Activity)context).startActivity(PreferencesIntent);
                         }
@@ -193,7 +200,8 @@ public class HQueryLang extends AsyncTask<Void, Integer, String> {
 
 
 
-        @Override
+
+    @Override
         protected void onCancelled() {
 
         }

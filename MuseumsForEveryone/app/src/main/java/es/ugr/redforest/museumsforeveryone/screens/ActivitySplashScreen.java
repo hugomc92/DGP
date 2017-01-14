@@ -1,5 +1,6 @@
 package es.ugr.redforest.museumsforeveryone.screens;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Handler;
@@ -9,12 +10,15 @@ import android.view.Window;
 
 import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
+import es.ugr.redforest.museumsforeveryone.utils.Languages;
 
 public class ActivitySplashScreen extends AppCompatActivity {
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         // Set portrait orientation
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         // Hide title bar
@@ -43,6 +47,8 @@ public class ActivitySplashScreen extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+
+                    Languages.setLocale(ControllerPreferences.getLanguage(),context);
 
                     Intent intent = new Intent(ActivitySplashScreen.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

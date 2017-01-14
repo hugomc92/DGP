@@ -79,14 +79,20 @@ public class HQueryArtworkList extends AsyncTask<Void, Integer, String> {
 
                     for (int j = 0; j < contentType.length(); ++j) {
                         JSONObject item = contentType.getJSONObject(j);
-                        JSONObject itemContentInformation = item.getJSONObject("content_information");
+                        JSONObject itemContentInformation = null;
+                        if(item.has("content_information")){
+                            itemContentInformation = item.getJSONObject("content_information");
+                        }
+
 
                         JSONObject itemContent = item.getJSONObject("content");
                         content = mapper.readValue(itemContent.toString(), Content.class);
 
-                        contentInformation = mapper.readValue(itemContentInformation.toString(), ContentInformation.class);
+                        if(itemContentInformation != null) {
+                            contentInformation = mapper.readValue(itemContentInformation.toString(), ContentInformation.class);
+                            contentInformationList.add(contentInformation);
+                        }
 
-                        contentInformationList.add(contentInformation);
 
                         //Add images to content
                         if(item.has("images")) {
@@ -96,7 +102,8 @@ public class HQueryArtworkList extends AsyncTask<Void, Integer, String> {
                                 JSONObject imgJson = imageJson.getJSONObject("image");
                                 Multimedia image = mapper.readValue(imgJson.toString(), Multimedia.class);
                                 image.setType("image");
-                                image.setAlternativeText(imageJson.getString("alt_text"));
+                                if(imageJson.has("alt_text"))
+                                    image.setAlternativeText(imageJson.getString("alt_text"));
                                 content.addMultimedia(image);
                             }
                         }
