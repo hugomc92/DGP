@@ -204,7 +204,7 @@ ContentService.prototype.initializeRouter = function() {
 
 													var video = Video.build();
 
-													video.retrieveAllByContentId(contentId).then(function(success) {
+													video.retrieveAllByContentIdByLangId(contentId, langCode).then(function(success) {
 														var videos = success;
 
 														var jsonResObj= {};
@@ -382,7 +382,7 @@ ContentService.prototype.initializeRouter = function() {
 																}
 
 																for(var n=0; n<videos.length; n++) {
-																	if(videos[n].CONTENT_ID === contents[i].ID) {
+																	if(videos[n].CONTENT_ID === contents[i].ID && (videos[n].LANG_ID === langId || videos[n].LANG_ID === null)) {
 																		contentVideos.push( {
 																			video: videos[n]
 																		});
