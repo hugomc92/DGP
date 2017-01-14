@@ -27,6 +27,7 @@ public class QueryBBDD {
     public static final String queryContentOfLocalization ="/api/content/location";
     public static final String queryGuidesVisits = "/api/guided_visit";
     public static final String queryGuideVisit = "/api/guided_visit/id";
+    public static final String queryLang = "/api/lang/";
 
 
     public static String doQuery(String urlREST, String parameters, String metodo) {

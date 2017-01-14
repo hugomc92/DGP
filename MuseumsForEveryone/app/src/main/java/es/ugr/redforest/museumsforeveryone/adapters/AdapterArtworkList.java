@@ -37,7 +37,6 @@ public class AdapterArtworkList extends RecyclerView.Adapter<AdapterArtworkList.
     /**
      * ViewHolder needed to handle how to show elements
      *
-     * @author Miguel Angel Torres Lopez
      * @author Emilio Chica Jiménez
      * @version 1.0.0
      * @see "layout/content_information_list_row.xml"
@@ -87,7 +86,6 @@ public class AdapterArtworkList extends RecyclerView.Adapter<AdapterArtworkList.
     @Override
     public void onBindViewHolder(ContentInformationViewHolder holder, int position) {
         ContentInformation contentType = contentInformationList.get(position);
-
         holder.contentInformationTxt.setText(contentType.getName());
         final ArrayList<Multimedia> imageMultimedia = contents.get(position).getMultimediaByType("image");
         if(imageMultimedia.size()>0) {
@@ -96,6 +94,8 @@ public class AdapterArtworkList extends RecyclerView.Adapter<AdapterArtworkList.
             if (imageMultimedia.get(0).getAlternativeText() != null)
                 holder.contentInformationImage.setContentDescription(imageMultimedia.get(0).getAlternativeText());
         }
+
+
 
     }
 
