@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Language {
 
 	private String lang;    //String which will be shown in the UI
-	private int image;      //Reference to the resource of the flag image for the language
+	private String image;      //Reference to the resource of the flag image for the language
 	private String code;	//String with language's code
 
 
@@ -31,7 +31,7 @@ public class Language {
 	 * @param image Reference to the resource of the flag image for the language
 	 * @param code String with language's code
 	 */
-	public Language(String lang, int image,String code) {
+	public Language(String lang, String image,String code) {
 		this.lang = lang;
 		this.image = image;
 		this.code = code;
@@ -42,7 +42,7 @@ public class Language {
 	 *
 	 * @return Returns a String
 	 */
-	@JsonProperty("LANGUAGE")
+	@JsonProperty("NAME")
 	public String getLang() {
 
 		return lang;
@@ -53,7 +53,7 @@ public class Language {
 	 *
 	 * @param lang String to show
 	 */
-	@JsonProperty("LANGUAGE")
+	@JsonProperty("NAME")
 	public void setLang(String lang) {
 
 		this.lang = lang;
@@ -64,8 +64,8 @@ public class Language {
 	 *
 	 * @return Integer ID of the image resource
 	 */
-	@JsonProperty("ICON")
-	public int getImage() {
+	@JsonProperty("FLAG")
+	public String getImage() {
 
 		return image;
 	}
@@ -75,8 +75,8 @@ public class Language {
 	 *
 	 * @param image Integer ID of the image resource
 	 */
-	@JsonProperty("ICON")
-	public void setImage(int image) {
+	@JsonProperty("FLAG")
+	public void setImage(String image) {
 
 		this.image = image;
 	}

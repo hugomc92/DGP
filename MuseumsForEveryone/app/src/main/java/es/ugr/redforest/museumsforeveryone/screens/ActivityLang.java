@@ -2,15 +2,12 @@ package es.ugr.redforest.museumsforeveryone.screens;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -18,6 +15,7 @@ import es.ugr.redforest.museumsforeveryone.models.Language;
 import es.ugr.redforest.museumsforeveryone.R;
 import es.ugr.redforest.museumsforeveryone.adapters.AdapterLang;
 import es.ugr.redforest.museumsforeveryone.threads.HQueryContentType;
+import es.ugr.redforest.museumsforeveryone.threads.HQueryLang;
 import es.ugr.redforest.museumsforeveryone.utils.ControllerPreferences;
 
 /**
@@ -49,7 +47,7 @@ public class ActivityLang extends AppCompatActivity {
 	    final RecyclerView recyclerLang = (RecyclerView) findViewById(R.id.recycler_lang);
 
 	    //Creates an Adapter with the list of languages
-	    AdapterLang langAdapter = new AdapterLang(langList);
+	    AdapterLang langAdapter = new AdapterLang(langList, context);
 
 	    //Creates an Android default layout to show elements on the RecyclerView
 	    LinearLayoutManager layMan = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,
@@ -83,7 +81,7 @@ public class ActivityLang extends AppCompatActivity {
 		});*/
 
 		//Assign an action to do on element click
-		langAdapter.setOnClickListener(new View.OnClickListener() {
+		/*langAdapter.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				//TODO: Establecer config de idiomas
@@ -104,15 +102,18 @@ public class ActivityLang extends AppCompatActivity {
 					startActivity(PreferencesIntent);
 				}
 			}
-		});
+		});*/
 
 	    //Set all previous elements to the RecyclerView
 	    recyclerLang.setLayoutManager(layMan);
 	    recyclerLang.setItemAnimator(new DefaultItemAnimator());
 	    recyclerLang.setAdapter(langAdapter);
 
+		HQueryLang hQuerylang = new HQueryLang(this,langList);
+		hQuerylang.execute();
+
 	    //DEBUGGING PURPOSES
-	    loadLanguages();
+	    //loadLanguages();
 		//HQueryContentType hQueryContentType = new HQueryContentType(this);
 		//hQueryContentType.execute();
     }
@@ -120,7 +121,7 @@ public class ActivityLang extends AppCompatActivity {
 	/**
 	 * Loads a few languages to the list
 	 * Only for debugging purposes
-	 */
+	 *//*
 	private void loadLanguages() {
 		Language es = new Language("Español", R.drawable.spain,"es");
 		langList.add(es);
@@ -133,6 +134,6 @@ public class ActivityLang extends AppCompatActivity {
 
 		Language de = new Language("Deutsch", R.drawable.german,"de");
 		langList.add(de);
-	}
+	}*/
 
 }

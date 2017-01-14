@@ -66,6 +66,8 @@ public class HQueryArtworkList extends AsyncTask<Void, Integer, String> {
     protected String doInBackground(Void... params) {
         ObjectMapper mapper = new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         result = QueryBBDD.doQuery(QueryBBDD.queryContentInformationOfType+"/"+typeContent+"/"+ ControllerPreferences.getLanguage(), "", "GET");
+        String prueba = ControllerPreferences.getLanguage();
+
         JSONObject res =null;
         ContentInformation contentInformation =null;
         Content content =null;

@@ -1,5 +1,6 @@
 package es.ugr.redforest.museumsforeveryone.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,10 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
+import es.ugr.redforest.museumsforeveryone.models.ContentType;
 import es.ugr.redforest.museumsforeveryone.models.Language;
 import es.ugr.redforest.museumsforeveryone.R;
+import es.ugr.redforest.museumsforeveryone.utils.QueryBBDD;
 
 /**
  * Adapter used in RecyclerView to display a list of Languages
@@ -24,7 +29,8 @@ public class AdapterLang extends RecyclerView.Adapter<AdapterLang.LangViewHolder
 						 implements View.OnClickListener {
 
 	private ArrayList<Language> langList;   // ArrayList containing the Languages to show
-	private View.OnClickListener listener;  // Listener needed to handle onClick event
+	private View.OnClickListener listener;
+	private Context context;// Listener needed to handle onClick event
 
 	/**
 	 * ViewHolder needed to handle how to show elements
@@ -54,9 +60,11 @@ public class AdapterLang extends RecyclerView.Adapter<AdapterLang.LangViewHolder
 	 * Constructor method.
 	 *
 	 * @param langList List of languages to show
+	 * @param context
 	 */
-	public AdapterLang(ArrayList<Language> langList) {
+	public AdapterLang(ArrayList<Language> langList, Context context) {
 		this.langList = langList;
+		this.context = context;
 	}
 
 	/**
@@ -78,8 +86,9 @@ public class AdapterLang extends RecyclerView.Adapter<AdapterLang.LangViewHolder
 	public void onBindViewHolder(LangViewHolder holder, int position) {
 		Language lang = langList.get(position);
 
-		holder.langImg.setImageResource(lang.getImage());
 		holder.langTxt.setText(lang.getLang());
+		Picasso.with(context).load(QueryBBDD.server+lang.getImage()).into(holder.langImg);
+
 	}
 
 	/**
