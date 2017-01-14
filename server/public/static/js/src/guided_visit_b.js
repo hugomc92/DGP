@@ -266,6 +266,8 @@ function initilizeForm(elem, langId) {
 
 					if(action === 'add') {
 						action = 'edit';
+
+						form.find('#visit_image').val('');
 						
 						$('.image_visit').removeAttr('required');
 					}

@@ -256,6 +256,7 @@ GuidedVisitService.prototype.initializeRouter = function() {
 								var localizationVisit = LocalizationVisit.build();
 
 								localizationVisit.addSome(locationOrder, gv.ID).then(function(success) {
+									jsonResObj.ok = 'ok';
 									jsonResObj.visitId = gv.ID;
 									jsonResObj.visitInfoId = gVI.ID;
 
@@ -385,6 +386,7 @@ GuidedVisitService.prototype.initializeRouter = function() {
 								guidedVisit.photo = newImage;
 
 								guidedVisit.updateById(visitId).then(function(success) {
+									jsonResObj.ok = 'ok';
 									jsonResObj.visitId = visitId;
 									jsonResObj.visitInfoId = gVI.ID;
 
@@ -394,6 +396,13 @@ GuidedVisitService.prototype.initializeRouter = function() {
 
 									res.json(jsonResObj);
 								});
+							}
+							else {
+								jsonResObj.ok = 'ok';
+								jsonResObj.visitId = visitId;
+								jsonResObj.visitInfoId = visitInfoId;
+
+								res.json(jsonResObj);
 							}
 						}, function(err){
 							jsonResObj.ok = 'failed';
@@ -427,8 +436,9 @@ GuidedVisitService.prototype.initializeRouter = function() {
 							guidedVisit.photo = newImage;
 
 							guidedVisit.updateById(visitId).then(function(success) {
+								jsonResObj.ok = 'ok';
 								jsonResObj.visitId = visitId;
-								jsonResObj.visitInfoId = gVI.ID;
+								jsonResObj.visitInfoId = visitInfoId;
 
 								res.json(jsonResObj);
 							}, function(err) {
@@ -436,6 +446,13 @@ GuidedVisitService.prototype.initializeRouter = function() {
 
 								res.json(jsonResObj);
 							});
+						}
+						else {
+							jsonResObj.ok = 'ok';
+							jsonResObj.visitId = visitId;
+							jsonResObj.visitInfoId = visitInfoId;
+
+							res.json(jsonResObj);
 						}
 					}, function(err){
 						jsonResObj.ok = 'failed';
