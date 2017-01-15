@@ -74,6 +74,7 @@ public class ActivityInstructionsMain extends AppIntro {
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
         Intent MainIntent = new Intent(this, MainActivity.class);
+        MainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(MainIntent);
         // Do something when users tap on Skip button.
     }
@@ -82,6 +83,7 @@ public class ActivityInstructionsMain extends AppIntro {
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
         Intent MainIntent = new Intent(this, MainActivity.class);
+        MainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(MainIntent);
         // Do something when users tap on Done button.
 
