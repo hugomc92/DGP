@@ -111,5 +111,8 @@ Ajuste Las Herramientas de Accesibilidad stattfindenden.</string>
 	<string name="sign_languaje_instructions">Se ha Activado la Herramienta de Lenguaje de Signos. Con Ella Los Vídeos de Los Contenidos del Museo Aparecerán de Lenguaje de Signos.</string>
 	<string name="fecha_creacion_obra">"Fecha de Creación:"</string>
 	<string name="location_artwork">"Localizacion:"</string>
+	<string name="accesibility_description_button">Accesibilidad. Opciones de accesibilidad. Botón.</string>
+	<string name="language_options_description">Idioma. Selección del idioma en el que se mostrará la aplicación. Botón.</string>
+	<string name="instructions_description">Instrucciones. Opción para volver a visualizar las instrucciones de la aplicación. Botón.</string>
 
 </resources>

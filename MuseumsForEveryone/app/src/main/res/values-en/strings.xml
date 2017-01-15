@@ -108,5 +108,8 @@
 	<string name="sign_languaje_instructions">The sign language tool has been activated. With it the videos of the contents of the museum will appear in sign language.</string>
 	<string name="fecha_creacion_obra">\"Creation date: \"</string>
 	<string name="location_artwork">\"Location:\"</string>
+	<string name="accesibility_description_button">Accessibility. Accessibility options. Button.</string>
+	<string name="language_options_description">Language. Select the language in which the application will be displayed. Button.</string>
+	<string name="instructions_description">Instructions. Option to re-display the application\'s instructions. Button.</string>
 
 </resources>
