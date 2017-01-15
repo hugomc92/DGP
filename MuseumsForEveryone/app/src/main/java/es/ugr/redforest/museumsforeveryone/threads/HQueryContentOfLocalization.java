@@ -131,13 +131,16 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
                             JSONObject content_type = item.getJSONObject("content_type");
                             itemContentType = mapper.readValue(content_type.toString(), ContentType.class);
                             //Add videos to content
-                            if (item.has("video")) {
-                                JSONArray videosJson = item.getJSONArray("video");
+                            if (item.has("videos")) {
+                                JSONArray videosJson = item.getJSONArray("videos");
                                 for (int i = 0; i < videosJson.length(); ++i) {
                                     JSONObject videoJson = videosJson.getJSONObject(i);
-                                    Multimedia video = mapper.readValue(videoJson.toString(), Multimedia.class);
-                                    video.setType("video");
-                                    content.addMultimedia(video);
+                                    if(videoJson.has("video")) {
+                                        JSONObject videoJ = videoJson.getJSONObject("video");
+                                        Multimedia video = mapper.readValue(videoJ.toString(), Multimedia.class);
+                                        video.setType("video");
+                                        content.addMultimedia(video);
+                                    }
                                 }
                             }
                             //Add images to content
