@@ -78,6 +78,44 @@ public class HQueryVisitGuide extends AsyncTask<Void, Integer, String> {
                             JSONObject itemLocation = item.getJSONObject("location");
                             int itemOrder =  item.getInt("order");
                             Location location = mapper.readValue(itemLocation.toString(), Location.class);
+                            //Only for testing
+                            if(itemOrder==1){
+                                if (ControllerPreferences.getLanguage().compareTo("fr-FR") == 0)
+                                    location.setDescription("Entrée principale");
+                                else if (ControllerPreferences.getLanguage().compareTo("en-GB") == 0)
+                                    location.setDescription("Main entrance");
+                                else if (ControllerPreferences.getLanguage().compareTo("de-DE") == 0)
+                                    location.setDescription("Haupteingang");
+                            }else if(itemOrder==2){
+                                if (ControllerPreferences.getLanguage().compareTo("fr-FR") == 0)
+                                    location.setDescription("murale interactive");
+                                else if (ControllerPreferences.getLanguage().compareTo("en-GB") == 0)
+                                    location.setDescription("Interactive Mural");
+                                else if (ControllerPreferences.getLanguage().compareTo("de-DE") == 0)
+                                    location.setDescription("interaktive Wand");
+                            }else if(itemOrder==3){
+                                if (ControllerPreferences.getLanguage().compareTo("fr-FR") == 0)
+                                    location.setDescription("salle principale");
+                                else if (ControllerPreferences.getLanguage().compareTo("en-GB") == 0)
+                                    location.setDescription("Main hallway");
+                                else if (ControllerPreferences.getLanguage().compareTo("de-DE") == 0)
+                                    location.setDescription("Haupthalle");
+                            }else if(itemOrder==4){
+                                if (ControllerPreferences.getLanguage().compareTo("fr-FR") == 0)
+                                    location.setDescription("gauche bas-côté");
+                                else if (ControllerPreferences.getLanguage().compareTo("en-GB") == 0)
+                                    location.setDescription("Left side aisle");
+                                else if (ControllerPreferences.getLanguage().compareTo("de-DE") == 0)
+                                    location.setDescription("linke Seitenschiff");
+                            }
+                            else {
+                                if (ControllerPreferences.getLanguage().compareTo("fr-FR") == 0)
+                                    location.setDescription("Nef droite de côté");
+                                else if (ControllerPreferences.getLanguage().compareTo("en-GB") == 0)
+                                    location.setDescription("Right side gangway");
+                                else if (ControllerPreferences.getLanguage().compareTo("de-DE") == 0)
+                                    location.setDescription("Rechts Seitenschiff");
+                            }
                             location.setOrder(itemOrder);
                             locations.add(location);
                         }

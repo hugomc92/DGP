@@ -8,7 +8,7 @@ import android.util.DisplayMetrics;
 import java.util.Locale;
 
 /**
- * Created by Sasu on 14/01/2017.
+ * Created by Antonio Benitez Guijarro on 14/01/2017.
  */
 
 public class Languages {
@@ -36,9 +36,5 @@ public class Languages {
         Configuration conf = res.getConfiguration();
         conf.setLocale(myLocale);
         res.updateConfiguration(conf, dm);
-        /*
-        Intent refresh = new Intent(this, AndroidLocalize.class);
-        ((Activity)context).startActivity(refresh);
-        ((Activity)context).finish();*/
     }
 }

@@ -43,7 +43,7 @@
 	<string name="video_description">video description</string>
 	<string name="image_description">Image description</string>
 	<string name="NFC_Error_Disabled">El sensor NFC está desactivado. Por favor actívelo en su dispositivo y vuelva a intentarlo.</string>
-	<string name="Scan_with_QR">Escanear con QR</string>
+	<string name="Scan_with_QR">Scan with QR</string>
 	<string name="NFCScan_instructions">Para analizar la pegatina NFC active el sensor NFC de su dispositivo y acérquelo a la etiqueta NFC por la parte trasera del dispositivo. Si desea escanear un QR en lugar de NFC pulse el siguiente botón.</string>
 	<string name="exit_Message">¿Seguro que quieres salir de la aplicación?</string>
 	<string name="yes">Sí</string>
@@ -63,7 +63,7 @@
 	<string name="accesibility">Accesibilidad</string>
 	<string name="scan_code_Accesibility">Escanear código de un contenido. Botón.</string>
 	<string name="description_Main_Photo">Fotografía aérea del museo fundación caja granada</string>
-	<string name="scann_code">Escanear código</string>
+	<string name="scann_code">Scan code</string>
 	<string name="list_content_Accesibility">Listar contenidos del museo. Botón.</string>
 	<string name="listar_contenido">Listar contenido</string>
 	<string name="guided_visit_Accesibility">Visita guiada por las obras del museo. Botón.</string>
