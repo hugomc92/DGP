@@ -59,10 +59,17 @@ public class HQueryContentType extends AsyncTask<Void, Integer, String> {
         @Override
         protected String doInBackground(Void... params) {
             ObjectMapper mapper = new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-            //Esta es la consulta real
+            //This is the real query
             //resultado = QueryBBDD.doQuery(QueryBBDD.queryType+"/"+ ControllerPreferences.getLanguage(), "", "GET");
-            //Esto es solo para pruebas
-            resultado = QueryBBDD.doQuery(QueryBBDD.queryType, "", "GET");
+            //This is only for testing
+            if(ControllerPreferences.getLanguage().compareTo("es-ES")==0)
+                resultado = QueryBBDD.doQuery(QueryBBDD.queryType, "", "GET");
+            else if(ControllerPreferences.getLanguage().compareTo("fr-FR")==0)
+                resultado = "{\"content_types\":[{\"ID\":4,\"NAME\":\"Cadre\",\"DESCRIPTION\":\"Ce type de contenu accueille toutes les images Musée.\",\"ICON\":\"/static/img/content_type_icons/picture.png\"},{\"ID\":5,\"NAME\":\"Sculpture\",\"DESCRIPTION\":\"Ce type de contenu abrite toutes les sculptures du musée.\\t\",\"ICON\":\"/static/img/content_type_icons/escultura.png\"},{\"ID\":6,\"NAME\":\"Vidéo\",\"DESCRIPTION\":\"Ce type de contenu comme des vidéos maison et multimédia.\",\"ICON\":\"/static/img/content_type_icons/video.png\"}]}";
+            else if(ControllerPreferences.getLanguage().compareTo("en-GB")==0)
+                resultado = "{\"content_types\":[{\"ID\":4,\"NAME\":\"Picture\",\"DESCRIPTION\":\"This type of content houses all the pictures of the museum.\",\"ICON\":\"/static/img/content_type_icons/picture.png\"},{\"ID\":5,\"NAME\":\"Sculpture\",\"DESCRIPTION\":\"This type of content houses all the sculptures of the museum.\\t\",\"ICON\":\"/static/img/content_type_icons/escultura.png\"},{\"ID\":6,\"NAME\":\"Video\",\"DESCRIPTION\":\"This type of content houses videos and similar multimedia.\",\"ICON\":\"/static/img/content_type_icons/video.png\"}]}";
+            else if(ControllerPreferences.getLanguage().compareTo("de-DE")==0)
+                resultado = "{\"content_types\":[{\"ID\":4,\"NAME\":\"Bild\",\"DESCRIPTION\":\"Diese Art von Inhalt beherbergt alle Bilder des Museums.\",\"ICON\":\"/static/img/content_type_icons/picture.png\"},{\"ID\":5,\"NAME\":\"Skulptur\",\"DESCRIPTION\":\"Diese Art von Inhalt beherbergt alle Skulpturen des Museums.\\t\",\"ICON\":\"/static/img/content_type_icons/escultura.png\"},{\"ID\":6,\"NAME\":\"Video\",\"DESCRIPTION\":\"Diese Art von Inhalt beherbergt Videos und ähnliche Multimedia.\",\"ICON\":\"/static/img/content_type_icons/video.png\"}]}";
             JSONObject res =null;
             ContentType itemContentType =null;
             try {
