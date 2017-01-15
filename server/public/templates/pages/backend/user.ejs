@@ -29,6 +29,7 @@
 							<th data-field="email">Email</th>
 							<th data-field="name_surame">Nombre. A</th>
 							<th data-field="admin">Admin</th>
+							<th data-field="s_admin">S. Admin</th>
 							<th data-field="action">Acción</th>
 						</tr>
 					</thead>
@@ -45,6 +46,14 @@
 								<td><%= users[i].NAME + ' ' + users[i].SURNAME %></td>
 								<td>
 									<% if(parseInt(users[i].ADMIN)) { %>
+										<span>Sí</span>
+									<% }
+									else { %>
+										<span>No</span>
+									<% } %>
+								</td>
+								<td>
+									<% if(parseInt(users[i].SUPER_ADMIN)) { %>
 										<span>Sí</span>
 									<% }
 									else { %>
