@@ -22,7 +22,7 @@ $(document).ready(function() {
 		id_content_type = parseInt(id_content_type);
 
 		if(action == '#delete_content_type') {
-			nombre = $(this).parent().parent().children()[1].innerHTML;
+			nombre = $(this).parent().parent().children()[2].innerHTML;
 
 			$("#delete_id_content_type").val(id_content_type);
 			$("#delete_titulo").text('Se borrará el tipo de contenido "' + nombre + '"');
