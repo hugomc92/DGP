@@ -664,9 +664,9 @@ ContentController.prototype.initBackend = function() {
 				video.url = newVideo;
 
 			if(newSubstitle === '')
-				video.substitle = null;
+				video.subtitle = null;
 			else
-				video.substitle = newSubstitle;
+				video.subtitle = newSubstitle;
 
 			var altText = {};
 
