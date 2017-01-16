@@ -384,11 +384,11 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
                     btn1.setVisibility(View.GONE);
                     btn2.setVisibility(View.GONE);
                     indexVideo=0;
-                    if(ControllerPreferences.getDisability()!=2) {
+                    /*if(ControllerPreferences.getDisability()!=2) {
                         if (videoMultimedia.get(indexVideo).getId_lang() != null) {
                             changeVideo(videoMultimedia, videoView);
                         }
-                    }else
+                    }else*/
                         changeVideo(videoMultimedia, videoView);
 
                 }else if(videoMultimedia.size()>0){
@@ -401,11 +401,11 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
                             if (indexVideo < 0) {
                                 indexVideo = videoMultimedia.size()-1;
                             }
-                            if(ControllerPreferences.getDisability()!=2) {
+                           /* if(ControllerPreferences.getDisability()!=2) {
                                 if (videoMultimedia.get(indexVideo).getId_lang() != null) {
                                     changeVideo(videoMultimedia, videoView);
                                 }
-                            }else
+                            }else*/
                                 changeVideo(videoMultimedia, videoView);
                         }
                     });
@@ -416,19 +416,19 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
                             if (indexVideo >= videoMultimedia.size()) {
                                 indexVideo = 0;
                             }
-                            if(ControllerPreferences.getDisability()!=2) {
+                            /*if(ControllerPreferences.getDisability()!=2) {
                                 if (videoMultimedia.get(indexVideo).getId_lang() != null) {
                                     changeVideo(videoMultimedia, videoView);
                                 }
-                            }else
+                            }else*/
                                 changeVideo(videoMultimedia, videoView);
                         }
                     });
-                    if(ControllerPreferences.getDisability()!=2) {
+                   /* if(ControllerPreferences.getDisability()!=2) {
                         if (videoMultimedia.get(indexVideo).getId_lang() != null) {
                             changeVideo(videoMultimedia, videoView);
                         }
-                    }else
+                    }else*/
                         changeVideo(videoMultimedia, videoView);
 
                /* videoView.setVideoURI(uri);
