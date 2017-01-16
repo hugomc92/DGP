@@ -106,5 +106,8 @@
     <string name="sign_languaje_instructions">Se ha activado la herramienta de lenguaje de signos. Con ella los vídeos de los contenidos del museo aparecerán en lenguaje de signos.</string>
     <string name="fecha_creacion_obra">"Fecha de creación: "</string>
     <string name="location_artwork">"Localizacion: "</string>
+    <string name="accesibility_description_button">Accesibilidad. Opciones de accesibilidad. Botón.</string>
+    <string name="language_options_description">Idioma. Selección del idioma en el que se mostrará la aplicación. Botón.</string>
+    <string name="instructions_description">Instrucciones. Opción para volver a visualizar las instrucciones de la aplicación. Botón.</string>
 
 </resources>

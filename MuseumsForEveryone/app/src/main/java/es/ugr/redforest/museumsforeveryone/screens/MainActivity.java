@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
 				.setCancelable(false)
 				.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
+						finish();
                         System.exit(0);
-                        finish();
 
 					}
 				})
