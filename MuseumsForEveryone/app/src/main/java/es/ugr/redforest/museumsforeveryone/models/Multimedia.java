@@ -17,6 +17,7 @@ public class Multimedia {
     private String type;
     private String alternativeText;
     private String subtitle;
+    private String id_lang;
 
     public Multimedia(int id, String url, String type,String alternativeText) {
         this.id = id;
@@ -42,6 +43,14 @@ public class Multimedia {
     @JsonProperty("ALT_TEXT")
     public void setAlternativeText(String alternativeText) {
         this.alternativeText = alternativeText;
+    }
+    @JsonProperty("LANG_ID")
+    public String getId_lang() {
+        return id_lang;
+    }
+    @JsonProperty("LANG_ID")
+    public void setId_lang(String id_lang) {
+        this.id_lang = id_lang;
     }
     @JsonProperty("ID")
     public int getId() {

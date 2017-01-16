@@ -330,7 +330,12 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
                     btn1.setVisibility(View.GONE);
                     btn2.setVisibility(View.GONE);
                     indexVideo=0;
-                    changeVideo(videoMultimedia,videoView);
+                    if(ControllerPreferences.getDisability()!=2) {
+                        if (videoMultimedia.get(indexVideo).getId_lang() != null) {
+                            changeVideo(videoMultimedia, videoView);
+                        }
+                    }else
+                        changeVideo(videoMultimedia, videoView);
 
                 }else if(videoMultimedia.size()>0){
                     Button previousVideo = (Button) ((Activity) context).findViewById(R.id.btPreviousVideo);
@@ -342,7 +347,12 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
                             if (indexVideo < 0) {
                                 indexVideo = videoMultimedia.size()-1;
                             }
-                            changeVideo(videoMultimedia,videoView);
+                            if(ControllerPreferences.getDisability()!=2) {
+                                if (videoMultimedia.get(indexVideo).getId_lang() != null) {
+                                    changeVideo(videoMultimedia, videoView);
+                                }
+                            }else
+                                changeVideo(videoMultimedia, videoView);
                         }
                     });
                     nextVideo.setOnClickListener(new View.OnClickListener() {
@@ -352,10 +362,20 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
                             if (indexVideo >= videoMultimedia.size()) {
                                 indexVideo = 0;
                             }
-                            changeVideo(videoMultimedia,videoView);
+                            if(ControllerPreferences.getDisability()!=2) {
+                                if (videoMultimedia.get(indexVideo).getId_lang() != null) {
+                                    changeVideo(videoMultimedia, videoView);
+                                }
+                            }else
+                                changeVideo(videoMultimedia, videoView);
                         }
                     });
-                    changeVideo(videoMultimedia,videoView);
+                    if(ControllerPreferences.getDisability()!=2) {
+                        if (videoMultimedia.get(indexVideo).getId_lang() != null) {
+                            changeVideo(videoMultimedia, videoView);
+                        }
+                    }else
+                        changeVideo(videoMultimedia, videoView);
 
                /* videoView.setVideoURI(uri);
 
@@ -378,29 +398,32 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
     }
     // Method to change video
     private void changeVideo(ArrayList<Multimedia> videoMultimedia,SimpleExoPlayerView videoView){
-        Uri uri = Uri.parse(QueryBBDD.server+videoMultimedia.get(indexVideo).getUrl());
-        videoView.setPlayer(player);
-        // Produces DataSource instances through which media data is loaded.
-        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context, Util.getUserAgent(context, "Museums4EveryOne"));
-        // Produces Extractor instances for parsing the media data.
-        ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
-        // This is the MediaSource representing the media to be played.
-        MediaSource videoSource = new ExtractorMediaSource(uri,
-                dataSourceFactory, extractorsFactory, null, null);
-        // If has subtitles load video with subtitles
-        if(videoMultimedia.get(indexVideo).getSubtitle()!=null && videoMultimedia.get(indexVideo).getSubtitle().compareTo("")!=0) {
-            Uri subtitleUri = Uri.parse(QueryBBDD.server + videoMultimedia.get(indexVideo).getSubtitle());
 
-            Format textFormat = Format.createTextSampleFormat(null, MimeTypes.TEXT_VTT,
-                    null, Format.NO_VALUE, Format.NO_VALUE, ControllerPreferences.getLanguage(), null);
-            MediaSource subtitleSource = new SingleSampleMediaSource(subtitleUri, dataSourceFactory, textFormat, C.TIME_UNSET);
-            // Plays the video with the sideloaded subtitle.
-            MergingMediaSource mergedSource =
-                    new MergingMediaSource(videoSource, subtitleSource);
-            // Prepare the player with the source.
-            player.prepare(mergedSource);
-        }else // if hasn't subtitles only video
-            player.prepare(videoSource);
+                if (videoMultimedia.get(indexVideo).getAlternativeText() != null)
+                    videoView.setContentDescription(videoMultimedia.get(indexVideo).getAlternativeText());
+                Uri uri = Uri.parse(QueryBBDD.server + videoMultimedia.get(indexVideo).getUrl());
+                videoView.setPlayer(player);
+                // Produces DataSource instances through which media data is loaded.
+                DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context, Util.getUserAgent(context, "Museums4EveryOne"));
+                // Produces Extractor instances for parsing the media data.
+                ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+                // This is the MediaSource representing the media to be played.
+                MediaSource videoSource = new ExtractorMediaSource(uri,
+                        dataSourceFactory, extractorsFactory, null, null);
+                // If has subtitles load video with subtitles
+                if (videoMultimedia.get(indexVideo).getSubtitle() != null && videoMultimedia.get(indexVideo).getSubtitle().compareTo("") != 0) {
+                    Uri subtitleUri = Uri.parse(QueryBBDD.server + videoMultimedia.get(indexVideo).getSubtitle());
+
+                    Format textFormat = Format.createTextSampleFormat(null, MimeTypes.TEXT_VTT,
+                            null, Format.NO_VALUE, Format.NO_VALUE, ControllerPreferences.getLanguage(), null);
+                    MediaSource subtitleSource = new SingleSampleMediaSource(subtitleUri, dataSourceFactory, textFormat, C.TIME_UNSET);
+                    // Plays the video with the sideloaded subtitle.
+                    MergingMediaSource mergedSource =
+                            new MergingMediaSource(videoSource, subtitleSource);
+                    // Prepare the player with the source.
+                    player.prepare(mergedSource);
+                } else // if hasn't subtitles only video
+                    player.prepare(videoSource);
     }
 
     @Override

@@ -76,5 +76,19 @@ public class ActivityArtworkDisplay extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(player!=null){
+            player.stop();
+        }
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(player!=null){
+            player.stop();
+        }
+    }
 }
