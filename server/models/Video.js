@@ -62,7 +62,7 @@ var Video = DBConnector.connectM4E().define('VIDEO', {
 			}
 			else if(this.url === null) {
 				return Video.update( {
-					SUBTITLE: this.substitle,
+					SUBTITLE: this.subtitle,
 					ALT_TEXT: this.altText,
 					LANG_ID: this.langId
 				}, {where: {ID: id}});
@@ -77,7 +77,7 @@ var Video = DBConnector.connectM4E().define('VIDEO', {
 			else {
 				return Video.update( {
 					URL: this.url,
-					SUBTITLE: this.substitle,
+					SUBTITLE: this.subtitle,
 					ALT_TEXT: this.altText,
 					LANG_ID: this.langId
 				}, {where: {ID: id}});

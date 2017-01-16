@@ -243,16 +243,6 @@ main {
     position: relative;
   }
 }
-@media only screen and (min-width: 601px) and (max-width: 992px) {
-  #contents .multimedia .content_multimedia li .multimedia_actions.video_actions {
-    padding-top: 55%;
-  }
-}
-@media only screen and (max-width: 600px) {
-  #contents .multimedia .content_multimedia li .multimedia_actions.video_actions {
-    padding-top: 55%;
-  }
-}
 #contents .multimedia .content_multimedia li .multimedia_actions .btn-floating {
   margin: 5px 0;
   display: inline-block;

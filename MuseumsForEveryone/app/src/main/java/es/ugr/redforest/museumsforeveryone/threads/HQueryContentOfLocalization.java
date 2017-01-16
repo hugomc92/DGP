@@ -130,6 +130,31 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
                             //Transform JSON content type to model content type
                             JSONObject content_type = item.getJSONObject("content_type");
                             itemContentType = mapper.readValue(content_type.toString(), ContentType.class);
+                            if(ControllerPreferences.getLanguage().compareTo("fr-FR")==0){
+                                if(itemContentType.getName()=="Cuadro"){
+                                    itemContentType.setName("Cadre");
+                                    itemContentType.setDescription("Ce type de contenu accueille toutes les images Musée.");
+                                }else if(itemContentType.getName()=="Escultura"){
+                                    itemContentType.setName("Sculpture");
+                                    itemContentType.setDescription("Ce type de contenu abrite toutes les sculptures du musée.");
+                                }else{
+                                    itemContentType.setName("Vidéo");
+                                    itemContentType.setDescription("Ce type de contenu comme des vidéos maison et multimédia.");
+                                }
+
+                            }
+                            else if(ControllerPreferences.getLanguage().compareTo("en-GB")==0){
+                                if(itemContentType.getName()=="Cuadro"){
+                                    itemContentType.setName("Picture");
+                                    itemContentType.setDescription("This type of content houses all the pictures of the museum.");
+                                }else if(itemContentType.getName()=="Escultura"){
+                                    itemContentType.setName("Sculpture");
+                                    itemContentType.setDescription("This type of content houses all the sculptures of the museum.");
+                                }else{
+                                    itemContentType.setName("Video");
+                                    itemContentType.setDescription("This type of content houses all the videos of the museum.");
+                                }
+                            }
                             //Add videos to content
                             if (item.has("videos")) {
                                 JSONArray videosJson = item.getJSONArray("videos");
@@ -247,12 +272,41 @@ public class HQueryContentOfLocalization extends AsyncTask<Void, Integer, String
 
             //set values at textview
             if(content.getContentType()!=null) {
-                typeArtWork.setText(content.getContentType().getName());
+                if(ControllerPreferences.getLanguage().compareTo("fr-FR")==0){
+                    if(content.getContentType().getName().compareTo("Cuadro")==0){
+                        typeArtWork.setText("Cadre");
+                        descriptionArtwork.setText("Ce type de contenu accueille toutes les images Musée.");
+                    }else if(content.getContentType().getName().compareTo("Escultura")==0){
+                        typeArtWork.setText("Sculpture");
+                        descriptionArtwork.setText("Ce type de contenu abrite toutes les sculptures du musée.");
+                    }else if(content.getContentType().getName().compareTo("Video")==0){
+                        typeArtWork.setText("Vidéo");
+                        descriptionArtwork.setText("Ce type de contenu comme des vidéos maison et multimédia.");
+                    }
+
+                }
+                else if(ControllerPreferences.getLanguage().compareTo("en-GB")==0){
+                    if(content.getContentType().getName().compareTo("Cuadro")==0){
+                        typeArtWork.setText("Picture");
+                        descriptionArtwork.setText("This type of content houses all the pictures of the museum.");
+                    }else if(content.getContentType().getName().compareTo("Escultura")==0){
+                        typeArtWork.setText("Sculpture");
+                        descriptionArtwork.setText("This type of content houses all the sculptures of the museum.");
+                    }else if(content.getContentType().getName().compareTo("Video")==0){
+                        typeArtWork.setText("Video");
+                        descriptionArtwork.setText("This type of content houses all the videos of the museum.");
+                    }
+                }else{
+                    typeArtWork.setText(content.getContentType().getName());
+                }
+
+                //typeArtWork.setText(content.getContentType().getName());
                 artworkName = content.getContentType().getName();
-                mySlide.inicializateToolbar(R.menu.menu_main, artworkName );
+                //mySlide.inicializateToolbar(R.menu.menu_main, typeArtWork.getText().toString() );
             }
             if(content.getContentInformation()!=null) {
                 titleArtwork.setText(content.getContentInformation().getName());
+                mySlide.inicializateToolbar(R.menu.menu_main, content.getContentInformation().getName().toString() );
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy",Locale.getDefault());
                 if(content.getCreation_date()!=null)
                     dateArtwork.setText(context.getString(R.string.fecha_creacion_obra)+ dateFormat.format(content.getCreation_date()));

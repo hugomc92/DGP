@@ -22,7 +22,7 @@ $(document).ready(function() {
 		id_user = parseInt(id_user);
 
 		if(action == '#delete_user') {
-			email = $(this).parent().parent().children()[1].innerHTML;
+			email = $(this).parent().parent().children()[2].innerHTML;
 
 			$("#delete_id_user").val(id_user);
 			$("#delete_titulo").text('Se borrará "' + email + '"');

@@ -12,8 +12,8 @@ app.use(bodyParser());
 app.use(compression());
 app.use(helmet());
 
-// sesion of 10 min
-var sessionTimeout = 120 * 60 * 1000;
+// sesion of 30 min
+var sessionTimeout = 30 * 60 * 1000;
 app.use(session({
 	secret: '}]QrgL{MWT8vE8F?t&?S',
 	resave: false,
