@@ -153,6 +153,7 @@
                             <Button
                                 android:layout_width="50dp"
                                 android:layout_height="55dp"
+                                android:layout_marginTop="20dp"
                                 android:id="@+id/btPreviousVideo"
                                 android:background="@drawable/ic_menu_left"
                                 android:textColor="@color/abc_primary_text_material_dark"
@@ -170,6 +171,7 @@
                             <Button
                                 android:layout_width="50dp"
                                 android:layout_height="55dp"
+                                android:layout_marginTop="20dp"
                                 android:id="@+id/btNextVideo"
                                 android:background="@drawable/ic_menu_right"
                                 android:textColor="@color/abc_primary_text_material_dark"
