@@ -204,7 +204,7 @@ ContentService.prototype.initializeRouter = function() {
 
 													var video = Video.build();
 
-													video.retrieveAllByContentIdByLangId(contentId, langCode).then(function(success) {
+													video.retrieveAllByContentIdByLangId(contentId, langId).then(function(success) {
 														var videos = success;
 
 														var jsonResObj= {};
