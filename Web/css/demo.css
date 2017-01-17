@@ -35,6 +35,7 @@ a:hover, a:focus {
 
 .content {
 	padding: 0 1em;
+	min-height: 1000px;
 	margin: 0 auto;
 	text-align: center;
 	position: relative;
@@ -244,4 +245,50 @@ ul.ref li {
 	.codrops-icon span {
 		display: none;
 	}
+}
+
+.content-Description p, .content-Description h1{
+	text-align: center;
+}
+.content-Description h1{
+	font-size: 50px;
+}
+.content-Description span{
+	color: #2251ab;
+	font-size: 35px;
+}
+.content-Description .texto span,.content-Description .texto p{
+
+	font-size: 20px;
+}
+
+.content-Description .texto p{
+	margin-left: 10%;
+	margin-right: 10%;
+}
+.content-Description .texto span{
+	color: #2251ab;
+}
+.content-Description i{
+	font-weight: bold;
+}
+.content-Description .title i{
+	color: #2251ab;
+	font-style: normal;
+	font-size: 40px;
+}
+footer{
+	background-color: #464646;
+	
+}
+.footer-copyright{
+	color: white;
+	text-align:center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #252525;
+}
+
+.footer-copyright a{
+	color: #2251ab;
 }

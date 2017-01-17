@@ -48,6 +48,7 @@ var Card = (function(window, undefined) {
   Card.prototype.openCard = function(callback) {
 
     this._TL = new TimelineLite;
+	$('body').addClass('noScrollOnBody');
 
     var slideContentDown = this._slideContentDown();
     var clipImageIn = this._clipImageIn();
@@ -210,6 +211,7 @@ var Card = (function(window, undefined) {
    * Close card.
    */
   Card.prototype.closeCard = function() {
+	  $('body').removeClass('noScrollOnBody');
 
     TweenLite.to(this._container, 0.4, {
       scrollTo: {
